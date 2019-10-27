@@ -13,12 +13,19 @@ import java.io.IOException;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static java.awt.Image.SCALE_SMOOTH;
+
 public class AnimationCompiler {
 
     public static Animation compileCatAnimation(String name, int count, Duration duration) {
         return compileCatAnimation(name, count, duration, false);
     }
+
     public static Animation compileCatAnimation(String name, int count, Duration duration, boolean reversed) {
+        return compileCatAnimation(name, count, duration, reversed, 1.0d);
+    }
+
+    public static Animation compileCatAnimation(String name, int count, Duration duration, boolean reversed, double scale) {
         var images = IntStream
                 .rangeClosed(1, count)
                 .mapToObj(index -> getCatResourcePath(name, index))
@@ -30,15 +37,16 @@ public class AnimationCompiler {
                         throw new RuntimeException("Failed to read the image.");
                     }
                 })
+                .map(image -> scaleImage(image, scale))
                 .collect(Collectors.toList());
 
-        int cellWidth = images.get(0).getWidth();
-        int cellHeight = images.get(0).getHeight();
+        int cellWidth = images.get(0).getWidth(null);
+        int cellHeight = images.get(0).getHeight(null);
 
-        BufferedImage image  = new BufferedImage(cellWidth * count, cellHeight, BufferedImage.TYPE_INT_ARGB);
+        BufferedImage image = new BufferedImage(cellWidth * count, cellHeight, BufferedImage.TYPE_INT_ARGB);
         Graphics graphics = image.getGraphics();
         for (int i = 0; i < images.size(); i++) {
-            BufferedImage img = images.get(i);
+            java.awt.Image img = images.get(i);
             if (reversed) {
                 img = flipHorizontal(img);
             }
@@ -53,12 +61,22 @@ public class AnimationCompiler {
         return new Animation(imageView, duration, count, cellWidth, cellHeight);
     }
 
-    private static BufferedImage flipHorizontal(BufferedImage image) {
+    private static java.awt.Image scaleImage(BufferedImage image, double scale) {
+        if (scale != 1.0d) {
+            int newWidth = (int) ((double) image.getWidth() * scale);
+            int newHeight = (int) ((double) image.getHeight() * scale);
+            return image.getScaledInstance(newWidth, newHeight, SCALE_SMOOTH);
+        } else {
+            return image;
+        }
+    }
+
+    private static BufferedImage flipHorizontal(java.awt.Image image) {
         AffineTransform at = new AffineTransform();
         at.concatenate(AffineTransform.getScaleInstance(-1, 1));
-        at.concatenate(AffineTransform.getTranslateInstance(-image.getWidth(), 0));
+        at.concatenate(AffineTransform.getTranslateInstance(-image.getWidth(null), 0));
         BufferedImage newImage = new BufferedImage(
-                image.getWidth(), image.getHeight(),
+                image.getWidth(null), image.getHeight(null),
                 BufferedImage.TYPE_INT_ARGB);
         Graphics2D g = newImage.createGraphics();
         g.transform(at);

@@ -1,6 +1,8 @@
 package com.mycodefu.application;
 
 import com.mycodefu.animation.Animation;
+import javafx.animation.Interpolator;
+import javafx.animation.TranslateTransition;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -21,6 +23,7 @@ public class Application extends javafx.application.Application{
 
 	public static final int SCREEN_WIDTH = 1024;
 	public static final int SCREEN_HEIGHT = 768;
+	public static final double CAT_SCALE = 0.5d;
 
 	public static void start(String[] args) {
 	Application.launch(args);
@@ -29,7 +32,7 @@ public class Application extends javafx.application.Application{
 	@Override
 	public void start(Stage stage) throws Exception {
 
-		Animation idleRightCat = compileCatAnimation("Idle", 10, Duration.seconds(1));
+		Animation idleRightCat = compileCatAnimation("Idle", 10, Duration.seconds(1), false, CAT_SCALE);
 		idleRightCat.setCycleCount(INDEFINITE);
 		double middleX = SCREEN_WIDTH / 2 - idleRightCat.getImageView().getViewport().getWidth() / 2;
 		double middleY = SCREEN_HEIGHT / 2 - idleRightCat.getImageView().getViewport().getHeight() / 2;
@@ -37,19 +40,19 @@ public class Application extends javafx.application.Application{
 		idleRightCat.getImageView().setY(middleY);
 		idleRightCat.play();
 
-		Animation idleLeftCat = compileCatAnimation("Idle", 10, Duration.seconds(1), true);
+		Animation idleLeftCat = compileCatAnimation("Idle", 10, Duration.seconds(1), true, CAT_SCALE);
 		idleLeftCat.setCycleCount(INDEFINITE);
 		idleLeftCat.getImageView().setX(middleX);
 		idleLeftCat.getImageView().setY(middleY);
 		idleLeftCat.getImageView().setVisible(false);
 
-		Animation walkingRightCat = compileCatAnimation("Walk", 10, Duration.seconds(1), false);
+		Animation walkingRightCat = compileCatAnimation("Walk", 10, Duration.seconds(1), false, CAT_SCALE);
 		walkingRightCat.setCycleCount(INDEFINITE);
 		walkingRightCat.getImageView().setX(middleX);
 		walkingRightCat.getImageView().setY(middleY);
 		walkingRightCat.getImageView().setVisible(false);
 
-		Animation walkingLeftCat = compileCatAnimation("Walk", 10, Duration.seconds(1), true);
+		Animation walkingLeftCat = compileCatAnimation("Walk", 10, Duration.seconds(1), true, CAT_SCALE);
 		walkingLeftCat.setCycleCount(INDEFINITE);
 		walkingLeftCat.getImageView().setX(middleX);
 		walkingLeftCat.getImageView().setY(middleY);
@@ -58,9 +61,15 @@ public class Application extends javafx.application.Application{
 		List<Animation> catAnimations = List.of(idleLeftCat, idleRightCat, walkingLeftCat, walkingRightCat);
 		List<Node> catAnimationImageViews = catAnimations.stream().map(Animation::getImageView).collect(Collectors.toList());
 
-		Group g = new Group(catAnimationImageViews);
+		Group catAnimationGroup = new Group(catAnimationImageViews);
 
-		Scene s = new Scene(g);
+		TranslateTransition jump = new TranslateTransition(Duration.millis(150), catAnimationGroup);
+		jump.interpolatorProperty().set(Interpolator.SPLINE(.1, .1, .7, .7));
+		jump.setByY(-125);
+		jump.setAutoReverse(true);
+		jump.setCycleCount(2);
+
+		Scene s = new Scene(catAnimationGroup);
 
 		stage.setScene(s);
 		stage.setWidth(SCREEN_WIDTH);
@@ -77,6 +86,8 @@ public class Application extends javafx.application.Application{
 				playOneAnimation(catAnimations, walkingRightCat);
 			} else if (keyEvent.getCode() == KeyCode.LEFT) {
 				playOneAnimation(catAnimations, walkingLeftCat);
+			} else if (keyEvent.getCode()==KeyCode.SPACE) {
+				jump.play();
 			}
 		});
 		stage.addEventHandler(KeyEvent.KEY_RELEASED, keyEvent -> {
