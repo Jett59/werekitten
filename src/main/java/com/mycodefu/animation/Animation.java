@@ -13,6 +13,7 @@ public class Animation extends Transition {
     private final int cellHeight;
 
     private int cellIndex;
+    private int lastCellIndex;
 
     Animation(ImageView imageView, Duration duration, int cellCount, int cellWidth, int cellHeight) {
         this.imageView = imageView;
@@ -24,6 +25,7 @@ public class Animation extends Transition {
         this.setInterpolator(Interpolator.LINEAR);
 
         this.cellIndex = 0;
+        this.lastCellIndex = 0;
         updateViewPort();
     }
 
@@ -38,6 +40,9 @@ public class Animation extends Transition {
     @Override
     protected void interpolate(double frac) {
         cellIndex = Math.min((int) Math.floor(frac * cellCount), cellCount - 1);
-        updateViewPort();
+        if (cellIndex != lastCellIndex) {
+            updateViewPort();
+            lastCellIndex = cellIndex;
+        }
     }
 }
