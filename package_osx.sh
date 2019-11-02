@@ -1,3 +1,6 @@
+set -e
+set +x
+
 JDK_14_VERSION=openjdk-14-jpackage+1-49_osx-x64_bin.tar.gz
 JDK_14_EXTRACTED_PATH=jdk-14.jdk
 

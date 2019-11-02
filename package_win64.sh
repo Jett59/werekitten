@@ -1,3 +1,6 @@
+set -e
+set +x
+
 JDK_14_EXTRACTED_PATH=jdk-14
 
 export JPACKAGE_HOME=./${JDK_14_EXTRACTED_PATH}

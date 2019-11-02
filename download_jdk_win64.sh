@@ -1,3 +1,6 @@
+set -e
+set +x
+
 JDK_14_VERSION=openjdk-14-jpackage+1-64_windows-x64_bin.zip
 JDK_14_EXTRACTED_PATH=jdk-14
 
