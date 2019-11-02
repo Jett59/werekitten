@@ -1,11 +1,5 @@
-JDK_14_VERSION=openjdk-14-jpackage+1-49_windows-x64_bin.zip
 JDK_14_EXTRACTED_PATH=jdk-14
 
-#rm -rf ./${JDK_14_EXTRACTED_PATH}
-#rm -rf ./${JDK_14_VERSION}
-
-#wget https://download.java.net/java/early_access/jpackage/1/${JDK_14_VERSION}
-#unzip ${JDK_14_VERSION}
 export JPACKAGE_HOME=./${JDK_14_EXTRACTED_PATH}
 export PATH=$JAVA_HOME/bin:$PATH
 export MAVEN_OPTS=-"Xmx3072m -XX:MaxPermSize=512m -XX:+CMSClassUnloadingEnabled -XX:-UseGCOverheadLimit"

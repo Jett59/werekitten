@@ -17,10 +17,13 @@ jobs:
 
       - run:
           name: Install dependencies
-          command: choco install maven correttojdk
+          command: |
+            choco install maven correttojdk
+            ./download_jdk_win64.sh
 
       - save_cache:
-          paths: []
+          paths:
+            - jdk-14
           key: circle-packages-{{ checksum ".circleci/config.yml" }}
 
       - run:
