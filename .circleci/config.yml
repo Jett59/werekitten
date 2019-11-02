@@ -30,4 +30,8 @@ jobs:
 
       - run:
           name: Build app + installer
-          command: ./package_win64.sh
+          command: |
+            function mvn {
+                /c/ProgramData/chocolatey/lib/maven/apache-maven-3.6.2/bin/mvn
+            }
+           ./package_win64.sh
