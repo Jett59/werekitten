@@ -10,7 +10,10 @@ jobs:
       shell: bash.exe
     steps:
       - checkout
-      - run: ./package_win64.sh
+      - run:
+          command: |
+            choco install maven correttojdk
+            ./package_win64.sh
 
 #      - restore_cache:
 #          keys:
