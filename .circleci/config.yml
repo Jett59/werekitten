@@ -18,7 +18,7 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            choco install maven correttojdk
+            choco install maven correttojdk wget
             ./download_jdk_win64.sh
 
       - save_cache:
