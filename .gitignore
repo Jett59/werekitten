@@ -27,8 +27,11 @@ hs_err_pid*
 .project
 .classpath
 
+# intellij
 .idea/
 *.iml
+
+# build assets
 bin/
 jdk*/
 *.zip
