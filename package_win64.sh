@@ -7,6 +7,9 @@ export JPACKAGE_HOME=./${JDK_14_EXTRACTED_PATH}
 export PATH=$JAVA_HOME/bin:$PATH
 export MAVEN_OPTS=-"Xmx3072m -XX:MaxPermSize=512m -XX:+CMSClassUnloadingEnabled -XX:-UseGCOverheadLimit"
 
+function mvn {
+  /c/ProgramData/chocolatey/lib/maven/apache-maven-3.6.2/bin/mvn $@
+}
 mvn clean package
 
 ${JPACKAGE_HOME}/bin/jpackage --package-type msi \

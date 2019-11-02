@@ -17,7 +17,9 @@ jobs:
 
       - run:
           name: Install chocolatey dependencies
-          command: choco install maven correttojdk wget
+          command: |
+            choco install maven --version 3.6.2
+            choco install correttojdk wget
 
       - run:
           name: Download experimental JDK with jpackage in it
@@ -30,8 +32,4 @@ jobs:
 
       - run:
           name: Build app + installer
-          command: |
-            function mvn {
-                /c/ProgramData/chocolatey/lib/maven/apache-maven-3.6.2/bin/mvn
-            }
-           ./package_win64.sh
+          command: ./package_win64.sh
