@@ -15,11 +15,14 @@ jobs:
           keys:
             - circle-packages-{{ checksum ".circleci/config.yml" }}
 
+
+      - run:
+          name: Install wixtoolset without the .NET framework dependency
+          command: choco install --ignore-dependencies wixtoolset
+            
       - run:
           name: Install chocolatey dependencies
           command: |
-            choco install dotnet3.5
-            choco install wixtoolset
             choco install maven --version 3.6.2
             choco install correttojdk wget
 
