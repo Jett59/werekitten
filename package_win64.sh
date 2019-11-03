@@ -28,7 +28,8 @@ ${JPACKAGE_HOME}/bin/jpackage --package-type msi \
     --copyright "2019 Jett Thompson" \
     --vendor "Jett Thompson" \
     --verbose \
-    --win-dir-chooser \
     --win-shortcut \
     --win-menu
+    
+#    --win-dir-chooser \
     
