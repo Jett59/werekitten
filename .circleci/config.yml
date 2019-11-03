@@ -19,7 +19,7 @@ jobs:
           name: Install chocolatey dependencies
           command: |
             choco install maven --version 3.6.2
-            choco install correttojdk wget
+            choco install correttojdk wget wixtoolset
 
       - run:
           name: Download experimental JDK with jpackage in it
