@@ -14,11 +14,6 @@ jobs:
       - restore_cache:
           keys:
             - circle-packages-{{ checksum ".circleci/config.yml" }}
-
-
-      - run:
-          name: Install wixtoolset without the .NET framework dependency
-          command: choco install --ignore-dependencies wixtoolset
             
       - run:
           name: Install chocolatey dependencies
@@ -26,6 +21,13 @@ jobs:
             choco install maven --version 3.6.2
             choco install correttojdk wget
 
+      - run:
+          name: Install wixtoolset without the .NET framework dependency
+          command: |
+            wget https://github.com/wixtoolset/wix3/releases/download/wix3112rtm/wix311-binaries.zip
+            unzip wix311-binaries.zip
+            ls
+          
       - run:
           name: Download experimental JDK with jpackage in it
           command: ./download_jdk_win64.sh
