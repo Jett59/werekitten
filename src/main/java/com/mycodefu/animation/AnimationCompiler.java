@@ -18,18 +18,18 @@ import static java.awt.Image.SCALE_SMOOTH;
 
 public class AnimationCompiler {
 
-    public static Animation compileCatAnimation(String name, int count, Duration duration) {
-        return compileCatAnimation(name, count, duration, false);
+    public static Animation compileCatAnimation(String type, String name, int count, Duration duration) {
+        return compileCatAnimation(type, name, count, duration, false);
     }
 
-    public static Animation compileCatAnimation(String name, int count, Duration duration, boolean reversed) {
-        return compileCatAnimation(name, count, duration, reversed, 1.0d);
+    public static Animation compileCatAnimation(String type, String name, int count, Duration duration, boolean reversed) {
+        return compileCatAnimation(type, name, count, duration, reversed, 1.0d);
     }
 
-    public static Animation compileCatAnimation(String name, int  count, Duration duration, boolean reversed, double scale) {
+    public static Animation compileCatAnimation(String type, String name, int  count, Duration duration, boolean reversed, double scale) {
         List<Image> images = IntStream
                 .rangeClosed(1, count)
-                .mapToObj(index -> getCatResourcePath(name, index))
+                .mapToObj(index -> getCatResourcePath(type, name, index))
                 .map(AnimationCompiler.class::getResourceAsStream)
                 .map(AnimationCompiler::readImage)
                 .map(image -> reversed ? reverseImage(image) : image)
@@ -46,10 +46,11 @@ public class AnimationCompiler {
         return new Animation(imageView, duration, count, cellWidth, cellHeight);
     }
 
-    private static String getCatResourcePath(String name, int index) {
-        final String path_template = "/cat/animations/[namelowercase]/[name] ([index]).png";
+    private static String getCatResourcePath(String type, String name, int index) {
+        final String path_template = "/[type]/animations/[namelowercase]/[name] ([index]).png";
 
         return path_template
+                .replace("[type]", type)
                 .replace("[namelowercase]", name.toLowerCase())
                 .replace("[name]", name)
                 .replace("[index]", Integer.toString(index));

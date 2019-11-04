@@ -25,6 +25,7 @@ public class Application extends javafx.application.Application{
 	public static final int SCREEN_WIDTH = 1024;
 	public static final int SCREEN_HEIGHT = 768;
 	public static final double CAT_SCALE = 0.5d;
+	public static final double SHREW_SCALE = 0.04d;
 
 	public static void start(String[] args) {
 	Application.launch(args);
@@ -33,7 +34,7 @@ public class Application extends javafx.application.Application{
 	@Override
 	public void start(Stage stage) throws Exception {
 
-		Animation idleRightCat = compileCatAnimation("Idle", 10, Duration.seconds(1), false, CAT_SCALE);
+		Animation idleRightCat = compileCatAnimation("cat", "Idle", 10, Duration.seconds(1), false, CAT_SCALE);
 		idleRightCat.setCycleCount(INDEFINITE);
 		double middleX = SCREEN_WIDTH / 2 - idleRightCat.getImageView().getViewport().getWidth() / 2;
 		double middleY = SCREEN_HEIGHT / 2 - idleRightCat.getImageView().getViewport().getHeight() / 2;
@@ -41,23 +42,33 @@ public class Application extends javafx.application.Application{
 		idleRightCat.getImageView().setY(middleY);
 		idleRightCat.play();
 
-		Animation idleLeftCat = compileCatAnimation("Idle", 10, Duration.seconds(1), true, CAT_SCALE);
+		Animation idleLeftCat = compileCatAnimation("cat", "Idle", 10, Duration.seconds(1), true, CAT_SCALE);
 		idleLeftCat.setCycleCount(INDEFINITE);
 		idleLeftCat.getImageView().setX(middleX);
 		idleLeftCat.getImageView().setY(middleY);
 		idleLeftCat.getImageView().setVisible(false);
 
-		Animation walkingRightCat = compileCatAnimation("Walk", 10, Duration.seconds(1), false, CAT_SCALE);
+		Animation walkingRightCat = compileCatAnimation("cat", "Walk", 10, Duration.seconds(1), false, CAT_SCALE);
 		walkingRightCat.setCycleCount(INDEFINITE);
 		walkingRightCat.getImageView().setX(middleX);
 		walkingRightCat.getImageView().setY(middleY);
 		walkingRightCat.getImageView().setVisible(false);
 
-		Animation walkingLeftCat = compileCatAnimation("Walk", 10, Duration.seconds(1), true, CAT_SCALE);
+		Animation walkingLeftCat = compileCatAnimation("cat", "Walk", 10, Duration.seconds(1), true, CAT_SCALE);
 		walkingLeftCat.setCycleCount(INDEFINITE);
 		walkingLeftCat.getImageView().setX(middleX);
 		walkingLeftCat.getImageView().setY(middleY);
 		walkingLeftCat.getImageView().setVisible(false);
+
+
+		Animation shrewRight = compileCatAnimation("shrew", "Idle", 2, Duration.seconds(1), false, SHREW_SCALE);
+		shrewRight.setCycleCount(INDEFINITE);
+		double shrewX = SCREEN_WIDTH / 2 - shrewRight.getImageView().getViewport().getWidth() - idleRightCat.getImageView().getViewport().getWidth() - 50;
+		double shrewY = middleY + idleRightCat.getImageView().getViewport().getHeight() - shrewRight.getImageView().getViewport().getHeight();
+		shrewRight.getImageView().setX(shrewX);
+		shrewRight.getImageView().setY(shrewY);
+		shrewRight.play();
+
 
 		List<Animation> catAnimations = List.of(idleLeftCat, idleRightCat, walkingLeftCat, walkingRightCat);
 		List<Node> catAnimationImageViews = catAnimations.stream().map(Animation::getImageView).collect(Collectors.toList());
@@ -73,7 +84,7 @@ public class Application extends javafx.application.Application{
 ImageView objectImageViews = BackgroundObjectBuilder.buildAll().getBackgroundObjectByName("Crate").getImageView();
 Group objectGroup = new Group(objectImageViews);
 
-Group combinedGroup = new Group(objectGroup, catAnimationGroup);
+Group combinedGroup = new Group(objectGroup, catAnimationGroup, shrewRight.getImageView());
 		Scene s = new Scene(combinedGroup);
 
 		stage.setScene(s);
