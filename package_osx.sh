@@ -1,14 +1,8 @@
 set -e
 set +x
 
-JDK_14_VERSION=openjdk-14-jpackage+1-64_osx-x64_bin.tar.gz
 JDK_14_EXTRACTED_PATH=jdk-14.jdk
 
-rm -rf ./${JDK_14_EXTRACTED_PATH}
-rm -rf ./${JDK_14_VERSION}
-
-wget https://download.java.net/java/early_access/jpackage/1/${JDK_14_VERSION}
-tar xzf ${JDK_14_VERSION}
 export JPACKAGE_HOME=./${JDK_14_EXTRACTED_PATH}
 export PATH=$JAVA_HOME/bin:$PATH
 export MAVEN_OPTS=-"Xmx3072m -XX:MaxPermSize=512m -XX:+CMSClassUnloadingEnabled -XX:-UseGCOverheadLimit"

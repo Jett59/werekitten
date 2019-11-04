@@ -14,7 +14,7 @@ import javafx.scene.image.Image;
 
 public class BackgroundObjectBuilder {
 	private static String toResourceDir(String from) {
-		return "/background/freetileset/png/object/"+from+".png";
+		return "/background/freetileset/png/Object/"+from+".png";
 	}
 public static BackgroundObject build(String name) {
 	InputStream in = BackgroundObjectBuilder.class.getResourceAsStream(toResourceDir(name));
