@@ -1,19 +1,20 @@
 package com.mycodefu.application;
 
 import com.mycodefu.animation.Animation;
+import com.mycodefu.backgroundObjects.BackgroundObjectBuilder;
+
 import javafx.animation.Interpolator;
 import javafx.animation.TranslateTransition;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static com.mycodefu.animation.AnimationCompiler.compileCatAnimation;
@@ -69,7 +70,11 @@ public class Application extends javafx.application.Application{
 		jump.setAutoReverse(true);
 		jump.setCycleCount(2);
 
-		Scene s = new Scene(catAnimationGroup);
+ImageView objectImageViews = BackgroundObjectBuilder.buildAll().getBackgroundObjectByName("Crate").getImageView();
+Group objectGroup = new Group(objectImageViews);
+
+Group combinedGroup = new Group(objectGroup, catAnimationGroup);
+		Scene s = new Scene(combinedGroup);
 
 		stage.setScene(s);
 		stage.setWidth(SCREEN_WIDTH);
