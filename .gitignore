@@ -35,3 +35,5 @@ hs_err_pid*
 bin/
 jdk*/
 *.zip
+*.msi
+*.pkg
