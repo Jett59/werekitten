@@ -12,6 +12,11 @@ jobs:
       - checkout
 
       - run:
+          name: Install dependencies
+          command: |
+            brew install wget
+
+      - run:
           name: Run build
           command: |
             ./download_jdk_osx.sh
