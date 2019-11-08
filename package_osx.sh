@@ -21,7 +21,7 @@ ${JPACKAGE_HOME}/Contents/Home/bin/jpackage --package-type pkg \
     --app-version 1.0 \
     --license-file ./LICENSE \
     --temp ./target/jpackage \
-    --runtime-image ${JAVA_HOME} \
+    --runtime-image "${JAVA_HOME}" \
     --copyright "2019 Jett Thompson" \
     --vendor "Jett Thompson" \
     --verbose
