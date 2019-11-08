@@ -6,7 +6,7 @@ version: 2.1
 jobs:
   build-mac:
     macos:
-      xcode: "9.0"
+      xcode: 11.2.0
 
     steps:
       - checkout
@@ -14,12 +14,12 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            brew install wget maven
-            brew cask install corretto
+            HOMEBREW_NO_AUTO_UPDATE=1 brew install wget maven
 
       - run:
           name: Run build
           command: |
+            ./install_corretto_jdk_osx.sh
             ./download_jdk_osx.sh
             ./package_osx.sh
 #
