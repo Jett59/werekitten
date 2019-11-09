@@ -16,3 +16,4 @@ echo "${JAVA_HOME}"
 
 export PATH=$JAVA_HOME/bin:$PATH
 echo $(java -version)
+
