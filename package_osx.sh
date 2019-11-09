@@ -4,9 +4,8 @@ set +x
 JDK_14_EXTRACTED_PATH=jdk-14.jdk
 
 export JPACKAGE_HOME=./${JDK_14_EXTRACTED_PATH}
-export PATH=$JAVA_HOME/bin:$PATH
-export MAVEN_OPTS=-"Xmx3072m -XX:MaxPermSize=512m -XX:+CMSClassUnloadingEnabled -XX:-UseGCOverheadLimit"
 
+export MAVEN_OPTS=-"Xmx3072m -XX:MaxPermSize=512m -XX:+CMSClassUnloadingEnabled -XX:-UseGCOverheadLimit"
 mvn clean package
 
 ${JPACKAGE_HOME}/Contents/Home/bin/jpackage --package-type pkg \
