@@ -1,14 +1,14 @@
 set -e
 set +x
 
-JDK_14_EXTRACTED_PATH=jdk-14.jdk
+export JAVA_HOME=$(cat JAVA_HOME.txt)
+export MAVEN_HOME=$(cat MAVEN_HOME.txt)
 
-export JPACKAGE_HOME=./${JDK_14_EXTRACTED_PATH}
-export PATH=$JAVA_HOME/bin:$PATH
 export MAVEN_OPTS=-"Xmx3072m -XX:MaxPermSize=512m -XX:+CMSClassUnloadingEnabled -XX:-UseGCOverheadLimit"
+$MAVEN_HOME/bin/mvn clean package
 
-mvn clean package
-
+JDK_14_EXTRACTED_PATH=jdk-14.jdk
+export JPACKAGE_HOME=./${JDK_14_EXTRACTED_PATH}
 ${JPACKAGE_HOME}/Contents/Home/bin/jpackage --package-type pkg \
     -d ./target/jpackage-app \
     -n WereKitten \
