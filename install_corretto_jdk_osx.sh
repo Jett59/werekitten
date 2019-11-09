@@ -12,7 +12,7 @@ wget "https://d3pxv6yz143wms.cloudfront.net/${CORRETTO_VERSION}/${CORRETTO_TAR_V
 tar xzf "${CORRETTO_TAR_VERSION}"
 
 export JAVA_HOME="$(pwd)/${CORRETTO_VERSION_EXTRACTED_PATH}/Contents/Home"
-echo "${JAVA_HOME}"
+echo "${JAVA_HOME}" > JAVA_HOME.txt
 
 export PATH=$JAVA_HOME/bin:$PATH
 echo $(java -version)
