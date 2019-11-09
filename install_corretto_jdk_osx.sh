@@ -2,7 +2,7 @@ set -e
 set +x
 
 CORRETTO_VERSION="11.0.5.10.1"
-CORRETTO_TAR_VERSION="amazon-corretto-${CORRETTO_TAR_VERSION}-macosx-x64.tar.gz"
+CORRETTO_TAR_VERSION="amazon-corretto-${CORRETTO_VERSION}-macosx-x64.tar.gz"
 CORRETTO_VERSION_EXTRACTED_PATH="amazon-corretto-11.jdk"
 
 rm -rf ./${CORRETTO_VERSION_EXTRACTED_PATH}
