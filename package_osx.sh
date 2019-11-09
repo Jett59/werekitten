@@ -5,8 +5,7 @@ export JAVA_HOME=$(cat JAVA_HOME.txt)
 export MAVEN_HOME=$(cat MAVEN_HOME.txt)
 
 export MAVEN_OPTS=-"Xmx3072m -XX:MaxPermSize=512m -XX:+CMSClassUnloadingEnabled -XX:-UseGCOverheadLimit"
-$MAVEN_HOME/mvn -version
-$MAVEN_HOME/mvn clean package
+$MAVEN_HOME/bin/mvn clean package
 
 JDK_14_EXTRACTED_PATH=jdk-14.jdk
 export JPACKAGE_HOME=./${JDK_14_EXTRACTED_PATH}
