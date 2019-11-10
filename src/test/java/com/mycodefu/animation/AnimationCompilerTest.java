@@ -38,7 +38,7 @@ class AnimationCompilerTest {
 
     @Test
     void compileAnimation_scaled() throws IOException {
-        Animation animation = AnimationCompiler.compileAnimation("shrew", "Idle", 2, Duration.millis(500), false, SHREW_SCALE);
+        Animation animation = AnimationCompiler.compileAnimation("shrew", "Idle", 2, Duration.millis(500), false, 0.5d);
         assertNotNull(animation);
 
         checkSize(animation, 542d, 184d);
@@ -48,7 +48,7 @@ class AnimationCompilerTest {
 
     @Test
     void compileAnimation_scaled_reversed() throws IOException {
-        Animation animation = AnimationCompiler.compileAnimation("shrew", "Idle", 2, Duration.millis(500), true, SHREW_SCALE);
+        Animation animation = AnimationCompiler.compileAnimation("shrew", "Idle", 2, Duration.millis(500), true, 0.5d);
         assertNotNull(animation);
 
         checkSize(animation, 542d, 184d);
