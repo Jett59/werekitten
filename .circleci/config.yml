@@ -9,8 +9,7 @@ jobs:
       - checkout
 
       - run: |
-          echo "Tag: ${CIRCLE_TAG}"
-          echo "Tag from git: $(git tag -l --points-at HEAD)"
+          echo "$(git tag -l --points-at HEAD)" > ~/circle_tag.txt
 
       - restore_cache:
           key: circleci-werekitten-{{ checksum "pom.xml" }}
@@ -26,6 +25,10 @@ jobs:
 
       - store_test_results:
           path: target/surefire-reports
+
+      - persist_to_workspace:
+          root: ~/
+          paths: circle_tag.txt
 
   build-mac-installer:
     macos:
@@ -121,11 +124,8 @@ jobs:
       - run:
           name: "Publish Release on GitHub"
           command: |
-            echo "CIRCLE_TAG (pre-update)=${CIRCLE_TAG}"
-
-            CURRENT_TAG="$(git tag -l --points-at HEAD)"
-            CIRCLE_TAG="${CIRCLE_TAG:-$CURRENT_TAG}"
-
+            CIRCLE_TAG="$(cat ./artifacts/circle_tag.txt)"
+            rm -f ./artifacts/circle_tag.txt
             echo "CIRCLE_TAG=${CIRCLE_TAG}"
 
             ghr -t ${GITHUB_TOKEN} \
