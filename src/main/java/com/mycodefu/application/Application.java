@@ -17,7 +17,7 @@ import javafx.util.Duration;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.mycodefu.animation.AnimationCompiler.compileCatAnimation;
+import static com.mycodefu.animation.AnimationCompiler.compileAnimation;
 import static javafx.animation.Animation.INDEFINITE;
 
 public class Application extends javafx.application.Application{
@@ -34,7 +34,7 @@ public class Application extends javafx.application.Application{
 	@Override
 	public void start(Stage stage) {
 		try {
-			Animation idleRightCat = compileCatAnimation("cat", "Idle", 10, Duration.seconds(1), false, CAT_SCALE);
+			Animation idleRightCat = compileAnimation("characters/cat", "Idle", 10, Duration.seconds(1), false, CAT_SCALE);
 			idleRightCat.setCycleCount(INDEFINITE);
 			double middleX = SCREEN_WIDTH / 2 - idleRightCat.getImageView().getViewport().getWidth() / 2;
 			double middleY = SCREEN_HEIGHT / 2 - idleRightCat.getImageView().getViewport().getHeight() / 2;
@@ -42,25 +42,25 @@ public class Application extends javafx.application.Application{
 			idleRightCat.getImageView().setY(middleY);
 			idleRightCat.play();
 
-			Animation idleLeftCat = compileCatAnimation("cat", "Idle", 10, Duration.seconds(1), true, CAT_SCALE);
+			Animation idleLeftCat = compileAnimation("characters/cat", "Idle", 10, Duration.seconds(1), true, CAT_SCALE);
 			idleLeftCat.setCycleCount(INDEFINITE);
 			idleLeftCat.getImageView().setX(middleX);
 			idleLeftCat.getImageView().setY(middleY);
 			idleLeftCat.getImageView().setVisible(false);
 
-			Animation walkingRightCat = compileCatAnimation("cat", "Walk", 10, Duration.seconds(1), false, CAT_SCALE);
+			Animation walkingRightCat = compileAnimation("characters/cat", "Walk", 10, Duration.seconds(1), false, CAT_SCALE);
 			walkingRightCat.setCycleCount(INDEFINITE);
 			walkingRightCat.getImageView().setX(middleX);
 			walkingRightCat.getImageView().setY(middleY);
 			walkingRightCat.getImageView().setVisible(false);
 
-			Animation walkingLeftCat = compileCatAnimation("cat", "Walk", 10, Duration.seconds(1), true, CAT_SCALE);
+			Animation walkingLeftCat = compileAnimation("characters/cat", "Walk", 10, Duration.seconds(1), true, CAT_SCALE);
 			walkingLeftCat.setCycleCount(INDEFINITE);
 			walkingLeftCat.getImageView().setX(middleX);
 			walkingLeftCat.getImageView().setY(middleY);
 			walkingLeftCat.getImageView().setVisible(false);
 
-			Animation shrewRight = compileCatAnimation("shrew", "Idle", 2, Duration.millis(250), false, SHREW_SCALE);
+			Animation shrewRight = compileAnimation("characters/shrew", "Idle", 2, Duration.millis(250), false, SHREW_SCALE);
 			shrewRight.setCycleCount(INDEFINITE);
 			double shrewX = SCREEN_WIDTH / 2 - shrewRight.getImageView().getViewport().getWidth() - idleRightCat.getImageView().getViewport().getWidth() - 50;
 			double shrewY = middleY + idleRightCat.getImageView().getViewport().getHeight() - shrewRight.getImageView().getViewport().getHeight();

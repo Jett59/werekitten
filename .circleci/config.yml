@@ -1,7 +1,30 @@
 version: 2.1
 
 jobs:
-  build-mac:
+  build:
+    docker:
+      - image: circleci/openjdk:11-jdk-stretch
+
+    steps:
+      - checkout
+
+      - restore_cache:
+          key: circleci-werekitten-{{ checksum "pom.xml" }}
+
+      - run: mvn dependency:go-offline
+
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: circleci-werekitten-{{ checksum "pom.xml" }}
+
+      - run: mvn package
+
+      - store_artifacts:
+          path: ./target/jpackage-app/WereKitten-1.0.pkg
+          destination: WereKitten-1.0.pkg
+
+  build-mac-installer:
     macos:
       xcode: 11.2.0
 
@@ -25,7 +48,7 @@ jobs:
           path: ./target/jpackage-app/WereKitten-1.0.pkg
           destination: WereKitten-1.0.pkg
 
-  build-windows:
+  build-windows-installer:
     machine:
       image: "windows-server-2019-vs2019:stable"
       resource_class: "windows.medium"
@@ -67,10 +90,22 @@ jobs:
           path: .\target\jpackage-app\WereKitten-1.0.msi
           destination: WereKitten-1.0.msi
 
+      - run:
+          name: Test installer
+          shell: powershell.exe
+          command: |
+            Start-Process msiexec.exe -Wait -ArgumentList '/I C:\Users\circleci\project\target\jpackage-app\WereKitten-1.0.msi /quiet /L*V msilog.txt'
+            if(![System.IO.File]::Exists('C:\Program Files\WereKitten\WereKitten.exe')){throw (New-Object System.IO.FileNotFoundException("Installed file not found!"))}
+
+      - store_artifacts:
+          path: msilog.log
+          destination: msilog.log
+
 workflows:
   version: 2
   build_all:
     jobs:
-      - build-mac
-      - build-windows
+      - build
+#      - build-mac
+#      - build-windows
 

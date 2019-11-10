@@ -1,4 +1,4 @@
-package com.mycodefu.start;
+package com.mycodefu;
 
 import com.mycodefu.application.Application;
 import com.mycodefu.backgroundObjects.BackgroundObjectBuilder;
