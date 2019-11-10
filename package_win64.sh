@@ -29,6 +29,5 @@ ${JPACKAGE_HOME}/bin/jpackage --package-type msi \
     --vendor "Jett Thompson" \
     --verbose \
     --win-shortcut \
-    --win-menu    
-    --win-dir-chooser \
-    
+    --win-menu \
+    --win-dir-chooser
