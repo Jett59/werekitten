@@ -1,4 +1,11 @@
-version: 2.1
+version: 2
+
+release-filters: &release-filters
+  filters:
+    tags:
+      only: /^v\d+\.\d+\.\d+$/
+    branches:
+      ignore: /.*/
 
 jobs:
   build:
@@ -7,6 +14,10 @@ jobs:
 
     steps:
       - checkout
+
+      - run: |
+          echo "Tag: ${CIRCLE_TAG}"
+          echo "Tag from git: $(git tag -l --points-at HEAD)"
 
       - restore_cache:
           key: circleci-werekitten-{{ checksum "pom.xml" }}
@@ -127,13 +138,6 @@ jobs:
                 "${CIRCLE_TAG}" \
                 "./artifacts/"
 
-
-release-filters: &release-filters
-  filters:
-    tags:
-      only: /^v\d+\.\d+\.\d+$/
-    branches:
-      ignore: /.*/
 
 workflows:
   version: 2
