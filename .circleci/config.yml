@@ -1,11 +1,4 @@
-version: 2
-
-release-filters: &release-filters
-  filters:
-    tags:
-      only: /^v\d+\.\d+\.\d+$/
-    branches:
-      ignore: /.*/
+version: 2.1
 
 jobs:
   build:
@@ -128,6 +121,13 @@ jobs:
       - run:
           name: "Publish Release on GitHub"
           command: |
+            echo "CIRCLE_TAG (pre-update)=${CIRCLE_TAG}"
+
+            CURRENT_TAG="$(git tag -l --points-at HEAD)"
+            CIRCLE_TAG="${CIRCLE_TAG:-$CURRENT_TAG}"
+
+            echo "CIRCLE_TAG=${CIRCLE_TAG}"
+
             ghr -t ${GITHUB_TOKEN} \
                 -u ${CIRCLE_PROJECT_USERNAME} \
                 -r ${CIRCLE_PROJECT_REPONAME} \
@@ -138,7 +138,6 @@ jobs:
                 "${CIRCLE_TAG}" \
                 "./artifacts/"
 
-
 workflows:
   version: 2
   build_release:
@@ -148,15 +147,21 @@ workflows:
             tags:
               only: /.*/
       - build-mac-installer:
-          <<: *release-filters
           requires:
             - build
+          filters:
+            tags:
+              only: /^v\d+\.\d+\.\d+$/
       - build-windows-installer:
-          <<: *release-filters
           requires:
             - build
+          filters:
+            tags:
+              only: /^v\d+\.\d+\.\d+$/
       - publish-github-release:
-          <<: *release-filters
           requires:
             - build-mac-installer
             - build-windows-installer
+          filters:
+            tags:
+              only: /^v\d+\.\d+\.\d+$/
