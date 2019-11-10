@@ -47,6 +47,10 @@ jobs:
           path: ./target/jpackage-app/WereKitten-1.0.pkg
           destination: WereKitten-1.0.pkg
 
+      - persist_to_workspace:
+          root: ~/
+          paths: project/target/jpackage-app/WereKitten-1.0.pkg
+
   build-windows-installer:
     machine:
       image: "windows-server-2019-vs2019:stable"
@@ -100,11 +104,45 @@ jobs:
           path: msilog.log
           destination: msilog.log
 
+      - persist_to_workspace:
+          root: ~/
+          paths: project\target\jpackage-app\WereKitten-1.0.msi
+
+  publish-github-release:
+    docker:
+      - image: cibuilds/github:0.10
+    steps:
+      - attach_workspace:
+          at: ./artifacts
+      - run:
+          name: "Publish Release on GitHub"
+          command: |
+            ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${CIRCLE_TAG} ./artifacts/
+
+release-filters: &release-filters
+  filters:
+    branches:
+      only:
+        - master
+    tags:
+      only: /^v\d+\.\d+\.\d+$/
+
+release-dependency: &release-dependency
+  requires:
+    - build
+  <<: *release-filters
+
 workflows:
   version: 2
   build_all:
     jobs:
       - build
-#      - build-mac
-#      - build-windows
-
+      - build-mac-installer:
+          <<: *release-dependency
+      - build-windows-installer:
+          <<: *release-dependency
+      - publish-github-release:
+          requires:
+            - build-mac-installer
+            - build-windows-installer
+          <<: *release-filters
