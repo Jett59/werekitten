@@ -136,6 +136,15 @@ jobs:
                 "${CIRCLE_TAG}" \
                 "/root/project/artifacts/project/target/jpackage-app/"
 
+release-filter: &release-filter
+  filters:
+    # ignore any commit on any branch by default
+    branches:
+      ignore: /.*/
+    # only act on version tags
+    tags:
+      only: /^v\d+\.\d+\.\d+$/
+
 workflows:
   version: 2
   build_release:
@@ -145,21 +154,15 @@ workflows:
             tags:
               only: /.*/
       - build-mac-installer:
+          <<: *release-filter
           requires:
             - build
-          filters:
-            tags:
-              only: /^v\d+\.\d+\.\d+$/
       - build-windows-installer:
+          <<: *release-filter
           requires:
             - build
-          filters:
-            tags:
-              only: /^v\d+\.\d+\.\d+$/
       - publish-github-release:
+          <<: *release-filter
           requires:
             - build-mac-installer
             - build-windows-installer
-          filters:
-            tags:
-              only: /^v\d+\.\d+\.\d+$/
