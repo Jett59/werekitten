@@ -1,7 +1,11 @@
 package com.mycodefu.application;
 
 import com.mycodefu.animation.Animation;
+import com.mycodefu.backgroundObjects.BackgroundObject;
 import com.mycodefu.backgroundObjects.BackgroundObjectBuilder;
+import com.mycodefu.backgroundObjects.NodeObject;
+import com.mycodefu.slide.SlideBackground;
+import com.mycodefu.sound.MusicPlayer;
 
 import javafx.animation.Interpolator;
 import javafx.animation.TranslateTransition;
@@ -14,6 +18,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,6 +31,7 @@ public class Application extends javafx.application.Application{
 	public static final int SCREEN_HEIGHT = 768;
 	public static final double CAT_SCALE = 0.5d;
 	public static final double SHREW_SCALE = 0.5d;
+public static final int catMoveAnimationDurationMilis = 100;
 
 	public static void start(String[] args) {
 	Application.launch(args);
@@ -80,10 +86,12 @@ public class Application extends javafx.application.Application{
 			jump.setAutoReverse(true);
 			jump.setCycleCount(2);
 
-			ImageView objectImageViews = BackgroundObjectBuilder.buildAll().getBackgroundObjectByName("Crate").getImageView();
-			Group objectGroup = new Group(objectImageViews);
+			NodeObject objects = BackgroundObjectBuilder.buildAll().getBackgroundObjectByName("Crate");
+			List<NodeObject> nodeObjectList = List.of(objects, shrewRight.asBackgroundObject("shrew right idol"));
+			SlideBackground slide = SlideBackground.withNodes(nodeObjectList);
+Group backgroundGroup = slide.getAsGroup();
 
-			Group combinedGroup = new Group(objectGroup, catAnimationGroup, shrewRight.getImageView());
+			Group combinedGroup = new Group(catAnimationGroup, backgroundGroup);
 			Scene s = new Scene(combinedGroup);
 
 			stage.setScene(s);
@@ -95,12 +103,15 @@ public class Application extends javafx.application.Application{
 			stage.setTitle("werekitten");
 
 			stage.show();
+MusicPlayer.playMain();
 
 			stage.addEventHandler(KeyEvent.KEY_PRESSED, keyEvent -> {
 				if (keyEvent.getCode() == KeyCode.RIGHT) {
 					playOneAnimation(catAnimations, walkingRightCat);
+					slide.moveX(-10);
 				} else if (keyEvent.getCode() == KeyCode.LEFT) {
 					playOneAnimation(catAnimations, walkingLeftCat);
+					slide.moveX(10);
 				} else if (keyEvent.getCode()==KeyCode.SPACE) {
 					jump.play();
 				}

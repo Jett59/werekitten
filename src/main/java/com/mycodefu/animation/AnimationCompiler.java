@@ -70,11 +70,13 @@ public class AnimationCompiler {
             throw new RuntimeException("Failed to read the image.");
         }
     }
-
+    private static Image scaleImage(Image image, int newWidth, int newHeight) {
+        return image.getScaledInstance(newWidth, newHeight, SCALE_SMOOTH);
+    }
     private static Image scaleImage(Image image, double scale) {
         int newWidth = (int) ((double) image.getWidth(null) * scale);
         int newHeight = (int) ((double) image.getHeight(null) * scale);
-        return image.getScaledInstance(newWidth, newHeight, SCALE_SMOOTH);
+        return scaleImage(image, newWidth, newHeight);
     }
 
     private static Image reverseImage(Image image) {
