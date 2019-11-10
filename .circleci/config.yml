@@ -8,10 +8,6 @@ jobs:
     steps:
       - checkout
 
-      - run: |
-          echo "Tag: ${CIRCLE_TAG}"
-          echo "Tag from git: $(git tag -l --points-at HEAD)"
-
       - restore_cache:
           key: circleci-werekitten-{{ checksum "pom.xml" }}
 
@@ -121,7 +117,16 @@ jobs:
       - run:
           name: "Publish Release on GitHub"
           command: |
-            ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${CIRCLE_TAG} ./artifacts/
+            ghr -t ${GITHUB_TOKEN} \
+                -u ${CIRCLE_PROJECT_USERNAME} \
+                -r ${CIRCLE_PROJECT_REPONAME} \
+                -c ${CIRCLE_SHA1} \
+                -delete \
+                -n "Alpha Release ${CIRCLE_TAG}" \
+                -b "This is a release for alpha testers to try our game!" \
+                "${CIRCLE_TAG}" \
+                "./artifacts/"
+
 
 release-filters: &release-filters
   filters:

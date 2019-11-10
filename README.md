@@ -8,12 +8,3 @@ https://opengameart.org/content/cat-dog-free-sprites
 https://opengameart.org/content/cat-song
 
 "If you use this music, please message me (or send me a link), and credit music by Dan Knoflicek. Thanks!"
-
-### Versions
-v0.0.5v0.0.
-v0.0.7
-v0.0.8
-v0.0.9
-v0.0.11
-v0.0.12
-v0.0.13
