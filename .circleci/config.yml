@@ -126,11 +126,6 @@ release-filters: &release-filters
     branches:
       ignore: /.*/
 
-release-dependency: &release-dependency
-  requires:
-    - build
-  <<: *release-filters
-
 workflows:
   version: 2
   build_always:
@@ -138,14 +133,17 @@ workflows:
       - build
   build_release:
     jobs:
-      - build:
-          <<: *release-filters
+      - build: *release-filters
       - build-mac-installer:
-          <<: *release-dependency
+          <<: *release-filters
+          requires:
+            - build
       - build-windows-installer:
-          <<: *release-dependency
+          <<: *release-filters
+          requires:
+            - build
       - publish-github-release:
+          <<: *release-filters
           requires:
             - build-mac-installer
             - build-windows-installer
-          <<: *release-filters
