@@ -8,6 +8,8 @@ jobs:
     steps:
       - checkout
 
+      - run: echo "${CIRCLE_TAG}"
+
       - restore_cache:
           key: circleci-werekitten-{{ checksum "pom.xml" }}
 
