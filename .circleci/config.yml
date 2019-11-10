@@ -8,7 +8,9 @@ jobs:
     steps:
       - checkout
 
-      - run: echo "${CIRCLE_TAG}"
+      - run: |
+          echo "Tag: ${CIRCLE_TAG}"
+          echo "Tag from git: $(git tag -l --points-at HEAD)"
 
       - restore_cache:
           key: circleci-werekitten-{{ checksum "pom.xml" }}
@@ -124,7 +126,7 @@ jobs:
 release-filters: &release-filters
   filters:
     tags:
-      only: /^\d+\.\d+\.\d+$/
+      only: /^v\d+\.\d+\.\d+$/
     branches:
       ignore: /.*/
 
