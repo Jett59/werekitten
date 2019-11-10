@@ -11,6 +11,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import static com.mycodefu.application.Application.SHREW_SCALE;
 import static org.junit.jupiter.api.Assertions.*;
 
 class AnimationCompilerTest {
@@ -20,13 +21,53 @@ class AnimationCompilerTest {
         Animation animation = AnimationCompiler.compileAnimation("shrew", "Idle", 2, Duration.millis(500));
         assertNotNull(animation);
 
-        File outputAnimationFile = new File("test-shrew.png");
+        checkSize(animation, 1084d, 368d);
+
+        testCompiledImage(animation, "test-shrew.png");
+    }
+
+    @Test
+    void compileAnimation_reversed() throws IOException {
+        Animation animation = AnimationCompiler.compileAnimation("shrew", "Idle", 2, Duration.millis(500), true);
+        assertNotNull(animation);
+
+        checkSize(animation, 1084d, 368d);
+
+        testCompiledImage(animation, "test-shrew-reversed.png");
+    }
+
+    @Test
+    void compileAnimation_scaled() throws IOException {
+        Animation animation = AnimationCompiler.compileAnimation("shrew", "Idle", 2, Duration.millis(500), false, SHREW_SCALE);
+        assertNotNull(animation);
+
+        checkSize(animation, 542d, 184d);
+
+        testCompiledImage(animation, "test-shrew-halfscale.png");
+    }
+
+    @Test
+    void compileAnimation_scaled_reversed() throws IOException {
+        Animation animation = AnimationCompiler.compileAnimation("shrew", "Idle", 2, Duration.millis(500), true, SHREW_SCALE);
+        assertNotNull(animation);
+
+        checkSize(animation, 542d, 184d);
+
+        testCompiledImage(animation, "test-shrew-halfscale-reversed.png");
+    }
+
+
+    private void testCompiledImage(Animation animation, String compareImageName) throws IOException {
+        File outputAnimationFile = new File(compareImageName);
         ImageIO.write(SwingFXUtils.fromFXImage(animation.getImageView().getImage(), null), "PNG", outputAnimationFile);
+        InputStream expectedTestResourceImage = AnimationCompilerTest.class.getResourceAsStream("/animation-compiler-test/" + compareImageName);
 
-        assertEquals(1084d, animation.getImageView().getImage().getWidth());
-        assertEquals(368d, animation.getImageView().getImage().getHeight());
+        assertTrue(binaryCompareStreams(expectedTestResourceImage, new FileInputStream(outputAnimationFile)), "The animation film-strip image created was not the same as expected.");
+    }
 
-        assertTrue(binaryCompareStreams(AnimationCompilerTest.class.getResourceAsStream("/test-shrew.png"), new FileInputStream(outputAnimationFile)));
+    private void checkSize(Animation animation, double width, double height) {
+        assertEquals(width, animation.getImageView().getImage().getWidth());
+        assertEquals(height, animation.getImageView().getImage().getHeight());
     }
 
     private boolean binaryCompareStreams(InputStream in1, InputStream in2){
@@ -44,7 +85,9 @@ class AnimationCompilerTest {
 
             return true;
         } catch (IOException e) {
-            throw new RuntimeException("error reading from stream");
+            System.out.println("Error comparing binary streams");
+            e.printStackTrace();
+            return false;
         } finally {
             try {
                 in1.close();
