@@ -121,11 +121,10 @@ jobs:
 
 release-filters: &release-filters
   filters:
-    branches:
-      only:
-        - master
     tags:
-      only: /^v\d+\.\d+\.\d+$/
+      only: /^\d+\.\d+\.\d+$/
+    branches:
+      ignore: /.*/
 
 release-dependency: &release-dependency
   requires:
