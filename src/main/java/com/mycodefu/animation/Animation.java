@@ -1,5 +1,7 @@
 package com.mycodefu.animation;
 
+import com.mycodefu.backgroundObjects.AnimatedBackgroundObject;
+
 import javafx.animation.Interpolator;
 import javafx.animation.Transition;
 import javafx.geometry.Rectangle2D;
@@ -44,5 +46,8 @@ public class Animation extends Transition {
             updateViewPort();
             lastCellIndex = cellIndex;
         }
+    }
+    public AnimatedBackgroundObject asBackgroundObject(String name) {
+    	return new AnimatedBackgroundObject(this, name);
     }
 }
