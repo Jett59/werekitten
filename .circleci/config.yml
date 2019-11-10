@@ -128,15 +128,13 @@ jobs:
             rm -f ./artifacts/circle_tag.txt
             echo "CIRCLE_TAG=${CIRCLE_TAG}"
 
-            ghr -t ${GITHUB_TOKEN} \
-                -u ${CIRCLE_PROJECT_USERNAME} \
-                -r ${CIRCLE_PROJECT_REPONAME} \
-                -c ${CIRCLE_SHA1} \
-                -delete \
-                -n "Alpha Release ${CIRCLE_TAG}" \
-                -b "This is a release for alpha testers to try our game!" \
+            ghr -t "${GITHUB_TOKEN}" \
+                -u "${CIRCLE_PROJECT_USERNAME}" \
+                -r "${CIRCLE_PROJECT_REPONAME}" \
+                -c "${CIRCLE_SHA1}" \
+                -replace \
                 "${CIRCLE_TAG}" \
-                "./artifacts/"
+                "/root/project/artifacts/project/target/jpackage-app/"
 
 workflows:
   version: 2
