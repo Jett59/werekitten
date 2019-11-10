@@ -133,9 +133,13 @@ release-dependency: &release-dependency
 
 workflows:
   version: 2
-  build_all:
+  build_always:
     jobs:
       - build
+  build_release:
+    jobs:
+      - build:
+          <<: *release-dependency
       - build-mac-installer:
           <<: *release-dependency
       - build-windows-installer:
