@@ -139,7 +139,7 @@ workflows:
   build_release:
     jobs:
       - build:
-          <<: *release-dependency
+          <<: *release-filters
       - build-mac-installer:
           <<: *release-dependency
       - build-windows-installer:
