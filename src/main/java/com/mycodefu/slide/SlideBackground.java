@@ -33,11 +33,7 @@ public Group getAsGroup() {
 	return g;
 }
 public void moveX(int moveAmount) {
-	getBackgroundObjectsFromNodes()
-			.map(bo->{
-				bo.move(moveAmount);
-				return bo;
-			});
+	g.setTranslateX(g.getTranslateX() + moveAmount);
 }
 
 public static SlideBackground empty() {
