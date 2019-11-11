@@ -130,17 +130,17 @@ public class Application extends javafx.application.Application {
                 }
             });
 
-            AnimationTimer timer = new AnimationTimer() {
+            AnimationTimer keysDownTimer = new AnimationTimer() {
                 @Override
                 public void handle(long now) {
                     if (keysDown.contains(KeyCode.LEFT)) {
-                        slide.moveX(10);
+                        slide.moveX(5);
                     } else if (keysDown.contains(KeyCode.RIGHT)) {
-                        slide.moveX(-10);
+                        slide.moveX(-5);
                     }
                 }
             };
-            timer.start();
+            keysDownTimer.start();
 
         } catch (Exception e) {
             e.printStackTrace();
