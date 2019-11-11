@@ -65,7 +65,7 @@ public class Application extends javafx.application.Application {
             walkingLeftCat.getImageView().setY(middleY);
             walkingLeftCat.getImageView().setVisible(false);
 
-            Animation shrewRight = compileAnimation("shrew", "Idle", 2, Duration.millis(250), false, SHREW_SCALE);
+            Animation shrewRight = compileAnimation("shadyshrew", "Idle", 2, Duration.millis(250), false, SHREW_SCALE);
             shrewRight.setCycleCount(INDEFINITE);
             double shrewX = SCREEN_WIDTH / 2 - shrewRight.getImageView().getViewport().getWidth() - idleRightCat.getImageView().getViewport().getWidth() - 50;
             double shrewY = middleY + idleRightCat.getImageView().getViewport().getHeight() - shrewRight.getImageView().getViewport().getHeight();
