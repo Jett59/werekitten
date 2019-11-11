@@ -7,6 +7,7 @@ import com.mycodefu.backgroundObjects.NodeObject;
 import com.mycodefu.slide.SlideBackground;
 import com.mycodefu.sound.MusicPlayer;
 
+import javafx.animation.AnimationTimer;
 import javafx.animation.Interpolator;
 import javafx.animation.TranslateTransition;
 import javafx.scene.Group;
@@ -20,6 +21,8 @@ import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.stream.Collectors;
 
 import static com.mycodefu.animation.AnimationCompiler.compileAnimation;
@@ -104,13 +107,15 @@ public class Application extends javafx.application.Application {
             stage.show();
             MusicPlayer.playMain();
 
+            Set<KeyCode> keysDown = new CopyOnWriteArraySet<>();
+
             stage.addEventHandler(KeyEvent.KEY_PRESSED, keyEvent -> {
                 if (keyEvent.getCode() == KeyCode.RIGHT) {
                     playOneAnimation(catAnimations, walkingRightCat);
-                    slide.moveX(-10);
+                    keysDown.add(KeyCode.RIGHT);
                 } else if (keyEvent.getCode() == KeyCode.LEFT) {
                     playOneAnimation(catAnimations, walkingLeftCat);
-                    slide.moveX(10);
+                    keysDown.add(KeyCode.LEFT);
                 } else if (keyEvent.getCode() == KeyCode.SPACE) {
                     jump.play();
                 }
@@ -118,10 +123,25 @@ public class Application extends javafx.application.Application {
             stage.addEventHandler(KeyEvent.KEY_RELEASED, keyEvent -> {
                 if (keyEvent.getCode() == KeyCode.RIGHT) {
                     playOneAnimation(catAnimations, idleRightCat);
+                    keysDown.remove(KeyCode.RIGHT);
                 } else if (keyEvent.getCode() == KeyCode.LEFT) {
                     playOneAnimation(catAnimations, idleLeftCat);
+                    keysDown.remove(KeyCode.LEFT);
                 }
             });
+
+            AnimationTimer timer = new AnimationTimer() {
+                @Override
+                public void handle(long now) {
+                    if (keysDown.contains(KeyCode.LEFT)) {
+                        slide.moveX(10);
+                    } else if (keysDown.contains(KeyCode.RIGHT)) {
+                        slide.moveX(-10);
+                    }
+                }
+            };
+            timer.start();
+
         } catch (Exception e) {
             e.printStackTrace();
 
