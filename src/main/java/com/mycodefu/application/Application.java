@@ -29,7 +29,7 @@ public class Application extends javafx.application.Application {
 
     public static final int SCREEN_WIDTH = 1024;
     public static final int SCREEN_HEIGHT = 768;
-    public static final double CAT_SCALE = 2d;
+    public static final double CAT_SCALE = 0.5d;
     public static final double SHREW_SCALE = 0.2d;
 
     public static void start(String[] args) {
