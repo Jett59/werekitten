@@ -13,7 +13,6 @@
       "scrollSpeed": 0,
       "elements": [
         {
-          "category": "Trees",
           "type": "Tree_1",
           "size": {
             "width": 100,

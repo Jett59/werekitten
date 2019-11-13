@@ -29,7 +29,7 @@ public class Application extends javafx.application.Application {
 
     public static final int SCREEN_WIDTH = 1024;
     public static final int SCREEN_HEIGHT = 768;
-    public static final double CAT_SCALE = 2d;
+    public static final double CAT_SCALE = 0.5d;
     public static final double SHREW_SCALE = 0.2d;
 
     public static void start(String[] args) {
@@ -107,10 +107,10 @@ public class Application extends javafx.application.Application {
             stage.addEventHandler(KeyEvent.KEY_PRESSED, keyEvent -> {
                 if (keyEvent.getCode() == KeyCode.RIGHT) {
                     playOneAnimation(catAnimations, walkingRightCat);
-                    slide.moveX(-10);
+                    slide.moveX(-2);
                 } else if (keyEvent.getCode() == KeyCode.LEFT) {
                     playOneAnimation(catAnimations, walkingLeftCat);
-                    slide.moveX(10);
+                    slide.moveX(2);
                 } else if (keyEvent.getCode() == KeyCode.SPACE) {
                     jump.play();
                 }
