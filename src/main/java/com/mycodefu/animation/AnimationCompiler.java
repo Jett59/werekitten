@@ -21,7 +21,7 @@ import static java.awt.Image.SCALE_SMOOTH;
  *
  * Resource location pattern:
  * /characters/[character]/animations/[animationlowercase]/[animation] ([index]).png
- * e.g. /Users/lthompson/IdeaProjects/werekitten/src/main/resources/characters/cat/animations/walk/Walk (1).png
+ * e.g. /characters/cat/animations/walk/Walk (1).png
  */
 public class AnimationCompiler {
 
@@ -36,7 +36,7 @@ public class AnimationCompiler {
     public static Animation compileAnimation(String character, String animation, int  count, Duration duration, boolean reversed, double scale) {
         List<Image> images = IntStream
                 .rangeClosed(1, count)
-                .mapToObj(index -> getCatResourcePath(character, animation, index))
+                .mapToObj(index -> getResourcePath(character, animation, index))
                 .map(AnimationCompiler.class::getResourceAsStream)
                 .map(AnimationCompiler::readImage)
                 .map(image -> reversed ? reverseImage(image) : image)
@@ -53,7 +53,7 @@ public class AnimationCompiler {
         return new Animation(imageView, duration, count, cellWidth, cellHeight);
     }
 
-    private static String getCatResourcePath(String character, String animation, int index) {
+    private static String getResourcePath(String character, String animation, int index) {
         final String path_template = "/characters/[character]/animations/[animationlowercase]/[animation] ([index]).png";
 
         return path_template
@@ -97,9 +97,20 @@ public class AnimationCompiler {
         BufferedImage image = new BufferedImage(cellWidth * images.size(), cellHeight, BufferedImage.TYPE_INT_ARGB);
         Graphics graphics = image.getGraphics();
         for (int i = 0; i < images.size(); i++) {
-            graphics.drawImage(images.get(i), cellWidth * i, 0, null);
+            Image cellImage = images.get(i);
+            checkWidthHeight(cellImage, cellWidth, cellHeight);
+
+            graphics.drawImage(cellImage, cellWidth * i, 0, null);
         }
         graphics.dispose();
         return image;
+    }
+
+    private static void checkWidthHeight(Image cellImage, int cellWidth, int cellHeight) {
+        if (cellImage.getWidth(null) != cellWidth) {
+            throw new RuntimeException("Unable to load animation cell as the width of a cell does not match the width of the first cell. Ensure that all images in an animation are the same width.");
+        } else if (cellImage.getHeight(null) != cellHeight) {
+            throw new RuntimeException("Unable to load animation cell as the height of a cell does not match the height of the first cell. Ensure that all images in an animation are the same height.");
+        }
     }
 }
