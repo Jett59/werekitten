@@ -40,3 +40,4 @@ jdk*/
 *.pkg
 
 /*.png
+.vscode/settings.json
