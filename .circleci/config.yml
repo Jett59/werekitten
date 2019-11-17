@@ -51,12 +51,12 @@ jobs:
             ./package_osx.sh
 
       - store_artifacts:
-          path: ./target/jpackage-app/WereKitten-1.0.pkg
-          destination: WereKitten-1.0.pkg
+          path: ./target/jpackage-app/WereKitten-1.0.dmg
+          destination: WereKitten-1.0.dmg
 
       - persist_to_workspace:
           root: ~/
-          paths: project/target/jpackage-app/WereKitten-1.0.pkg
+          paths: project/target/jpackage-app/WereKitten-1.0.dmg
 
   build-windows-installer:
     machine:

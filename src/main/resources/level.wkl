@@ -1,0 +1,46 @@
+{
+  "type": "level",
+  "version": "0.0.1",
+  "name": "Christmas Level",
+  "description": "The Christmas edition of WereKitten sees the kitten playing with a christmas tree and being chased by elves.",
+  "size": {
+    "width": 10000,
+    "height": 768
+  },
+  "layers": [
+    {
+      "name": "background",
+      "scrollSpeed": 0,
+      "elements": [
+        {
+          "type": "Tree_1",
+          "size": {
+            "width": 100,
+            "height": 100
+          },
+          "location": {
+            "x": 10,
+            "y": 200
+          }
+        }
+      ]
+    },
+    {
+      "name": "foreground",
+      "scrollSpeed": 1,
+      "elements": [
+        {
+          "type": "Crate",
+          "size": {
+            "width": 100,
+            "height": 100
+          },
+          "location": {
+            "x": 10,
+            "y": 200
+          }
+        }
+      ]
+    }
+  ]
+}
