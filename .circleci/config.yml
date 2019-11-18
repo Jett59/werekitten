@@ -83,7 +83,9 @@ jobs:
 
       - run:
           name: Download experimental JDK with jpackage in it
-          command: ./download_jdk_win64.sh
+          command: |
+            ./download_jdk_win64.sh
+            ./unzip_jdk_win64.sh
 
       - save_cache:
           paths:
