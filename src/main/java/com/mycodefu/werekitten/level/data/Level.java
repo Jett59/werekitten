@@ -1,12 +1,9 @@
-package com.mycodefu.werekitten.level;
+package com.mycodefu.werekitten.level.data;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.mycodefu.werekitten.slide.Layer;
-import com.mycodefu.werekitten.tools.Size;
-
-public class WereKittenLevel {
+public class Level {
 private String version;
 private String name;
 private String description;
@@ -42,10 +39,10 @@ public List<Layer> getLayers() {
 public void setLayers(List<Layer> layers) {
 	this.layers = layers;
 }
-public WereKittenLevel() {
+public Level() {
 
 }
-public WereKittenLevel(String version, String name, String description, List<Layer> layers) {
+public Level(String version, String name, String description, List<Layer> layers) {
 	setVersion(version);
 	setName(name);
 	setDescription(description);

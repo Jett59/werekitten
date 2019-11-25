@@ -1,7 +1,4 @@
-package com.mycodefu.werekitten.backgroundObjects;
-
-import com.mycodefu.werekitten.tools.Location;
-import com.mycodefu.werekitten.tools.Size;
+package com.mycodefu.werekitten.level.data;
 
 public class BackgroundElement {
 private String type;

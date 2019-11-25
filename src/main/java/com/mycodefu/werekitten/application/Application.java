@@ -1,8 +1,11 @@
 package com.mycodefu.werekitten.application;
 
 import com.mycodefu.werekitten.animation.Animation;
+import com.mycodefu.werekitten.backgroundObjects.BackgroundObject;
 import com.mycodefu.werekitten.backgroundObjects.BackgroundObjectBuilder;
-import com.mycodefu.werekitten.backgroundObjects.NodeObject;
+import com.mycodefu.werekitten.level.LevelReader;
+import com.mycodefu.werekitten.level.data.Level;
+import com.mycodefu.werekitten.slide.LayerGroup;
 import com.mycodefu.werekitten.slide.SlideBackground;
 import com.mycodefu.werekitten.sound.MusicPlayer;
 
@@ -17,6 +20,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
@@ -42,7 +46,7 @@ public class Application extends javafx.application.Application {
             Animation idleRightCat = compileAnimation("cat", "Idle", 10, Duration.seconds(1), false, CAT_SCALE);
             idleRightCat.setCycleCount(INDEFINITE);
             double middleX = SCREEN_WIDTH / 2 - idleRightCat.getImageView().getViewport().getWidth() / 2;
-            double middleY = SCREEN_HEIGHT / 2 - idleRightCat.getImageView().getViewport().getHeight() / 2;
+            double middleY = (SCREEN_HEIGHT / 2) - (idleRightCat.getImageView().getViewport().getHeight() / 2);
             idleRightCat.getImageView().setX(middleX);
             idleRightCat.getImageView().setY(middleY);
             idleRightCat.play();
@@ -85,12 +89,44 @@ public class Application extends javafx.application.Application {
             jump.setAutoReverse(true);
             jump.setCycleCount(2);
 
-            NodeObject objects = BackgroundObjectBuilder.buildAll().getBackgroundObjectByName("Crate");
-            List<NodeObject> nodeObjectList = List.of(objects, shrewRight.asBackgroundObject("shrew right idol"));
-            SlideBackground slide = SlideBackground.withNodes(nodeObjectList);
-            Group backgroundGroup = slide.getAsGroup();
+            Level defaultLevel = LevelReader.read("/level.wkl");
+            List<LayerGroup> layerGroups = defaultLevel.getLayers().stream().map(layer -> {
 
-            Group combinedGroup = new Group(catAnimationGroup, backgroundGroup);
+                List<BackgroundObject> elements = layer.getElements().stream().map(backgroundElement -> {
+                    BackgroundObject backgroundObject = BackgroundObjectBuilder.build(backgroundElement.getType());
+
+                    backgroundObject.getImageView().setX(backgroundElement.getLocation().getX());
+                    backgroundObject.getImageView().setY(backgroundElement.getLocation().getY());
+
+
+                    return backgroundObject;
+                }).collect(Collectors.toList());
+
+                Group group = new Group(elements.stream().map(BackgroundObject::getNode).collect(Collectors.toList()));
+
+                return new LayerGroup(layer.getName(), group, layer.getScrollSpeed(), layer.getDepth());
+            })
+                    .sorted(Comparator.comparingInt(LayerGroup::getDepth))
+                    .collect(Collectors.toList());
+
+            Group combinedGroup = new Group();
+            boolean addedCat = false;
+
+            SlideBackground slide = SlideBackground.empty();
+            for (LayerGroup layerGroup : layerGroups) {
+                if (layerGroup.getDepth()>=0 && !addedCat){
+                    combinedGroup.getChildren().add(catAnimationGroup);
+                    addedCat=true;
+                }
+                slide.addLayerGroup(layerGroup);
+
+                combinedGroup.getChildren().add(layerGroup.getGroup());
+            }
+
+            if (!addedCat){
+                combinedGroup.getChildren().add(catAnimationGroup);
+            }
+
             Scene s = new Scene(combinedGroup);
 
             stage.setScene(s);

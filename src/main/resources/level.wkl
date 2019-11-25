@@ -10,7 +10,8 @@
   "layers": [
     {
       "name": "background",
-      "scrollSpeed": 0,
+      "depth": -1,
+      "scrollSpeed": 0.5,
       "elements": [
         {
           "type": "Tree_1",
@@ -19,14 +20,15 @@
             "height": 100
           },
           "location": {
-            "x": 10,
-            "y": 200
+            "x": 700,
+            "y": 300
           }
         }
       ]
     },
     {
       "name": "foreground",
+      "depth": 1,
       "scrollSpeed": 1,
       "elements": [
         {
@@ -36,8 +38,8 @@
             "height": 100
           },
           "location": {
-            "x": 10,
-            "y": 200
+            "x": 900,
+            "y": 420
           }
         }
       ]

@@ -1,4 +1,4 @@
-package com.mycodefu.werekitten.tools;
+package com.mycodefu.werekitten.level.data;
 
 public class Location{
 private int x;
