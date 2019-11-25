@@ -1,8 +1,8 @@
 package com.mycodefu.werekitten.application;
 
 import com.mycodefu.werekitten.animation.Animation;
-import com.mycodefu.werekitten.backgroundObjects.BackgroundObject;
 import com.mycodefu.werekitten.backgroundObjects.BackgroundObjectBuilder;
+import com.mycodefu.werekitten.backgroundObjects.NodeObject;
 import com.mycodefu.werekitten.level.LevelReader;
 import com.mycodefu.werekitten.level.data.Level;
 import com.mycodefu.werekitten.slide.LayerGroup;
@@ -92,17 +92,13 @@ public class Application extends javafx.application.Application {
             Level defaultLevel = LevelReader.read("/level.wkl");
             List<LayerGroup> layerGroups = defaultLevel.getLayers().stream().map(layer -> {
 
-                List<BackgroundObject> elements = layer.getElements().stream().map(backgroundElement -> {
-                    BackgroundObject backgroundObject = BackgroundObjectBuilder.build(backgroundElement.getType());
+                List<NodeObject> elements = layer.getElements().stream().map(backgroundElement -> {
 
-                    backgroundObject.getImageView().setX(backgroundElement.getLocation().getX());
-                    backgroundObject.getImageView().setY(backgroundElement.getLocation().getY());
-
-
-                    return backgroundObject;
+                    NodeObject nodeObject = BackgroundObjectBuilder.build(backgroundElement);
+                    return nodeObject;
                 }).collect(Collectors.toList());
 
-                Group group = new Group(elements.stream().map(BackgroundObject::getNode).collect(Collectors.toList()));
+                Group group = new Group(elements.stream().map(NodeObject::getNode).collect(Collectors.toList()));
 
                 return new LayerGroup(layer.getName(), group, layer.getScrollSpeed(), layer.getDepth());
             })

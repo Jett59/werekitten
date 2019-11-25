@@ -7,11 +7,11 @@ public class Layer {
     private String name;
     private int depth;
     private double scrollSpeed;
-    private List<BackgroundElement> elements = new ArrayList<>();
+    private List<Element> elements = new ArrayList<>();
 
 	public Layer() {}
 
-	public Layer(String name, double scrollSpeed, List<BackgroundElement> elements) {
+	public Layer(String name, double scrollSpeed, List<Element> elements) {
 		setName(name);
 		setScrollSpeed(scrollSpeed);
 		setElements(elements);
@@ -33,19 +33,19 @@ public class Layer {
         this.scrollSpeed = scrollSpeed;
     }
 
-    public List<BackgroundElement> getElements() {
+    public List<Element> getElements() {
         return elements;
     }
 
-    public void setElements(List<BackgroundElement> elements) {
+    public void setElements(List<Element> elements) {
         this.elements = elements;
     }
 
-    public void addElement(BackgroundElement elem) {
+    public void addElement(Element elem) {
         elements.add(elem);
     }
 
-    public void removeElement(BackgroundElement elem) {
+    public void removeElement(Element elem) {
         elements.remove(elem);
     }
 

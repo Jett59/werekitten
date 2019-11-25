@@ -3,12 +3,12 @@ package com.mycodefu.werekitten.backgroundObjects;
 import javafx.scene.Node;
 import javafx.scene.image.*;;
 
-public class BackgroundObject implements NodeObject {
+public class BackgroundImageObject implements NodeObject {
     private final ImageView imageView;
     private Image image;
     private String name;
 
-    BackgroundObject(Image image, String name) {
+    BackgroundImageObject(Image image, String name) {
         this.image = image;
         this.imageView = new ImageView(image);
         this.name = name;
@@ -23,7 +23,6 @@ public class BackgroundObject implements NodeObject {
         return name;
     }
 
-    @Override
     public ImageView getImageView() {
         return imageView;
     }
@@ -33,9 +32,4 @@ public class BackgroundObject implements NodeObject {
         return imageView;
     }
 
-    @Override
-    public void move(int moveAmount) {
-        var imgView = getImageView();
-        imgView.setX(imgView.getX() + moveAmount);
-    }
 }

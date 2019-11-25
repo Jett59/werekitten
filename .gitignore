@@ -41,3 +41,6 @@ jdk*/
 
 /*.png
 .vscode/settings.json
+/amazon-corretto-11.jdk/
+/apache-maven-3.6.2/
+/jre/

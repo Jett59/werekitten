@@ -1,6 +1,6 @@
 package com.mycodefu.werekitten.animation;
 
-import com.mycodefu.werekitten.backgroundObjects.AnimatedBackgroundObject;
+import com.mycodefu.werekitten.backgroundObjects.BackgroundAnimationObject;
 
 import javafx.animation.Interpolator;
 import javafx.animation.Transition;
@@ -71,7 +71,7 @@ public class Animation extends Transition {
             lastCellIndex = cellIndex;
         }
     }
-    public AnimatedBackgroundObject asBackgroundObject(String name) {
-    	return new AnimatedBackgroundObject(this, name);
+    public BackgroundAnimationObject asBackgroundObject(String name) {
+    	return new BackgroundAnimationObject(this, name);
     }
 }
