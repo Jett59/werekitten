@@ -9,6 +9,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.DoubleStream;
 
 class Point
 {
@@ -51,6 +52,9 @@ class Wall {
 }
 
 public class ImageToPolygon {
+
+    public static final boolean DEBUG = false;
+
     public static void main(String[] args) throws IOException {
         if (args.length != 2 || !Files.exists(Path.of(args[0]))) {
             System.out.println("Run this program with two arguments, the first being a valid file path!");
@@ -65,9 +69,17 @@ public class ImageToPolygon {
             System.out.println("Must have 3 or more points on the polygon!");
         }
 
-        double increment_angle = 360d / (double) polygonPoints;
-
         BufferedImage image = ImageIO.read(Path.of(args[0]).toFile());
+
+        javafx.scene.shape.Polygon polygonFX = getPolygon(image, polygonPoints);
+        System.out.println(polygonFX);
+
+    }
+
+    public static javafx.scene.shape.Polygon getPolygon(BufferedImage image, double numberOfPoints) {
+
+        double increment_angle = 360d / numberOfPoints;
+
         Graphics2D graphics = (Graphics2D)image.getGraphics();
 
         List<Point> points = new ArrayList<>();
@@ -103,7 +115,9 @@ public class ImageToPolygon {
                 } else {
                     int pixel = image.getRGB((int)currentX, (int)currentY);
                     int alpha = (pixel >> 24) & 0xff;
-//                    System.out.println(String.format("x: %f, y: %f, alpha: %d", currentX, currentY, alpha));
+                    if (DEBUG) {
+                        System.out.println(String.format("x: %f, y: %f, alpha: %d", currentX, currentY, alpha));
+                    }
 
                     if (alpha==255) {
                         hitAlpha = true;
@@ -114,30 +128,50 @@ public class ImageToPolygon {
             if (hitAlpha) {
                 points.add(new Point((int)currentX, (int)currentY));
 
-                graphics.setColor(Color.BLACK);
-                graphics.setStroke(new BasicStroke(3));
-                graphics.drawLine((int)startX, (int)startY, (int)currentX, (int)currentY);
+                if (DEBUG) {
+                    graphics.setColor(Color.BLACK);
+                    graphics.setStroke(new BasicStroke(3));
+                    graphics.drawLine((int) startX, (int) startY, (int) currentX, (int) currentY);
+                }
             }
 
         }
 
-        int[] xs = points.stream().map(point -> (int)point.x).mapToInt(Integer::intValue).toArray();
-        int[] ys = points.stream().map(point -> (int)point.y).mapToInt(Integer::intValue).toArray();
+        double[] pointAsDoubles = points
+                .stream()
+                .flatMap(point -> DoubleStream.of(point.x, point.y).boxed())
+                .mapToDouble(Double::doubleValue)
+                .toArray();
 
-        Polygon polygon = new Polygon(xs, ys, points.size());
-        graphics.setColor(Color.YELLOW);
-        graphics.setStroke(new BasicStroke(3, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
-        graphics.drawPolygon(polygon);
 
-        ImageIO.write(image, "PNG", Path.of("test.png").toFile());
+        var polygonFX = new javafx.scene.shape.Polygon(pointAsDoubles);
 
-        BufferedImage justPolygon = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_ARGB);
-        Graphics2D justPolygonGraphics = (Graphics2D)justPolygon.getGraphics();
-        justPolygonGraphics.setColor(Color.BLACK);
-        justPolygonGraphics.setStroke(new BasicStroke(3, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
-        justPolygonGraphics.fill(polygon);
 
-        ImageIO.write(justPolygon, "PNG", Path.of("testJustPolygon.png").toFile());
+        if (DEBUG) {
+            int[] xs = points.stream().map(point -> (int)point.x).mapToInt(Integer::intValue).toArray();
+            int[] ys = points.stream().map(point -> (int)point.y).mapToInt(Integer::intValue).toArray();
+
+            Polygon polygon = new Polygon(xs, ys, points.size());
+
+            graphics.setColor(Color.YELLOW);
+            graphics.setStroke(new BasicStroke(3, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+            graphics.drawPolygon(polygon);
+
+            BufferedImage justPolygon = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_ARGB);
+            Graphics2D justPolygonGraphics = (Graphics2D) justPolygon.getGraphics();
+            justPolygonGraphics.setColor(Color.BLACK);
+            justPolygonGraphics.setStroke(new BasicStroke(3, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+            justPolygonGraphics.fill(polygon);
+
+            try {
+                ImageIO.write(image, "PNG", Path.of("test.png").toFile());
+                ImageIO.write(justPolygon, "PNG", Path.of("testJustPolygon.png").toFile());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return polygonFX;
     }
 
     private static double moveXAngle(double x, double angle, double distance) {
@@ -157,7 +191,7 @@ public class ImageToPolygon {
         }
     }
 
-    static Point edgeLocationFromAngle(BufferedImage image, double angleDegrees) {
+    private static Point edgeLocationFromAngle(BufferedImage image, double angleDegrees) {
         double centerX = (double)image.getWidth() / 2d;
         double centerY = (double)image.getHeight() / 2d;
         Point center = new Point(centerX, centerY);
@@ -171,7 +205,7 @@ public class ImageToPolygon {
         List<Wall> walls = Wall.listFromImage(image);
         for (Wall wall : walls) {
             Point point = lineIntersection(wall.point1, wall.point2, center, edge);
-            if (point.x != Double.MAX_VALUE && point.x >= 0 && point.x <= image.getWidth() && point.y >= 0 && point.y <= image.getHeight()) {
+            if (point.x != Double.MAX_VALUE && (int)point.x >= 0 && (int)point.x <= image.getWidth() && (int)point.y >= 0 && (int)point.y <= image.getHeight()) {
                 switch (wall.name) {
                     case "Top":
                         if (angleDegrees > 180) {

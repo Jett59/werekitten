@@ -6,7 +6,10 @@ import javafx.animation.Interpolator;
 import javafx.animation.Transition;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.ImageView;
+import javafx.scene.shape.Polygon;
 import javafx.util.Duration;
+
+import java.util.List;
 
 /**
  * A transition based animation which moves a viewport over a filmstrip style image.
@@ -27,8 +30,10 @@ public class Animation extends Transition {
 
     private int cellIndex;
     private int lastCellIndex;
+    private List<Polygon> cellPolygons;
 
-    Animation(ImageView imageView, Duration duration, int cellCount, int cellWidth, int cellHeight) {
+    Animation(ImageView imageView, Duration duration, int cellCount, int cellWidth, int cellHeight, List<Polygon> cellPolygons) {
+        this.cellPolygons = cellPolygons;
         checkImageView(imageView, cellCount, cellWidth, cellHeight);
 
         this.imageView = imageView;
@@ -71,6 +76,11 @@ public class Animation extends Transition {
             lastCellIndex = cellIndex;
         }
     }
+
+    public Polygon getCurrentShape() {
+        return cellPolygons.get(cellIndex);
+    }
+
     public BackgroundAnimationObject asBackgroundObject(String name) {
     	return new BackgroundAnimationObject(this, name);
     }

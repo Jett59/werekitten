@@ -1,6 +1,7 @@
 package com.mycodefu.werekitten.application;
 
 import com.mycodefu.werekitten.animation.Animation;
+import com.mycodefu.werekitten.backgroundObjects.BackgroundImageObject;
 import com.mycodefu.werekitten.backgroundObjects.BackgroundObjectBuilder;
 import com.mycodefu.werekitten.backgroundObjects.NodeObject;
 import com.mycodefu.werekitten.level.LevelReader;
@@ -15,15 +16,19 @@ import javafx.animation.TranslateTransition;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.shape.Polygon;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 import static com.mycodefu.werekitten.animation.AnimationCompiler.compileAnimation;
@@ -50,6 +55,8 @@ public class Application extends javafx.application.Application {
             idleRightCat.getImageView().setX(middleX);
             idleRightCat.getImageView().setY(middleY);
             idleRightCat.play();
+
+            AtomicReference<Animation> currentAnimation = new AtomicReference<>(idleRightCat);
 
             Animation idleLeftCat = compileAnimation("cat", "Idle", 10, Duration.seconds(1), true, CAT_SCALE);
             idleLeftCat.setCycleCount(INDEFINITE);
@@ -89,6 +96,8 @@ public class Application extends javafx.application.Application {
             jump.setAutoReverse(true);
             jump.setCycleCount(2);
 
+            List<NodeObject> possibleCollisions = new ArrayList<>();
+
             Level defaultLevel = LevelReader.read("/level.wkl");
             List<LayerGroup> layerGroups = defaultLevel.getLayers().stream().map(layer -> {
 
@@ -97,6 +106,10 @@ public class Application extends javafx.application.Application {
                     NodeObject nodeObject = BackgroundObjectBuilder.build(backgroundElement);
                     return nodeObject;
                 }).collect(Collectors.toList());
+
+                if (layer.getDepth() >= 0) {
+                    possibleCollisions.addAll(elements);
+                }
 
                 Group group = new Group(elements.stream().map(NodeObject::getNode).collect(Collectors.toList()));
 
@@ -110,16 +123,16 @@ public class Application extends javafx.application.Application {
 
             SlideBackground slide = SlideBackground.empty();
             for (LayerGroup layerGroup : layerGroups) {
-                if (layerGroup.getDepth()>=0 && !addedCat){
+                if (layerGroup.getDepth() >= 0 && !addedCat) {
                     combinedGroup.getChildren().add(catAnimationGroup);
-                    addedCat=true;
+                    addedCat = true;
                 }
                 slide.addLayerGroup(layerGroup);
 
                 combinedGroup.getChildren().add(layerGroup.getGroup());
             }
 
-            if (!addedCat){
+            if (!addedCat) {
                 combinedGroup.getChildren().add(catAnimationGroup);
             }
 
@@ -140,10 +153,10 @@ public class Application extends javafx.application.Application {
 
             stage.addEventHandler(KeyEvent.KEY_PRESSED, keyEvent -> {
                 if (keyEvent.getCode() == KeyCode.RIGHT) {
-                    playOneAnimation(catAnimations, walkingRightCat);
+                    currentAnimation.set(playOneAnimation(catAnimations, walkingRightCat));
                     keysDown.add(KeyCode.RIGHT);
                 } else if (keyEvent.getCode() == KeyCode.LEFT) {
-                    playOneAnimation(catAnimations, walkingLeftCat);
+                    currentAnimation.set(playOneAnimation(catAnimations, walkingLeftCat));
                     keysDown.add(KeyCode.LEFT);
                 } else if (keyEvent.getCode() == KeyCode.SPACE) {
                     jump.play();
@@ -151,10 +164,10 @@ public class Application extends javafx.application.Application {
             });
             stage.addEventHandler(KeyEvent.KEY_RELEASED, keyEvent -> {
                 if (keyEvent.getCode() == KeyCode.RIGHT) {
-                    playOneAnimation(catAnimations, idleRightCat);
+                    currentAnimation.set(playOneAnimation(catAnimations, idleRightCat));
                     keysDown.remove(KeyCode.RIGHT);
                 } else if (keyEvent.getCode() == KeyCode.LEFT) {
-                    playOneAnimation(catAnimations, idleLeftCat);
+                    currentAnimation.set(playOneAnimation(catAnimations, idleLeftCat));
                     keysDown.remove(KeyCode.LEFT);
                 }
             });
@@ -163,9 +176,39 @@ public class Application extends javafx.application.Application {
                 @Override
                 public void handle(long now) {
                     if (keysDown.contains(KeyCode.LEFT)) {
-                        slide.moveX(5);
+                        boolean canMove = false;
+                        Polygon currentShape = currentAnimation.get().getCurrentShape();
+                        for (NodeObject possibleCollision : possibleCollisions) {
+                            BackgroundImageObject possibleCollisionBackgroundImageObject = (BackgroundImageObject)possibleCollision;
+                            ImageView imageView = possibleCollisionBackgroundImageObject.getImageView();
+                            double possibleCollisionX = imageView.getX() + possibleCollisionBackgroundImageObject.getNode().getParent().getTranslateX() + imageView.getImage().getWidth();
+
+                            double catMinX = currentAnimation.get().getImageView().getX() + currentShape.getLayoutBounds().getMinX();
+
+                            if (catMinX > possibleCollisionX) {
+                                canMove = true;
+                            }
+                        }
+                        if (canMove) {
+                            slide.moveX(5);
+                        }
                     } else if (keysDown.contains(KeyCode.RIGHT)) {
-                        slide.moveX(-5);
+                        boolean canMove = false;
+                        Polygon currentShape = currentAnimation.get().getCurrentShape();
+                        for (NodeObject possibleCollision : possibleCollisions) {
+                            BackgroundImageObject possibleCollisionBackgroundImageObject = (BackgroundImageObject)possibleCollision;
+                            ImageView imageView = possibleCollisionBackgroundImageObject.getImageView();
+                            double possibleCollisionX = imageView.getX() + possibleCollisionBackgroundImageObject.getNode().getParent().getTranslateX();
+
+                            double catMaxX = currentShape.getLayoutBounds().getMaxX() + currentAnimation.get().getImageView().getX();
+
+                            if (catMaxX < possibleCollisionX) {
+                                canMove = true;
+                            }
+                        }
+                        if (canMove) {
+                            slide.moveX(-5);
+                        }
                     }
                 }
             };
@@ -178,7 +221,7 @@ public class Application extends javafx.application.Application {
         }
     }
 
-    private void playOneAnimation(List<Animation> allAnimations, Animation animationToPlay) {
+    private Animation playOneAnimation(List<Animation> allAnimations, Animation animationToPlay) {
         for (Animation animation : allAnimations) {
             if (animation == animationToPlay) {
                 animation.getImageView().setVisible(true);
@@ -188,6 +231,7 @@ public class Application extends javafx.application.Application {
                 animation.getImageView().setVisible(false);
             }
         }
+        return animationToPlay;
     }
 
 }
