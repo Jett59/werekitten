@@ -4,12 +4,11 @@ import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
-import javax.imageio.ImageIO;
+import com.mycodefu.werekitten.image.ImageHelper;
+
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -37,8 +36,8 @@ public class AnimationCompiler {
         List<Image> images = IntStream
                 .rangeClosed(1, count)
                 .mapToObj(index -> getResourcePath(character, animation, index))
-                .map(AnimationCompiler.class::getResourceAsStream)
-                .map(AnimationCompiler::readImage)
+                .map(log->{System.out.println(log);return log;})
+                .map(ImageHelper::readBufferedImage)
                 .map(image -> reversed ? reverseImage(image) : image)
                 .map(image -> scale != 1.0d ? scaleImage(image, scale) : image)
                 .collect(Collectors.toList());
@@ -63,13 +62,6 @@ public class AnimationCompiler {
                 .replace("[index]", Integer.toString(index));
     }
 
-    private static BufferedImage readImage(InputStream resourceStream) {
-        try {
-            return ImageIO.read(resourceStream);
-        } catch (IOException e) {
-            throw new RuntimeException("Failed to read the image.");
-        }
-    }
     private static Image scaleImage(Image image, int newWidth, int newHeight) {
         return image.getScaledInstance(newWidth, newHeight, SCALE_SMOOTH);
     }

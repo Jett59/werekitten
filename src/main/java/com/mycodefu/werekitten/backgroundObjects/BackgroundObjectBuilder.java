@@ -1,12 +1,15 @@
 package com.mycodefu.werekitten.backgroundObjects;
 
 
+import com.mycodefu.werekitten.animation.Animation;
+import com.mycodefu.werekitten.animation.AnimationCompiler;
 import com.mycodefu.werekitten.image.ImageHelper;
 
 import com.mycodefu.werekitten.level.data.Element;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
 
 public class BackgroundObjectBuilder {
     private static String toResourceDir(String from) {
@@ -17,10 +20,18 @@ public class BackgroundObjectBuilder {
         NodeObject result;
         switch (element.getType()) {
 
-            //TODO: Support BackgroundAnimationObject
+        case animation: {
+        	int dotIndex = element.getName().indexOf(".");
+        	String character = element.getName().substring(0, dotIndex);
+        	String animation = element.getName().substring(dotIndex+1);
+        	System.out.println(character+" "+animation);
+        	Animation animat = AnimationCompiler.compileAnimation(character, animation, 2, Duration.millis(100));
+        	result = animat.asBackgroundObject(element.getName());
+    	break;
+        }
 
             case Image: {
-                Image fxImage = ImageHelper.readImage(toResourceDir(element.getName()));
+                Image fxImage = ImageHelper.readFxImage(toResourceDir(element.getName()));
                 BackgroundImageObject backgroundImageObject = new BackgroundImageObject(fxImage, element.getName());
                 backgroundImageObject.getImageView().setX(element.getLocation().getX());
                 backgroundImageObject.getImageView().setY(element.getLocation().getY());
@@ -58,6 +69,8 @@ public class BackgroundObjectBuilder {
                 result = new BackgroundShapeObject(element.getName(), rectangle);
                 break;
             }
+            
+            
             default:
                 throw new IllegalArgumentException(String.format("Unknown element type '%s'.", element.getType()));
         }

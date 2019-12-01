@@ -13,7 +13,8 @@
       "scrollSpeed": 0,
       "elements": [
         {
-          "type": "Tree_1",
+          "type": "animation",
+"name": "Bush (4)",
           "size": {
             "width": 100,
             "height": 100
