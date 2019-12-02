@@ -6,10 +6,13 @@ import com.mycodefu.werekitten.animation.AnimationCompiler;
 import com.mycodefu.werekitten.image.ImageHelper;
 
 import com.mycodefu.werekitten.level.data.Element;
+
+import javafx.animation.Interpolator;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
+import static javafx.animation.Animation.INDEFINITE;
 
 public class BackgroundObjectBuilder {
     private static String toResourceDir(String from) {
@@ -25,8 +28,13 @@ public class BackgroundObjectBuilder {
         	String character = element.getName().substring(0, dotIndex);
         	String animation = element.getName().substring(dotIndex+1);
         	System.out.println(character+" "+animation);
-        	Animation animat = AnimationCompiler.compileAnimation(character, animation, 2, Duration.millis(100));
-        	result = animat.asBackgroundObject(element.getName());
+        	Animation animat = AnimationCompiler.compileAnimation(character, animation, element.getAnimationConfig().getFramesInAnimation(), Duration.millis(element.getAnimationConfig().getDurationMillis()), element.getAnimationConfig().getReversed());
+        	BackgroundAnimationObject animatedBackgroundObject = animat.asBackgroundObject(element.getName());
+        	animatedBackgroundObject.getAnimation().setCycleCount(INDEFINITE);
+        	animatedBackgroundObject.getAnimation().setInterpolator(Interpolator.LINEAR);
+        	animatedBackgroundObject.getAnimation().play();
+        	result = animatedBackgroundObject;
+        	
     	break;
         }
 

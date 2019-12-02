@@ -85,9 +85,14 @@
             "height": 100
           },
           "location": {
-            "x": 100,
+            "x": 700,
             "y": 300
-          }
+          },
+"animationConfig": {
+"durationMillis": 1000,
+"framesInAnimation": 10,
+"reversed": true
+}
         }
       ]
     },
