@@ -32,40 +32,23 @@ public class AnimationCompiler {
     }
 
     public static Animation compileAnimation(String character, String animation, int count, Duration duration, boolean reversed) {
-        return compileAnimation(character, animation, count, duration, reversed, 1.0d);
+        return compileAnimation(character, animation, count, duration, reverseImages(reversed));
     }
 
+    private static ImageProcess reverseImages(boolean reverse) {
+    	if(reverse) {
+    	return images->images.stream().map(AnimationCompiler::reverseImage).collect(Collectors.toList());
+    	}else {
+    		return images->images;
+    	}
+    }
+    
+    private static ImageProcess scaleImages(double scale) {
+    	return images->images.stream().map(img->AnimationCompiler.scaleImage(img, scale)).collect(Collectors.toList());
+    }
+    
     public static Animation compileAnimation(String character, String animation, int count, Duration duration, boolean reversed, double scale) {
-    	return compileAnimation(character, animation, count, duration, new ImageProcess() {
-
-			@Override
-			public List<BufferedImage> process(List<BufferedImage> images) {
-				if(scale >= 0d) {
-				var newImages = new ArrayList<BufferedImage>();
-				for(BufferedImage img : images) {
-					newImages.add(scaleImage(img, scale));
-				}
-				return newImages;
-				}else {
-					throw new IllegalArgumentException("scale parameter outside of valid range: "+scale);
-				}
-			}
-    	}, new ImageProcess() {
-
-			@Override
-			public List<BufferedImage> process(List<BufferedImage> images) {
-				if(reversed) {
-					var newImages = new ArrayList<BufferedImage>();
-					for(BufferedImage img : images) {
-						newImages.add(reverseImage(img));
-					}
-					return newImages;
-				}else {
-				return images;
-				}
-			}
-    		
-    	});
+    	return compileAnimation(character, animation, count, duration, scaleImages(scale), reverseImages(reversed));
     }
     
     public static Animation compileAnimation(String character, String animation, int count, Duration duration, ImageProcess... imageProcesses) {
