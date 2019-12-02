@@ -11,6 +11,7 @@ import com.mycodefu.werekitten.image.ImageHelper;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -35,6 +36,39 @@ public class AnimationCompiler {
     }
 
     public static Animation compileAnimation(String character, String animation, int count, Duration duration, boolean reversed, double scale) {
+    	return compileAnimation(character, animation, count, duration, new ImageProcess() {
+
+			@Override
+			public List<BufferedImage> process(List<BufferedImage> images) {
+				if(scale >= 0d) {
+				var newImages = new ArrayList<BufferedImage>();
+				for(BufferedImage img : images) {
+					newImages.add(scaleImage(img, scale));
+				}
+				return newImages;
+				}else {
+					throw new IllegalArgumentException("scale parameter outside of valid range: "+scale);
+				}
+			}
+    	}, new ImageProcess() {
+
+			@Override
+			public List<BufferedImage> process(List<BufferedImage> images) {
+				if(reversed) {
+					var newImages = new ArrayList<BufferedImage>();
+					for(BufferedImage img : images) {
+						newImages.add(reverseImage(img));
+					}
+					return newImages;
+				}else {
+				return images;
+				}
+			}
+    		
+    	});
+    }
+    
+    public static Animation compileAnimation(String character, String animation, int count, Duration duration, ImageProcess... imageProcesses) {
         List<BufferedImage> images = IntStream
                 .rangeClosed(1, count)
                 .mapToObj(index -> getResourcePath(character, animation, index))
@@ -43,11 +77,15 @@ public class AnimationCompiler {
                     return log;
                 })
                 .map(ImageHelper::readBufferedImage)
-                .map(image -> reversed ? reverseImage(image) : image)
-                .map(image -> scale != 1.0d ? scaleImage(image, scale) : image)
                 .collect(Collectors.toList());
 
-        int cellWidth = images.get(0).getWidth(null);
+        if(imageProcesses != null && imageProcesses.length > 0) {
+        	for(ImageProcess process : imageProcesses) {
+        		images = process.process(images);
+        	}
+        }
+        
+         int cellWidth = images.get(0).getWidth(null);
         int cellHeight = images.get(0).getHeight(null);
 
         BufferedImage animationStrip = createAnimationStrip(images, cellWidth, cellHeight);

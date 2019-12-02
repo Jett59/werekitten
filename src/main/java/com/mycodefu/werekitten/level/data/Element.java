@@ -2,6 +2,7 @@ package com.mycodefu.werekitten.level.data;
 
 public class Element {
     private ElementType type;
+    private AnimationConfig animationConfig;
     private String name;
     private Size size;
     private Location location;
@@ -68,4 +69,12 @@ public class Element {
     public void setStrokeWidth(double strokeWidth) {
         this.strokeWidth = strokeWidth;
     }
+
+	public AnimationConfig getAnimationConfig() {
+		return animationConfig;
+	}
+
+	public void setAnimationConfig(AnimationConfig animationConfig) {
+		this.animationConfig = animationConfig;
+	}
 }
