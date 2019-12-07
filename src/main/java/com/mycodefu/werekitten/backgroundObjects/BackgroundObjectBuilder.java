@@ -27,7 +27,6 @@ public class BackgroundObjectBuilder {
         	int dotIndex = element.getName().indexOf(".");
         	String character = element.getName().substring(0, dotIndex);
         	String animation = element.getName().substring(dotIndex+1);
-        	System.out.println(character+" "+animation);
         	Animation animat = AnimationCompiler.compileAnimation(character, animation, element.getAnimationConfig().getFramesInAnimation(), Duration.millis(element.getAnimationConfig().getDurationMillis()), element.getAnimationConfig().getReversed());
         	BackgroundAnimationObject animatedBackgroundObject = animat.asBackgroundObject(element.getName());
         	animatedBackgroundObject.getAnimation().setCycleCount(INDEFINITE);

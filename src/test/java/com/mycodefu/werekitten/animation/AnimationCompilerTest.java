@@ -55,6 +55,16 @@ public class AnimationCompilerTest {
         testCompiledImage(animation, "test-shrew-halfscale-reversed.png");
     }
 
+    @Test
+    public void compileAnimation_resized() throws IOException{
+    Animation animation = AnimationCompiler.compileAnimation("shrew", "idle", 2, Duration.millis(500), false, 237);
+    assertNotNull(animation);
+    
+    checkSize(animation, 698d, 237d);
+    
+    testCompiledImage(animation, "test-shrew-resized-237.png");
+    }
+    
 
     private void testCompiledImage(Animation animation, String compareImageName) throws IOException {
         File outputAnimationFile = new File(compareImageName);

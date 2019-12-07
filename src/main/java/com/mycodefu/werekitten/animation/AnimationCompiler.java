@@ -1,22 +1,23 @@
 package com.mycodefu.werekitten.animation;
 
-import com.mycodefu.werekitten.builder.ImageToPolygon;
-import javafx.embed.swing.SwingFXUtils;
-import javafx.scene.image.ImageView;
-import javafx.scene.shape.Polygon;
-import javafx.util.Duration;
+import static java.awt.Image.SCALE_SMOOTH;
 
-import com.mycodefu.werekitten.image.ImageHelper;
-
-import java.awt.*;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static java.awt.Image.SCALE_SMOOTH;
+import com.mycodefu.werekitten.builder.ImageToPolygon;
+import com.mycodefu.werekitten.image.ImageHelper;
+
+import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.image.ImageView;
+import javafx.scene.shape.Polygon;
+import javafx.util.Duration;
 
 /**
  * Creates an animation from a resource folder full of animation cell images.
@@ -47,18 +48,27 @@ public class AnimationCompiler {
     	return images->images.stream().map(img->AnimationCompiler.scaleImage(img, scale)).collect(Collectors.toList());
     }
     
+    private static ImageProcess scaleImagesToHeight(int height) {
+    	return images->{
+    			BufferedImage firstImage = images.get(0);
+    			int firstImageHeight = firstImage.getHeight();
+    			double scale = (double)height/(double)firstImageHeight;
+    			return scaleImages(scale).process(images);
+    	};
+    }
+    
     public static Animation compileAnimation(String character, String animation, int count, Duration duration, boolean reversed, double scale) {
     	return compileAnimation(character, animation, count, duration, scaleImages(scale), reverseImages(reversed));
     }
+
+    public static Animation compileAnimation(String character, String animation, int count, Duration duration, boolean reversed, int height) {
+    	return compileAnimation(character, animation, count, duration, reverseImages(reversed), scaleImagesToHeight(height));
+    }
     
-    public static Animation compileAnimation(String character, String animation, int count, Duration duration, ImageProcess... imageProcesses) {
+	public static Animation compileAnimation(String character, String animation, int count, Duration duration, ImageProcess... imageProcesses) {
         List<BufferedImage> images = IntStream
                 .rangeClosed(1, count)
                 .mapToObj(index -> getResourcePath(character, animation, index))
-                .map(log -> {
-                    System.out.println(log);
-                    return log;
-                })
                 .map(ImageHelper::readBufferedImage)
                 .collect(Collectors.toList());
 
