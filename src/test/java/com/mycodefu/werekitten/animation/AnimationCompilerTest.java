@@ -56,25 +56,32 @@ public class AnimationCompilerTest {
     }
 
     @Test
-    public void compileAnimation_resized() throws IOException{
-    Animation animation = AnimationCompiler.compileAnimation("shrew", "idle", 2, Duration.millis(500), false, 237, "height");
-    assertNotNull(animation);
-    
-    checkSize(animation, 698d, 237d);
-    
-    testCompiledImage(animation, "test-shrew-resized-237.png");
-    }
-    
-@Test
-public void compileAnimation_resized_reversed() throws IOException{
-        Animation animation = AnimationCompiler.compileAnimation("shrew", "idle", 2, Duration.millis(500), true, 237, "height");
+    public void compileAnimation_resized() throws IOException {
+        Animation animation = AnimationCompiler.compileAnimation("shrew", "idle", 2, Duration.millis(500), false, 237, "height");
         assertNotNull(animation);
-        
+
+        checkSize(animation, 698d, 237d);
+
+        testCompiledImage(animation, "test-shrew-resized-237.png");
+    }
+
+    @Test
+    public void compileAnimation_resized_reversed() throws IOException {
+        Animation animation = null;
+        try {
+            animation = AnimationCompiler.compileAnimation("shrew", "idle", 2, Duration.millis(500), true, 237, "height");
+        } catch (Exception e) {
+            System.out.println("error compiling animation");
+            e.printStackTrace();
+            throw e;
+        }
+        assertNotNull(animation);
+
         checkSize(animation, 698, 237);
-        
+
         testCompiledImage(animation, "test-shrew-resized-237-reversed.png");
-}
-    
+    }
+
 
     private void testCompiledImage(Animation animation, String compareImageName) throws IOException {
         File outputAnimationFile = new File(compareImageName);
@@ -89,18 +96,18 @@ public void compileAnimation_resized_reversed() throws IOException{
         assertEquals(height, animation.getImageView().getImage().getHeight());
     }
 
-    private boolean binaryCompareStreams(InputStream in1, InputStream in2){
+    private boolean binaryCompareStreams(InputStream in1, InputStream in2) {
         try {
 
-            int value1,value2;
-            do{
+            int value1, value2;
+            do {
                 //since we're buffered read() isn't expensive
                 value1 = in1.read();
                 value2 = in2.read();
-                if(value1 !=value2){
+                if (value1 != value2) {
                     return false;
                 }
-            }while(value1 >=0);
+            } while (value1 >= 0);
 
             return true;
         } catch (IOException e) {
