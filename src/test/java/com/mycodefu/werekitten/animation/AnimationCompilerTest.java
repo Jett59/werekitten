@@ -67,7 +67,7 @@ public class AnimationCompilerTest {
     
 @Test
 public void compileAnimation_resized_reversed() throws IOException{
-        Animation animation = AnimationCompiler.compileAnimation("shrew", "idle", 2, Duration.millis(500), true, 237);
+        Animation animation = AnimationCompiler.compileAnimation("shrew", "idle", 2, Duration.millis(500), true, 237, "height");
         assertNotNull(animation);
         
         checkSize(animation, 698, 237);
