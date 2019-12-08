@@ -57,13 +57,23 @@ public class AnimationCompilerTest {
 
     @Test
     public void compileAnimation_resized() throws IOException{
-    Animation animation = AnimationCompiler.compileAnimation("shrew", "idle", 2, Duration.millis(500), false, 237);
+    Animation animation = AnimationCompiler.compileAnimation("shrew", "idle", 2, Duration.millis(500), false, 237, "height");
     assertNotNull(animation);
     
     checkSize(animation, 698d, 237d);
     
     testCompiledImage(animation, "test-shrew-resized-237.png");
     }
+    
+@Test
+public void compileAnimation_resized_reversed() throws IOException{
+        Animation animation = AnimationCompiler.compileAnimation("shrew", "idle", 2, Duration.millis(500), true, 237);
+        assertNotNull(animation);
+        
+        checkSize(animation, 698, 237);
+        
+        testCompiledImage(animation, "test-shrew-resized-237-reversed.png");
+}
     
 
     private void testCompiledImage(Animation animation, String compareImageName) throws IOException {

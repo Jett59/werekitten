@@ -57,12 +57,25 @@ public class AnimationCompiler {
     	};
     }
     
+    private static ImageProcess scaleImagesToWidth(int width) {
+    	return images->{
+			BufferedImage firstImage = images.get(0);
+			int firstImageWidth = firstImage.getWidth();
+			double scale = (double)width/(double)firstImageWidth;
+			return scaleImages(scale).process(images);
+	};
+    }
+    
+    private static ImageProcess scaleImagesToWidthOrHeight(String widthOrHeight, int size) {
+    	return widthOrHeight=="width" ? scaleImagesToWidth(size) : widthOrHeight == "height" ? scaleImagesToHeight(size) : null;
+    }
+    
     public static Animation compileAnimation(String character, String animation, int count, Duration duration, boolean reversed, double scale) {
     	return compileAnimation(character, animation, count, duration, scaleImages(scale), reverseImages(reversed));
     }
 
-    public static Animation compileAnimation(String character, String animation, int count, Duration duration, boolean reversed, int height) {
-    	return compileAnimation(character, animation, count, duration, reverseImages(reversed), scaleImagesToHeight(height));
+    public static Animation compileAnimation(String character, String animation, int count, Duration duration, boolean reversed, int size, String widthOrHeight) {
+    	return compileAnimation(character, animation, count, duration, reverseImages(reversed), scaleImagesToWidthOrHeight(widthOrHeight, size));
     }
     
 	public static Animation compileAnimation(String character, String animation, int count, Duration duration, ImageProcess... imageProcesses) {
