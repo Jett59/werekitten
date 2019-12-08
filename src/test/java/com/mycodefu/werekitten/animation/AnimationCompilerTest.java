@@ -57,7 +57,7 @@ public class AnimationCompilerTest {
 
     @Test
     public void compileAnimation_resized() throws IOException {
-        Animation animation = AnimationCompiler.compileAnimation("shrew", "idle", 2, Duration.millis(500), false, 237, "height");
+        Animation animation = AnimationCompiler.compileAnimation("shrew", "Idle", 2, Duration.millis(500), false, 237, "height");
         assertNotNull(animation);
 
         checkSize(animation, 698d, 237d);
@@ -69,7 +69,7 @@ public class AnimationCompilerTest {
     public void compileAnimation_resized_reversed() throws IOException {
         Animation animation = null;
         try {
-            animation = AnimationCompiler.compileAnimation("shrew", "idle", 2, Duration.millis(500), true, 237, "height");
+            animation = AnimationCompiler.compileAnimation("shrew", "Idle", 2, Duration.millis(500), true, 237, "height");
         } catch (Exception e) {
             System.out.println("error compiling animation");
             e.printStackTrace();
