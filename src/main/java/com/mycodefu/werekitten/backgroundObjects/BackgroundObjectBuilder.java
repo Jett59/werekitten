@@ -12,6 +12,7 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
+
 import static javafx.animation.Animation.INDEFINITE;
 
 public class BackgroundObjectBuilder {
@@ -22,20 +23,39 @@ public class BackgroundObjectBuilder {
     public static NodeObject build(Element element) {
         NodeObject result;
         switch (element.getType()) {
+            case animation: {
+                int dotIndex = element.getName().indexOf(".");
+                String character = element.getName().substring(0, dotIndex);
+                String animation = element.getName().substring(dotIndex + 1);
 
-        case animation: {
-        	int dotIndex = element.getName().indexOf(".");
-        	String character = element.getName().substring(0, dotIndex);
-        	String animation = element.getName().substring(dotIndex+1);
-        	Animation animat = AnimationCompiler.compileAnimation(character, animation, element.getAnimationConfig().getFramesInAnimation(), Duration.millis(element.getAnimationConfig().getDurationMillis()), element.getAnimationConfig().getReversed());
-        	BackgroundAnimationObject animatedBackgroundObject = animat.asBackgroundObject(element.getName());
-        	animatedBackgroundObject.getAnimation().setCycleCount(INDEFINITE);
-        	animatedBackgroundObject.getAnimation().setInterpolator(Interpolator.LINEAR);
-        	animatedBackgroundObject.getAnimation().play();
-        	result = animatedBackgroundObject;
-        	
-    	break;
-        }
+                Animation animat;
+                if (element.getSize() != null && (element.getSize().getHeight() > 0 || element.getSize().getWidth() > 0)) {
+                    String widthOrHeight;
+                    int size;
+                    if (element.getSize().getHeight() > 0) {
+                        widthOrHeight = "height";
+                        size = element.getSize().getHeight();
+                    } else {
+                        widthOrHeight = "width";
+                        size = element.getSize().getWidth();
+                    }
+                    animat = AnimationCompiler.compileAnimation(character, animation, element.getAnimationConfig().getFramesInAnimation(), Duration.millis(element.getAnimationConfig().getDurationMillis()), element.getAnimationConfig().getReversed(), size, widthOrHeight);
+                } else {
+                    animat = AnimationCompiler.compileAnimation(character, animation, element.getAnimationConfig().getFramesInAnimation(), Duration.millis(element.getAnimationConfig().getDurationMillis()), element.getAnimationConfig().getReversed());
+                }
+
+                animat.getImageView().setX(element.getLocation().getX());
+                animat.getImageView().setY(element.getLocation().getY());
+
+                BackgroundAnimationObject animatedBackgroundObject = animat.asBackgroundObject(element.getName());
+
+
+                animatedBackgroundObject.getAnimation().setCycleCount(INDEFINITE);
+                animatedBackgroundObject.getAnimation().setInterpolator(Interpolator.LINEAR);
+                animatedBackgroundObject.getAnimation().play();
+                result = animatedBackgroundObject;
+                break;
+            }
 
             case Image: {
                 Image fxImage = ImageHelper.readFxImage(toResourceDir(element.getName()));
@@ -76,8 +96,8 @@ public class BackgroundObjectBuilder {
                 result = new BackgroundShapeObject(element.getName(), rectangle);
                 break;
             }
-            
-            
+
+
             default:
                 throw new IllegalArgumentException(String.format("Unknown element type '%s'.", element.getType()));
         }

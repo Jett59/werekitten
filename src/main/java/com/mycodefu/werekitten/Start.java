@@ -14,9 +14,7 @@ import javafx.util.Duration;
 
 public class Start {
     public static void main(String[] args) throws IOException {
-    	ImageIO.write(SwingFXUtils.fromFXImage(AnimationCompiler.compileAnimation("shrew", "idle", 2, Duration.millis(500), true, 237).getImageView().getImage(), null), "png", new File("test-shrew-resized-237-reversed.png"));
     	MusicPlayer.setInLevel();
-    	AnimationCompiler.compileAnimation("cat", "walk", 10, Duration.seconds(1), false, 10);
-        Application.start(args);
+    	Application.start(args);
     }
 }
