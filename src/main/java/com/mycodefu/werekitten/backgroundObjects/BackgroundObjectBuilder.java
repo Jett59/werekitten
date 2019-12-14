@@ -29,7 +29,11 @@ public class BackgroundObjectBuilder {
                 String animation = element.getName().substring(dotIndex + 1);
 
                 Animation animat;
-                if (element.getSize() != null && (element.getSize().getHeight() > 0 || element.getSize().getWidth() > 0)) {
+                if (element.getSize() != null) {
+                	if(element.getSize().getHeight() > 0 || element.getSize().getWidth() > 0) {
+                	if(element.getSize().getWidth() > 0 && element.getSize().getHeight() > 0) {
+                		throw new IllegalArgumentException("the size parameter specified on element "+element.getName()+" cannot have both width and height specified at one time");
+                	}
                     String widthOrHeight;
                     int size;
                     if (element.getSize().getHeight() > 0) {
@@ -40,6 +44,9 @@ public class BackgroundObjectBuilder {
                         size = element.getSize().getWidth();
                     }
                     animat = AnimationCompiler.compileAnimation(character, animation, element.getAnimationConfig().getFramesInAnimation(), Duration.millis(element.getAnimationConfig().getDurationMillis()), element.getAnimationConfig().getReversed(), size, widthOrHeight);
+                	}else {
+                		throw new IllegalArgumentException("the size parameter on element "+element.getName()+" has neither width or height specified");
+                	}
                 } else {
                     animat = AnimationCompiler.compileAnimation(character, animation, element.getAnimationConfig().getFramesInAnimation(), Duration.millis(element.getAnimationConfig().getDurationMillis()), element.getAnimationConfig().getReversed());
                 }
