@@ -1,11 +1,7 @@
 package com.mycodefu.werekitten.animation;
 
-import static java.awt.Image.SCALE_SMOOTH;
-
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -38,14 +34,14 @@ public class AnimationCompiler {
 
     private static ImageProcess reverseImages(boolean reverse) {
     	if(reverse) {
-    	return images->images.stream().map(AnimationCompiler::reverseImage).collect(Collectors.toList());
+    	return images->images.stream().map(ImageHelper::reverseImage).collect(Collectors.toList());
     	}else {
     		return images->images;
     	}
     }
     
     private static ImageProcess scaleImages(double scale) {
-    	return images->images.stream().map(img->AnimationCompiler.scaleImage(img, scale)).collect(Collectors.toList());
+    	return images->images.stream().map(img->ImageHelper.scaleImage(img, scale)).collect(Collectors.toList());
     }
     
     private static ImageProcess scaleImagesToHeight(int height) {
@@ -112,48 +108,7 @@ public class AnimationCompiler {
                 .replace("[animation]", animation)
                 .replace("[index]", Integer.toString(index));
     }
-
-    private static BufferedImage scaleImage(Image image, int newWidth, int newHeight) {
-        return toBufferedImage(image.getScaledInstance(newWidth, newHeight, SCALE_SMOOTH));
-    }
-
-    public static BufferedImage toBufferedImage(Image img) {
-        if (img instanceof BufferedImage) {
-            return (BufferedImage) img;
-        }
-
-        // Create a buffered image with transparency
-        BufferedImage bimage = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-
-        // Draw the image on to the buffered image
-        Graphics2D bGr = bimage.createGraphics();
-        bGr.drawImage(img, 0, 0, null);
-        bGr.dispose();
-
-        // Return the buffered image
-        return bimage;
-    }
-
-    private static BufferedImage scaleImage(Image image, double scale) {
-        int newWidth = (int) ((double) image.getWidth(null) * scale);
-        int newHeight = (int) ((double) image.getHeight(null) * scale);
-        return scaleImage(image, newWidth, newHeight);
-    }
-
-    private static BufferedImage reverseImage(Image image) {
-        AffineTransform at = new AffineTransform();
-        at.concatenate(AffineTransform.getScaleInstance(-1, 1));
-        at.concatenate(AffineTransform.getTranslateInstance(-image.getWidth(null), 0));
-        BufferedImage newImage = new BufferedImage(
-                image.getWidth(null), image.getHeight(null),
-                BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g = newImage.createGraphics();
-        g.transform(at);
-        g.drawImage(image, 0, 0, null);
-        g.dispose();
-        return newImage;
-    }
-
+    
     private static BufferedImage createAnimationStrip(List<BufferedImage> images, int cellWidth, int cellHeight) {
         BufferedImage image = new BufferedImage(cellWidth * images.size(), cellHeight, BufferedImage.TYPE_INT_ARGB);
         Graphics graphics = image.getGraphics();
