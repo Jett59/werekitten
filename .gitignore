@@ -44,3 +44,5 @@ jdk*/
 /amazon-corretto-11.jdk/
 /apache-maven-3.6.2/
 /jre/
+/JAVA_HOME.txt
+/MAVEN_HOME.txt
