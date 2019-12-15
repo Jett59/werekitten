@@ -15,9 +15,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class AnimationCompilerTest {
 
+AnimationCompiler animationCompiler = new AnimationCompiler();
+
     @Test
     public void compileAnimation() throws IOException {
-        Animation animation = AnimationCompiler.compileAnimation("shrew", "Idle", 2, Duration.millis(500));
+        Animation animation = animationCompiler.compileAnimation("shrew", "Idle", 2, Duration.millis(500));
         assertNotNull(animation);
 
         checkSize(animation, 1084d, 368d);
@@ -27,7 +29,7 @@ public class AnimationCompilerTest {
 
     @Test
     public void compileAnimation_reversed() throws IOException {
-        Animation animation = AnimationCompiler.compileAnimation("shrew", "Idle", 2, Duration.millis(500), true);
+        Animation animation = animationCompiler.compileAnimation("shrew", "Idle", 2, Duration.millis(500), true);
         assertNotNull(animation);
 
         checkSize(animation, 1084d, 368d);
@@ -37,7 +39,7 @@ public class AnimationCompilerTest {
 
     @Test
     public void compileAnimation_scaled() throws IOException {
-        Animation animation = AnimationCompiler.compileAnimation("shrew", "Idle", 2, Duration.millis(500), false, 0.5d);
+        Animation animation = animationCompiler.compileAnimation("shrew", "Idle", 2, Duration.millis(500), false, 0.5d);
         assertNotNull(animation);
 
         checkSize(animation, 542d, 184d);
@@ -47,7 +49,7 @@ public class AnimationCompilerTest {
 
     @Test
     public void compileAnimation_scaled_reversed() throws IOException {
-        Animation animation = AnimationCompiler.compileAnimation("shrew", "Idle", 2, Duration.millis(500), true, 0.5d);
+        Animation animation = animationCompiler.compileAnimation("shrew", "Idle", 2, Duration.millis(500), true, 0.5d);
         assertNotNull(animation);
 
         checkSize(animation, 542d, 184d);
@@ -57,7 +59,7 @@ public class AnimationCompilerTest {
 
     @Test
     public void compileAnimation_resized() throws IOException {
-        Animation animation = AnimationCompiler.compileAnimation("shrew", "Idle", 2, Duration.millis(500), false, 237, "height");
+        Animation animation = animationCompiler.compileAnimation("shrew", "Idle", 2, Duration.millis(500), false, 237, "height");
         assertNotNull(animation);
 
         checkSize(animation, 698d, 237d);
@@ -68,13 +70,7 @@ public class AnimationCompilerTest {
     @Test
     public void compileAnimation_resized_reversed() throws IOException {
         Animation animation = null;
-        try {
-            animation = AnimationCompiler.compileAnimation("shrew", "Idle", 2, Duration.millis(500), true, 237, "height");
-        } catch (Exception e) {
-            System.out.println("error compiling animation");
-            e.printStackTrace();
-            throw e;
-        }
+            animation = animationCompiler.compileAnimation("shrew", "Idle", 2, Duration.millis(500), true, 237, "height");
         assertNotNull(animation);
 
         checkSize(animation, 698, 237);

@@ -31,7 +31,7 @@ import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
-import static com.mycodefu.werekitten.animation.AnimationCompiler.compileAnimation;
+import com.mycodefu.werekitten.animation.AnimationCompiler;
 import static javafx.animation.Animation.INDEFINITE;
 
 public class Application extends javafx.application.Application {
@@ -44,11 +44,15 @@ public class Application extends javafx.application.Application {
     public static void start(String[] args) {
         Application.launch(args);
     }
-
+    
     @Override
     public void start(Stage stage) {
-        try {
-            Animation idleRightCat = compileAnimation("cat", "Idle", 10, Duration.seconds(1), false, CAT_SCALE);
+       try {
+            AnimationCompiler animationCompiler = new AnimationCompiler();
+            BackgroundObjectBuilder backgroundObjectBuilder = new BackgroundObjectBuilder(new AnimationCompiler());
+
+        	
+        	Animation idleRightCat = animationCompiler.compileAnimation("cat", "Idle", 10, Duration.seconds(1), false, CAT_SCALE);
             idleRightCat.setCycleCount(INDEFINITE);
             double middleX = SCREEN_WIDTH / 2 - idleRightCat.getImageView().getViewport().getWidth() / 2;
             double middleY = (SCREEN_HEIGHT / 2) - (idleRightCat.getImageView().getViewport().getHeight() / 2);
@@ -58,25 +62,25 @@ public class Application extends javafx.application.Application {
 
             AtomicReference<Animation> currentAnimation = new AtomicReference<>(idleRightCat);
 
-            Animation idleLeftCat = compileAnimation("cat", "Idle", 10, Duration.seconds(1), true, CAT_SCALE);
+            Animation idleLeftCat = animationCompiler.compileAnimation("cat", "Idle", 10, Duration.seconds(1), true, CAT_SCALE);
             idleLeftCat.setCycleCount(INDEFINITE);
             idleLeftCat.getImageView().setX(middleX);
             idleLeftCat.getImageView().setY(middleY);
             idleLeftCat.getImageView().setVisible(false);
 
-            Animation walkingRightCat = compileAnimation("cat", "Walk", 10, Duration.seconds(1), false, CAT_SCALE);
+            Animation walkingRightCat = animationCompiler.compileAnimation("cat", "Walk", 10, Duration.seconds(1), false, CAT_SCALE);
             walkingRightCat.setCycleCount(INDEFINITE);
             walkingRightCat.getImageView().setX(middleX);
             walkingRightCat.getImageView().setY(middleY);
             walkingRightCat.getImageView().setVisible(false);
 
-            Animation walkingLeftCat = compileAnimation("cat", "Walk", 10, Duration.seconds(1), true, CAT_SCALE);
+            Animation walkingLeftCat = animationCompiler.compileAnimation("cat", "Walk", 10, Duration.seconds(1), true, CAT_SCALE);
             walkingLeftCat.setCycleCount(INDEFINITE);
             walkingLeftCat.getImageView().setX(middleX);
             walkingLeftCat.getImageView().setY(middleY);
             walkingLeftCat.getImageView().setVisible(false);
 
-            Animation shrewRight = compileAnimation("shadyshrew", "Idle", 2, Duration.millis(250), false, SHREW_SCALE);
+            Animation shrewRight = animationCompiler.compileAnimation("shadyshrew", "Idle", 2, Duration.millis(250), false, SHREW_SCALE);
             shrewRight.setCycleCount(INDEFINITE);
             double shrewX = SCREEN_WIDTH / 2 - shrewRight.getImageView().getViewport().getWidth() - idleRightCat.getImageView().getViewport().getWidth() - 50;
             double shrewY = middleY + idleRightCat.getImageView().getViewport().getHeight() - shrewRight.getImageView().getViewport().getHeight();
@@ -103,7 +107,7 @@ public class Application extends javafx.application.Application {
 
                 List<NodeObject> elements = layer.getElements().stream().map(backgroundElement -> {
 
-                    NodeObject nodeObject = BackgroundObjectBuilder.build(backgroundElement);
+                    NodeObject nodeObject = backgroundObjectBuilder.build(backgroundElement);
                     return nodeObject;
                 }).collect(Collectors.toList());
 

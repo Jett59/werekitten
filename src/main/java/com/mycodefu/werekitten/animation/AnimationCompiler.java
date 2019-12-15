@@ -24,11 +24,11 @@ import javafx.util.Duration;
  */
 public class AnimationCompiler {
 
-    public static Animation compileAnimation(String character, String animation, int count, Duration duration) {
+    public Animation compileAnimation(String character, String animation, int count, Duration duration) {
         return compileAnimation(character, animation, count, duration, false);
     }
 
-    public static Animation compileAnimation(String character, String animation, int count, Duration duration, boolean reversed) {
+    public Animation compileAnimation(String character, String animation, int count, Duration duration, boolean reversed) {
         return compileAnimation(character, animation, count, duration, reverseImages(reversed));
     }
 
@@ -66,15 +66,15 @@ public class AnimationCompiler {
     	return widthOrHeight=="width" ? scaleImagesToWidth(size) : widthOrHeight == "height" ? scaleImagesToHeight(size) : null;
     }
     
-    public static Animation compileAnimation(String character, String animation, int count, Duration duration, boolean reversed, double scale) {
+    public Animation compileAnimation(String character, String animation, int count, Duration duration, boolean reversed, double scale) {
     	return compileAnimation(character, animation, count, duration, scaleImages(scale), reverseImages(reversed));
     }
 
-    public static Animation compileAnimation(String character, String animation, int count, Duration duration, boolean reversed, int size, String widthOrHeight) {
+    public Animation compileAnimation(String character, String animation, int count, Duration duration, boolean reversed, int size, String widthOrHeight) {
     	return compileAnimation(character, animation, count, duration, reverseImages(reversed), scaleImagesToWidthOrHeight(widthOrHeight, size));
     }
     
-	public static Animation compileAnimation(String character, String animation, int count, Duration duration, ImageProcess... imageProcesses) {
+	public Animation compileAnimation(String character, String animation, int count, Duration duration, ImageProcess... imageProcesses) {
         List<BufferedImage> images = IntStream
                 .rangeClosed(1, count)
                 .mapToObj(index -> getResourcePath(character, animation, index))

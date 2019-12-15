@@ -15,12 +15,21 @@ import javafx.util.Duration;
 
 import static javafx.animation.Animation.INDEFINITE;
 
+import javax.inject.Inject;
+
 public class BackgroundObjectBuilder {
-    private static String toResourceDir(String from) {
+
+private AnimationCompiler animationCompiler;
+
+public BackgroundObjectBuilder(AnimationCompiler animationCompiler) {
+	this.animationCompiler = animationCompiler;
+}
+
+    private String toResourceDir(String from) {
         return "/background/freetileset/png/Object/" + from + ".png";
     }
 
-    public static NodeObject build(Element element) {
+    public NodeObject build(Element element) {
         NodeObject result;
         switch (element.getType()) {
             case Animation: {
@@ -43,12 +52,12 @@ public class BackgroundObjectBuilder {
                         widthOrHeight = "width";
                         size = element.getSize().getWidth();
                     }
-                    animat = AnimationCompiler.compileAnimation(character, animation, element.getAnimationConfig().getFramesInAnimation(), Duration.millis(element.getAnimationConfig().getDurationMillis()), element.getAnimationConfig().getReversed(), size, widthOrHeight);
+                    animat = animationCompiler.compileAnimation(character, animation, element.getAnimationConfig().getFramesInAnimation(), Duration.millis(element.getAnimationConfig().getDurationMillis()), element.getAnimationConfig().getReversed(), size, widthOrHeight);
                 	}else {
                 		throw new IllegalArgumentException("the size parameter on element "+element.getName()+" has neither width or height specified");
                 	}
                 } else {
-                    animat = AnimationCompiler.compileAnimation(character, animation, element.getAnimationConfig().getFramesInAnimation(), Duration.millis(element.getAnimationConfig().getDurationMillis()), element.getAnimationConfig().getReversed());
+                    animat = animationCompiler.compileAnimation(character, animation, element.getAnimationConfig().getFramesInAnimation(), Duration.millis(element.getAnimationConfig().getDurationMillis()), element.getAnimationConfig().getReversed());
                 }
 
                 animat.getImageView().setX(element.getLocation().getX());
@@ -84,7 +93,7 @@ public class BackgroundObjectBuilder {
         return result;
     }
 
-    public static BackgroundShapeObject createBackgroundShapeFromElement(Element element) {
+    public BackgroundShapeObject createBackgroundShapeFromElement(Element element) {
         if (element.getSize() == null) {
             throw new IllegalArgumentException(String.format("No size specified on shape element named '%s'.", element.getName()));
         }

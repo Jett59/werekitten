@@ -1,11 +1,13 @@
 package com.mycodefu.werekitten.backgroundObjects;
 
+import com.mycodefu.werekitten.animation.AnimationCompiler;
 import com.mycodefu.werekitten.level.data.Color;
 import com.mycodefu.werekitten.level.data.Element;
 import com.mycodefu.werekitten.level.data.Location;
 import com.mycodefu.werekitten.level.data.Size;
 import javafx.scene.shape.Shape;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import static com.mycodefu.werekitten.level.data.ElementType.Rectangle;
 import static javafx.scene.paint.Color.TRANSPARENT;
@@ -16,6 +18,9 @@ class BackgroundObjectBuilderTest {
 
     @Test
     void build_rectangle_valid() {
+    	AnimationCompiler mockedAnimationCompiler = Mockito.mock(AnimationCompiler.class);
+    	BackgroundObjectBuilder backgroundObjectBuilder = new BackgroundObjectBuilder(mockedAnimationCompiler);
+
         Element element = new Element();
         element.setName("Yellow Square");
         element.setType(Rectangle);
@@ -23,7 +28,7 @@ class BackgroundObjectBuilderTest {
         element.setLocation(new Location(10, 10));
         element.setSize(new Size(100, 100));
 
-        NodeObject nodeObject = BackgroundObjectBuilder.build(element);
+        NodeObject nodeObject = backgroundObjectBuilder.build(element);
         assertEquals(BackgroundShapeObject.class, nodeObject.getClass());
         BackgroundShapeObject backgroundShapeObject = (BackgroundShapeObject) nodeObject;
         assertEquals(javafx.scene.shape.Rectangle.class, backgroundShapeObject.getShape().getClass());
@@ -31,6 +36,9 @@ class BackgroundObjectBuilderTest {
 
     @Test
     void createBackgroundShapeFromElement_valid() {
+    	AnimationCompiler mockedAnimationCompiler = Mockito.mock(AnimationCompiler.class);
+    	BackgroundObjectBuilder backgroundObjectBuilder = new BackgroundObjectBuilder(mockedAnimationCompiler);
+
         Element element = new Element();
         element.setName("Yellow Square with Red Border");
         element.setType(Rectangle);
@@ -40,7 +48,7 @@ class BackgroundObjectBuilderTest {
         element.setLocation(new Location(10, 20));
         element.setSize(new Size(100, 300));
 
-        BackgroundShapeObject backgroundShapeObject = BackgroundObjectBuilder.createBackgroundShapeFromElement(element);
+        BackgroundShapeObject backgroundShapeObject = backgroundObjectBuilder.createBackgroundShapeFromElement(element);
         Shape shape = backgroundShapeObject.getShape();
         assertEquals(javafx.scene.shape.Rectangle.class, shape.getClass());
 
@@ -61,6 +69,9 @@ class BackgroundObjectBuilderTest {
 
     @Test
     void createBackgroundShapeFromElement_valid_noborder() {
+    	AnimationCompiler mockedAnimationCompiler = Mockito.mock(AnimationCompiler.class);
+    	BackgroundObjectBuilder backgroundObjectBuilder = new BackgroundObjectBuilder(mockedAnimationCompiler);
+
         Element element = new Element();
         element.setName("Yellow Square with No Border");
         element.setType(Rectangle);
@@ -68,7 +79,7 @@ class BackgroundObjectBuilderTest {
         element.setLocation(new Location(10, 20));
         element.setSize(new Size(100, 300));
 
-        BackgroundShapeObject backgroundShapeObject = BackgroundObjectBuilder.createBackgroundShapeFromElement(element);
+        BackgroundShapeObject backgroundShapeObject = backgroundObjectBuilder.createBackgroundShapeFromElement(element);
         Shape shape = backgroundShapeObject.getShape();
         assertEquals(javafx.scene.shape.Rectangle.class, shape.getClass());
 
@@ -89,6 +100,9 @@ class BackgroundObjectBuilderTest {
 
     @Test
     void createBackgroundShapeFromElement_valid_border_nofill() {
+    	AnimationCompiler mockedAnimationCompiler = Mockito.mock(AnimationCompiler.class);
+    	BackgroundObjectBuilder backgroundObjectBuilder = new BackgroundObjectBuilder(mockedAnimationCompiler);
+
         Element element = new Element();
         element.setName("Blue Square with Border and No Fill");
         element.setType(Rectangle);
@@ -97,7 +111,7 @@ class BackgroundObjectBuilderTest {
         element.setLocation(new Location(10, 20));
         element.setSize(new Size(100, 300));
 
-        BackgroundShapeObject backgroundShapeObject = BackgroundObjectBuilder.createBackgroundShapeFromElement(element);
+        BackgroundShapeObject backgroundShapeObject = backgroundObjectBuilder.createBackgroundShapeFromElement(element);
         Shape shape = backgroundShapeObject.getShape();
         assertEquals(javafx.scene.shape.Rectangle.class, shape.getClass());
 
@@ -121,13 +135,16 @@ class BackgroundObjectBuilderTest {
         Exception exception = assertThrows(
                 IllegalArgumentException.class,
                 () -> {
+                	AnimationCompiler mockedAnimationCompiler = Mockito.mock(AnimationCompiler.class);
+                	BackgroundObjectBuilder backgroundObjectBuilder = new BackgroundObjectBuilder(mockedAnimationCompiler);
+
                     Element element = new Element();
                     element.setName("Yellow Square");
                     element.setType(Rectangle);
                     element.setFillColor(new Color(1d, 1d, 0d, 1d)); //yellow
                     element.setLocation(new Location(10, 10));
 
-                    BackgroundObjectBuilder.build(element);
+                    backgroundObjectBuilder.build(element);
                 });
 
         assertEquals("No size specified on shape element named 'Yellow Square'.", exception.getMessage());
@@ -139,13 +156,16 @@ class BackgroundObjectBuilderTest {
         Exception exception = assertThrows(
                 IllegalArgumentException.class,
                 () -> {
+                	AnimationCompiler mockedAnimationCompiler = Mockito.mock(AnimationCompiler.class);
+                	BackgroundObjectBuilder backgroundObjectBuilder = new BackgroundObjectBuilder(mockedAnimationCompiler);
+
                     Element element = new Element();
                     element.setName("Yellow Square");
                     element.setType(Rectangle);
                     element.setFillColor(new Color(1d, 1d, 0d, 1d)); //yellow
                     element.setSize(new Size(100, 100));
 
-                    BackgroundObjectBuilder.build(element);
+                    backgroundObjectBuilder.build(element);
                 });
 
         assertEquals("No location specified on shape element named 'Yellow Square'.", exception.getMessage());
