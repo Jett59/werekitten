@@ -23,7 +23,7 @@ public class BackgroundObjectBuilder {
     public static NodeObject build(Element element) {
         NodeObject result;
         switch (element.getType()) {
-            case animation: {
+            case Animation: {
                 int dotIndex = element.getName().indexOf(".");
                 String character = element.getName().substring(0, dotIndex);
                 String animation = element.getName().substring(dotIndex + 1);
@@ -74,40 +74,47 @@ public class BackgroundObjectBuilder {
                 break;
             }
             case Rectangle: {
-                Rectangle rectangle = new Rectangle(
-                        element.getLocation().getX(),
-                        element.getLocation().getY(),
-                        element.getSize().getWidth(),
-                        element.getSize().getHeight()
-                );
-                if (element.getFillColor() != null) {
-                    rectangle.setFill(new Color(
-                            element.getFillColor().getRed(),
-                            element.getFillColor().getGreen(),
-                            element.getFillColor().getBlue(),
-                            element.getFillColor().getOpacity()
-                    ));
-                }
-                rectangle.setStrokeWidth(element.getStrokeWidth());
-                if (element.getStrokeColor() != null) {
-                    rectangle.setStroke(
-                            new Color(
-                                    element.getStrokeColor().getRed(),
-                                    element.getStrokeColor().getGreen(),
-                                    element.getStrokeColor().getBlue(),
-                                    element.getStrokeColor().getOpacity()
-                            ));
-                } else {
-                    rectangle.setStroke(Color.BLACK);
-                }
-                result = new BackgroundShapeObject(element.getName(), rectangle);
+                result = createBackgroundShapeFromElement(element);
                 break;
             }
-
 
             default:
                 throw new IllegalArgumentException(String.format("Unknown element type '%s'.", element.getType()));
         }
+        return result;
+    }
+
+    public static BackgroundShapeObject createBackgroundShapeFromElement(Element element) {
+        if (element.getSize() == null) {
+            throw new IllegalArgumentException(String.format("No size specified on shape element named '%s'.", element.getName()));
+        }
+        Rectangle rectangle = new Rectangle(
+                element.getLocation().getX(),
+                element.getLocation().getY(),
+                element.getSize().getWidth(),
+                element.getSize().getHeight()
+        );
+        if (element.getFillColor() != null) {
+            rectangle.setFill(new Color(
+                    element.getFillColor().getRed(),
+                    element.getFillColor().getGreen(),
+                    element.getFillColor().getBlue(),
+                    element.getFillColor().getOpacity()
+            ));
+        }
+        rectangle.setStrokeWidth(element.getStrokeWidth());
+        if (element.getStrokeColor() != null) {
+            rectangle.setStroke(
+                    new Color(
+                            element.getStrokeColor().getRed(),
+                            element.getStrokeColor().getGreen(),
+                            element.getStrokeColor().getBlue(),
+                            element.getStrokeColor().getOpacity()
+                    ));
+        } else {
+            rectangle.setStroke(Color.BLACK);
+        }
+        BackgroundShapeObject result = new BackgroundShapeObject(element.getName(), rectangle);
         return result;
     }
 

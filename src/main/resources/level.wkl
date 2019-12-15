@@ -97,7 +97,7 @@
       "scrollSpeed": 1,
       "elements": [
         {
-          "type": "animation",
+          "type": "Animation",
           "name": "shadyshrew.Idle",
           "size": {
             "height": 50

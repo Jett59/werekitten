@@ -23,4 +23,7 @@ public class BackgroundShapeObject implements NodeObject {
         return name;
     }
 
+    public Shape getShape() {
+        return shape;
+    }
 }

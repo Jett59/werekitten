@@ -6,6 +6,17 @@ public class Color {
     double green;
     double opacity;
 
+    public Color() {
+        this(0d, 0d, 0d, 0d);
+    }
+
+    public Color(double red, double green, double blue, double opacity) {
+        this.red = red;
+        this.green = green;
+        this.blue = blue;
+        this.opacity = opacity;
+    }
+
     public double getRed() {
         return red;
     }
