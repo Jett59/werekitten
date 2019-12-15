@@ -81,7 +81,6 @@
           "type": "Image",
           "name": "Tree_3",
           "size": {
-            "width": 100,
             "height": 100
           },
           "location": {
@@ -123,7 +122,6 @@
           "type": "Image",
           "name": "Crate",
           "size": {
-            "width": 100,
             "height": 100
           },
           "location": {
@@ -135,7 +133,6 @@
           "type": "Image",
           "name": "Stone",
           "size": {
-            "width": 100,
             "height": 100
           },
           "location": {
