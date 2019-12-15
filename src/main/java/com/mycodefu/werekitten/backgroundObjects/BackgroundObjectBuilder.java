@@ -8,6 +8,7 @@ import com.mycodefu.werekitten.image.ImageHelper;
 import com.mycodefu.werekitten.level.data.Element;
 
 import javafx.animation.Interpolator;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -15,7 +16,7 @@ import javafx.util.Duration;
 
 import static javafx.animation.Animation.INDEFINITE;
 
-import javax.inject.Inject;
+import java.awt.image.BufferedImage;
 
 public class BackgroundObjectBuilder {
 
@@ -74,7 +75,21 @@ public BackgroundObjectBuilder(AnimationCompiler animationCompiler) {
             }
 
             case Image: {
-                Image fxImage = ImageHelper.readFxImage(toResourceDir(element.getName()));
+                BufferedImage bufferedImage = ImageHelper.readBufferedImage(toResourceDir(element.getName()));
+                if(element.getSize() != null) {
+                if(element.getSize().getHeight() > 0 && element.getSize().getWidth() > 0) {
+                	throw new IllegalArgumentException("the size parameter on element "+element.getName()+" cannot have both width and height specified at one time");
+                }else if(element.getSize().getHeight() < 1 && element.getSize().getWidth() < 1) {
+                	throw new IllegalArgumentException("the size parameter specified on element "+element.getName()+" must have either width or height specified");
+                }else {
+                	double scale =
+                			element.getSize().getHeight() > 0 ?
+                					(double)element.getSize().getHeight()/(double)bufferedImage.getHeight() :
+                				(double)element.getSize().getWidth()/(double)bufferedImage.getWidth();
+                	bufferedImage = ImageHelper.scaleImage(bufferedImage, scale);
+                }
+                }
+                Image fxImage = SwingFXUtils.toFXImage(bufferedImage, null);
                 BackgroundImageObject backgroundImageObject = new BackgroundImageObject(fxImage, element.getName());
                 backgroundImageObject.getImageView().setX(element.getLocation().getX());
                 backgroundImageObject.getImageView().setY(element.getLocation().getY());
