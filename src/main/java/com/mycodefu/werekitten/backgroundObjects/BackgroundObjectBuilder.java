@@ -88,6 +88,9 @@ public class BackgroundObjectBuilder {
         if (element.getSize() == null) {
             throw new IllegalArgumentException(String.format("No size specified on shape element named '%s'.", element.getName()));
         }
+        if (element.getLocation() == null) {
+            throw new IllegalArgumentException(String.format("No location specified on shape element named '%s'.", element.getName()));
+        }
         Rectangle rectangle = new Rectangle(
                 element.getLocation().getX(),
                 element.getLocation().getY(),
@@ -101,6 +104,8 @@ public class BackgroundObjectBuilder {
                     element.getFillColor().getBlue(),
                     element.getFillColor().getOpacity()
             ));
+        } else {
+            rectangle.setFill(Color.TRANSPARENT);
         }
         rectangle.setStrokeWidth(element.getStrokeWidth());
         if (element.getStrokeColor() != null) {
