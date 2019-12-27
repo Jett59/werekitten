@@ -8,6 +8,6 @@ import com.mycodefu.werekitten.sound.MusicPlayer;
 public class Start{
     public static void main(String[] args) throws IOException {
     	MusicPlayer.setInLevel();
-    	Application.start(args);
+    	Application.launch(args);
     }
 }
