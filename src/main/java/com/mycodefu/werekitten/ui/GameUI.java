@@ -7,7 +7,6 @@ import com.mycodefu.werekitten.backgroundObjects.NodeObject;
 import com.mycodefu.werekitten.level.LevelReader;
 import com.mycodefu.werekitten.level.data.Level;
 import com.mycodefu.werekitten.slide.LayerGroup;
-import com.mycodefu.werekitten.slide.SlideBackground;
 import javafx.animation.Interpolator;
 import javafx.animation.TranslateTransition;
 import javafx.scene.Group;
@@ -160,7 +159,7 @@ public void stopMovingLeft() {
     
 @Override
 public void stopMovingRight() {
-	playOneAnimation(catAnimations, idolRightCat);
+	playOneAnimation(catAnimations, idleRightCat);
 }
 
     

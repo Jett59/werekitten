@@ -1,19 +1,21 @@
 package com.mycodefu.werekitten;
 
 import com.mycodefu.werekitten.application.GameLoop;
-import com.mycodefu.werekitten.event.PlayerEventType;
+import com.mycodefu.werekitten.keyboard.KeyboardListener;
 import com.mycodefu.werekitten.sound.MusicPlayer;
 import com.mycodefu.werekitten.ui.GameUI;
-import javafx.animation.AnimationTimer;
+
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 public class Start extends Application {
     public static final int SCREEN_WIDTH = 1024;
     public static final int SCREEN_HEIGHT = 768;
 
-    @Override
+    @SuppressWarnings("exports")
+	@Override
     public void start(Stage stage) {
         stage.show();
         stage.setWidth(SCREEN_WIDTH);
@@ -35,17 +37,22 @@ public class Start extends Application {
         GameLoop gameLoop = new GameLoop(gameUI);
         gameLoop.start();
 
+        KeyboardListener keyboardListener = new KeyboardListener(event->{
+        	gameLoop.addPlayerEvent(event);
+        });
+        
+        stage.addEventHandler(KeyEvent.KEY_PRESSED, keyEvent->{
+        	keyboardListener.keyPressed(keyEvent.getCode());
+        });
+        
+        stage.addEventHandler(KeyEvent.KEY_RELEASED, keyEvent->{
+        	keyboardListener.keyReleased(keyEvent.getCode());
+        });
+        
+        keyboardListener.startListening();
+        
         MusicPlayer.setInLevel();
         MusicPlayer.playLevel();
-
-
-        AnimationTimer testTimer = new AnimationTimer() {
-            @Override
-            public void handle(long now) {
-                gameLoop.addPlayerEvent(PlayerEventType.moveRight);
-            }
-        };
-        testTimer.start();
     }
 
     public static void main(String[] args) {
