@@ -33,6 +33,7 @@ public class GameUI implements UI {
     Animation shrewRight;
     List<Animation> catAnimations;
     TranslateTransition jump;
+    Group catAnimationGroup;
 
     public Scene getScene(int screenWidth, int screenHeight) {
         try {
@@ -56,13 +57,13 @@ public class GameUI implements UI {
             idleLeftCat.getImageView().setVisible(false);
 
             walkingRightCat = animationCompiler.compileAnimation("cat", "Walk", 10, Duration.seconds(1), false, CAT_SCALE);
-            walkingRightCat.setCycleCount(INDEFINITE);
+            walkingRightCat.setCycleCount(1);
             walkingRightCat.getImageView().setX(middleX);
             walkingRightCat.getImageView().setY(middleY);
             walkingRightCat.getImageView().setVisible(false);
 
             walkingLeftCat = animationCompiler.compileAnimation("cat", "Walk", 10, Duration.seconds(1), true, CAT_SCALE);
-            walkingLeftCat.setCycleCount(INDEFINITE);
+            walkingLeftCat.setCycleCount(1);
             walkingLeftCat.getImageView().setX(middleX);
             walkingLeftCat.getImageView().setY(middleY);
             walkingLeftCat.getImageView().setVisible(false);
@@ -79,7 +80,7 @@ public class GameUI implements UI {
             catAnimations = List.of(idleLeftCat, idleRightCat, walkingLeftCat, walkingRightCat);
             List<Node> catAnimationImageViews = catAnimations.stream().map(Animation::getImageView).collect(Collectors.toList());
 
-            Group catAnimationGroup = new Group(catAnimationImageViews);
+            catAnimationGroup = new Group(catAnimationImageViews);
 
             jump = new TranslateTransition(Duration.millis(150), catAnimationGroup);
             jump.interpolatorProperty().set(Interpolator.SPLINE(.1, .1, .7, .7));
@@ -143,11 +144,13 @@ public class GameUI implements UI {
 
     @Override
     public void moveLeft(int amount) {
+        catAnimationGroup.setTranslateX(catAnimationGroup.getTranslateX() - amount);
         playOneAnimation(catAnimations, walkingLeftCat);
     }
 
     @Override
     public void moveRight(int amount) {
+        catAnimationGroup.setTranslateX(catAnimationGroup.getTranslateX() + amount);
         playOneAnimation(catAnimations, walkingRightCat);
     }
 
