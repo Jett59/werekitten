@@ -111,13 +111,12 @@ public class GameUI implements UI {
             Group combinedGroup = new Group();
             boolean addedCat = false;
 
-            SlideBackground slide = SlideBackground.empty();
             for (LayerGroup layerGroup : layerGroups) {
                 if (layerGroup.getDepth() >= 0 && !addedCat) {
                     combinedGroup.getChildren().add(catAnimationGroup);
                     addedCat = true;
                 }
-                slide.addLayerGroup(layerGroup);
+
 
                 combinedGroup.getChildren().add(layerGroup.getGroup());
             }
@@ -154,7 +153,17 @@ public class GameUI implements UI {
         playOneAnimation(catAnimations, walkingRightCat);
     }
 
+@Override
+public void stopMovingLeft() {
+	playOneAnimation(catAnimations, idleLeftCat);
+}
+    
+@Override
+public void stopMovingRight() {
+	playOneAnimation(catAnimations, idolRightCat);
+}
 
+    
     private Animation playOneAnimation(List<Animation> allAnimations, Animation animationToPlay) {
         for (Animation animation : allAnimations) {
             if (animation == animationToPlay) {

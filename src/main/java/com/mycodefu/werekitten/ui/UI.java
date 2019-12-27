@@ -4,4 +4,6 @@ public interface UI {
 void jump();
 void moveLeft(int amount);
 void moveRight(int amount);
+void stopMovingLeft();
+void stopMovingRight();
 }

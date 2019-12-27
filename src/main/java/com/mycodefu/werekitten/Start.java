@@ -42,7 +42,7 @@ public class Start extends Application {
         AnimationTimer testTimer = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                gameLoop.addPlayerEvent(() -> PlayerEventType.moveRight);
+                gameLoop.addPlayerEvent(PlayerEventType.moveRight);
             }
         };
         testTimer.start();
