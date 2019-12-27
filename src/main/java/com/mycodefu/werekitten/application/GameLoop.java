@@ -51,6 +51,12 @@ public static int CAT_MOVE_AMOUNT = 2;
 
 }
 
+//adds a playerEvent to the PlayerEventQueue
+public void addPlayerEvent(PlayerEvent playerEvent) {
+	playerEventQueue.offer(playerEvent);
+}
+
+//constructor for the gameLoop class, passing the ui to execute the player commands
 public GameLoop(UI ui) {
 	//set the ui
 	this.ui = ui;
