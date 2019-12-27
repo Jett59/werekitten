@@ -1,6 +1,8 @@
 package com.mycodefu.werekitten;
 
 import com.mycodefu.werekitten.application.GameLoop;
+import com.mycodefu.werekitten.event.PlayerEventType;
+import com.mycodefu.werekitten.keyboard.KeyType;
 import com.mycodefu.werekitten.keyboard.KeyboardListener;
 import com.mycodefu.werekitten.sound.MusicPlayer;
 import com.mycodefu.werekitten.ui.GameUI;
@@ -39,6 +41,14 @@ public class Start extends Application {
 
         KeyboardListener keyboardListener = new KeyboardListener(event->{
         	gameLoop.addPlayerEvent(event);
+        });
+
+        keyboardListener.addKeyboardReleasedCallback(type->{
+        	if(type.equals(KeyType.left)) {
+        		gameLoop.addPlayerEvent(PlayerEventType.stopMovingLeft);
+        	}else if(type.equals(KeyType.right)) {
+        		gameLoop.addPlayerEvent(PlayerEventType.stopMovingRight);
+        	}
         });
         
         stage.addEventHandler(KeyEvent.KEY_PRESSED, keyEvent->{
