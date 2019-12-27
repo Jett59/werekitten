@@ -1,7 +1,6 @@
 package com.mycodefu.werekitten.application;
 
 import com.mycodefu.werekitten.animation.Animation;
-import com.mycodefu.werekitten.backgroundObjects.BackgroundImageObject;
 import com.mycodefu.werekitten.backgroundObjects.BackgroundObjectBuilder;
 import com.mycodefu.werekitten.backgroundObjects.NodeObject;
 import com.mycodefu.werekitten.level.LevelReader;
@@ -9,32 +8,26 @@ import com.mycodefu.werekitten.level.data.Level;
 import com.mycodefu.werekitten.slide.LayerGroup;
 import com.mycodefu.werekitten.slide.SlideBackground;
 import com.mycodefu.werekitten.sound.MusicPlayer;
+import com.mycodefu.werekitten.ui.UI;
 
-import javafx.animation.AnimationTimer;
 import javafx.animation.Interpolator;
 import javafx.animation.TranslateTransition;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.shape.Polygon;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Set;
-import java.util.concurrent.CopyOnWriteArraySet;
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 import com.mycodefu.werekitten.animation.AnimationCompiler;
 import static javafx.animation.Animation.INDEFINITE;
 
-public class Application extends javafx.application.Application {
+public class Application extends javafx.application.Application implements UI{
 
     public static final int SCREEN_WIDTH = 1024;
     public static final int SCREEN_HEIGHT = 768;
@@ -48,6 +41,14 @@ public class Application extends javafx.application.Application {
     @Override
     public void start(Stage stage) {
        try {
+    	   stage.show();
+           stage.setWidth(SCREEN_WIDTH);
+           stage.setHeight(SCREEN_HEIGHT);
+           stage.setOnCloseRequest(e -> {
+               System.exit(0);
+           });
+           stage.setTitle("werekitten");
+           
             AnimationCompiler animationCompiler = new AnimationCompiler();
             BackgroundObjectBuilder backgroundObjectBuilder = new BackgroundObjectBuilder(new AnimationCompiler());
 
@@ -60,7 +61,7 @@ public class Application extends javafx.application.Application {
             idleRightCat.getImageView().setY(middleY);
             idleRightCat.play();
 
-            AtomicReference<Animation> currentAnimation = new AtomicReference<>(idleRightCat);
+            
 
             Animation idleLeftCat = animationCompiler.compileAnimation("cat", "Idle", 10, Duration.seconds(1), true, CAT_SCALE);
             idleLeftCat.setCycleCount(INDEFINITE);
@@ -143,81 +144,19 @@ public class Application extends javafx.application.Application {
             Scene s = new Scene(combinedGroup);
 
             stage.setScene(s);
-            stage.setWidth(SCREEN_WIDTH);
-            stage.setHeight(SCREEN_HEIGHT);
-            stage.setOnCloseRequest(e -> {
-                System.exit(0);
-            });
-            stage.setTitle("werekitten");
 
-            stage.show();
+
+
             MusicPlayer.playLevel();
 
-            Set<KeyCode> keysDown = new CopyOnWriteArraySet<>();
 
             stage.addEventHandler(KeyEvent.KEY_PRESSED, keyEvent -> {
-                if (keyEvent.getCode() == KeyCode.RIGHT) {
-                    currentAnimation.set(playOneAnimation(catAnimations, walkingRightCat));
-                    keysDown.add(KeyCode.RIGHT);
-                } else if (keyEvent.getCode() == KeyCode.LEFT) {
-                    currentAnimation.set(playOneAnimation(catAnimations, walkingLeftCat));
-                    keysDown.add(KeyCode.LEFT);
-                } else if (keyEvent.getCode() == KeyCode.SPACE) {
-                    jump.play();
-                }
+                
             });
             stage.addEventHandler(KeyEvent.KEY_RELEASED, keyEvent -> {
-                if (keyEvent.getCode() == KeyCode.RIGHT) {
-                    currentAnimation.set(playOneAnimation(catAnimations, idleRightCat));
-                    keysDown.remove(KeyCode.RIGHT);
-                } else if (keyEvent.getCode() == KeyCode.LEFT) {
-                    currentAnimation.set(playOneAnimation(catAnimations, idleLeftCat));
-                    keysDown.remove(KeyCode.LEFT);
-                }
+            	
             });
-
-            AnimationTimer keysDownTimer = new AnimationTimer() {
-                @Override
-                public void handle(long now) {
-                    if (keysDown.contains(KeyCode.LEFT)) {
-                        boolean canMove = false;
-                        Polygon currentShape = currentAnimation.get().getCurrentShape();
-                        for (NodeObject possibleCollision : possibleCollisions) {
-                            BackgroundImageObject possibleCollisionBackgroundImageObject = (BackgroundImageObject)possibleCollision;
-                            ImageView imageView = possibleCollisionBackgroundImageObject.getImageView();
-                            double possibleCollisionX = imageView.getX() + possibleCollisionBackgroundImageObject.getNode().getParent().getTranslateX() + imageView.getImage().getWidth();
-
-                            double catMinX = currentAnimation.get().getImageView().getX() + currentShape.getLayoutBounds().getMinX();
-
-                            if (catMinX > possibleCollisionX) {
-                                canMove = true;
-                            }
-                        }
-                        if (canMove) {
-                            slide.moveX(5);
-                        }
-                    } else if (keysDown.contains(KeyCode.RIGHT)) {
-                        boolean canMove = false;
-                        Polygon currentShape = currentAnimation.get().getCurrentShape();
-                        for (NodeObject possibleCollision : possibleCollisions) {
-                            BackgroundImageObject possibleCollisionBackgroundImageObject = (BackgroundImageObject)possibleCollision;
-                            ImageView imageView = possibleCollisionBackgroundImageObject.getImageView();
-                            double possibleCollisionX = imageView.getX() + possibleCollisionBackgroundImageObject.getNode().getParent().getTranslateX();
-
-                            double catMaxX = currentShape.getLayoutBounds().getMaxX() + currentAnimation.get().getImageView().getX();
-
-                            if (catMaxX < possibleCollisionX) {
-                                canMove = true;
-                            }
-                        }
-                        if (canMove) {
-                            slide.moveX(-5);
-                        }
-                    }
-                }
-            };
-            keysDownTimer.start();
-
+            
         } catch (Exception e) {
             e.printStackTrace();
 
@@ -225,7 +164,27 @@ public class Application extends javafx.application.Application {
         }
     }
 
-    private Animation playOneAnimation(List<Animation> allAnimations, Animation animationToPlay) {
+    
+
+	@Override
+	public void jump() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void moveLeft(int amount) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void moveRight(int amount) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private Animation playOneAnimation(List<Animation> allAnimations, Animation animationToPlay) {
         for (Animation animation : allAnimations) {
             if (animation == animationToPlay) {
                 animation.getImageView().setVisible(true);
