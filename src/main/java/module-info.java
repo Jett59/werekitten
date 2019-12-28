@@ -5,6 +5,7 @@ open module com.mycodefu.werekitten {
 	requires java.desktop;
 	requires javax.inject;
 	requires guice;
+	requires io.netty.all;
 	
 
     exports com.mycodefu.werekitten to guice, java.base, java.lang;
