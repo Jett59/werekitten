@@ -49,10 +49,12 @@ public void startListening() {
 			if(typeToDown.get(KeyType.left).get()) {
 				//raise an event using the eventHandler passed in the constructor
 				eventHandler.raiseEvent(PlayerEventType.moveLeft);
-			}else if(typeToDown.get(KeyType.right).get()) {
+			}
+			if(typeToDown.get(KeyType.right).get()) {
 				//raise an event using the eventHandler passed in the constructor
 				eventHandler.raiseEvent(PlayerEventType.moveRight);
-			}else if(typeToDown.get(KeyType.space).get()) {
+			}
+			if(typeToDown.get(KeyType.space).get()) {
 				//raise an event using the eventHandler passed in the constructor
 				eventHandler.raiseEvent(PlayerEventType.jump);
 			}

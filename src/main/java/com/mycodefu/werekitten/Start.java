@@ -46,7 +46,8 @@ public class Start extends Application {
         keyboardListener.addKeyboardReleasedCallback(type->{
         	if(type.equals(KeyType.left)) {
         		gameLoop.addPlayerEvent(PlayerEventType.stopMovingLeft);
-        	}else if(type.equals(KeyType.right)) {
+        	}
+        	if(type.equals(KeyType.right)) {
         		gameLoop.addPlayerEvent(PlayerEventType.stopMovingRight);
         	}
         });
