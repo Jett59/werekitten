@@ -12,6 +12,7 @@
         <junit-platform.version>5.3.1</junit-platform.version>
         <jackson.version>2.10.1</jackson.version>
         <javafx.version>13.0.1</javafx.version>
+                        <netty.version>4.1.44.Final</netty.version>
     </properties>
 
     <profiles>
@@ -52,6 +53,11 @@
     </profiles>
 
     <dependencies>
+    <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-all</artifactId>
+            <version>${netty.version}</version>
+        </dependency>
     <!-- https://mvnrepository.com/artifact/com.google.inject/guice -->
 <dependency>
     <groupId>com.google.inject</groupId>
