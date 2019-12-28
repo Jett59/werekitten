@@ -1,5 +1,7 @@
 package com.mycodefu.werekitten.netty.server;
 
+import java.net.InetSocketAddress;
+
 import com.mycodefu.werekitten.netty.server.NettyServerHandler;
 
 import io.netty.bootstrap.ServerBootstrap;
@@ -46,9 +48,17 @@ public class NettyServer {
                         pipeline.addLast(new HttpServerCodec());
                         pipeline.addLast(new HttpObjectAggregator(65536));
                         pipeline.addLast(new WebSocketServerCompressionHandler());
-                        pipeline.addLast(new NettyServerHandler(ch.id(), allChannels, callback));
+                        pipeline.addLast(new NettyServerHandler(ch.id(), callback));
                     }
                 });
+    }
+
+	public int getPort() {
+        if (serverSocketChannel != null && serverSocketChannel.isOpen()) {
+            return ((InetSocketAddress)serverSocketChannel.localAddress()).getPort();
+        } else {
+            return 0;
+        }
     }
 
 	public void listen() {

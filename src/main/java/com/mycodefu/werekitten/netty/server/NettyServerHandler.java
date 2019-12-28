@@ -37,7 +37,7 @@ public class NettyServerHandler extends SimpleChannelInboundHandler<Object> {
 
 	private void handleWebSocketRequest(ChannelHandlerContext channelHandlerContext, WebSocketFrame msg) {
         String ip = channelHandlerContext.channel().remoteAddress().toString();
-        callback.messageReceived(id, ip, "WebSocket\n" + msg.content().toString(CharsetUtil.UTF_8));
+        callback.messageReceived(id, ip, msg.content().toString(CharsetUtil.UTF_8));
     }
 
     private void handleHttpRequest(ChannelHandlerContext channelHandlerContext, FullHttpRequest msg) {

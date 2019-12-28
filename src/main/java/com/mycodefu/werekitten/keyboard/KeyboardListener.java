@@ -71,11 +71,13 @@ public void keyPressed(KeyCode code) {
 	newValue.set(true);
 	//get the KeyType equivilent of the KeyCode
 	KeyType key = codeToType.get(code);
+	if(key != null) {
 	//replace the value of the KeyType with the newValue
 	typeToDown.replace(key, newValue);
 	//run all of the keyPressedCallbacks, passing the keyType
 	for(KeyboardEventCallback callback : keyPressedCallbackList) {
 		callback.callback(key);
+	}
 	}
 }
 
@@ -86,11 +88,13 @@ public void keyReleased(KeyCode code) {
 	newValue.set(false);
 	//get the KeyType equivilent of the KeyCode
 	KeyType key = codeToType.get(code);
+	if(key != null) {
 	//replace the value of the KeyType with the newValue
 	typeToDown.replace(key, newValue);
 	//run all of the KeyReleasedCallbacks, passing the keyType
 	for(KeyboardEventCallback callback : keyReleasedCallbackList) {
 		callback.callback(key);
+	}
 	}
 }
 
