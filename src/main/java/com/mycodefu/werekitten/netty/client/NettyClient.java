@@ -37,7 +37,7 @@ public class NettyClient {
     /**
      * @param url e.g. ws://127.0.0.1:8080/websocket
      */
-    public WebSocketClient(String url, WebSocketClientHandler.SocketCallback callback) {
+    public NettyClient(String url, NettyClientHandler.SocketCallback callback) {
         this.callback = callback;
         try {
             this.uri = new URI(url);
@@ -98,8 +98,8 @@ public class NettyClient {
             this.group = new NioEventLoopGroup();
             String id = "";
             try {
-                final WebSocketClientHandler handler =
-                        new WebSocketClientHandler(
+                final NettyClientHandler handler =
+                        new NettyClientHandler(
                                 WebSocketClientHandshakerFactory.newHandshaker(
                                         uri, WebSocketVersion.V13, null, true, new DefaultHttpHeaders()),
                                 this.callback
