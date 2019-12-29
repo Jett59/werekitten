@@ -12,6 +12,8 @@ import javafx.animation.TranslateTransition;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
+import javafx.scene.robot.Robot;
 import javafx.util.Duration;
 
 import java.util.ArrayList;
@@ -33,6 +35,7 @@ public class GameUI implements UI {
     List<Animation> catAnimations;
     TranslateTransition jump;
     Group catAnimationGroup;
+    TopBar topBar;
 
     public Scene getScene(int screenWidth, int screenHeight) {
         try {
@@ -124,7 +127,15 @@ public class GameUI implements UI {
                 combinedGroup.getChildren().add(catAnimationGroup);
             }
 
-            Scene s = new Scene(combinedGroup);
+            Pane pane = new Pane();
+
+            topBar = new TopBar(pane);
+            combinedGroup.getChildren().add(topBar);
+
+            pane.getChildren().add(combinedGroup);
+
+
+            Scene s = new Scene(pane);
             return s;
 
 
@@ -144,12 +155,16 @@ public class GameUI implements UI {
     public void moveLeft(int amount) {
         catAnimationGroup.setTranslateX(catAnimationGroup.getTranslateX() - amount);
         playOneAnimation(catAnimations, walkingLeftCat);
+
+        topBar.updateXAmount(catAnimationGroup.getTranslateX());
     }
 
     @Override
     public void moveRight(int amount) {
         catAnimationGroup.setTranslateX(catAnimationGroup.getTranslateX() + amount);
         playOneAnimation(catAnimations, walkingRightCat);
+
+        topBar.updateXAmount(catAnimationGroup.getTranslateX());
     }
 
 @Override
