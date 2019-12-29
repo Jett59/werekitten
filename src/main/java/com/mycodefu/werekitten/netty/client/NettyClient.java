@@ -29,7 +29,7 @@ public class NettyClient {
     final int port;
     final boolean ssl;
     final SslContext sslCtx;
-    final WebSocketClientHandler.SocketCallback callback;
+    final NettyClientHandler.SocketCallback callback;
     private Channel channel;
     private NioEventLoopGroup group;
     private boolean connected;
