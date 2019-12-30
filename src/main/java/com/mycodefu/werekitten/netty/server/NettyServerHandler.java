@@ -13,15 +13,20 @@ import io.netty.handler.codec.http.websocketx.WebSocketServerHandshakerFactory;
 import io.netty.util.CharsetUtil;
 
 public class NettyServerHandler extends SimpleChannelInboundHandler<Object> {
-	private final ChannelId id;
     private final ServerConnectionCallback callback;
 
-	public NettyServerHandler(ChannelId id, ServerConnectionCallback callback) {
-		this.id = id;
+	public NettyServerHandler(ServerConnectionCallback callback) {
 		this.callback = callback;
 	}
 
-	@Override
+    @Override
+    public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+        super.channelInactive(ctx);
+
+        callback.serverConnectionClosed(ctx.channel().id());
+    }
+
+    @Override
 	protected void channelRead0(ChannelHandlerContext ctx, Object msg) throws Exception {
 		if (msg instanceof FullHttpRequest) {
             handleHttpRequest(ctx, (FullHttpRequest) msg);
@@ -31,13 +36,14 @@ public class NettyServerHandler extends SimpleChannelInboundHandler<Object> {
 	}
 
 	public interface ServerConnectionCallback {
-        void connectionReceived(ChannelId id);
-        void messageReceived(ChannelId id, String sourceIpAddress, String message);
+        void serverConnectionOpened(ChannelId id);
+        void serverConnectionMessage(ChannelId id, String sourceIpAddress, String message);
+        void serverConnectionClosed(ChannelId id);
     }
 
 	private void handleWebSocketRequest(ChannelHandlerContext channelHandlerContext, WebSocketFrame msg) {
         String ip = channelHandlerContext.channel().remoteAddress().toString();
-        callback.messageReceived(id, ip, msg.content().toString(CharsetUtil.UTF_8));
+        callback.serverConnectionMessage(channelHandlerContext.channel().id(), ip, msg.content().toString(CharsetUtil.UTF_8));
     }
 
     private void handleHttpRequest(ChannelHandlerContext channelHandlerContext, FullHttpRequest msg) {
@@ -54,7 +60,7 @@ public class NettyServerHandler extends SimpleChannelInboundHandler<Object> {
             if (channelFuture.isSuccess()) {
                 System.out.println(channelHandlerContext.channel() + " Connected");
 
-                callback.connectionReceived(id);
+                callback.serverConnectionOpened(channelHandlerContext.channel().id());
             }
         }
     }

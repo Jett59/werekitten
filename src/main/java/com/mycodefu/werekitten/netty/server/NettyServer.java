@@ -48,7 +48,7 @@ public class NettyServer {
                         pipeline.addLast(new HttpServerCodec());
                         pipeline.addLast(new HttpObjectAggregator(65536));
                         pipeline.addLast(new WebSocketServerCompressionHandler());
-                        pipeline.addLast(new NettyServerHandler(ch.id(), callback));
+                        pipeline.addLast(new NettyServerHandler(callback));
                     }
                 });
     }

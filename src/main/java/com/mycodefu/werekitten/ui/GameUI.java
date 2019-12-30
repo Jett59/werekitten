@@ -13,7 +13,6 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
-import javafx.scene.robot.Robot;
 import javafx.util.Duration;
 
 import java.util.ArrayList;
@@ -23,7 +22,7 @@ import java.util.stream.Collectors;
 
 import static javafx.animation.Animation.INDEFINITE;
 
-public class GameUI implements UI {
+public class GameUI implements UI, UIConnectCallback {
     public static final double CAT_SCALE = 0.5d;
     public static final double SHREW_SCALE = 0.2d;
 
@@ -36,6 +35,7 @@ public class GameUI implements UI {
     TranslateTransition jump;
     Group catAnimationGroup;
     TopBar topBar;
+    private List<UIEventCallback> callbacks = new ArrayList<>();
 
     public Scene getScene(int screenWidth, int screenHeight) {
         try {
@@ -119,7 +119,6 @@ public class GameUI implements UI {
                     addedCat = true;
                 }
 
-
                 combinedGroup.getChildren().add(layerGroup.getGroup());
             }
 
@@ -129,11 +128,10 @@ public class GameUI implements UI {
 
             Pane pane = new Pane();
 
-            topBar = new TopBar(pane);
+            topBar = new TopBar(pane, this);
             combinedGroup.getChildren().add(topBar);
 
             pane.getChildren().add(combinedGroup);
-
 
             Scene s = new Scene(pane);
             return s;
@@ -144,7 +142,6 @@ public class GameUI implements UI {
             throw new RuntimeException("Unable to create game UI scene", e);
         }
     }
-
 
     @Override
     public void jump() {
@@ -167,17 +164,26 @@ public class GameUI implements UI {
         topBar.updateXAmount(catAnimationGroup.getTranslateX());
     }
 
-@Override
-public void stopMovingLeft() {
-	playOneAnimation(catAnimations, idleLeftCat);
-}
-    
-@Override
-public void stopMovingRight() {
-	playOneAnimation(catAnimations, idleRightCat);
-}
+    @Override
+    public void stopMovingLeft() {
+        playOneAnimation(catAnimations, idleLeftCat);
+    }
 
-    
+    @Override
+    public void stopMovingRight() {
+        playOneAnimation(catAnimations, idleRightCat);
+    }
+
+    @Override
+    public void addUIEventListener(UIEventCallback callback) {
+        this.callbacks.add(callback);
+    }
+
+    @Override
+    public void updateConnectionState(boolean connected) {
+        this.topBar.updateConnectionState(connected);
+    }
+
     private Animation playOneAnimation(List<Animation> allAnimations, Animation animationToPlay) {
         for (Animation animation : allAnimations) {
             if (animation == animationToPlay) {
@@ -189,5 +195,23 @@ public void stopMovingRight() {
             }
         }
         return animationToPlay;
+    }
+
+    @Override
+    public void connect(String address) {
+        for (UIEventCallback callback : this.callbacks) {
+            callback.connect(address);
+        }
+    }
+
+    @Override
+    public void disconnect() {
+        for (UIEventCallback callback : this.callbacks) {
+            callback.disconnect();
+        }
+    }
+
+    public void setPort(int port) {
+        this.topBar.setPort(port);
     }
 }
