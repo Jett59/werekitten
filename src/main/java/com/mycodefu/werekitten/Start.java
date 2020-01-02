@@ -96,9 +96,21 @@ public class Start extends Application implements UIEventCallback, NettyClientHa
         keyboardListener.addKeyboardReleasedCallback(type -> {
             if (type.equals(KeyType.left)) {
                 gameLoop.get().addPlayer1Event(PlayerEventType.stopMovingLeft);
+                if(channelId.get() != null) {
+                    server.sendMessage(channelId.get(), type.name());
+                }
+                if(client != null) {
+                    client.sendMessage(type.name());
+                }
             }
             if (type.equals(KeyType.right)) {
                 gameLoop.get().addPlayer1Event(PlayerEventType.stopMovingRight);
+                if(channelId.get() != null) {
+                    server.sendMessage(channelId.get(), type.name());
+                }
+                if(client != null) {
+                    client.sendMessage(type.name());
+                }
             }
         });
 
