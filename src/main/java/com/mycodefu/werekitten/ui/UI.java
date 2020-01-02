@@ -1,15 +1,11 @@
 package com.mycodefu.werekitten.ui;
 
+import com.mycodefu.werekitten.player.Player;
+
 public interface UI {
-    void jump();
+Player getPlayer1();
 
-    void moveLeft(int amount);
-
-    void moveRight(int amount);
-
-    void stopMovingLeft();
-
-    void stopMovingRight();
+Player getPlayer2();
 
     void addUIEventListener(UIEventCallback callback);
 

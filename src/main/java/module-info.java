@@ -7,6 +7,7 @@ open module com.mycodefu.werekitten {
 	requires guice;
 	requires io.netty.all;
     requires com.fasterxml.jackson.databind;
+	requires javafx.base;
 
     exports com.mycodefu.werekitten to guice, java.base;
 }

@@ -46,13 +46,12 @@ public class Start extends Application implements UIEventCallback, NettyClientHa
 
             @Override
             public void serverConnectionClosed(ChannelId id) {
-                gameLoop.get().addPlayerEvent(PlayerEventType.disconnected);
+                
             }
 
             @Override
             public void serverConnectionOpened(ChannelId id) {
                 System.out.println(String.format("recieved connection from %s", id.asLongText()));
-                gameLoop.get().addPlayerEvent(PlayerEventType.connected);
             }
         });
         stage.show();
@@ -141,12 +140,12 @@ public class Start extends Application implements UIEventCallback, NettyClientHa
 
     @Override
     public void clientDisconnected(String id) {
-        gameLoop.get().addPlayerEvent(PlayerEventType.disconnected);
+    	
     }
 
     @Override
     public void clientConnected(String id) {
-        gameLoop.get().addPlayerEvent(PlayerEventType.connected);
+        
     }
 
     @Override

@@ -5,7 +5,5 @@ public enum PlayerEventType {
     moveRight,
     jump,
     stopMovingLeft,
-    stopMovingRight,
-    connected,
-    disconnected,
+    stopMovingRight
 }
