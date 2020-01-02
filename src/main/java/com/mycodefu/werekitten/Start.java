@@ -38,7 +38,7 @@ public class Start extends Application implements UIEventCallback, NettyClientHa
                 PlayerEventType eventType;
                 try {
                     eventType = PlayerEventType.valueOf(message);
-                    gameLoop.get().addPlayerEvent(eventType);
+                    gameLoop.get().addPlayer2Event(eventType);
                 } catch (Exception e) {
                     System.out.println(String.format("message %s is not a valid playEventType", message));
                 }
@@ -79,15 +79,15 @@ public class Start extends Application implements UIEventCallback, NettyClientHa
         gameLoop.get().start();
 
         KeyboardListener keyboardListener = new KeyboardListener(event -> {
-            gameLoop.get().addPlayerEvent(event);
+            gameLoop.get().addPlayer1Event(event);
         });
 
         keyboardListener.addKeyboardReleasedCallback(type -> {
             if (type.equals(KeyType.left)) {
-                gameLoop.get().addPlayerEvent(PlayerEventType.stopMovingLeft);
+                gameLoop.get().addPlayer1Event(PlayerEventType.stopMovingLeft);
             }
             if (type.equals(KeyType.right)) {
-                gameLoop.get().addPlayerEvent(PlayerEventType.stopMovingRight);
+                gameLoop.get().addPlayer1Event(PlayerEventType.stopMovingRight);
             }
         });
 
@@ -154,7 +154,7 @@ public class Start extends Application implements UIEventCallback, NettyClientHa
         PlayerEventType eventType;
         try {
             eventType = PlayerEventType.valueOf(text);
-            gameLoop.get().addPlayerEvent(eventType);
+            gameLoop.get().addPlayer2Event(eventType);
         } catch (Exception e) {
             System.out.println(String.format("message %s is not a valid playEventType", text));
         }

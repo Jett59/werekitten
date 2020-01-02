@@ -32,7 +32,12 @@ public static final int CAT_JUMP_AMOUNT = 300;
             BackgroundObjectBuilder backgroundObjectBuilder = new BackgroundObjectBuilder(new AnimationCompiler());
 
 player1 = Kitten.create(CAT_JUMP_AMOUNT, CAT_HEIGHT, Duration.seconds(1));
-            
+player1.stopMovingRight();
+
+player2 = Kitten.create(CAT_JUMP_AMOUNT, CAT_HEIGHT, Duration.seconds(1));
+player2.moveRight(400);
+player2.stopMovingLeft();
+
             List<NodeObject> possibleCollisions = new ArrayList<>();
 
             Level defaultLevel = LevelReader.read("/level.wkl");
@@ -59,6 +64,7 @@ player1 = Kitten.create(CAT_JUMP_AMOUNT, CAT_HEIGHT, Duration.seconds(1));
             for (LayerGroup layerGroup : layerGroups) {
                 if (layerGroup.getDepth() >= 0 && !addedCat) {
                     combinedGroup.getChildren().add(player1.getGroup());
+                    combinedGroup.getChildren().add(player2.getGroup());
                     addedCat = true;
                 }
 
@@ -67,6 +73,7 @@ player1 = Kitten.create(CAT_JUMP_AMOUNT, CAT_HEIGHT, Duration.seconds(1));
 
             if (!addedCat) {
                 combinedGroup.getChildren().add(player1.getGroup());
+                combinedGroup.getChildren().add(player2.getGroup());
             }
 
             Pane pane = new Pane();

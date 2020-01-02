@@ -75,8 +75,11 @@ runPlayerEvents(player2EventQueue);
     }
     
     //adds a playerEvent to the PlayerEventQueue
-    public void addPlayerEvent(PlayerEventType playerEventType) {
+    public void addPlayer1Event(PlayerEventType playerEventType) {
         player1EventQueue.offer(playerEventType);
+    }
+    public void addPlayer2Event(PlayerEventType playerEventType) {
+        player2EventQueue.offer(playerEventType);
     }
 
     //constructor for the gameLoop class, passing the ui to execute the player commands
