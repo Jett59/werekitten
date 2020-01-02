@@ -3,6 +3,7 @@ package com.mycodefu.werekitten;
 import java.util.concurrent.atomic.AtomicReference;
 
 import com.mycodefu.werekitten.application.GameLoop;
+import com.mycodefu.werekitten.event.NetworkEventType;
 import com.mycodefu.werekitten.event.PlayerEventType;
 import com.mycodefu.werekitten.keyboard.KeyType;
 import com.mycodefu.werekitten.keyboard.KeyboardListener;
@@ -46,12 +47,13 @@ public class Start extends Application implements UIEventCallback, NettyClientHa
 
             @Override
             public void serverConnectionClosed(ChannelId id) {
-                
+                gameLoop.get().addNetworkEvent(NetworkEventType.disconnected);
             }
 
             @Override
             public void serverConnectionOpened(ChannelId id) {
                 System.out.println(String.format("recieved connection from %s", id.asLongText()));
+                gameLoop.get().addNetworkEvent(NetworkEventType.connected);
             }
         });
         stage.show();
@@ -140,12 +142,12 @@ public class Start extends Application implements UIEventCallback, NettyClientHa
 
     @Override
     public void clientDisconnected(String id) {
-    	
+        gameLoop.get().addNetworkEvent(NetworkEventType.disconnected);
     }
 
     @Override
     public void clientConnected(String id) {
-        
+        gameLoop.get().addNetworkEvent(NetworkEventType.connected);
     }
 
     @Override
