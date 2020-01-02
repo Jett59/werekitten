@@ -6,6 +6,7 @@ import com.mycodefu.werekitten.netty.server.NettyServerHandler;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
+import io.netty.channel.ChannelId;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.group.ChannelGroup;
@@ -15,6 +16,8 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpServerCodec;
+import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
+import io.netty.handler.codec.http.websocketx.WebSocketFrame;
 import io.netty.handler.codec.http.websocketx.extensions.compression.WebSocketServerCompressionHandler;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
@@ -81,4 +84,12 @@ public class NettyServer {
         }
     }
 
+    public void sendMessage(ChannelId id, String message) {
+        Channel channel = allChannels.find(id);
+        if (channel != null) {
+            WebSocketFrame frame = new TextWebSocketFrame(message);
+            channel.writeAndFlush(frame);
+        }
+    }
+    
 }

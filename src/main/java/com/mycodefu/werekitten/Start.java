@@ -31,6 +31,8 @@ public class Start extends Application implements UIEventCallback, NettyClientHa
     @SuppressWarnings("exports")
     @Override
     public void start(Stage stage) {
+    	AtomicReference<ChannelId> channelId = new AtomicReference<>();
+    	
         server = new NettyServer(0, new ServerConnectionCallback() {
 
             @Override
@@ -49,9 +51,10 @@ public class Start extends Application implements UIEventCallback, NettyClientHa
             public void serverConnectionClosed(ChannelId id) {
                 gameLoop.get().addNetworkEvent(NetworkEventType.disconnected);
             }
-
+            
             @Override
             public void serverConnectionOpened(ChannelId id) {
+            	channelId.set(id);
                 System.out.println(String.format("recieved connection from %s", id.asLongText()));
                 gameLoop.get().addNetworkEvent(NetworkEventType.connected);
             }
@@ -82,6 +85,12 @@ public class Start extends Application implements UIEventCallback, NettyClientHa
 
         KeyboardListener keyboardListener = new KeyboardListener(event -> {
             gameLoop.get().addPlayer1Event(event);
+            if(channelId.get() != null) {
+            	server.sendMessage(channelId.get(), event.name());
+            }
+            if(client != null) {
+            	client.sendMessage(event.name());
+            }
         });
 
         keyboardListener.addKeyboardReleasedCallback(type -> {
