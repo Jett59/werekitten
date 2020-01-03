@@ -11,7 +11,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
 public class TopBar extends javafx.scene.layout.VBox {
-    public static final String WERE_KITTEN_TITLE = "Welcome to WereKitten! Listing on port: %d, Kitten x: %.0f";
     private final TextField connectionAddress;
     private final Button connectionButton;
     private final FlowPane connectionControls;
@@ -19,16 +18,18 @@ public class TopBar extends javafx.scene.layout.VBox {
     Text title;
     private int port;
     private double x_value;
+    private String localIPAddress;
 
     public TopBar(Pane parent, UIConnectCallback connectCallback){
         super();
         this.setBackground(new Background(new BackgroundFill(Color.WHITE, null, null)));
-        this.setOpacity(0.25);
+        this.setOpacity(0.70);
         this.setMinHeight(25);
         this.setFillWidth(true);
         this.prefWidthProperty().bind(parent.widthProperty());
 
         this.flowLayout = new javafx.scene.layout.FlowPane();
+        this.flowLayout.setHgap(10);
 
         this.port = 0;
         this.x_value = 0;
@@ -47,6 +48,7 @@ public class TopBar extends javafx.scene.layout.VBox {
             }
         });
         this.connectionControls = new FlowPane();
+        this.connectionControls.setHgap(5);
         this.connectionControls.getChildren().add(connectionAddress);
         this.connectionControls.getChildren().add(connectionButton);
 
@@ -60,7 +62,11 @@ public class TopBar extends javafx.scene.layout.VBox {
     }
 
     private void updateTitle() {
-        title.setText(String.format(WERE_KITTEN_TITLE, port, x_value));
+        StringBuilder titleBuilder = new StringBuilder("Welcome to WereKitten!");
+        if (this.port > 0 && this.localIPAddress != null) {
+            titleBuilder.append(String.format(", listening on ws://%s:%d", this.localIPAddress, this.port));
+        }
+        this.title.setText(titleBuilder.toString());
     }
 
     public void updateXAmount(double value) {
@@ -79,6 +85,11 @@ public class TopBar extends javafx.scene.layout.VBox {
 
     public void setPort(int port) {
         this.port = port;
+        updateTitle();
+    }
+
+    public void setLocalIPAddress(String localIPAddress) {
+        this.localIPAddress = localIPAddress;
         updateTitle();
     }
 }

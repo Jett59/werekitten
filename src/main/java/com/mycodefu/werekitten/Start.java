@@ -1,5 +1,9 @@
 package com.mycodefu.werekitten;
 
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.util.Enumeration;
 import java.util.concurrent.atomic.AtomicReference;
 
 import com.mycodefu.werekitten.application.GameLoop;
@@ -129,8 +133,9 @@ public class Start extends Application implements UIEventCallback, NettyClientHa
 
         server.listen();
 
-        System.out.println(server.getPort());
         gameUI.setPort(server.getPort());
+        gameUI.setIP(getLocalIPAddress());
+
     }
 
     public static void main(String[] args) {
@@ -187,5 +192,32 @@ public class Start extends Application implements UIEventCallback, NettyClientHa
     @Override
     public void clientError(String id, Throwable e) {
         System.out.println(e.toString());
+    }
+
+    private static String getLocalIPAddress(){
+        String ip = null;
+        try {
+            Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
+            while (interfaces.hasMoreElements()) {
+                NetworkInterface iface = interfaces.nextElement();
+                // filters out 127.0.0.1 and inactive interfaces
+                if (iface.isLoopback() || !iface.isUp())
+                    continue;
+
+                Enumeration<InetAddress> addresses = iface.getInetAddresses();
+                while(addresses.hasMoreElements()) {
+                    InetAddress addr = addresses.nextElement();
+                    ip = addr.getHostAddress();
+                    System.out.println(iface.getDisplayName() + " " + ip);
+                }
+            }
+            if (ip==null){
+                throw new SocketException("No interface found");
+            }
+            return ip;
+
+        } catch (SocketException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

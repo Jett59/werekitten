@@ -20,8 +20,8 @@ import java.util.stream.Collectors;
 
 public class GameUI implements UI, UIConnectCallback {
     public static final int CAT_HEIGHT = 100;
-public static final int CAT_JUMP_AMOUNT = 300;
-    
+    public static final int CAT_JUMP_AMOUNT = 300;
+
     Player player1;
     Player player2;
     TopBar topBar;
@@ -31,12 +31,12 @@ public static final int CAT_JUMP_AMOUNT = 300;
         try {
             BackgroundObjectBuilder backgroundObjectBuilder = new BackgroundObjectBuilder(new AnimationCompiler());
 
-player1 = Kitten.create(CAT_JUMP_AMOUNT, CAT_HEIGHT, Duration.seconds(1));
-player1.stopMovingRight();
+            player1 = Kitten.create(CAT_JUMP_AMOUNT, CAT_HEIGHT, Duration.seconds(1));
+            player1.stopMovingRight();
 
-player2 = Kitten.create(CAT_JUMP_AMOUNT, CAT_HEIGHT, Duration.seconds(1));
-player2.moveRight(400);
-player2.stopMovingLeft();
+            player2 = Kitten.create(CAT_JUMP_AMOUNT, CAT_HEIGHT, Duration.seconds(1));
+            player2.moveRight(400);
+            player2.stopMovingLeft();
 
             List<NodeObject> possibleCollisions = new ArrayList<>();
 
@@ -121,13 +121,17 @@ player2.stopMovingLeft();
         this.topBar.setPort(port);
     }
 
-	@Override
-	public Player getPlayer1() {
-		return player1;
-	}
+    @Override
+    public Player getPlayer1() {
+        return player1;
+    }
 
-	@Override
-	public Player getPlayer2() {
-		return player2;
-	}
+    @Override
+    public Player getPlayer2() {
+        return player2;
+    }
+
+    public void setIP(String localIPAddress) {
+        this.topBar.setLocalIPAddress(localIPAddress);
+    }
 }
