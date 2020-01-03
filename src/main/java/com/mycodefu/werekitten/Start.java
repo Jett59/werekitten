@@ -210,8 +210,8 @@ public class Start extends Application implements UIEventCallback, NettyClientHa
                     InetAddress addr = addresses.nextElement();
                     if (addr instanceof Inet6Address) continue;
                     ip = addr.getHostAddress();
-
                     System.out.println(iface.getDisplayName() + " " + ip);
+                    break;
                 }
             }
             if (ip==null){
