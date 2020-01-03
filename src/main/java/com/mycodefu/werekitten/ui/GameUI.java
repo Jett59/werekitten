@@ -32,12 +32,16 @@ public class GameUI implements UI, UIConnectCallback {
             BackgroundObjectBuilder backgroundObjectBuilder = new BackgroundObjectBuilder(new AnimationCompiler());
 
             player1 = Kitten.create(CAT_JUMP_AMOUNT, CAT_HEIGHT, Duration.seconds(1));
+            player1.getGroup().setLayoutX(screenWidth/2);
+            player1.getGroup().setLayoutY(screenHeight-(348+CAT_HEIGHT));
             player1.stopMovingRight();
 
             player2 = Kitten.create(CAT_JUMP_AMOUNT, CAT_HEIGHT, Duration.seconds(1));
-            player2.moveRight(400);
+            player2.getGroup().setLayoutX(screenWidth/2);
+            player2.getGroup().setLayoutY(screenHeight-(348+CAT_HEIGHT));
             player2.stopMovingLeft();
-
+            player2.getGroup().setVisible(false);
+            
             List<NodeObject> possibleCollisions = new ArrayList<>();
 
             Level defaultLevel = LevelReader.read("/level.wkl");
