@@ -30,7 +30,7 @@ Player(Animation idleRight, Animation idleLeft, Animation walkRight, Animation w
 	
 	jump = new TranslateTransition(Duration.millis(150), animationGroup);
     jump.interpolatorProperty().set(Interpolator.SPLINE(.1, .1, .7, .7));
-    jump.setByY(jumpAmount);
+    jump.setByY(-jumpAmount);
     jump.setAutoReverse(true);
     jump.setCycleCount(2);
 }
