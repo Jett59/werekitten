@@ -1,5 +1,6 @@
 package com.mycodefu.werekitten;
 
+import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
@@ -207,7 +208,9 @@ public class Start extends Application implements UIEventCallback, NettyClientHa
                 Enumeration<InetAddress> addresses = iface.getInetAddresses();
                 while(addresses.hasMoreElements()) {
                     InetAddress addr = addresses.nextElement();
+                    if (addr instanceof Inet6Address) continue;
                     ip = addr.getHostAddress();
+
                     System.out.println(iface.getDisplayName() + " " + ip);
                 }
             }
