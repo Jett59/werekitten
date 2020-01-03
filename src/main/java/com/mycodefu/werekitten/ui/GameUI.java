@@ -105,6 +105,7 @@ public class GameUI implements UI, UIConnectCallback {
     @Override
     public void updateConnectionState(boolean connected) {
         this.topBar.updateConnectionState(connected);
+        this.player2.getGroup().setVisible(connected);
     }
 
     @Override
