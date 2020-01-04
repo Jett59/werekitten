@@ -38,7 +38,7 @@ public class TopBar extends javafx.scene.layout.VBox {
         title.setFill(Color.BLACK);
         this.flowLayout.getChildren().add(title);
 
-        this.connectionAddress = new javafx.scene.control.TextField("ws://127.0.0.1:50000");
+        this.connectionAddress = new javafx.scene.control.TextField("ws://127.0.0.1:");
         this.connectionButton = new javafx.scene.control.Button("Connect");
         this.connectionButton.setOnAction(actionEvent -> {
             if (this.connectionButton.getText().equalsIgnoreCase("Connect")) {
@@ -57,6 +57,8 @@ public class TopBar extends javafx.scene.layout.VBox {
         this.getChildren().add(flowLayout);
 
         updateTitle();
+        
+        updateConnectionAddressBoxText();
 
         this.setAlignment(Pos.CENTER_LEFT);
     }
@@ -66,9 +68,21 @@ public class TopBar extends javafx.scene.layout.VBox {
         if (this.port > 0 && this.localIPAddress != null) {
             titleBuilder.append(String.format(", listening on ws://%s:%d", this.localIPAddress, this.port));
         }
+        System.out.println("port: "+port);
         this.title.setText(titleBuilder.toString());
     }
 
+    private void updateConnectionAddressBoxText() {
+    	StringBuilder connectionBoxTextBuilder = new StringBuilder("ws://127.0.0.1:");
+    	if(this.port > 0) {
+    		connectionBoxTextBuilder.append(port);
+    	}else {
+    		connectionBoxTextBuilder.append(50000);
+    		System.out.println("using port 50000, port value: "+port);
+    	}
+    	this.connectionAddress.setText(connectionBoxTextBuilder.toString());
+    }
+    
     public void updateXAmount(double value) {
         this.x_value = value;
         updateTitle();
@@ -86,6 +100,7 @@ public class TopBar extends javafx.scene.layout.VBox {
     public void setPort(int port) {
         this.port = port;
         updateTitle();
+        updateConnectionAddressBoxText();
     }
 
     public void setLocalIPAddress(String localIPAddress) {
