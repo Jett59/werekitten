@@ -12,7 +12,7 @@
         <junit-platform.version>5.3.1</junit-platform.version>
         <jackson.version>2.10.1</jackson.version>
         <javafx.version>13.0.1</javafx.version>
-                        <netty.version>4.1.44.Final</netty.version>
+        <netty.version>4.1.44.Final</netty.version>
     </properties>
 
     <profiles>
@@ -25,6 +25,7 @@
             </activation>
             <properties>
                 <javafx.classifier>win</javafx.classifier>
+                <jni.classifier>windows-x86_64</jni.classifier>
             </properties>
         </profile>
         <profile>
@@ -36,6 +37,7 @@
             </activation>
             <properties>
                 <javafx.classifier>mac</javafx.classifier>
+                <jni.classifier>osx-x86_64</jni.classifier>
             </properties>
         </profile>
         <profile>
@@ -48,28 +50,28 @@
             </activation>
             <properties>
                 <javafx.classifier>linux</javafx.classifier>
+                <jni.classifier>linux-x86_64</jni.classifier>
             </properties>
         </profile>
     </profiles>
 
     <dependencies>
-    <dependency>
+        <dependency>
             <groupId>io.netty</groupId>
-            <artifactId>netty-all</artifactId>
+            <artifactId>netty-common</artifactId>
             <version>${netty.version}</version>
         </dependency>
-    <!-- https://mvnrepository.com/artifact/com.google.inject/guice -->
-<dependency>
-    <groupId>com.google.inject</groupId>
-    <artifactId>guice</artifactId>
-    <version>4.0</version>
-</dependency>
-    <dependency>
-    <groupId>org.mockito</groupId>
-    <artifactId>mockito-core</artifactId>
-    <version>3.2.0</version>
-    <scope>test</scope>
-    </dependency>
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-codec-http</artifactId>
+            <version>${netty.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>3.2.0</version>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>

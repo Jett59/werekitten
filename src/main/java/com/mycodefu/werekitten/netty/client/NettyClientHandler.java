@@ -2,6 +2,7 @@ package com.mycodefu.werekitten.netty.client;
 
 import java.util.UUID;
 
+import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelHandlerContext;
@@ -67,9 +68,10 @@ public class NettyClientHandler extends SimpleChannelInboundHandler<Object> {
 
         if (msg instanceof FullHttpResponse) {
             FullHttpResponse response = (FullHttpResponse) msg;
+            ByteBuf content = response.content();
             IllegalStateException illegalStateException = new IllegalStateException(
                     "Unexpected FullHttpResponse (getStatus=" + response.status() +
-                            ", content=" + response.content().toString(CharsetUtil.UTF_8) + ')');
+                            ", content=" + content.toString(CharsetUtil.UTF_8) + ')');
             callback.clientError(id, illegalStateException);
             throw illegalStateException;
         }
