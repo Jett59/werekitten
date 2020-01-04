@@ -3,9 +3,10 @@ set -x
 
 export JAVA_HOME=$(cat JAVA_HOME.txt)
 
-MAVEN_TAR="apache-maven-3.6.2-bin.tar.gz"
-MAVEN_DIR="apache-maven-3.6.2"
-wget "http://apache.mirror.digitalpacific.com.au/maven/maven-3/3.6.2/binaries/${MAVEN_TAR}"
+MAVEN_VERSION="3.6.3"
+MAVEN_TAR="apache-maven-${MAVEN_VERSION}-bin.tar.gz"
+MAVEN_DIR="apache-maven-${MAVEN_VERSION}"
+wget "http://mirror.intergrid.com.au/apache/maven/maven-3/${MAVEN_VERSION}/binaries/${MAVEN_TAR}"
 tar xzf "${MAVEN_TAR}"
 
 export MAVEN_HOME="$(pwd)/${MAVEN_DIR}"
