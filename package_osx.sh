@@ -12,6 +12,7 @@ $MAVEN_HOME/bin/mvn clean package
 
 ${JPACKAGE_HOME}/Contents/Home/bin/jpackage \
       --name WereKitten \
+      -d ./target/jpackage-app \
       --input ./target/release-directory \
       --description "A game where you control a cat and go on deadly quests." \
       --app-version 1.0 \

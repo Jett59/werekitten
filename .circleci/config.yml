@@ -68,7 +68,7 @@ jobs:
 
       - persist_to_workspace:
           root: ~/
-          paths: project/target/WereKitten-1.0.dmg
+          paths: project/target/jpackage-app/WereKitten-1.0.dmg
 
   build-windows-installer:
     machine:
@@ -113,14 +113,14 @@ jobs:
             ./package_win64.sh
 
       - store_artifacts:
-          path: .\target\WereKitten-1.0.msi
+          path: .\target\jpackage-app\WereKitten-1.0.msi
           destination: WereKitten-1.0.msi
 
       - run:
           name: Test installer
           shell: powershell.exe
           command: |
-            Start-Process msiexec.exe -Wait -ArgumentList '/I C:\Users\circleci\project\target\WereKitten-1.0.msi /quiet /L*V msilog.txt'
+            Start-Process msiexec.exe -Wait -ArgumentList '/I C:\Users\circleci\project\target\jpackage-app\WereKitten-1.0.msi /quiet /L*V msilog.txt'
             if(![System.IO.File]::Exists('C:\Program Files\WereKitten\WereKitten.exe')){throw (New-Object System.IO.FileNotFoundException("Installed file not found!"))}
 
       - store_artifacts:
@@ -129,7 +129,7 @@ jobs:
 
       - persist_to_workspace:
           root: ~/
-          paths: project\target\WereKitten-1.0.msi
+          paths: project\target\jpackage-app\WereKitten-1.0.msi
 
   publish-github-release:
     docker:

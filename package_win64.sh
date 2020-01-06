@@ -14,6 +14,7 @@ mvn clean package
 
 ${JPACKAGE_HOME}/bin/jpackage \
       --type msi \
+      -d ./target/jpackage-app \
       --name WereKitten \
       --input ./target/release-directory \
       --description "A game where you control a cat and go on deadly quests." \
