@@ -23,8 +23,8 @@ public static Kitten create(int jumpAmount, int height, Duration duration) {
 	Animation idleRight = animationCompiler.compileAnimation("cat", "Idle", 10, duration, false, height, "height");
 	
 	Animation idleLeft = animationCompiler.compileAnimation("cat", "Idle", 10, duration, true, height, "height");
-	Animation walkRight = animationCompiler.compileAnimation("cat", "walk", 10, duration, false, height, "height");
-	Animation walkLeft = animationCompiler.compileAnimation("cat", "walk", 10, duration, true, height, "height");
+	Animation walkRight = animationCompiler.compileAnimation("cat", "Walk", 10, duration, false, height, "height");
+	Animation walkLeft = animationCompiler.compileAnimation("cat", "Walk", 10, duration, true, height, "height");
 	
 	addPropertiesToAnimation(idleRight, -1, Interpolator.LINEAR);
 	addPropertiesToAnimation(idleLeft, -1, Interpolator.LINEAR);
