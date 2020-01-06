@@ -167,9 +167,11 @@
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>3.1.2</version>
                 <configuration>
-                    <outputDirectory>${project.build.directory}/jpackage-app</outputDirectory>
+                    <outputDirectory>${project.build.directory}/release-directory</outputDirectory>
                     <archive>
                         <manifest>
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>lib/</classpathPrefix>
                             <mainClass>com.mycodefu.werekitten.Start</mainClass>
                         </manifest>
                     </archive>
@@ -188,7 +190,7 @@
                         </goals>
                         <configuration>
                             <includeScope>runtime</includeScope>
-                            <outputDirectory>${project.build.directory}/jpackage-app/lib</outputDirectory>
+                            <outputDirectory>${project.build.directory}/release-directory/lib</outputDirectory>
                         </configuration>
                     </execution>
                 </executions>

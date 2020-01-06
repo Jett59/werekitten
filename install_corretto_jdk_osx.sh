@@ -8,7 +8,7 @@ CORRETTO_VERSION_EXTRACTED_PATH="amazon-corretto-11.jdk"
 rm -rf ./${CORRETTO_VERSION_EXTRACTED_PATH}
 rm -rf ./${CORRETTO_TAR_VERSION}
 
-wget "https://d3pxv6yz143wms.cloudfront.net/${CORRETTO_VERSION}/${CORRETTO_TAR_VERSION}"
+wget "https://corretto.aws/downloads/resources/${CORRETTO_VERSION}/${CORRETTO_TAR_VERSION}"
 tar xzf "${CORRETTO_TAR_VERSION}"
 
 export JAVA_HOME="$(pwd)/${CORRETTO_VERSION_EXTRACTED_PATH}/Contents/Home"

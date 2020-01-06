@@ -13,7 +13,7 @@ function mvn {
 mvn clean package
 
 ${JPACKAGE_HOME}/bin/jpackage --type msi \
-    -d ./target/jpackage-app \
+    -d ./target/release-directory \
     -n WereKitten \
     --description "A game where you control a cat and go on deadly quests." \
     --resource-dir ./src/main/deploy/jpackage \
