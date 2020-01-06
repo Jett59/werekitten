@@ -43,11 +43,23 @@ jobs:
             HOMEBREW_NO_AUTO_UPDATE=1 brew install wget
 
       - run:
-          name: Run build
+          name: Download Corretto JDK
           command: |
             ./install_corretto_jdk_osx.sh
+
+      - run:
+          name: Install Maven
+          command: |
             ./install_maven_osx.sh
+
+      - run:
+          name: Download JDK 14 early access
+          command: |
             ./download_jdk_osx.sh
+
+      - run:
+          name: Build app + Package installer
+          command: |
             ./package_osx.sh
 
       - store_artifacts:
