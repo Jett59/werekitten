@@ -12,11 +12,19 @@ export MAVEN_OPTS=-"Xmx3072m -XX:MaxPermSize=512m -XX:+CMSClassUnloadingEnabled 
 
 ${JPACKAGE_HOME}/Contents/Home/bin/jpackage \
       --name WereKitten \
-      --runtime-image ./amazon-corretto-11.jdk/Contents/Home \
       --input ./target/release-directory \
+      --description "A game where you control a cat and go on deadly quests." \
+      --app-version 1.0 \
+      --license-file ./LICENSE \
+      --icon ./src/main/resources/icons/app.ico \
+      --copyright "2019 Jett Thompson" \
+      --vendor "Jett Thompson" \
       --main-jar WereKitten.jar \
+      --module-path ./target/release-directory/lib \
+      --add-modules javafx.controls \
       --verbose
 #      --resource-dir ./src/main/deploy/jpackage \
+#      --runtime-image ./amazon-corretto-11.jdk/Contents/Home \
 
 #${JPACKAGE_HOME}/Contents/Home/bin/jpackage \
 #      --name WereKitten \

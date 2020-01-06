@@ -36,8 +36,8 @@ public class Start extends Application implements UIEventCallback, NettyClientHa
     @SuppressWarnings("exports")
     @Override
     public void start(Stage stage) {
-    	AtomicReference<ChannelId> channelId = new AtomicReference<>();
-    	
+        AtomicReference<ChannelId> channelId = new AtomicReference<>();
+
         server = new NettyServer(0, new ServerConnectionCallback() {
 
             @Override
@@ -56,10 +56,10 @@ public class Start extends Application implements UIEventCallback, NettyClientHa
             public void serverConnectionClosed(ChannelId id) {
                 gameLoop.get().addNetworkEvent(NetworkEventType.disconnected);
             }
-            
+
             @Override
             public void serverConnectionOpened(ChannelId id) {
-            	channelId.set(id);
+                channelId.set(id);
                 System.out.println(String.format("recieved connection from %s", id.asLongText()));
                 gameLoop.get().addNetworkEvent(NetworkEventType.connected);
             }
@@ -90,30 +90,30 @@ public class Start extends Application implements UIEventCallback, NettyClientHa
 
         KeyboardListener keyboardListener = new KeyboardListener(event -> {
             gameLoop.get().addPlayer1Event(event);
-            if(channelId.get() != null) {
-            	server.sendMessage(channelId.get(), event.name());
+            if (channelId.get() != null) {
+                server.sendMessage(channelId.get(), event.name());
             }
-            if(client != null) {
-            	client.sendMessage(event.name());
+            if (client != null) {
+                client.sendMessage(event.name());
             }
         });
 
         keyboardListener.addKeyboardReleasedCallback(type -> {
             if (type.equals(KeyType.left)) {
                 gameLoop.get().addPlayer1Event(PlayerEventType.stopMovingLeft);
-                if(channelId.get() != null) {
+                if (channelId.get() != null) {
                     server.sendMessage(channelId.get(), type.name());
                 }
-                if(client != null) {
+                if (client != null) {
                     client.sendMessage(type.name());
                 }
             }
             if (type.equals(KeyType.right)) {
                 gameLoop.get().addPlayer1Event(PlayerEventType.stopMovingRight);
-                if(channelId.get() != null) {
+                if (channelId.get() != null) {
                     server.sendMessage(channelId.get(), type.name());
                 }
-                if(client != null) {
+                if (client != null) {
                     client.sendMessage(type.name());
                 }
             }
@@ -195,7 +195,7 @@ public class Start extends Application implements UIEventCallback, NettyClientHa
         System.out.println(e.toString());
     }
 
-    private static String getLocalIPAddress(){
+    private static String getLocalIPAddress() {
         String ip = null;
         try {
             Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
@@ -206,7 +206,7 @@ public class Start extends Application implements UIEventCallback, NettyClientHa
                     continue;
 
                 Enumeration<InetAddress> addresses = iface.getInetAddresses();
-                while(addresses.hasMoreElements()) {
+                while (addresses.hasMoreElements()) {
                     InetAddress addr = addresses.nextElement();
                     if (addr instanceof Inet6Address) continue;
                     ip = addr.getHostAddress();
@@ -214,13 +214,14 @@ public class Start extends Application implements UIEventCallback, NettyClientHa
                     break;
                 }
             }
-            if (ip==null){
-                throw new SocketException("No interface found");
+            if (ip == null) {
+                ip = "127.0.0.1";
             }
             return ip;
 
         } catch (SocketException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            return "127.0.0.1";
         }
     }
 }
