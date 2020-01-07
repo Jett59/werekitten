@@ -91,10 +91,12 @@ public class Start extends Application implements UIEventCallback, NettyClientHa
         KeyboardListener keyboardListener = new KeyboardListener(event -> {
             gameLoop.get().addPlayer1Event(event);
             if (channelId.get() != null) {
-                server.sendMessage(channelId.get(), event.name());
+            	String message = event.toString();
+                server.sendMessage(channelId.get(), message);
             }
             if (client != null) {
-                client.sendMessage(event.name());
+            	String message = event.toString();
+                client.sendMessage(message);
             }
         });
 
@@ -102,19 +104,19 @@ public class Start extends Application implements UIEventCallback, NettyClientHa
             if (type.equals(KeyType.left)) {
                 gameLoop.get().addPlayer1Event(PlayerEventType.stopMovingLeft);
                 if (channelId.get() != null) {
-                    server.sendMessage(channelId.get(), type.name());
+                    server.sendMessage(channelId.get(), PlayerEventType.stopMovingLeft.toString());
                 }
                 if (client != null) {
-                    client.sendMessage(type.name());
+                    client.sendMessage(PlayerEventType.stopMovingLeft.toString());
                 }
             }
             if (type.equals(KeyType.right)) {
                 gameLoop.get().addPlayer1Event(PlayerEventType.stopMovingRight);
                 if (channelId.get() != null) {
-                    server.sendMessage(channelId.get(), type.name());
+                    server.sendMessage(channelId.get(), PlayerEventType.stopMovingRight.toString());
                 }
                 if (client != null) {
-                    client.sendMessage(type.name());
+                    client.sendMessage(PlayerEventType.stopMovingRight.toString());
                 }
             }
         });
