@@ -17,7 +17,7 @@ ${JPACKAGE_HOME}/bin/jpackage \
       -d ./target/jpackage-app \
       --name WereKitten \
       --input ./target/release-directory \
-      --description "A game where you control a cat and go on deadly quests." \
+      --description "a game where you control a cat and fight for territory" \
       --app-version 1.0 \
       --license-file ./LICENSE \
       --icon ./src/main/resources/icons/app.ico \
