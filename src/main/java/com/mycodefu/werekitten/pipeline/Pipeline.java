@@ -9,12 +9,12 @@ public class Pipeline {
     private final Queue<PipelineEvent> eventQueue;
     private final PipelineHandler[] handlers;
     private final int eventsToRunPerFrame;
+    private String name;
     private final PipelineContext context;
-    private final PipelineEventType pipelineEventType;
 
-    public Pipeline(PipelineEventType pipelineEventType, PipelineContext context, int eventsToRunPerFrame, PipelineHandler... handlers) {
+    public Pipeline(String name, PipelineContext context, int eventsToRunPerFrame, PipelineHandler... handlers) {
+        this.name = name;
         this.context = context;
-        this.pipelineEventType = pipelineEventType;
         if (handlers == null || handlers.length == 0) {
             throw new IllegalArgumentException("Handlers may not be null or empty.");
         } else {
@@ -32,8 +32,8 @@ public class Pipeline {
         this.eventQueue = new ConcurrentLinkedQueue<>();
     }
 
-    public PipelineEventType getPipelineEventType() {
-        return pipelineEventType;
+    public String getName() {
+        return name;
     }
 
     public void processEvents() {
