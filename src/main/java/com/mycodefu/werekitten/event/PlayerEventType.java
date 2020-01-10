@@ -1,9 +1,14 @@
 package com.mycodefu.werekitten.event;
 
-public enum PlayerEventType {
+public enum PlayerEventType implements Event{
     moveLeft,
     moveRight,
     jump,
     stopMovingLeft,
-    stopMovingRight
+    stopMovingRight;
+
+	@Override
+	public String getName() {
+		return toString();
+	}
 }

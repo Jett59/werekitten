@@ -1,6 +1,12 @@
 package com.mycodefu.werekitten.event;
 
-public enum NetworkEventType {
+public enum NetworkEventType implements Event{
     connected,
-    disconnected,
+    disconnected;
+
+	@Override
+	public String getName() {
+		return toString();
+	}
+
 }
