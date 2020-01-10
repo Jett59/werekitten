@@ -23,6 +23,9 @@ public static void playLevel() {
 	}, "level theme thread").start();
 	levelTheme.stop();
 }
+public static void stopPlayingLevel() {
+	shouldPlayLevel = false;
+}
 private static Clip gameThemeInit(String themeName) {
 	try {
 		InputStream in = new MusicPlayer().getClass().getResourceAsStream("/music/"+themeName+".wav");

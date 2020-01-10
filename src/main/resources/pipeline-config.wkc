@@ -5,6 +5,7 @@
       "eventsToRunPerFrame": 1,
       "handlers": [
         "com.mycodefu.werekitten.pipeline.handlers.game.UICreationHandler",
+        "com.mycodefu.werekitten.pipeline.handlers.game.MusicHandler",
         "com.mycodefu.werekitten.pipeline.handlers.game.WindowCloseHandler"
       ]
     }

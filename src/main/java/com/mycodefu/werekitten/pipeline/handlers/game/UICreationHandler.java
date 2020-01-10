@@ -11,10 +11,12 @@ public class UICreationHandler implements PipelineHandler {
     	if(event.getPipelineName().equalsIgnoreCase("game")) {
     		switch (event.getEvent().getName()) {
     		case "start": {
+    			context.getStage().setTitle("werekitten");
+    			context.getStage().setMaximized(true);
     			context.getStage().show();
     			context.getStage().setScene(
     					new GameUI()
-    					.getScene(1024, 768)
+    					.getScene((int)context.getStage().getWidth(), (int)context.getStage().getHeight())
     					);
     			break;
     		}
