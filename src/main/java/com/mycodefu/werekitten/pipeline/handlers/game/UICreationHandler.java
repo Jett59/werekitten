@@ -13,6 +13,6 @@ public class UICreationHandler implements PipelineHandler {
 
     @Override
     public void handleEvent(PipelineContext context, PipelineEvent event) {
-
+        System.out.println("Starting game!!");
     }
 }
