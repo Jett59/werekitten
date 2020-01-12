@@ -7,8 +7,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import com.mycodefu.werekitten.event.PlayerEventType;
-
 import javafx.animation.AnimationTimer;
 import javafx.scene.input.KeyCode;
 
@@ -21,7 +19,7 @@ private List<KeyboardEventCallback> keyReleasedCallbackList = new CopyOnWriteArr
 private List<KeyboardEventCallback> keyPressedCallbackList = new CopyOnWriteArrayList<>();
 
 public static interface KeyboardEventHandler{
-	void raiseEvent(PlayerEventType type);
+	void raiseEvent(KeyType type);
 }
 
 public static interface KeyboardEventCallback{
@@ -48,15 +46,15 @@ public void startListening() {
 			//check if any of the keys in typeToDown are down
 			if(typeToDown.get(KeyType.left).get()) {
 				//raise an event using the eventHandler passed in the constructor
-				eventHandler.raiseEvent(PlayerEventType.moveLeft);
+				eventHandler.raiseEvent(KeyType.left);
 			}
 			if(typeToDown.get(KeyType.right).get()) {
 				//raise an event using the eventHandler passed in the constructor
-				eventHandler.raiseEvent(PlayerEventType.moveRight);
+				eventHandler.raiseEvent(KeyType.right);
 			}
 			if(typeToDown.get(KeyType.space).get()) {
 				//raise an event using the eventHandler passed in the constructor
-				eventHandler.raiseEvent(PlayerEventType.jump);
+				eventHandler.raiseEvent(KeyType.space);
 			}
 		}
 		
