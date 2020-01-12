@@ -27,7 +27,7 @@ public class UICreationHandler implements PipelineHandler {
     		}
     		
     		default:
-    			throw new IllegalArgumentException("gameEventType "+event.getEvent().getName()+" could not be determined");
+    			break;
     		}
     	}
     }

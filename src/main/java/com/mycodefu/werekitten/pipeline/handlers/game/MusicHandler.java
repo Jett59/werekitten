@@ -25,7 +25,7 @@ public class MusicHandler implements PipelineHandler{
 			}
 			
 			default:
-				throw new IllegalArgumentException("the event "+event.getEvent().getName()+" could not be determined");
+				break;
 			}
 		}
 	}

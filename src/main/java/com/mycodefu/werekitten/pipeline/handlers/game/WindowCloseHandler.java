@@ -21,7 +21,7 @@ public class WindowCloseHandler implements PipelineHandler {
                     System.exit(0);
                 }
                 default:
-                    throw new IllegalArgumentException("gameEventType: " + event.getEvent().getName() + " could not be determined");
+                    break;
             }
         } else {
             throw new IllegalArgumentException("the eventType " + event.getPipelineName() + " is not allowed in the handler windowCloseHandler");
