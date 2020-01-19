@@ -8,6 +8,8 @@ import com.mycodefu.werekitten.pipeline.config.PipelineConfig;
 import com.mycodefu.werekitten.pipeline.config.PipelineConfiguration;
 import com.mycodefu.werekitten.pipeline.events.game.StartGameEvent;
 import com.mycodefu.werekitten.pipeline.handlers.PipelineHandler;
+import com.mycodefu.werekitten.player.Player;
+
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -44,7 +46,6 @@ public class Start extends Application implements PipelineContext {
                 }
             }
             pipelines.put(name, new Pipeline(name, this, pipelineConfiguration.getEventsToRunPerFrame(), handlers.toArray(new PipelineHandler[]{})));
-
         }
     }
 
@@ -76,4 +77,11 @@ public class Start extends Application implements PipelineContext {
     public void postEvent(PipelineEvent event) {
         pipelines.get(event.getPipelineName()).addEvent(event);
     }
+
+    private Map<String, Player> playerMap = new HashMap<>();
+    
+	@Override
+	public Map<String, Player> getPlayerMap() {
+		return playerMap;
+	}
 }

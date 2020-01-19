@@ -9,6 +9,13 @@
         "com.mycodefu.werekitten.pipeline.handlers.game.MusicHandler",
         "com.mycodefu.werekitten.pipeline.handlers.game.WindowCloseHandler"
       ]
+    },
+    {
+    "name": "keyboard",
+    "eventsToRunPerFrame": 10,
+    "handlers": [
+    "com.mycodefu.werekitten.pipeline.handlers.keyboard.PlayerKeyboardHandler"
+    ]
     }
   ]
 }
