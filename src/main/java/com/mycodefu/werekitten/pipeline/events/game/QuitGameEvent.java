@@ -1,9 +1,11 @@
 package com.mycodefu.werekitten.pipeline.events.game;
 
+import com.mycodefu.werekitten.event.Event;
 import com.mycodefu.werekitten.event.GameEventType;
 
 public class QuitGameEvent extends GameEvent {
-    public QuitGameEvent() {
-        super(GameEventType.quit);
+    @Override
+    public Event getEvent() {
+        return GameEventType.quit;
     }
 }
