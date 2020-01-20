@@ -23,7 +23,8 @@ public class Start extends Application implements PipelineContext {
     private final Map<String, Pipeline> pipelines;
     private Stage stage;
 
-    public Start() {
+    @SuppressWarnings("deprecation")
+	public Start() {
         this.pipelines = new HashMap<>();
         PipelineConfig config = PipelineConfig.read();
         for (int i = 0; i < config.getPipelines().size(); i++) {
@@ -50,7 +51,7 @@ public class Start extends Application implements PipelineContext {
     }
 
     @Override
-    public void start(Stage stage) {
+    public void start(@SuppressWarnings("exports") Stage stage) {
         this.stage = stage;
         this.postEvent(new StartGameEvent());
 
@@ -68,18 +69,21 @@ public class Start extends Application implements PipelineContext {
         launch(args);
     }
 
-    @Override
+    @SuppressWarnings("exports")
+	@Override
     public Stage getStage() {
         return this.stage;
     }
 
-    @Override
+    @SuppressWarnings("exports")
+	@Override
     public void postEvent(PipelineEvent event) {
         pipelines.get(event.getPipelineName()).addEvent(event);
     }
 
     private Map<String, Player> playerMap = new HashMap<>();
     
+	@SuppressWarnings("exports")
 	@Override
 	public Map<String, Player> getPlayerMap() {
 		return playerMap;

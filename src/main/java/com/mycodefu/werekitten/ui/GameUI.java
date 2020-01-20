@@ -5,14 +5,11 @@ import com.mycodefu.werekitten.backgroundObjects.BackgroundObjectBuilder;
 import com.mycodefu.werekitten.backgroundObjects.NodeObject;
 import com.mycodefu.werekitten.level.LevelReader;
 import com.mycodefu.werekitten.level.data.Level;
-import com.mycodefu.werekitten.player.Kitten;
 import com.mycodefu.werekitten.player.Player;
 import com.mycodefu.werekitten.slide.LayerGroup;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
-import javafx.util.Duration;
-
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -22,25 +19,15 @@ public class GameUI implements UI, UIConnectCallback {
     public static final int CAT_HEIGHT = 100;
     public static final int CAT_JUMP_AMOUNT = 300;
 
-    Player player1;
-    Player player2;
-    TopBar topBar;
+    private Group playerGroup = new Group();
+    private TopBar topBar;
     private List<UIEventCallback> callbacks = new ArrayList<>();
 
     public Scene getScene(int screenWidth, int screenHeight) {
         try {
             BackgroundObjectBuilder backgroundObjectBuilder = new BackgroundObjectBuilder(new AnimationCompiler());
 
-            player1 = Kitten.create(CAT_JUMP_AMOUNT, CAT_HEIGHT, Duration.seconds(1));
-            player1.getGroup().setLayoutX(screenWidth/2);
-            player1.getGroup().setLayoutY(screenHeight-(348+CAT_HEIGHT));
-            player1.stopMovingRight();
-
-            player2 = Kitten.create(CAT_JUMP_AMOUNT, CAT_HEIGHT, Duration.seconds(1));
-            player2.getGroup().setLayoutX(screenWidth/2);
-            player2.getGroup().setLayoutY(screenHeight-(348+CAT_HEIGHT));
-            player2.stopMovingLeft();
-            player2.getGroup().setVisible(false);
+playerGroup.setLayoutX(screenWidth/2);
             
             List<NodeObject> possibleCollisions = new ArrayList<>();
 
@@ -67,8 +54,7 @@ public class GameUI implements UI, UIConnectCallback {
 
             for (LayerGroup layerGroup : layerGroups) {
                 if (layerGroup.getDepth() >= 0 && !addedCat) {
-                    combinedGroup.getChildren().add(player1.getGroup());
-                    combinedGroup.getChildren().add(player2.getGroup());
+                    combinedGroup.getChildren().add(playerGroup);
                     addedCat = true;
                 }
 
@@ -76,8 +62,7 @@ public class GameUI implements UI, UIConnectCallback {
             }
 
             if (!addedCat) {
-                combinedGroup.getChildren().add(player1.getGroup());
-                combinedGroup.getChildren().add(player2.getGroup());
+                combinedGroup.getChildren().add(playerGroup);
             }
 
             Pane pane = new Pane();
@@ -105,7 +90,6 @@ public class GameUI implements UI, UIConnectCallback {
     @Override
     public void updateConnectionState(boolean connected) {
         this.topBar.updateConnectionState(connected);
-        this.player2.getGroup().setVisible(connected);
     }
 
     @Override
@@ -125,18 +109,13 @@ public class GameUI implements UI, UIConnectCallback {
     public void setPort(int port) {
         this.topBar.setPort(port);
     }
-
-    @Override
-    public Player getPlayer1() {
-        return player1;
-    }
-
-    @Override
-    public Player getPlayer2() {
-        return player2;
-    }
-
+    
     public void setIP(String localIPAddress) {
         this.topBar.setLocalIPAddress(localIPAddress);
     }
+
+	@Override
+	public void addPlayer(Player player) {
+		playerGroup.getChildren().add(player.getGroup());
+	}
 }

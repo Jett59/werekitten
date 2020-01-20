@@ -3,12 +3,7 @@ package com.mycodefu.werekitten.slide;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.mycodefu.werekitten.backgroundObjects.NodeObject;
-
 import javafx.scene.Group;
-import javafx.scene.Node;
-
-import java.util.stream.*;
 
 public class SlideBackground {
     private List<LayerGroup> layerGroups = new ArrayList<>();

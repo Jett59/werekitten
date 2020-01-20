@@ -9,7 +9,6 @@ import javax.sound.sampled.Clip;
 
 public class MusicPlayer {
 private static Clip levelTheme = gameThemeInit("Level_Theme");
-private static boolean shouldPlayMain = false;
 private static boolean shouldPlayLevel = false;
 public static void playLevel() {
 	new Thread(()->{
@@ -40,6 +39,5 @@ private static Clip gameThemeInit(String themeName) {
 }
 public static void setInLevel() {
 	shouldPlayLevel = true;
-	shouldPlayMain = false;
 }
 }

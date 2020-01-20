@@ -2,11 +2,12 @@ package com.mycodefu.werekitten.pipeline.handlers.Ui;
 
 import com.mycodefu.werekitten.pipeline.PipelineContext;
 import com.mycodefu.werekitten.pipeline.PipelineEvent;
+import com.mycodefu.werekitten.pipeline.events.ui.PlayerCreatedEvent;
 import com.mycodefu.werekitten.pipeline.events.ui.UiCreatedEvent;
 import com.mycodefu.werekitten.pipeline.handlers.PipelineHandler;
 import com.mycodefu.werekitten.ui.UI;
 
-public class LocalPlayerAdditionHandler implements PipelineHandler{
+public class PlayerAdditionHandler implements PipelineHandler{
 private UI ui;
 
 	@Override
@@ -18,7 +19,8 @@ private UI ui;
 				break;
 			}
 			case "playerCreated": {
-				//ui.
+				ui.addPlayer(((PlayerCreatedEvent)event).getPlayer());
+				break;
 			}
 			
 			default:

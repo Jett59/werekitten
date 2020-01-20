@@ -17,7 +17,8 @@ public class TopBar extends javafx.scene.layout.VBox {
     private final FlowPane flowLayout;
     Text title;
     private int port;
-    private double x_value;
+	@SuppressWarnings("unused")
+	private double x_value;
     private String localIPAddress;
 
     public TopBar(Pane parent, UIConnectCallback connectCallback){

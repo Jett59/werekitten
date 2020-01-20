@@ -16,6 +16,13 @@
     "handlers": [
     "com.mycodefu.werekitten.pipeline.handlers.keyboard.PlayerKeyboardHandler"
     ]
+    },
+    {
+    "name": "Ui",
+    "eventsToRunPerFrame": 1,
+    "handlers": [
+    "com.mycodefu.werekitten.pipeline.handlers.Ui.PlayerAdditionHandler"
+    ]
     }
   ]
 }

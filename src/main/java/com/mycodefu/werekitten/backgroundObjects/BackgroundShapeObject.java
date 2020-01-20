@@ -1,7 +1,6 @@
 package com.mycodefu.werekitten.backgroundObjects;
 
 import javafx.scene.Node;
-import javafx.scene.image.ImageView;
 import javafx.scene.shape.Shape;
 
 public class BackgroundShapeObject implements NodeObject {
