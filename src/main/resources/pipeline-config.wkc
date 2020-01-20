@@ -6,6 +6,7 @@
       "handlers": [
         "com.mycodefu.werekitten.pipeline.handlers.game.UICreationHandler",
         "com.mycodefu.werekitten.pipeline.handlers.game.KeyboardEnablingHandler",
+        "com.mycodefu.werekitten.pipeline.handlers.game.LocalPlayerAdditionHandler",
         "com.mycodefu.werekitten.pipeline.handlers.game.MusicHandler",
         "com.mycodefu.werekitten.pipeline.handlers.game.WindowCloseHandler"
       ]
@@ -18,7 +19,7 @@
     ]
     },
     {
-    "name": "Ui",
+    "name": "UI",
     "eventsToRunPerFrame": 1,
     "handlers": [
     "com.mycodefu.werekitten.pipeline.handlers.Ui.PlayerAdditionHandler"

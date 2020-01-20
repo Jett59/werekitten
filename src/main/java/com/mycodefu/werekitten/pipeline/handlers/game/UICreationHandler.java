@@ -2,6 +2,7 @@ package com.mycodefu.werekitten.pipeline.handlers.game;
 
 import com.mycodefu.werekitten.pipeline.PipelineContext;
 import com.mycodefu.werekitten.pipeline.PipelineEvent;
+import com.mycodefu.werekitten.pipeline.events.ui.UiCreatedEvent;
 import com.mycodefu.werekitten.pipeline.handlers.PipelineHandler;
 import com.mycodefu.werekitten.ui.GameUI;
 
@@ -11,13 +12,17 @@ public class UICreationHandler implements PipelineHandler {
     	if(event.getPipelineName().equalsIgnoreCase("game")) {
     		switch (event.getEvent().getName()) {
     		case "start": {
+    			GameUI ui;
+    			
     			context.getStage().setTitle("werekitten");
     			context.getStage().setMaximized(true);
     			context.getStage().show();
+    			ui = new GameUI();
     			context.getStage().setScene(
-    					new GameUI()
+    					ui
     					.getScene((int)context.getStage().getWidth(), (int)context.getStage().getHeight())
     					);
+    			context.postEvent(new UiCreatedEvent(ui));
     			break;
     		}
     		

@@ -10,6 +10,17 @@ public class Kitten extends Player{
 
 private Kitten(Animation idleRight, Animation idleLeft, Animation walkRight, Animation walkLeft, int jumpAmount) {
 	super(idleRight, idleLeft, walkRight, walkLeft, jumpAmount);
+	System.out.println("created the kitten");
+	if(equals(null)) {
+		System.out.println("kitten == null");
+	}else {
+		System.out.println("kitten != null");
+	}
+	if(super.equals(null)) {
+		System.out.println("player == null");
+	}else {
+		System.out.println("player != null");
+	}
 }
 
 private static void addPropertiesToAnimation(Animation animation, int cycleCount, Interpolator interpolator) {

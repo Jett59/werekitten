@@ -15,6 +15,7 @@ private UI ui;
 		if(event.getPipelineName().equalsIgnoreCase("Ui")) {
 			switch (event.getEvent().getName()) {
 			case "UiCreated": {
+				System.out.println("UI created");
 				this.ui = ((UiCreatedEvent)event).getUI();
 				break;
 			}

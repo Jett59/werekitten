@@ -78,7 +78,16 @@ public class Start extends Application implements PipelineContext {
     @SuppressWarnings("exports")
 	@Override
     public void postEvent(PipelineEvent event) {
-        pipelines.get(event.getPipelineName()).addEvent(event);
+    	Pipeline pipeline;
+    	try {
+        pipeline = pipelines.get(event.getPipelineName());
+    	}catch(NullPointerException e) {
+    		throw new IllegalArgumentException("the pipeline "+event.getPipelineName()+"was not valid", e);
+    	}
+        if(pipeline == null) {
+        	System.out.println("pipeline == null");
+        }
+        pipeline.addEvent(event);
     }
 
     private Map<String, Player> playerMap = new HashMap<>();
