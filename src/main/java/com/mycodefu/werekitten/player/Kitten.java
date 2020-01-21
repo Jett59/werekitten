@@ -7,6 +7,7 @@ import javafx.animation.Interpolator;
 import javafx.util.Duration;
 
 public class Kitten extends Player{
+	public static int MOVE_AMOUNT = 2;
 
 private Kitten(Animation idleRight, Animation idleLeft, Animation walkRight, Animation walkLeft, int jumpAmount) {
 	super(idleRight, idleLeft, walkRight, walkLeft, jumpAmount);

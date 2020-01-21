@@ -59,6 +59,7 @@ keyboardListener.keyPressed(keyEvent.getCode());
 				context.getStage().addEventHandler(KeyEvent.KEY_RELEASED, keyEvent->{
 					keyboardListener.keyReleased(keyEvent.getCode());
 				});
+				keyboardListener.startListening();
 				break;
 			}
 			

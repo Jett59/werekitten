@@ -22,6 +22,7 @@ public class UICreationHandler implements PipelineHandler {
     					ui
     					.getScene((int)context.getStage().getWidth(), (int)context.getStage().getHeight())
     					);
+    			ui.updateConnectionState(true);
     			context.postEvent(new UiCreatedEvent(ui));
     			break;
     		}

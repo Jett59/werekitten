@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 public class GameUI implements UI, UIConnectCallback {
     public static final int CAT_HEIGHT = 100;
-    public static final int CAT_JUMP_AMOUNT = 300;
+    public static final int CAT_JUMP_AMOUNT = 200;
 
     private Group playerGroup = new Group();
     private TopBar topBar;
@@ -28,6 +28,7 @@ public class GameUI implements UI, UIConnectCallback {
             BackgroundObjectBuilder backgroundObjectBuilder = new BackgroundObjectBuilder(new AnimationCompiler());
 
 playerGroup.setLayoutX(screenWidth/2);
+playerGroup.setLayoutY(screenHeight/2-CAT_HEIGHT*2);
             
             List<NodeObject> possibleCollisions = new ArrayList<>();
 
