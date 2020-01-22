@@ -29,7 +29,8 @@ Player(Animation idleRight, Animation idleLeft, Animation walkRight, Animation w
 	animationGroup = new Group(idleRight.getImageView(), idleLeft.getImageView(), walkRight.getImageView(), walkLeft.getImageView());
 	
 	jump = new TranslateTransition(Duration.millis(150), animationGroup);
-    jump.interpolatorProperty().set(Interpolator.SPLINE(.1, .1, .7, .7));
+    //jump.interpolatorProperty().set(Interpolator.SPLINE(.1, .1, .7, .7));
+	jump.setInterpolator(Interpolator.EASE_OUT);
     jump.setByY(-jumpAmount);
     jump.setAutoReverse(true);
     jump.setCycleCount(2);
