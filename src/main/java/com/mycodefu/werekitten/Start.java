@@ -6,17 +6,13 @@ import com.mycodefu.werekitten.pipeline.PipelineContext;
 import com.mycodefu.werekitten.pipeline.PipelineEvent;
 import com.mycodefu.werekitten.pipeline.config.PipelineConfig;
 import com.mycodefu.werekitten.pipeline.config.PipelineConfiguration;
-import com.mycodefu.werekitten.pipeline.events.game.QuitGameEvent;
 import com.mycodefu.werekitten.pipeline.events.game.StartGameEvent;
 import com.mycodefu.werekitten.pipeline.handlers.PipelineHandler;
 import com.mycodefu.werekitten.player.Player;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
-import javafx.event.Event;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
