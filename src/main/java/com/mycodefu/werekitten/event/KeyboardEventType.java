@@ -6,7 +6,10 @@ leftReleased,
 rightPressed,
 rightReleased,
 spacePressed,
-spaceReleased;
+spaceReleased,
+registerListener,
+unregisterListener
+	;
 
 @Override
 public String getName() {

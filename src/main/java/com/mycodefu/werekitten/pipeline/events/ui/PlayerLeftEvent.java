@@ -4,10 +4,10 @@ import com.mycodefu.werekitten.event.Event;
 import com.mycodefu.werekitten.event.UiEventType;
 import com.mycodefu.werekitten.player.Player;
 
-public class PlayerCreatedEvent extends UiEvent {
+public class PlayerLeftEvent extends UiEvent {
     private Player player;
 
-    public PlayerCreatedEvent(Player player) {
+    public PlayerLeftEvent(Player player) {
         this.player = player;
     }
 

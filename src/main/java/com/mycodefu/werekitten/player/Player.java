@@ -13,18 +13,18 @@ import javafx.scene.Group;
 import javafx.util.Duration;
 
 public class Player {
-private Map<String, Animation> nameToAnimation = new ConcurrentHashMap<>();
+private Map<AnimationType, Animation> nameToAnimation = new ConcurrentHashMap<>();
 private List<Animation> animations = new ArrayList<>();
 private Group animationGroup;
 private TranslateTransition jump;
 
-Player(Animation idleRight, Animation idleLeft, Animation walkRight, Animation walkLeft, int jumpAmount) {
+Player(Animation idleRight, Animation idleLeft, Animation walkRight, Animation walkLeft, int jumpAmount, AnimationType initialAnimation, int initialXPosition) {
 	animations.addAll(List.of(idleRight, idleLeft, walkRight, walkLeft));
 	
-	nameToAnimation.put("idleRight", idleRight);
-	nameToAnimation.put("idleLeft", idleLeft);
-	nameToAnimation.put("walkRight", walkRight);
-	nameToAnimation.put("walkLeft", walkLeft);
+	nameToAnimation.put(AnimationType.idleRight, idleRight);
+	nameToAnimation.put(AnimationType.idleLeft, idleLeft);
+	nameToAnimation.put(AnimationType.walkRight, walkRight);
+	nameToAnimation.put(AnimationType.walkLeft, walkLeft);
 	
 	animationGroup = new Group(idleRight.getImageView(), idleLeft.getImageView(), walkRight.getImageView(), walkLeft.getImageView());
 	
@@ -34,6 +34,9 @@ Player(Animation idleRight, Animation idleLeft, Animation walkRight, Animation w
     jump.setByY(-jumpAmount);
     jump.setAutoReverse(true);
     jump.setCycleCount(2);
+
+    playOneAnimation(animations, nameToAnimation.get(initialAnimation));
+	animationGroup.setTranslateX(animationGroup.getTranslateX()+initialXPosition);
 }
 
 public Group getGroup() {
@@ -42,12 +45,12 @@ public Group getGroup() {
 
 public void moveLeft(int amount) {
 	animationGroup.setTranslateX(animationGroup.getTranslateX()-amount);
-	playOneAnimation(animations, nameToAnimation.get("walkLeft"));
+	playOneAnimation(animations, nameToAnimation.get(AnimationType.walkLeft));
 }
 
 public void moveRight(int amount) {
 	animationGroup.setTranslateX(animationGroup.getTranslateX()+amount);
-	playOneAnimation(animations, nameToAnimation.get("walkRight"));
+	playOneAnimation(animations, nameToAnimation.get(AnimationType.walkRight));
 }
 
 public void jump() {
@@ -55,11 +58,11 @@ public void jump() {
 }
 
 public void stopMovingLeft() {
-	playOneAnimation(animations, nameToAnimation.get("idleLeft"));
+	playOneAnimation(animations, nameToAnimation.get(AnimationType.idleLeft));
 }
 
 public void stopMovingRight() {
-	playOneAnimation(animations, nameToAnimation.get("idleRight"));
+	playOneAnimation(animations, nameToAnimation.get(AnimationType.idleRight));
 }
 
 private Animation playOneAnimation(List<Animation> allAnimations, Animation animationToPlay) {
@@ -75,4 +78,10 @@ private Animation playOneAnimation(List<Animation> allAnimations, Animation anim
     return animationToPlay;
 }
 
+public enum AnimationType{
+	idleRight,
+	idleLeft,
+	walkRight,
+	walkLeft
+}
 }

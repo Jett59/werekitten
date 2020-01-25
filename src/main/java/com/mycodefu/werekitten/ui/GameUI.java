@@ -10,6 +10,8 @@ import com.mycodefu.werekitten.slide.LayerGroup;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Box;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -22,13 +24,14 @@ public class GameUI implements UI, UIConnectCallback {
     private Group playerGroup = new Group();
     private TopBar topBar;
     private List<UIEventCallback> callbacks = new ArrayList<>();
+    private Scene scene;
 
     public Scene getScene(int screenWidth, int screenHeight) {
         try {
             BackgroundObjectBuilder backgroundObjectBuilder = new BackgroundObjectBuilder(new AnimationCompiler());
 
-playerGroup.setLayoutX(screenWidth/2);
-playerGroup.setLayoutY(screenHeight/2-CAT_HEIGHT*2);
+            playerGroup.setLayoutX(0);
+            playerGroup.setLayoutY(screenHeight/2-CAT_HEIGHT*2);
             
             List<NodeObject> possibleCollisions = new ArrayList<>();
 
@@ -73,8 +76,8 @@ playerGroup.setLayoutY(screenHeight/2-CAT_HEIGHT*2);
 
             pane.getChildren().add(combinedGroup);
 
-            Scene s = new Scene(pane);
-            return s;
+            scene = new Scene(pane);
+            return scene;
 
 
         } catch (Exception e) {
@@ -107,6 +110,7 @@ playerGroup.setLayoutY(screenHeight/2-CAT_HEIGHT*2);
         }
     }
 
+    @Override
     public void setPort(int port) {
         this.topBar.setPort(port);
     }
@@ -118,5 +122,6 @@ playerGroup.setLayoutY(screenHeight/2-CAT_HEIGHT*2);
 	@Override
 	public void addPlayer(Player player) {
 		playerGroup.getChildren().add(player.getGroup());
+        System.out.println("added player group to scene");
 	}
 }

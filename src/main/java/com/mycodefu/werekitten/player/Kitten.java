@@ -9,8 +9,8 @@ import javafx.util.Duration;
 public class Kitten extends Player{
 	public static int MOVE_AMOUNT = 2;
 
-private Kitten(Animation idleRight, Animation idleLeft, Animation walkRight, Animation walkLeft, int jumpAmount) {
-	super(idleRight, idleLeft, walkRight, walkLeft, jumpAmount);
+private Kitten(Animation idleRight, Animation idleLeft, Animation walkRight, Animation walkLeft, int jumpAmount, AnimationType initialAnimation, int initialXPosition) {
+	super(idleRight, idleLeft, walkRight, walkLeft, jumpAmount, initialAnimation, initialXPosition);
 	System.out.println("created the kitten");
 	if(equals(null)) {
 		System.out.println("kitten == null");
@@ -29,7 +29,7 @@ private static void addPropertiesToAnimation(Animation animation, int cycleCount
 	animation.setInterpolator(interpolator);
 }
 
-public static Kitten create(int jumpAmount, int height, Duration duration) {
+public static Kitten create(int jumpAmount, int height, Duration duration, AnimationType initialAnimation, int initialXPosition) {
 	AnimationCompiler animationCompiler = new AnimationCompiler();
 	
 	Animation idleRight = animationCompiler.compileAnimation("cat", "Idle", 10, duration, false, height, "height");
@@ -43,8 +43,9 @@ public static Kitten create(int jumpAmount, int height, Duration duration) {
 	addPropertiesToAnimation(walkRight, 1, Interpolator.LINEAR);
 	addPropertiesToAnimation(walkLeft, 1, Interpolator.LINEAR);
 	
-	Kitten result = new Kitten(idleRight, idleLeft, walkRight, walkLeft, jumpAmount);
+	Kitten result = new Kitten(idleRight, idleLeft, walkRight, walkLeft, jumpAmount, initialAnimation, initialXPosition);
 	return result;
 }
+
 
 }

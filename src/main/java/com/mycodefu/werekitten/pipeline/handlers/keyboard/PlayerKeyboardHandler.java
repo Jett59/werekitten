@@ -1,37 +1,56 @@
 package com.mycodefu.werekitten.pipeline.handlers.keyboard;
 
+import com.mycodefu.werekitten.event.KeyboardEventType;
 import com.mycodefu.werekitten.pipeline.PipelineContext;
 import com.mycodefu.werekitten.pipeline.PipelineEvent;
+import com.mycodefu.werekitten.pipeline.events.keyboard.RegisterKeyListenerEvent;
 import com.mycodefu.werekitten.pipeline.handlers.PipelineHandler;
 import com.mycodefu.werekitten.player.Kitten;
 
-public class PlayerKeyboardHandler implements PipelineHandler{
+import java.util.HashSet;
+import java.util.Set;
+
+public class PlayerKeyboardHandler implements PipelineHandler {
+	private Set<RegisterKeyListenerEvent.KeyListener> listeners = new HashSet<>();
 
 	@Override
-	public void handleEvent(PipelineContext context, PipelineEvent event) {
-		if(event.getPipelineName().equalsIgnoreCase("keyboard")) {
-			switch (event.getEvent().getName()) {
-			case "leftPressed": {
-				context.getPlayerMap().get("local").moveLeft(Kitten.MOVE_AMOUNT);
-				break;
+    public void handleEvent(PipelineContext context, PipelineEvent event) {
+        if (event.getPipelineName().equalsIgnoreCase("keyboard")) {
+			KeyboardEventType keyboardEventType = (KeyboardEventType) event.getEvent();
+			switch (keyboardEventType) {
+                case leftPressed: {
+                    context.getPlayerMap().get("local").moveLeft(Kitten.MOVE_AMOUNT);
+                    break;
+                }
+                case rightPressed: {
+                    context.getPlayerMap().get("local").moveRight(Kitten.MOVE_AMOUNT);
+                    break;
+                }
+                case leftReleased: {
+                    context.getPlayerMap().get("local").stopMovingLeft();
+                    break;
+                }
+                case rightReleased: {
+                    context.getPlayerMap().get("local").stopMovingRight();
+                    break;
+                }
+                case spacePressed: {
+                    context.getPlayerMap().get("local").jump();
+                    break;
+                }
+                case registerListener:{
+                	this.listeners.add(((RegisterKeyListenerEvent)event).getKeyListener());
+					return;
+				}
+                case unregisterListener: {
+					this.listeners.remove(((RegisterKeyListenerEvent) event).getKeyListener());
+					return;
+				}
+            }
+			for (RegisterKeyListenerEvent.KeyListener listener : listeners) {
+				listener.keyEventOccurred(keyboardEventType);
 			}
-			case "rightPressed": {
-				context.getPlayerMap().get("local").moveRight(Kitten.MOVE_AMOUNT);
-				break;
-			}
-			case "leftReleased": {
-				context.getPlayerMap().get("local").stopMovingLeft();
-				break;
-			}
-			case "rightReleased": {
-				context.getPlayerMap().get("local").stopMovingRight();
-				break;
-			}
-			case "spacePressed": {
-				context.getPlayerMap().get("local").jump();
-			}
-			}
-		}
-		}
+        }
+    }
 
 }

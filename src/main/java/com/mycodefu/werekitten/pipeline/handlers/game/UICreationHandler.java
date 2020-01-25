@@ -6,6 +6,8 @@ import com.mycodefu.werekitten.pipeline.events.ui.UiCreatedEvent;
 import com.mycodefu.werekitten.pipeline.handlers.PipelineHandler;
 import com.mycodefu.werekitten.ui.GameUI;
 
+import java.awt.*;
+
 public class UICreationHandler implements PipelineHandler {
     @Override
     public void handleEvent(PipelineContext context, PipelineEvent event) {
@@ -13,16 +15,20 @@ public class UICreationHandler implements PipelineHandler {
     		switch (event.getEvent().getName()) {
     		case "start": {
     			GameUI ui;
-    			
-    			context.getStage().setTitle("werekitten");
-    			context.getStage().setMaximized(true);
-    			context.getStage().show();
-    			ui = new GameUI();
-    			context.getStage().setScene(
-    					ui
-    					.getScene((int)context.getStage().getWidth(), (int)context.getStage().getHeight())
-    					);
-    			ui.updateConnectionState(true);
+
+				var screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+
+				context.getStage().setHeight(screenSize.height);
+				context.getStage().setWidth(screenSize.width);
+
+				context.getStage().setTitle("werekitten");
+				context.getStage().setMaximized(true);
+				context.getStage().show();
+				ui = new GameUI();
+				context.getStage().setScene(
+						ui
+								.getScene((int)context.getStage().getWidth(), (int)context.getStage().getHeight())
+				);
     			context.postEvent(new UiCreatedEvent(ui));
     			break;
     		}

@@ -2,6 +2,7 @@ package com.mycodefu.werekitten.pipeline;
 
 import com.mycodefu.werekitten.pipeline.handlers.PipelineHandler;
 
+import java.util.Arrays;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
@@ -55,5 +56,13 @@ public class Pipeline {
 
     public void addEvent(PipelineEvent event) {
         eventQueue.offer(event);
+    }
+
+    @Override
+    public String toString() {
+        return "Pipeline{" +
+                ", name='" + name + '\'' +
+                ", handlers.length=" + handlers.length +
+                '}';
     }
 }

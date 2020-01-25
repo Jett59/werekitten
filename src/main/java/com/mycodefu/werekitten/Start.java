@@ -6,13 +6,16 @@ import com.mycodefu.werekitten.pipeline.PipelineContext;
 import com.mycodefu.werekitten.pipeline.PipelineEvent;
 import com.mycodefu.werekitten.pipeline.config.PipelineConfig;
 import com.mycodefu.werekitten.pipeline.config.PipelineConfiguration;
+import com.mycodefu.werekitten.pipeline.events.game.QuitGameEvent;
 import com.mycodefu.werekitten.pipeline.events.game.StartGameEvent;
 import com.mycodefu.werekitten.pipeline.handlers.PipelineHandler;
 import com.mycodefu.werekitten.player.Player;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.event.Event;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,13 +49,17 @@ public class Start extends Application implements PipelineContext {
                     throw new IllegalArgumentException("Failed to load handler '" + handlerClass + "'.", e);
                 }
             }
-            pipelines.put(name, new Pipeline(name, this, pipelineConfiguration.getEventsToRunPerFrame(), handlers.toArray(new PipelineHandler[]{})));
+            Pipeline pipeline = new Pipeline(name, this, pipelineConfiguration.getEventsToRunPerFrame(), handlers.toArray(new PipelineHandler[]{}));
+            pipelines.put(name, pipeline);
+
+            System.out.println(String.format("Initialized %s", pipeline));
         }
     }
 
     @Override
     public void start(@SuppressWarnings("exports") Stage stage) {
         this.stage = stage;
+
         this.postEvent(new StartGameEvent());
 
         new AnimationTimer() {

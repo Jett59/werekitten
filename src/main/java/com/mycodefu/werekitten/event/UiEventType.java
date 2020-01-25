@@ -2,7 +2,16 @@ package com.mycodefu.werekitten.event;
 
 public enum UiEventType implements Event{
 	UiCreated,
-	playerCreated;
+	playerCreated,
+	networkServerListening,
+	networkConnected,
+	networkDisconnected,
+	networkMoveLeft,
+	networkMoveRight,
+	networkStopMovingLeft,
+	networkStopMovingRight,
+	networkJump;
+
 
 	@Override
 	public String getName() {

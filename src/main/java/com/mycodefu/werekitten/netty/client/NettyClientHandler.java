@@ -80,7 +80,7 @@ public class NettyClientHandler extends SimpleChannelInboundHandler<Object> {
         if (frame instanceof TextWebSocketFrame) {
             TextWebSocketFrame textFrame = (TextWebSocketFrame) frame;
             String text = textFrame.text();
-            System.out.println("WebSocket Client received message: " + text);
+//            System.out.println("WebSocket Client received message: " + text);
             callback.clientMessageReceived(id, text);
 
         } else if (frame instanceof PongWebSocketFrame) {
