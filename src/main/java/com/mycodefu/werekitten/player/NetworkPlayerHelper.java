@@ -27,7 +27,7 @@ public class NetworkPlayerHelper implements RegisterKeyListenerEvent.KeyListener
 
     public void createNetworkPlayer(String playerId, PipelineContext context, NetworkPlayerMessageSender playerMessageSender) {
 
-        int initialXPosition = 0; //TODO: get the x position from the remote server as a new network message, and start the remote player wherever they are
+        int initialXPosition = 500; //TODO: get the x position from the remote server as a new network message, and start the remote player wherever they are
 
         Player networkPlayer = Kitten.create(GameUI.CAT_JUMP_AMOUNT, GameUI.CAT_HEIGHT, Duration.seconds(1), Player.AnimationType.idleLeft, initialXPosition);
         context.getPlayerMap().put(playerId, networkPlayer);
