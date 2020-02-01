@@ -16,19 +16,15 @@ public class UICreationHandler implements PipelineHandler {
     		case "start": {
     			GameUI ui;
 
+				context.getStage().setTitle("werekitten");
+
 				var screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
-				context.getStage().setHeight(screenSize.height);
-				context.getStage().setWidth(screenSize.width);
-
-				context.getStage().setTitle("werekitten");
-				context.getStage().setMaximized(true);
-				context.getStage().show();
 				ui = new GameUI();
-				context.getStage().setScene(
-						ui
-								.getScene((int)context.getStage().getWidth(), (int)context.getStage().getHeight())
-				);
+    			context.getStage().setScene(ui.getScene(screenSize.width, screenSize.height));
+				context.getStage().setFullScreen(true);
+				context.getStage().show();
+
     			context.postEvent(new UiCreatedEvent(ui));
     			break;
     		}
