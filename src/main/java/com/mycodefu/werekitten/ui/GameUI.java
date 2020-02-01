@@ -3,6 +3,7 @@ package com.mycodefu.werekitten.ui;
 import com.mycodefu.werekitten.animation.AnimationCompiler;
 import com.mycodefu.werekitten.backgroundObjects.BackgroundObjectBuilder;
 import com.mycodefu.werekitten.backgroundObjects.NodeObject;
+import com.mycodefu.werekitten.level.LevelBuilder;
 import com.mycodefu.werekitten.level.LevelReader;
 import com.mycodefu.werekitten.level.data.Level;
 import com.mycodefu.werekitten.player.Player;
@@ -10,8 +11,6 @@ import com.mycodefu.werekitten.slide.LayerGroup;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.Box;
-
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -32,26 +31,9 @@ public class GameUI implements UI, UIConnectCallback {
 
             playerGroup.setLayoutX(0);
             playerGroup.setLayoutY(screenHeight/2-CAT_HEIGHT*2);
-            
-            List<NodeObject> possibleCollisions = new ArrayList<>();
 
-            Level defaultLevel = LevelReader.read("/level.wkl");
-            List<LayerGroup> layerGroups = defaultLevel.getLayers().stream()
-                    .map(layer -> {
-                        List<NodeObject> elements = layer.getElements().stream().map(backgroundElement -> {
-                            NodeObject nodeObject = backgroundObjectBuilder.build(backgroundElement);
-                            return nodeObject;
-                        }).collect(Collectors.toList());
-
-                        if (layer.getDepth() >= 0) {
-                            possibleCollisions.addAll(elements);
-                        }
-
-                        Group group = new Group(elements.stream().map(NodeObject::getNode).collect(Collectors.toList()));
-                        return new LayerGroup(layer.getName(), group, layer.getScrollSpeed(), layer.getDepth());
-                    })
-                    .sorted(Comparator.comparingInt(LayerGroup::getDepth))
-                    .collect(Collectors.toList());
+            LevelBuilder levelBuilder = new LevelBuilder(backgroundObjectBuilder);
+            List<LayerGroup> layerGroups = levelBuilder.buildLevel("/level.wkl");
 
             Group combinedGroup = new Group();
             boolean addedCat = false;

@@ -4,7 +4,7 @@
   "name": "Christmas Level",
   "description": "The Christmas edition of WereKitten sees the kitten playing with a christmas tree and being chased by elves.",
   "size": {
-    "width": 10000,
+    "width": 1024,
     "height": 768
   },
   "layers": [
