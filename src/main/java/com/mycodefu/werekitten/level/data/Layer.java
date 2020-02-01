@@ -6,12 +6,16 @@ import java.util.List;
 public class Layer {
     private String name;
     private int depth;
+    private LayerType type;
     private double scrollSpeed;
     private List<Element> elements = new ArrayList<>();
 
-	public Layer() {}
+	public Layer() {
+        this.type = LayerType.Background;
+    }
 
 	public Layer(String name, double scrollSpeed, List<Element> elements) {
+	    this();
 		setName(name);
 		setScrollSpeed(scrollSpeed);
 		setElements(elements);
@@ -55,5 +59,13 @@ public class Layer {
 
     public void setDepth(int depth) {
         this.depth = depth;
+    }
+
+    public LayerType getType() {
+        return type;
+    }
+
+    public void setType(LayerType type) {
+        this.type = type;
     }
 }

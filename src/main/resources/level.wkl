@@ -91,6 +91,24 @@
       ]
     },
     {
+      "name": "players",
+      "type": "Player",
+      "depth": 0,
+      "scrollSpeed": 1,
+      "elements": [
+        {
+          "type": "Player",
+          "size": {
+            "height": 100
+          },
+          "location": {
+            "x": 500,
+            "y": 397
+          }
+        }
+      ]
+    },
+    {
       "name": "shrews",
       "depth": -1,
       "scrollSpeed": 1,
