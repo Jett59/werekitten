@@ -4,10 +4,10 @@ import com.mycodefu.werekitten.event.Event;
 import com.mycodefu.werekitten.event.UiEventType;
 import com.mycodefu.werekitten.player.Player;
 
-public class PlayerLeftEvent extends UiEvent {
+public class PlayerDestroyedEvent extends UiEvent {
     private Player player;
 
-    public PlayerLeftEvent(Player player) {
+    public PlayerDestroyedEvent(Player player) {
         this.player = player;
     }
 
@@ -17,6 +17,6 @@ public class PlayerLeftEvent extends UiEvent {
 
     @Override
     public Event getEvent() {
-        return UiEventType.playerCreated;
+        return UiEventType.playerDestroyed;
     }
 }

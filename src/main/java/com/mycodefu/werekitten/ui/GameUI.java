@@ -78,6 +78,7 @@ public class GameUI implements UI, UIConnectCallback {
         this.topBar.updateConnectionState(connected);
     }
 
+
     @Override
     public void connect(String address) {
         for (UIEventCallback callback : this.callbacks) {
@@ -106,4 +107,9 @@ public class GameUI implements UI, UIConnectCallback {
 		playerGroup.getChildren().add(player.getGroup());
         System.out.println("added player group to scene");
 	}
+
+    @Override
+    public void removePlayer(Player player) {
+        playerGroup.getChildren().remove(player.getGroup());
+    }
 }

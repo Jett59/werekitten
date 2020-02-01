@@ -44,7 +44,7 @@ public class NetworkPlayerHelper implements RegisterKeyListenerEvent.KeyListener
 
     public void destroyNetworkPlayer(String playerId, PipelineContext context) {
         Player player = context.getPlayerMap().get(playerId);
-        context.postEvent(new PlayerLeftEvent(player));
+        context.postEvent(new PlayerDestroyedEvent(player));
         context.postEvent(new NetworkDisconnectedEvent());
 
         playerMessageSenders.remove(playerId);

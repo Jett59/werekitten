@@ -10,4 +10,6 @@ public interface UI {
     void addUIEventListener(UIEventCallback callback);
 
     void updateConnectionState(boolean connected);
+
+    void removePlayer(Player player);
 }
