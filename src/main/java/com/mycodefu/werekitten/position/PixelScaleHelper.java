@@ -13,13 +13,13 @@ public PixelScaleHelper(int scaleWidth, int scaleHeight, int screenWidth, int sc
 
 public int scaleX(int x) {
 	double ratio = (double)x/(double)scaleWidth;
-	int result = (int) (ratio*screenWidth);
+	int result = (int) Math.ceil(ratio*screenWidth);
 	return result;
 }
 
 public int scaleY(int y) {
 	double ratio = (double)y/(double)scaleHeight;
-	int result = (int) (ratio*screenHeight);
+	int result = (int) Math.ceil(ratio*screenHeight);
 	return result;
 }
 }
