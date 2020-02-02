@@ -4,9 +4,7 @@ import com.mycodefu.werekitten.animation.AnimationCompiler;
 import com.mycodefu.werekitten.backgroundObjects.BackgroundObjectBuilder;
 import com.mycodefu.werekitten.level.GameLevel;
 import com.mycodefu.werekitten.level.LevelBuilder;
-import com.mycodefu.werekitten.level.data.Element;
 import com.mycodefu.werekitten.level.data.LayerType;
-import com.mycodefu.werekitten.level.data.Level;
 import com.mycodefu.werekitten.player.Player;
 import com.mycodefu.werekitten.slide.LayerGroup;
 import javafx.scene.Group;
@@ -23,7 +21,6 @@ public class GameUI implements UI, UIConnectCallback {
     private TopBar topBar;
     private List<UIEventCallback> callbacks = new ArrayList<>();
     private Scene scene;
-    private Element playerElement = null;
 
     public SceneLevel getScene(int screenWidth, int screenHeight) {
         try {
@@ -37,8 +34,7 @@ public class GameUI implements UI, UIConnectCallback {
 
             for (LayerGroup layerGroup : layerGroups) {
                 if (layerGroup.getLayerType() == LayerType.Player) {
-                    playerElement = layerGroup.getElements().get(0);
-                    playerGroup.setLayoutY(playerElement.getLocation().getY());
+                    playerGroup.setLayoutY(level.getPlayerElement().getLocation().getY());
                     combinedGroup.getChildren().add(playerGroup);
                 } else {
                     combinedGroup.getChildren().add(layerGroup.getGroup());
@@ -108,11 +104,4 @@ public class GameUI implements UI, UIConnectCallback {
         playerGroup.getChildren().remove(player.getGroup());
     }
 
-    public Element getPlayerElement() {
-        return playerElement;
-    }
-
-    public void setPlayerElement(Element playerElement) {
-        this.playerElement = playerElement;
-    }
 }
