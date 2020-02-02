@@ -5,6 +5,8 @@ import com.mycodefu.werekitten.backgroundObjects.BackgroundObjectBuilder;
 import com.mycodefu.werekitten.backgroundObjects.NodeObject;
 import com.mycodefu.werekitten.level.LevelBuilder;
 import com.mycodefu.werekitten.level.LevelReader;
+import com.mycodefu.werekitten.level.data.Element;
+import com.mycodefu.werekitten.level.data.LayerType;
 import com.mycodefu.werekitten.level.data.Level;
 import com.mycodefu.werekitten.player.Player;
 import com.mycodefu.werekitten.slide.LayerGroup;
@@ -24,32 +26,28 @@ public class GameUI implements UI, UIConnectCallback {
     private TopBar topBar;
     private List<UIEventCallback> callbacks = new ArrayList<>();
     private Scene scene;
+    private Element playerElement = null;
 
     public Scene getScene(int screenWidth, int screenHeight) {
         try {
             BackgroundObjectBuilder backgroundObjectBuilder = new BackgroundObjectBuilder(new AnimationCompiler());
 
-            playerGroup.setLayoutX(0);
-            playerGroup.setLayoutY(screenHeight/2-CAT_HEIGHT*2);
 
             LevelBuilder levelBuilder = new LevelBuilder(backgroundObjectBuilder);
             List<LayerGroup> layerGroups = levelBuilder.buildLevel("/level.wkl");
 
             Group combinedGroup = new Group();
-            boolean addedCat = false;
 
             for (LayerGroup layerGroup : layerGroups) {
-                if (layerGroup.getDepth() >= 0 && !addedCat) {
-                    combinedGroup.getChildren().add(playerGroup);
-                    addedCat = true;
-                }
+            	if(layerGroup.getLayerType() == LayerType.Player) {
+            		playerElement = layerGroup.getElements().get(0);
+            		playerGroup.setLayoutY(playerElement.getLocation().getY());
+            		combinedGroup.getChildren().add(playerGroup);
+            	}else {
+            		combinedGroup.getChildren().add(layerGroup.getGroup());
+            	}
+            	}
 
-                combinedGroup.getChildren().add(layerGroup.getGroup());
-            }
-
-            if (!addedCat) {
-                combinedGroup.getChildren().add(playerGroup);
-            }
 
             Pane pane = new Pane();
 
@@ -112,4 +110,12 @@ public class GameUI implements UI, UIConnectCallback {
     public void removePlayer(Player player) {
         playerGroup.getChildren().remove(player.getGroup());
     }
+
+	public Element getPlayerElement() {
+		return playerElement;
+	}
+
+	public void setPlayerElement(Element playerElement) {
+		this.playerElement = playerElement;
+	}
 }
