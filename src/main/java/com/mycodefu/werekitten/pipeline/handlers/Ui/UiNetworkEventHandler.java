@@ -11,6 +11,7 @@ import com.mycodefu.werekitten.pipeline.handlers.PipelineHandler;
 import com.mycodefu.werekitten.player.Kitten;
 import com.mycodefu.werekitten.player.NetworkPlayerHelper;
 import com.mycodefu.werekitten.player.Player;
+import com.mycodefu.werekitten.position.PixelScaleHelper;
 import com.mycodefu.werekitten.ui.UI;
 import com.mycodefu.werekitten.ui.UIEventCallback;
 
@@ -28,7 +29,8 @@ public class UiNetworkEventHandler implements PipelineHandler, UIEventCallback, 
     public void handleEvent(PipelineContext context, PipelineEvent event) {
     	this.context = context;
         if (event.getPipelineName().equalsIgnoreCase("Ui")) {
-            switch ((UiEventType)event.getEvent()) {
+			PixelScaleHelper pixelScaleHelper = context.level().get().getPixelScaleHelper();
+			switch ((UiEventType)event.getEvent()) {
                 case UiCreated: {
                     this.ui = ((UiCreatedEvent) event).getUI();
                     this.ui.addUIEventListener(this);
@@ -37,12 +39,12 @@ public class UiNetworkEventHandler implements PipelineHandler, UIEventCallback, 
                 }
 				case networkMoveLeft:{
 					Player player = context.getPlayerMap().get(((NetworkMoveLeftEvent)event).getPlayerId());
-					player.moveLeft(Kitten.MOVE_AMOUNT);
+					player.moveLeft(pixelScaleHelper.scaleX(Kitten.MOVE_AMOUNT));
 					break;
 				}
 				case networkMoveRight:{
 					Player player = context.getPlayerMap().get(((NetworkMoveRightEvent)event).getPlayerId());
-					player.moveRight(Kitten.MOVE_AMOUNT);
+					player.moveRight(pixelScaleHelper.scaleX(Kitten.MOVE_AMOUNT));
 					break;
 				}
 				case networkStopMovingLeft:{

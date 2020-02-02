@@ -1,6 +1,7 @@
 package com.mycodefu.werekitten.level;
 
 import com.mycodefu.werekitten.level.data.*;
+import com.mycodefu.werekitten.position.PixelScaleHelper;
 import com.mycodefu.werekitten.slide.LayerGroup;
 
 import java.util.ArrayList;
@@ -9,14 +10,20 @@ import java.util.List;
 public class GameLevel {
     private Level levelData;
     private List<LayerGroup> layerGroups;
+    private PixelScaleHelper pixelScaleHelper;
 
-    public GameLevel(Level levelData, List<LayerGroup> layerGroups) {
+    public GameLevel(Level levelData, List<LayerGroup> layerGroups, PixelScaleHelper pixelScaleHelper) {
         this.levelData = levelData;
         this.layerGroups = layerGroups;
+        this.pixelScaleHelper = pixelScaleHelper;
     }
 
     public Level getLevelData() {
         return levelData;
+    }
+
+    public PixelScaleHelper getPixelScaleHelper() {
+        return pixelScaleHelper;
     }
 
     public List<LayerGroup> getLayerGroups() {

@@ -6,6 +6,7 @@ import com.mycodefu.werekitten.pipeline.PipelineEvent;
 import com.mycodefu.werekitten.pipeline.events.keyboard.RegisterKeyListenerEvent;
 import com.mycodefu.werekitten.pipeline.handlers.PipelineHandler;
 import com.mycodefu.werekitten.player.Kitten;
+import com.mycodefu.werekitten.position.PixelScaleHelper;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -16,14 +17,15 @@ public class PlayerKeyboardHandler implements PipelineHandler {
 	@Override
     public void handleEvent(PipelineContext context, PipelineEvent event) {
         if (event.getPipelineName().equalsIgnoreCase("keyboard")) {
-			KeyboardEventType keyboardEventType = (KeyboardEventType) event.getEvent();
+            PixelScaleHelper pixelScaleHelper = context.level().get().getPixelScaleHelper();
+            KeyboardEventType keyboardEventType = (KeyboardEventType) event.getEvent();
 			switch (keyboardEventType) {
                 case leftPressed: {
-                    context.getPlayerMap().get("local").moveLeft(Kitten.MOVE_AMOUNT);
+                    context.getPlayerMap().get("local").moveLeft(pixelScaleHelper.scaleX(Kitten.MOVE_AMOUNT));
                     break;
                 }
                 case rightPressed: {
-                    context.getPlayerMap().get("local").moveRight(Kitten.MOVE_AMOUNT);
+                    context.getPlayerMap().get("local").moveRight(pixelScaleHelper.scaleX(Kitten.MOVE_AMOUNT));
                     break;
                 }
                 case leftReleased: {

@@ -51,6 +51,6 @@ public class LevelBuilder {
                 .sorted(Comparator.comparingInt(LayerGroup::getDepth))
                 .collect(Collectors.toList());
 
-        return new GameLevel(defaultLevel, layerGroups);
+        return new GameLevel(defaultLevel, layerGroups, pixelScaleHelper);
     }
 }
