@@ -2,7 +2,6 @@ package com.mycodefu.werekitten;
 
 
 import com.mycodefu.werekitten.level.GameLevel;
-import com.mycodefu.werekitten.level.data.Level;
 import com.mycodefu.werekitten.pipeline.Pipeline;
 import com.mycodefu.werekitten.pipeline.PipelineContext;
 import com.mycodefu.werekitten.pipeline.PipelineEvent;
@@ -97,7 +96,8 @@ public class Start extends Application implements PipelineContext {
         pipeline.addEvent(event);
     }
 
-    @Override
+    @SuppressWarnings("exports")
+	@Override
     public AtomicReference<GameLevel> level() {
         return this.level;
     }
