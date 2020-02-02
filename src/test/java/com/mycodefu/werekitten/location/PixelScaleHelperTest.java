@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
-import com.mycodefu.werekitten.position.PixelScaleHelper;
+import com.mycodefu.werekitten.level.PixelScaleHelper;
 
 
 public class PixelScaleHelperTest {

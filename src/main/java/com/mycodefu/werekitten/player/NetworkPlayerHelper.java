@@ -26,7 +26,7 @@ public class NetworkPlayerHelper implements RegisterKeyListenerEvent.KeyListener
     }
 
     public void createNetworkPlayer(String playerId, PipelineContext context, NetworkPlayerMessageSender playerMessageSender) {
-    	int height = context.level().get().getPlayerElement().getSize().getHeight();
+    	double height = context.level().get().getPlayerElement().getSize().getHeight();
 
         int initialXPosition = 500; //TODO: get the x position from the remote server as a new network message, and start the remote player wherever they are
 

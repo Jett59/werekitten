@@ -47,7 +47,7 @@ public BackgroundObjectBuilder(AnimationCompiler animationCompiler) {
                 		throw new IllegalArgumentException("the size parameter specified on element "+element.getName()+" cannot have both width and height specified at one time");
                 	}
                     String widthOrHeight;
-                    int size;
+                    double size;
                     if (element.getSize().getHeight() > 0) {
                         widthOrHeight = "height";
                         size = element.getSize().getHeight();

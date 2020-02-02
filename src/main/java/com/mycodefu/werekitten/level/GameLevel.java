@@ -1,10 +1,8 @@
 package com.mycodefu.werekitten.level;
 
 import com.mycodefu.werekitten.level.data.*;
-import com.mycodefu.werekitten.position.PixelScaleHelper;
 import com.mycodefu.werekitten.slide.LayerGroup;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class GameLevel {

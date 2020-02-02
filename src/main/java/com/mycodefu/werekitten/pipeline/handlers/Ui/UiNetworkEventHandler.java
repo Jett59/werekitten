@@ -11,7 +11,7 @@ import com.mycodefu.werekitten.pipeline.handlers.PipelineHandler;
 import com.mycodefu.werekitten.player.Kitten;
 import com.mycodefu.werekitten.player.NetworkPlayerHelper;
 import com.mycodefu.werekitten.player.Player;
-import com.mycodefu.werekitten.position.PixelScaleHelper;
+import com.mycodefu.werekitten.level.PixelScaleHelper;
 import com.mycodefu.werekitten.ui.UI;
 import com.mycodefu.werekitten.ui.UIEventCallback;
 

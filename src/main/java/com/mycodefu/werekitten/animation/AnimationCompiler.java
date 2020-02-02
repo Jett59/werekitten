@@ -44,7 +44,7 @@ public class AnimationCompiler {
     	return images->images.stream().map(img->ImageHelper.scaleImage(img, scale)).collect(Collectors.toList());
     }
     
-    private static ImageProcess scaleImagesToHeight(int height) {
+    private static ImageProcess scaleImagesToHeight(double height) {
     	return images->{
     			BufferedImage firstImage = images.get(0);
     			int firstImageHeight = firstImage.getHeight();
@@ -53,7 +53,7 @@ public class AnimationCompiler {
     	};
     }
     
-    private static ImageProcess scaleImagesToWidth(int width) {
+    private static ImageProcess scaleImagesToWidth(double width) {
     	return images->{
 			BufferedImage firstImage = images.get(0);
 			int firstImageWidth = firstImage.getWidth();
@@ -62,7 +62,7 @@ public class AnimationCompiler {
 	};
     }
     
-    private static ImageProcess scaleImagesToWidthOrHeight(String widthOrHeight, int size) {
+    private static ImageProcess scaleImagesToWidthOrHeight(String widthOrHeight, double size) {
     	return widthOrHeight=="width" ? scaleImagesToWidth(size) : widthOrHeight == "height" ? scaleImagesToHeight(size) : null;
     }
     
@@ -70,7 +70,7 @@ public class AnimationCompiler {
     	return compileAnimation(character, animation, count, duration, scaleImages(scale), reverseImages(reversed));
     }
 
-    public Animation compileAnimation(String character, String animation, int count, Duration duration, boolean reversed, int size, String widthOrHeight) {
+    public Animation compileAnimation(String character, String animation, int count, Duration duration, boolean reversed, double size, String widthOrHeight) {
     	return compileAnimation(character, animation, count, duration, reverseImages(reversed), scaleImagesToWidthOrHeight(widthOrHeight, size));
     }
     

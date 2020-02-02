@@ -6,7 +6,7 @@ import com.mycodefu.werekitten.pipeline.PipelineEvent;
 import com.mycodefu.werekitten.pipeline.events.keyboard.RegisterKeyListenerEvent;
 import com.mycodefu.werekitten.pipeline.handlers.PipelineHandler;
 import com.mycodefu.werekitten.player.Kitten;
-import com.mycodefu.werekitten.position.PixelScaleHelper;
+import com.mycodefu.werekitten.level.PixelScaleHelper;
 
 import java.util.HashSet;
 import java.util.Set;

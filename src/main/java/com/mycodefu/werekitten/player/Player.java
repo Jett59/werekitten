@@ -18,7 +18,7 @@ private List<Animation> animations = new ArrayList<>();
 private Group animationGroup;
 private TranslateTransition jump;
 
-Player(Animation idleRight, Animation idleLeft, Animation walkRight, Animation walkLeft, int jumpAmount, AnimationType initialAnimation, int initialXPosition) {
+Player(Animation idleRight, Animation idleLeft, Animation walkRight, Animation walkLeft, double jumpAmount, AnimationType initialAnimation, double initialXPosition) {
 	animations.addAll(List.of(idleRight, idleLeft, walkRight, walkLeft));
 	
 	nameToAnimation.put(AnimationType.idleRight, idleRight);
@@ -43,12 +43,12 @@ public Group getGroup() {
 	return animationGroup;
 }
 
-public void moveLeft(int amount) {
+public void moveLeft(double amount) {
 	animationGroup.setTranslateX(animationGroup.getTranslateX()-amount);
 	playOneAnimation(animations, nameToAnimation.get(AnimationType.walkLeft));
 }
 
-public void moveRight(int amount) {
+public void moveRight(double amount) {
 	animationGroup.setTranslateX(animationGroup.getTranslateX()+amount);
 	playOneAnimation(animations, nameToAnimation.get(AnimationType.walkRight));
 }

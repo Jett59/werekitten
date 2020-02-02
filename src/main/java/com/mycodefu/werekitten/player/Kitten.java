@@ -7,9 +7,9 @@ import javafx.animation.Interpolator;
 import javafx.util.Duration;
 
 public class Kitten extends Player{
-	public static int MOVE_AMOUNT = 2;
+	public static double MOVE_AMOUNT = 2;
 
-private Kitten(Animation idleRight, Animation idleLeft, Animation walkRight, Animation walkLeft, int jumpAmount, AnimationType initialAnimation, int initialXPosition) {
+private Kitten(Animation idleRight, Animation idleLeft, Animation walkRight, Animation walkLeft, double jumpAmount, AnimationType initialAnimation, double initialXPosition) {
 	super(idleRight, idleLeft, walkRight, walkLeft, jumpAmount, initialAnimation, initialXPosition);
 	System.out.println("created the kitten");
 	if(equals(null)) {
@@ -29,7 +29,7 @@ private static void addPropertiesToAnimation(Animation animation, int cycleCount
 	animation.setInterpolator(interpolator);
 }
 
-public static Kitten create(int jumpAmount, int height, Duration duration, AnimationType initialAnimation, int initialXPosition) {
+public static Kitten create(double jumpAmount, double height, Duration duration, AnimationType initialAnimation, double initialXPosition) {
 	AnimationCompiler animationCompiler = new AnimationCompiler();
 	
 	Animation idleRight = animationCompiler.compileAnimation("cat", "Idle", 10, duration, false, height, "height");
