@@ -2,9 +2,8 @@ package com.mycodefu.werekitten.ui;
 
 import com.mycodefu.werekitten.animation.AnimationCompiler;
 import com.mycodefu.werekitten.backgroundObjects.BackgroundObjectBuilder;
-import com.mycodefu.werekitten.backgroundObjects.NodeObject;
+import com.mycodefu.werekitten.level.GameLevel;
 import com.mycodefu.werekitten.level.LevelBuilder;
-import com.mycodefu.werekitten.level.LevelReader;
 import com.mycodefu.werekitten.level.data.Element;
 import com.mycodefu.werekitten.level.data.LayerType;
 import com.mycodefu.werekitten.level.data.Level;
@@ -13,10 +12,9 @@ import com.mycodefu.werekitten.slide.LayerGroup;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
+
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class GameUI implements UI, UIConnectCallback {
     public static final int CAT_HEIGHT = 100;
@@ -28,25 +26,25 @@ public class GameUI implements UI, UIConnectCallback {
     private Scene scene;
     private Element playerElement = null;
 
-    public Scene getScene(int screenWidth, int screenHeight) {
+    public SceneLevel getScene(int screenWidth, int screenHeight) {
         try {
             BackgroundObjectBuilder backgroundObjectBuilder = new BackgroundObjectBuilder(new AnimationCompiler());
 
-
             LevelBuilder levelBuilder = new LevelBuilder(backgroundObjectBuilder);
-            List<LayerGroup> layerGroups = levelBuilder.buildLevel("/level.wkl");
+            GameLevel level = levelBuilder.buildLevel("/level.wkl", screenWidth, screenHeight);
+            List<LayerGroup> layerGroups = level.getLayerGroups();
 
             Group combinedGroup = new Group();
 
             for (LayerGroup layerGroup : layerGroups) {
-            	if(layerGroup.getLayerType() == LayerType.Player) {
-            		playerElement = layerGroup.getElements().get(0);
-            		playerGroup.setLayoutY(playerElement.getLocation().getY());
-            		combinedGroup.getChildren().add(playerGroup);
-            	}else {
-            		combinedGroup.getChildren().add(layerGroup.getGroup());
-            	}
-            	}
+                if (layerGroup.getLayerType() == LayerType.Player) {
+                    playerElement = layerGroup.getElements().get(0);
+                    playerGroup.setLayoutY(playerElement.getLocation().getY());
+                    combinedGroup.getChildren().add(playerGroup);
+                } else {
+                    combinedGroup.getChildren().add(layerGroup.getGroup());
+                }
+            }
 
 
             Pane pane = new Pane();
@@ -57,7 +55,7 @@ public class GameUI implements UI, UIConnectCallback {
             pane.getChildren().add(combinedGroup);
 
             scene = new Scene(pane);
-            return scene;
+            return new SceneLevel(scene, level);
 
 
         } catch (Exception e) {
@@ -95,27 +93,27 @@ public class GameUI implements UI, UIConnectCallback {
     public void setPort(int port) {
         this.topBar.setPort(port);
     }
-    
+
     public void setIP(String localIPAddress) {
         this.topBar.setLocalIPAddress(localIPAddress);
     }
 
-	@Override
-	public void addPlayer(Player player) {
-		playerGroup.getChildren().add(player.getGroup());
+    @Override
+    public void addPlayer(Player player) {
+        playerGroup.getChildren().add(player.getGroup());
         System.out.println("added player group to scene");
-	}
+    }
 
     @Override
     public void removePlayer(Player player) {
         playerGroup.getChildren().remove(player.getGroup());
     }
 
-	public Element getPlayerElement() {
-		return playerElement;
-	}
+    public Element getPlayerElement() {
+        return playerElement;
+    }
 
-	public void setPlayerElement(Element playerElement) {
-		this.playerElement = playerElement;
-	}
+    public void setPlayerElement(Element playerElement) {
+        this.playerElement = playerElement;
+    }
 }

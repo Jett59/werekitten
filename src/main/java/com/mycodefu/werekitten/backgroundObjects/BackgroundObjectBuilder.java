@@ -106,6 +106,7 @@ public BackgroundObjectBuilder(AnimationCompiler animationCompiler) {
             
             case Player: {
             	//empty node
+                final Group group = new Group();
             	result = new NodeObject() {
 
 					@Override
@@ -115,7 +116,7 @@ public BackgroundObjectBuilder(AnimationCompiler animationCompiler) {
 
 					@Override
 					public Node getNode() {
-						return new Group();
+                        return group;
 					}
             		
             	};

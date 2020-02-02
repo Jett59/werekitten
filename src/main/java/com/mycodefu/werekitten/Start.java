@@ -1,6 +1,7 @@
 package com.mycodefu.werekitten;
 
 
+import com.mycodefu.werekitten.level.data.Level;
 import com.mycodefu.werekitten.pipeline.Pipeline;
 import com.mycodefu.werekitten.pipeline.PipelineContext;
 import com.mycodefu.werekitten.pipeline.PipelineEvent;
@@ -17,10 +18,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class Start extends Application implements PipelineContext {
     private final Map<String, Pipeline> pipelines;
     private Stage stage;
+    private AtomicReference<Level> level = new AtomicReference<>(null);
 
     @SuppressWarnings("deprecation")
 	public Start() {
@@ -92,6 +95,12 @@ public class Start extends Application implements PipelineContext {
         }
         pipeline.addEvent(event);
     }
+
+    @Override
+    public AtomicReference<Level> level() {
+        return this.level;
+    }
+
 
     private Map<String, Player> playerMap = new HashMap<>();
     

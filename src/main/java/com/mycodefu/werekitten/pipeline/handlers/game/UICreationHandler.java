@@ -5,6 +5,7 @@ import com.mycodefu.werekitten.pipeline.PipelineEvent;
 import com.mycodefu.werekitten.pipeline.events.ui.UiCreatedEvent;
 import com.mycodefu.werekitten.pipeline.handlers.PipelineHandler;
 import com.mycodefu.werekitten.ui.GameUI;
+import com.mycodefu.werekitten.ui.SceneLevel;
 
 import java.awt.*;
 
@@ -21,7 +22,9 @@ public class UICreationHandler implements PipelineHandler {
 				var screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
 				ui = new GameUI();
-    			context.getStage().setScene(ui.getScene(screenSize.width, screenSize.height));
+				SceneLevel sceneLevel = ui.getScene(screenSize.width, screenSize.height);
+				context.level().set(sceneLevel.getLevel());
+				context.getStage().setScene(sceneLevel.getScene());
 				context.getStage().setFullScreen(true);
 				context.getStage().show();
 
