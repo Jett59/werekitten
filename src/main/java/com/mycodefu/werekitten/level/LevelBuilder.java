@@ -47,7 +47,7 @@ public List<LayerGroup> buildLevel(String LevelPath){
                 }).collect(Collectors.toList());
 
                 Group group = new Group(elements.stream().map(NodeObject::getNode).collect(Collectors.toList()));
-                return new LayerGroup(layer.getName(), group, layer.getScrollSpeed(), layer.getDepth());
+                return new LayerGroup(layer.getName(), layer.getType(), group, layer.getElements(), layer.getScrollSpeed(), layer.getDepth());
             })
             .sorted(Comparator.comparingInt(LayerGroup::getDepth))
             .collect(Collectors.toList());

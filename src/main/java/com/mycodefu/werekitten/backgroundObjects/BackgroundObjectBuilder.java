@@ -9,6 +9,8 @@ import com.mycodefu.werekitten.level.data.Element;
 
 import javafx.animation.Interpolator;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -100,6 +102,24 @@ public BackgroundObjectBuilder(AnimationCompiler animationCompiler) {
             case Rectangle: {
                 result = createBackgroundShapeFromElement(element);
                 break;
+            }
+            
+            case Player: {
+            	//empty node
+            	result = new NodeObject() {
+
+					@Override
+					public String getName() {
+						return element.getName();
+					}
+
+					@Override
+					public Node getNode() {
+						return new Group();
+					}
+            		
+            	};
+            	break;
             }
 
             default:
