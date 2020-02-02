@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class Start extends Application implements PipelineContext {
+public class 	 Start extends Application implements PipelineContext {
     private final Map<String, Pipeline> pipelines;
     private Stage stage;
     private AtomicReference<GameLevel> level = new AtomicReference<>(null);

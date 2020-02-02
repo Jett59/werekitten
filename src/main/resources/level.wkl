@@ -77,6 +77,17 @@
       "depth": -1.5,
       "scrollSpeed": 0.5,
       "elements": [
+{
+"type": "Image",
+"name": "Tree_3",
+"size": {
+"height": 300
+},
+"location": {
+"x": 200,
+"y": 70
+}
+},
         {
           "type": "Image",
           "name": "Tree_3",
@@ -103,7 +114,7 @@
           },
           "location": {
             "x": 500,
-            "y": 397
+            "y": 512
           }
         }
       ]
@@ -117,11 +128,11 @@
           "type": "Animation",
           "name": "shadyshrew.Idle",
           "size": {
-            "height": 50
+            "height": 25
           },
           "location": {
-            "x": 925,
-            "y": 445
+            "x": 225,
+            "y": 380
           },
           "animationConfig": {
             "durationMillis": 250,
@@ -130,6 +141,24 @@
           }
         }
       ]
-    }
+    },
+{
+"name": "foreground",
+"depth": 1,
+"scrollSpeed": 1,
+"elements": [
+{
+"type": "Image",
+"name": "Crate",
+"size": {
+"height": 100
+},
+"location": {
+"x": 300,
+"y": 512
+}
+}
+]
+}
   ]
 }
