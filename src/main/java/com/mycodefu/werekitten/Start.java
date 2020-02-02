@@ -1,6 +1,7 @@
 package com.mycodefu.werekitten;
 
 
+import com.mycodefu.werekitten.level.GameLevel;
 import com.mycodefu.werekitten.level.data.Level;
 import com.mycodefu.werekitten.pipeline.Pipeline;
 import com.mycodefu.werekitten.pipeline.PipelineContext;
@@ -23,7 +24,7 @@ import java.util.concurrent.atomic.AtomicReference;
 public class Start extends Application implements PipelineContext {
     private final Map<String, Pipeline> pipelines;
     private Stage stage;
-    private AtomicReference<Level> level = new AtomicReference<>(null);
+    private AtomicReference<GameLevel> level = new AtomicReference<>(null);
 
     @SuppressWarnings("deprecation")
 	public Start() {
@@ -97,7 +98,7 @@ public class Start extends Application implements PipelineContext {
     }
 
     @Override
-    public AtomicReference<Level> level() {
+    public AtomicReference<GameLevel> level() {
         return this.level;
     }
 
