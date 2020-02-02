@@ -17,8 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameUI implements UI, UIConnectCallback {
-    public static final int CAT_HEIGHT = 100;
-    public static final int CAT_JUMP_AMOUNT = 100;
+    public static final double CAT_JUMP_AMOUNT = 100;
 
     private Group playerGroup = new Group();
     private TopBar topBar;

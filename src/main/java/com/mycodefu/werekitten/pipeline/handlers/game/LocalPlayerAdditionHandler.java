@@ -19,7 +19,10 @@ public class LocalPlayerAdditionHandler implements PipelineHandler {
 			case "start": {
 				double catHeight = context.level().get().getPlayerElement().getSize().getHeight();
 
-				Player localPlayer = Kitten.create(GameUI.CAT_JUMP_AMOUNT, catHeight, Duration.seconds(1), Player.AnimationType.idleRight, 500);
+				double initialXPosition = context.level().get().getPixelScaleHelper().scaleX(500);
+				double catJumpAmount = context.level().get().getPixelScaleHelper().scaleY(GameUI.CAT_JUMP_AMOUNT);
+
+				Player localPlayer = Kitten.create(catJumpAmount, catHeight, Duration.seconds(1), Player.AnimationType.idleRight, initialXPosition);
 				context.getPlayerMap().put("local", localPlayer);
 				context.postEvent(new PlayerCreatedEvent(localPlayer));
 				break;
