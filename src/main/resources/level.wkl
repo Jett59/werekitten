@@ -98,7 +98,18 @@
             "x": 700,
             "y": 70
           }
-        }
+        },
+{
+"type": "Image",
+"name": "Mushroom_2",
+"size": {
+"height": 10
+},
+"location": {
+"x": 550,
+"y": 450
+}
+}
       ]
     },
     {
@@ -121,7 +132,7 @@
     },
     {
       "name": "shrews",
-      "depth": -1,
+      "depth": 1,
       "scrollSpeed": 1,
       "elements": [
         {
@@ -131,8 +142,8 @@
             "height": 25
           },
           "location": {
-            "x": 225,
-            "y": 380
+            "x": 325,
+            "y": 487
           },
           "animationConfig": {
             "durationMillis": 250,
