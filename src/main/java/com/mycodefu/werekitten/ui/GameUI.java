@@ -1,9 +1,6 @@
 package com.mycodefu.werekitten.ui;
 
-import com.mycodefu.werekitten.animation.AnimationCompiler;
-import com.mycodefu.werekitten.backgroundObjects.BackgroundObjectBuilder;
 import com.mycodefu.werekitten.level.GameLevel;
-import com.mycodefu.werekitten.level.LevelBuilder;
 import com.mycodefu.werekitten.level.data.LayerType;
 import com.mycodefu.werekitten.player.Player;
 import com.mycodefu.werekitten.slide.LayerGroup;
@@ -18,7 +15,6 @@ public class GameUI implements UI, UIConnectCallback {
     public static final double CAT_JUMP_AMOUNT = 100;
 
     private Group playerGroup = new Group();
-    private TopBar topBar;
     private List<UIEventCallback> callbacks = new ArrayList<>();
     private Scene scene;
 
@@ -38,8 +34,6 @@ public class GameUI implements UI, UIConnectCallback {
 
             Pane pane = new Pane();
 
-            topBar = new TopBar(pane, this);
-            combinedGroup.getChildren().add(topBar);
 
             pane.getChildren().add(combinedGroup);
 
@@ -60,7 +54,7 @@ public class GameUI implements UI, UIConnectCallback {
 
     @Override
     public void updateConnectionState(boolean connected) {
-        this.topBar.updateConnectionState(connected);
+    
     }
 
 
@@ -80,11 +74,11 @@ public class GameUI implements UI, UIConnectCallback {
 
     @Override
     public void setPort(int port) {
-        this.topBar.setPort(port);
+    
     }
 
     public void setIP(String localIPAddress) {
-        this.topBar.setLocalIPAddress(localIPAddress);
+        
     }
 
     @Override

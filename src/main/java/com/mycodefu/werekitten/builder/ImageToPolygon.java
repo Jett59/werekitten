@@ -48,10 +48,12 @@ class Wall {
     }
 }
 
-public class ImageToPolygon {
-    public static final boolean DEBUG = true;
 
-    public static void main(String[] args) throws IOException {
+    public class ImageToPolygon {
+
+        public static final boolean DEBUG = false;
+        
+    	public static void main(String[] args) throws IOException {
         if (args.length != 2 || !Files.exists(Path.of(args[0]))) {
             System.out.println("Run this program with two arguments, the first being a valid file path!");
             return;
