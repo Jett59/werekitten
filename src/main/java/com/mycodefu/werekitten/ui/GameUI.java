@@ -22,17 +22,11 @@ public class GameUI implements UI, UIConnectCallback {
     private List<UIEventCallback> callbacks = new ArrayList<>();
     private Scene scene;
 
-    public SceneLevel getScene(int screenWidth, int screenHeight) {
+    public SceneLevel getScene(GameLevel level) {
         try {
-            BackgroundObjectBuilder backgroundObjectBuilder = new BackgroundObjectBuilder(new AnimationCompiler());
-
-            LevelBuilder levelBuilder = new LevelBuilder(backgroundObjectBuilder);
-            GameLevel level = levelBuilder.buildLevel("/level.wkl", screenWidth, screenHeight);
-            List<LayerGroup> layerGroups = level.getLayerGroups();
-
             Group combinedGroup = new Group();
 
-            for (LayerGroup layerGroup : layerGroups) {
+            for (LayerGroup layerGroup : level.getLayerGroups()) {
                 if (layerGroup.getLayerType() == LayerType.Player) {
                     playerGroup.setLayoutY(level.getPlayerElement().getLocation().getY());
                     combinedGroup.getChildren().add(playerGroup);
