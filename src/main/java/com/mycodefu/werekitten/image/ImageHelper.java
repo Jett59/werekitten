@@ -5,6 +5,7 @@ import static java.awt.Image.SCALE_SMOOTH;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import javax.imageio.ImageIO;
@@ -27,6 +28,13 @@ public class ImageHelper {
             throw new IllegalArgumentException("could not load the image: " + resourceFilePath + ", original exception: " + e.getMessage());
         }
         return img;
+    }
+    public static BufferedImage safeReadImageFile(File file) {
+        try {
+            return ImageIO.read(file);
+        } catch (IOException e) {
+            throw new IllegalArgumentException("could not load the image: " + file.getAbsolutePath() + ", original exception: " + e.getMessage());
+        }
     }
 
     public static Image readFxImage(String resourcePath) {
