@@ -4,6 +4,7 @@ import com.mycodefu.werekitten.animation.Animation;
 import javafx.animation.Interpolator;
 import javafx.animation.TranslateTransition;
 import javafx.scene.Group;
+import javafx.scene.shape.Shape;
 import javafx.util.Duration;
 
 import java.util.ArrayList;
@@ -65,6 +66,10 @@ public class Player {
 
     public void stopMovingRight() {
         currentAnimation = playOneAnimation(animations, nameToAnimation.get(AnimationType.idleRight));
+    }
+    
+    public Shape getCurrentShape() {
+    	return currentAnimation.getCurrentShape();
     }
 
     private Animation playOneAnimation(List<Animation> allAnimations, Animation animationToPlay) {
