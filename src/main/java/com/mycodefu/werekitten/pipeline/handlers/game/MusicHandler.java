@@ -15,6 +15,10 @@ public class MusicHandler implements PipelineHandler{
 			switch (event.getEvent().getName()) {
 			case "start": {
 				MusicPlayer.setInLevel();
+				break;
+			}
+			
+			case "levelLoaded": {
 				MusicPlayer.playLevel();
 				break;
 			}
