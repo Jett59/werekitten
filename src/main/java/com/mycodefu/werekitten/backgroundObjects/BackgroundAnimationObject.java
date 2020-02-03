@@ -2,6 +2,7 @@ package com.mycodefu.werekitten.backgroundObjects;
 
 import com.mycodefu.werekitten.animation.Animation;
 import javafx.scene.Node;
+import javafx.scene.shape.Shape;
 
 public class BackgroundAnimationObject implements NodeObject {
     private Animation animation;
@@ -15,6 +16,11 @@ public class BackgroundAnimationObject implements NodeObject {
     @Override
     public Node getNode() {
         return animation.getImageView();
+    }
+
+    @Override
+    public Shape getShape() {
+        return animation.getCurrentShape();
     }
 
     @Override

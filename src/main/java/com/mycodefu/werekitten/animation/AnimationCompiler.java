@@ -1,19 +1,17 @@
 package com.mycodefu.werekitten.animation;
 
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.image.BufferedImage;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-
 import com.mycodefu.werekitten.builder.ImageToPolygon;
 import com.mycodefu.werekitten.image.ImageHelper;
-
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Polygon;
 import javafx.util.Duration;
+
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * Creates an animation from a resource folder full of animation cell images.
@@ -33,61 +31,61 @@ public class AnimationCompiler {
     }
 
     private static ImageProcess reverseImages(boolean reverse) {
-    	if(reverse) {
-    	return images->images.stream().map(ImageHelper::reverseImage).collect(Collectors.toList());
-    	}else {
-    		return images->images;
-    	}
+        if (reverse) {
+            return images -> images.stream().map(ImageHelper::reverseImage).collect(Collectors.toList());
+        } else {
+            return images -> images;
+        }
     }
-    
+
     private static ImageProcess scaleImages(double scale) {
-    	return images->images.stream().map(img->ImageHelper.scaleImage(img, scale)).collect(Collectors.toList());
+        return images -> images.stream().map(img -> ImageHelper.scaleImage(img, scale)).collect(Collectors.toList());
     }
-    
+
     private static ImageProcess scaleImagesToHeight(double height) {
-    	return images->{
-    			BufferedImage firstImage = images.get(0);
-    			int firstImageHeight = firstImage.getHeight();
-    			double scale = (double)height/(double)firstImageHeight;
-    			return scaleImages(scale).process(images);
-    	};
+        return images -> {
+            BufferedImage firstImage = images.get(0);
+            int firstImageHeight = firstImage.getHeight();
+            double scale = (double) height / (double) firstImageHeight;
+            return scaleImages(scale).process(images);
+        };
     }
-    
+
     private static ImageProcess scaleImagesToWidth(double width) {
-    	return images->{
-			BufferedImage firstImage = images.get(0);
-			int firstImageWidth = firstImage.getWidth();
-			double scale = (double)width/(double)firstImageWidth;
-			return scaleImages(scale).process(images);
-	};
+        return images -> {
+            BufferedImage firstImage = images.get(0);
+            int firstImageWidth = firstImage.getWidth();
+            double scale = (double) width / (double) firstImageWidth;
+            return scaleImages(scale).process(images);
+        };
     }
-    
+
     private static ImageProcess scaleImagesToWidthOrHeight(String widthOrHeight, double size) {
-    	return widthOrHeight=="width" ? scaleImagesToWidth(size) : widthOrHeight == "height" ? scaleImagesToHeight(size) : null;
+        return widthOrHeight == "width" ? scaleImagesToWidth(size) : widthOrHeight == "height" ? scaleImagesToHeight(size) : null;
     }
-    
+
     public Animation compileAnimation(String character, String animation, int count, Duration duration, boolean reversed, double scale) {
-    	return compileAnimation(character, animation, count, duration, scaleImages(scale), reverseImages(reversed));
+        return compileAnimation(character, animation, count, duration, scaleImages(scale), reverseImages(reversed));
     }
 
     public Animation compileAnimation(String character, String animation, int count, Duration duration, boolean reversed, double size, String widthOrHeight) {
-    	return compileAnimation(character, animation, count, duration, reverseImages(reversed), scaleImagesToWidthOrHeight(widthOrHeight, size));
+        return compileAnimation(character, animation, count, duration, reverseImages(reversed), scaleImagesToWidthOrHeight(widthOrHeight, size));
     }
-    
-	public Animation compileAnimation(String character, String animation, int count, Duration duration, ImageProcess... imageProcesses) {
+
+    public Animation compileAnimation(String character, String animation, int count, Duration duration, ImageProcess... imageProcesses) {
         List<BufferedImage> images = IntStream
                 .rangeClosed(1, count)
                 .mapToObj(index -> getResourcePath(character, animation, index))
                 .map(ImageHelper::readBufferedImage)
                 .collect(Collectors.toList());
 
-        if(imageProcesses != null && imageProcesses.length > 0) {
-        	for(ImageProcess process : imageProcesses) {
-        		images = process.process(images);
-        	}
+        if (imageProcesses != null && imageProcesses.length > 0) {
+            for (ImageProcess process : imageProcesses) {
+                images = process.process(images);
+            }
         }
-        
-         int cellWidth = images.get(0).getWidth(null);
+
+        int cellWidth = images.get(0).getWidth(null);
         int cellHeight = images.get(0).getHeight(null);
 
         BufferedImage animationStrip = createAnimationStrip(images, cellWidth, cellHeight);
@@ -108,7 +106,7 @@ public class AnimationCompiler {
                 .replace("[animation]", animation)
                 .replace("[index]", Integer.toString(index));
     }
-    
+
     private static BufferedImage createAnimationStrip(List<BufferedImage> images, int cellWidth, int cellHeight) {
         BufferedImage image = new BufferedImage(cellWidth * images.size(), cellHeight, BufferedImage.TYPE_INT_ARGB);
         Graphics graphics = image.getGraphics();

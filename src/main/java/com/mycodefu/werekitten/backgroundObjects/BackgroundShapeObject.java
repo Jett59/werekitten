@@ -22,6 +22,7 @@ public class BackgroundShapeObject implements NodeObject {
         return name;
     }
 
+    @Override
     public Shape getShape() {
         return shape;
     }

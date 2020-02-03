@@ -10,12 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.DoubleStream;
 
-class Point
-{
-    double x,y;
+class Point {
+    double x, y;
 
-    public Point(double x, double y)
-    {
+    public Point(double x, double y) {
         this.x = x;
         this.y = y;
     }
@@ -43,7 +41,7 @@ class Wall {
     public static List<Wall> listFromImage(BufferedImage image) {
         List<Wall> walls = new ArrayList<>();
         walls.add(new Wall("Top", new Point(0, 0), new Point(image.getWidth(), 0)));
-        walls.add(new Wall("Left", new Point(0,0), new Point(0, image.getHeight())));
+        walls.add(new Wall("Left", new Point(0, 0), new Point(0, image.getHeight())));
         walls.add(new Wall("Bottom", new Point(0, image.getHeight()), new Point(image.getWidth(), image.getHeight())));
         walls.add(new Wall("Right", new Point(image.getWidth(), 0), new Point(image.getWidth(), image.getHeight())));
         return walls;
@@ -51,8 +49,7 @@ class Wall {
 }
 
 public class ImageToPolygon {
-
-    public static final boolean DEBUG = false;
+    public static final boolean DEBUG = true;
 
     public static void main(String[] args) throws IOException {
         if (args.length != 2 || !Files.exists(Path.of(args[0]))) {
@@ -67,19 +64,28 @@ public class ImageToPolygon {
         if (polygonPoints < 3) {
             System.out.println("Must have 3 or more points on the polygon!");
         }
+//        try (Stream<Path> walk = Files.walk(Paths.get("/Users/lthompson/IdeaProjects/werekitten/src/main/resources/characters"), 4)) {
+//            walk
+//                    .filter(path -> path.toString().endsWith(".png"))
+//                    .map(Path::toFile)
+//                    .forEach(file -> {
+//                        BufferedImage image = safeReadImageFile(file);
+//                        javafx.scene.shape.Polygon polygon = getPolygon(image, 128);
+//                        WereKittenPolygon.write(polygon, file);
+//                    });
+//        }
 
-        BufferedImage image = ImageIO.read(Path.of(args[0]).toFile());
+        BufferedImage image = ImageIO.read(Path.of(args[0]).toFile());;
 
         javafx.scene.shape.Polygon polygonFX = getPolygon(image, polygonPoints);
         System.out.println(polygonFX);
-
     }
 
     public static javafx.scene.shape.Polygon getPolygon(BufferedImage image, double numberOfPoints) {
 
         double increment_angle = 360d / numberOfPoints;
 
-        Graphics2D graphics = (Graphics2D)image.getGraphics();
+        Graphics2D graphics = (Graphics2D) image.getGraphics();
 
         List<Point> points = new ArrayList<>();
 
@@ -95,7 +101,7 @@ public class ImageToPolygon {
 
             boolean hitEdge = false;
             boolean hitAlpha = false;
-            while(!hitEdge && !hitAlpha) {
+            while (!hitEdge && !hitAlpha) {
                 currentX = moveXAngle(currentX, angle, -1d);
                 currentY = moveYAngle(currentY, angle, -1d);
 
@@ -112,20 +118,20 @@ public class ImageToPolygon {
                     currentY = image.getHeight();
                     hitEdge = true;
                 } else {
-                    int pixel = image.getRGB((int)currentX, (int)currentY);
+                    int pixel = image.getRGB((int) currentX, (int) currentY);
                     int alpha = (pixel >> 24) & 0xff;
                     if (DEBUG) {
                         System.out.println(String.format("x: %f, y: %f, alpha: %d", currentX, currentY, alpha));
                     }
 
-                    if (alpha==255) {
+                    if (alpha == 255) {
                         hitAlpha = true;
                     }
                 }
             }
 
             if (hitAlpha) {
-                points.add(new Point((int)currentX, (int)currentY));
+                points.add(new Point((int) currentX, (int) currentY));
 
                 if (DEBUG) {
                     graphics.setColor(Color.BLACK);
@@ -147,8 +153,8 @@ public class ImageToPolygon {
 
 
         if (DEBUG) {
-            int[] xs = points.stream().map(point -> (int)point.x).mapToInt(Integer::intValue).toArray();
-            int[] ys = points.stream().map(point -> (int)point.y).mapToInt(Integer::intValue).toArray();
+            int[] xs = points.stream().map(point -> (int) point.x).mapToInt(Integer::intValue).toArray();
+            int[] ys = points.stream().map(point -> (int) point.y).mapToInt(Integer::intValue).toArray();
 
             Polygon polygon = new Polygon(xs, ys, points.size());
 
@@ -191,8 +197,8 @@ public class ImageToPolygon {
     }
 
     private static Point edgeLocationFromAngle(BufferedImage image, double angleDegrees) {
-        double centerX = (double)image.getWidth() / 2d;
-        double centerY = (double)image.getHeight() / 2d;
+        double centerX = (double) image.getWidth() / 2d;
+        double centerY = (double) image.getHeight() / 2d;
         Point center = new Point(centerX, centerY);
 
         double length = image.getHeight() + image.getWidth() + 1;
@@ -204,7 +210,7 @@ public class ImageToPolygon {
         List<Wall> walls = Wall.listFromImage(image);
         for (Wall wall : walls) {
             Point point = lineIntersection(wall.point1, wall.point2, center, edge);
-            if (point.x != Double.MAX_VALUE && (int)point.x >= 0 && (int)point.x <= image.getWidth() && (int)point.y >= 0 && (int)point.y <= image.getHeight()) {
+            if (point.x != Double.MAX_VALUE && (int) point.x >= 0 && (int) point.x <= image.getWidth() && (int) point.y >= 0 && (int) point.y <= image.getHeight()) {
                 switch (wall.name) {
                     case "Top":
                         if (angleDegrees > 180) {
@@ -224,31 +230,27 @@ public class ImageToPolygon {
         throw new RuntimeException("Failed to find an intersection!");
     }
 
-    static Point lineIntersection(Point A, Point B, Point C, Point D)
-    {
+    static Point lineIntersection(Point A, Point B, Point C, Point D) {
         // Line AB represented as a1x + b1y = c1
         double a1 = B.y - A.y;
         double b1 = A.x - B.x;
-        double c1 = a1*(A.x) + b1*(A.y);
+        double c1 = a1 * (A.x) + b1 * (A.y);
 
         // Line CD represented as a2x + b2y = c2
         double a2 = D.y - C.y;
         double b2 = C.x - D.x;
-        double c2 = a2*(C.x)+ b2*(C.y);
+        double c2 = a2 * (C.x) + b2 * (C.y);
 
-        double determinant = a1*b2 - a2*b1;
+        double determinant = a1 * b2 - a2 * b1;
 
-        if (determinant == 0)
-        {
-            // The lines are parallel. This is simplified
-            // by returning a pair of FLT_MAX
+        if (determinant == 0) {
+            // The lines are parallel
             return new Point(Double.MAX_VALUE, Double.MAX_VALUE);
-        }
-        else
-        {
-            double x = (b2*c1 - b1*c2)/determinant;
-            double y = (a1*c2 - a2*c1)/determinant;
+        } else {
+            double x = (b2 * c1 - b1 * c2) / determinant;
+            double y = (a1 * c2 - a2 * c1) / determinant;
             return new Point(x, y);
         }
     }
+
 }

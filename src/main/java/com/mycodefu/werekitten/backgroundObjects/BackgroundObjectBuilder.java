@@ -4,21 +4,22 @@ package com.mycodefu.werekitten.backgroundObjects;
 import com.mycodefu.werekitten.animation.Animation;
 import com.mycodefu.werekitten.animation.AnimationCompiler;
 import com.mycodefu.werekitten.image.ImageHelper;
-
 import com.mycodefu.werekitten.level.data.Element;
-
 import javafx.animation.Interpolator;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 import javafx.util.Duration;
 
-import static javafx.animation.Animation.INDEFINITE;
-
 import java.awt.image.BufferedImage;
+
+import static com.mycodefu.werekitten.builder.ImageToPolygon.getPolygon;
+import static javafx.animation.Animation.INDEFINITE;
 
 public class BackgroundObjectBuilder {
 
@@ -92,7 +93,10 @@ public BackgroundObjectBuilder(AnimationCompiler animationCompiler) {
                 }
                 }
                 Image fxImage = SwingFXUtils.toFXImage(bufferedImage, null);
-                BackgroundImageObject backgroundImageObject = new BackgroundImageObject(fxImage, element.getName());
+
+                Polygon polygon = getPolygon(bufferedImage, 32);
+
+                BackgroundImageObject backgroundImageObject = new BackgroundImageObject(fxImage, element.getName(), polygon);
                 backgroundImageObject.getImageView().setX(element.getLocation().getX());
                 backgroundImageObject.getImageView().setY(element.getLocation().getY());
                 result = backgroundImageObject;
@@ -107,6 +111,7 @@ public BackgroundObjectBuilder(AnimationCompiler animationCompiler) {
             case Player: {
             	//empty node
                 final Group group = new Group();
+                final Rectangle rectangle = new Rectangle(element.getSize().getWidth(), element.getSize().getHeight());
             	result = new NodeObject() {
 
 					@Override
@@ -118,8 +123,12 @@ public BackgroundObjectBuilder(AnimationCompiler animationCompiler) {
 					public Node getNode() {
                         return group;
 					}
-            		
-            	};
+
+                    @Override
+                    public Shape getShape() {
+                        return rectangle;
+                    }
+                };
             	break;
             }
 
