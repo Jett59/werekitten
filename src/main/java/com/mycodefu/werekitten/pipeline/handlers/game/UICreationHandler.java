@@ -7,6 +7,8 @@ import com.mycodefu.werekitten.level.GameLevel;
 import com.mycodefu.werekitten.level.LevelBuilder;
 import com.mycodefu.werekitten.pipeline.PipelineContext;
 import com.mycodefu.werekitten.pipeline.PipelineEvent;
+import com.mycodefu.werekitten.pipeline.events.game.LevelLoadedEvent;
+import com.mycodefu.werekitten.pipeline.events.network.NetworkStartEvent;
 import com.mycodefu.werekitten.pipeline.events.ui.UiCreatedEvent;
 import com.mycodefu.werekitten.pipeline.handlers.PipelineHandler;
 import com.mycodefu.werekitten.slide.LayerGroup;
@@ -36,6 +38,11 @@ public class UICreationHandler implements PipelineHandler {
 				context.getStage().show();
 
     			context.postEvent(new UiCreatedEvent(ui));
+    			
+    			boolean shouldListenOnLan = ((LevelLoadedEvent)event).getShouldListenOnLan();
+    			if(shouldListenOnLan) {
+    				context.postEvent(new NetworkStartEvent());
+    			}
     			break;
     		}
     		

@@ -34,7 +34,6 @@ public class UiNetworkEventHandler implements PipelineHandler, UIEventCallback, 
                 case UiCreated: {
                     this.ui = ((UiCreatedEvent) event).getUI();
                     this.ui.addUIEventListener(this);
-					context.postEvent(new NetworkStartEvent());
                     break;
                 }
 				case networkMoveLeft:{
@@ -71,6 +70,15 @@ public class UiNetworkEventHandler implements PipelineHandler, UIEventCallback, 
                     break;
                 }
 				case networkServerListening: {
+					if(ui == null) {
+						System.out.println("ui is null");
+					}
+					if(event.equals(null)) {
+						System.out.println("event is null");
+					}
+					if(((NetworkServerListeningEvent)event).equals(null)) {
+						System.out.println("event is null when casting");
+					}
                     ui.setPort(((NetworkServerListeningEvent)event).getPort());
                     break;
                 }

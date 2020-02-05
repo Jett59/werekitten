@@ -7,6 +7,7 @@ public class NetworkServerListeningEvent extends UiEvent {
     int port;
 
     public NetworkServerListeningEvent(int port) {
+    	System.out.println(port);
         this.port = port;
     }
 
