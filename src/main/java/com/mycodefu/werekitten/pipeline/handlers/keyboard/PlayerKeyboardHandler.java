@@ -17,6 +17,9 @@ public class PlayerKeyboardHandler implements PipelineHandler {
 
 	@Override
     public void handleEvent(PipelineContext context, PipelineEvent event) {
+		if(context.level().get() == null) {
+			return;
+		}
         if (event.getPipelineName().equalsIgnoreCase("keyboard")) {
             PixelScaleHelper pixelScaleHelper = context.level().get().getPixelScaleHelper();
             KeyboardEventType keyboardEventType = (KeyboardEventType) event.getEvent();
