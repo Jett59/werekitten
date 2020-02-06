@@ -31,7 +31,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 public class LoadLevelHandler implements PipelineHandler {
-	public static String buttonStyle = "-fx-background-color: #000000; -fx-text-fill: #05ed1b; ";
+	public static String buttonStyle = "-fx-background-color: #666666; -fx-text-fill: #ccccff; ";
 	
 	BackgroundObjectBuilder backgroundObjectBuilder;
 	Element backgroundElement = new Element();
@@ -46,7 +46,7 @@ public class LoadLevelHandler implements PipelineHandler {
             GameEventType gameEventType = (GameEventType)event.getEvent();
             switch (gameEventType) {
                 case start: {
-                	backgroundElement.setFillColor(new Color(0.05, 0.2, 0.81, 1));
+                	backgroundElement.setFillColor(new Color(0.05, 0.2, 0.95, 0.25));
                 	backgroundElement.setType(ElementType.Rectangle);
                 	backgroundElement.setLocation(new Location(0, 0));
                 	backgroundElement.setSize(new Size(640, 480));
@@ -57,16 +57,25 @@ public class LoadLevelHandler implements PipelineHandler {
                     ImageView imageView = new ImageView("/characters/cat/animations/idle/Idle (1).png");
                     imageView = new ImageView(SwingFXUtils.toFXImage(ImageHelper.scaleImage(SwingFXUtils.fromFXImage(imageView.getImage(), null), 0.5), null));
                     Button singleplayer = new Button("Singleplayer");
+                    singleplayer.setScaleX(1.5);
+                    singleplayer.setScaleY(1.5);
+                    singleplayer.setTranslateX(-50);
                     singleplayer.setStyle(buttonStyle);
                     singleplayer.setOnAction(actionEvent -> {
                         buildLevel(context, false);
                     });
-                    Button hostServer = new Button("host lan server");
+                    Button hostServer = new Button("Host LAN Server");
+                    hostServer.setScaleX(1.5);
+                    hostServer.setScaleY(1.5);
+                    hostServer.setTranslateX(0);
                     hostServer.setStyle(buttonStyle);
                     hostServer.setOnAction(e->{
                     	buildLevel(context, true);
                     });
                     Button joinServer = new Button("join lan server");
+                    joinServer.setScaleX(1.5);
+                    joinServer.setScaleY(1.5);
+                    joinServer.setTranslateX(55);
                     joinServer.setStyle(buttonStyle);
                     joinServer.setOnAction(e->{
                     	FlowPane serverPane = getJoinServerPane();
