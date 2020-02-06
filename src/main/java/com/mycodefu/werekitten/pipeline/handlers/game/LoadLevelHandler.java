@@ -31,7 +31,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 public class LoadLevelHandler implements PipelineHandler {
-	public static String buttonStyle = "-fx-background-color: #ffff01; ";
+	public static String buttonStyle = "-fx-background-color: #000000; -fx-text-fill: #05ed1b; ";
 	
 	BackgroundObjectBuilder backgroundObjectBuilder;
 	Element backgroundElement = new Element();
