@@ -7,16 +7,19 @@ import com.mycodefu.werekitten.netty.server.NettyServer;
 import com.mycodefu.werekitten.netty.server.NettyServerHandler;
 import com.mycodefu.werekitten.pipeline.PipelineContext;
 import com.mycodefu.werekitten.pipeline.PipelineEvent;
+import com.mycodefu.werekitten.pipeline.events.ui.NetworkConnectionEstablishedEvent;
 import com.mycodefu.werekitten.pipeline.events.ui.NetworkServerListeningEvent;
 import com.mycodefu.werekitten.pipeline.handlers.PipelineHandler;
 import com.mycodefu.werekitten.player.NetworkPlayerHelper;
 import io.netty.channel.ChannelId;
 
-public class NetworkPlayerHandler implements PipelineHandler {
+import static com.mycodefu.werekitten.pipeline.events.ui.NetworkConnectionEstablishedEvent.ConnectionType.client;
+
+public class ServerHandler implements PipelineHandler {
     private final NetworkPlayerHelper networkPlayerHelper;
     NettyServer server;
 
-    public NetworkPlayerHandler() {
+    public ServerHandler() {
         this.networkPlayerHelper = new NetworkPlayerHelper();
     }
 
@@ -30,8 +33,9 @@ public class NetworkPlayerHandler implements PipelineHandler {
                     	ConcurrentMap<ChannelId, NetworkPlayerHelper.NetworkPlayerMessageSender> senders = new ConcurrentHashMap<>();
                     	
                         @Override
-                        public void serverConnectionOpened(ChannelId id) {
+                        public void serverConnectionOpened(ChannelId id, String remoteAddress) {
                             senders.put(id, (playerMessage) -> server.sendMessage(id, playerMessage));
+                            context.postEvent(new NetworkConnectionEstablishedEvent(client, remoteAddress));
                         }
 
                         @Override

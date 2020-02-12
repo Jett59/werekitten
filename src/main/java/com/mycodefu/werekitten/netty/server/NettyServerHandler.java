@@ -36,7 +36,7 @@ public class NettyServerHandler extends SimpleChannelInboundHandler<Object> {
 	}
 
 	public interface ServerConnectionCallback {
-        void serverConnectionOpened(ChannelId id);
+        void serverConnectionOpened(ChannelId id, String remoteAddress);
         void serverConnectionMessage(ChannelId id, String sourceIpAddress, String message);
         void serverConnectionClosed(ChannelId id);
     }
@@ -60,7 +60,7 @@ public class NettyServerHandler extends SimpleChannelInboundHandler<Object> {
             if (channelFuture.isSuccess()) {
                 System.out.println(channelHandlerContext.channel() + " Connected");
 
-                callback.serverConnectionOpened(channelHandlerContext.channel().id());
+                callback.serverConnectionOpened(channelHandlerContext.channel().id(), channelHandlerContext.channel().remoteAddress().toString());
             }
         }
     }
