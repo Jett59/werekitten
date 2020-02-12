@@ -21,6 +21,8 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class Start extends Application implements PipelineContext {
+    private static boolean DEBUG_PIPELINE_EVENTS = true;
+
     private final Map<String, Pipeline> pipelines;
     private Stage stage;
     private AtomicReference<GameLevel> level = new AtomicReference<>(null);
@@ -91,9 +93,13 @@ public class Start extends Application implements PipelineContext {
     		throw new IllegalArgumentException("the pipeline "+event.getPipelineName()+"was not valid", e);
     	}
         if(pipeline == null) {
-        	System.out.println("pipeline == null");
+        	System.out.println("pipeline == null. event cannot be posted");
+        } else {
+            if (DEBUG_PIPELINE_EVENTS) {
+                System.out.println(String.format("Event posted: %s (%s), class: %s\n%s", event.getEvent(), event.getPipelineName(), event.getClass().getSimpleName(), event));
+            }
+            pipeline.addEvent(event);
         }
-        pipeline.addEvent(event);
     }
 
     @SuppressWarnings("exports")
