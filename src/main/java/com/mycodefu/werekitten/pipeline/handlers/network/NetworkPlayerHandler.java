@@ -1,5 +1,8 @@
 package com.mycodefu.werekitten.pipeline.handlers.network;
 
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+
 import com.mycodefu.werekitten.netty.server.NettyServer;
 import com.mycodefu.werekitten.netty.server.NettyServerHandler;
 import com.mycodefu.werekitten.pipeline.PipelineContext;
@@ -24,14 +27,16 @@ public class NetworkPlayerHandler implements PipelineHandler {
                 case "start": {
                     System.out.println("Starting network listener...");
                     server = new NettyServer(0, new NettyServerHandler.ServerConnectionCallback() {
+                    	ConcurrentMap<ChannelId, NetworkPlayerHelper.NetworkPlayerMessageSender> senders = new ConcurrentHashMap<>();
+                    	
                         @Override
                         public void serverConnectionOpened(ChannelId id) {
-                            networkPlayerHelper.createNetworkPlayer(id.asLongText(), context, (message) -> server.sendMessage(id, message));
+                            senders.put(id, (playerMessage) -> server.sendMessage(id, playerMessage));
                         }
 
                         @Override
                         public void serverConnectionMessage(ChannelId id, String sourceIpAddress, String message) {
-                            networkPlayerHelper.applyNetworkMessageToPlayer(message, id.asLongText(), context);
+                            networkPlayerHelper.applyNetworkMessageToPlayer(message, id.asLongText(), context, senders.get(id));
                         }
 
                         @Override

@@ -25,10 +25,9 @@ public class NetworkPlayerHelper implements RegisterKeyListenerEvent.KeyListener
         }
     }
 
-    public void createNetworkPlayer(String playerId, PipelineContext context, NetworkPlayerMessageSender playerMessageSender) {
+    public void createNetworkPlayer(String playerId, PipelineContext context, NetworkPlayerMessageSender playerMessageSender, double initialXPosition) {
     	double height = context.level().get().getPlayerElement().getSize().getHeight();
 
-        double initialXPosition = context.level().get().getPixelScaleHelper().scaleX(500); //TODO: get the x position from the remote server as a new network message, and start the remote player wherever they are
         double catJumpAmount = context.level().get().getPixelScaleHelper().scaleY(GameUI.CAT_JUMP_AMOUNT);
 
         Player networkPlayer = Kitten.create(catJumpAmount, height, Duration.seconds(1), Player.AnimationType.idleLeft, initialXPosition);
@@ -52,8 +51,13 @@ public class NetworkPlayerHelper implements RegisterKeyListenerEvent.KeyListener
         playerMessageSenders.remove(playerId);
     }
 
-    public void applyNetworkMessageToPlayer(String message, String playerId, PipelineContext context) {
+    public void applyNetworkMessageToPlayer(String message, String playerId, PipelineContext context, NetworkPlayerMessageSender playerMessageSender) {
 
+    if(message.startsWith("init")) {
+    	createNetworkPlayer(playerId, context, playerMessageSender, (double)Integer.parseInt(message.substring(4)));
+    	return;
+    }
+    
         switch (message) {
             case "leftPressed": {
                 context.postEvent(new NetworkMoveLeftEvent(playerId));

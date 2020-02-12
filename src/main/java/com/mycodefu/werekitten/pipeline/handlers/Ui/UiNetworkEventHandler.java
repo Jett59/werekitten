@@ -107,18 +107,19 @@ public class UiNetworkEventHandler implements PipelineHandler, UIEventCallback, 
 		networkPlayerHelper.destroyNetworkPlayer(id, context);
 	}
 
+	private NetworkPlayerHelper.NetworkPlayerMessageSender messageSender = null;
 	@Override
 	public void clientConnected(String id) {
-		networkPlayerHelper.createNetworkPlayer(id, context, (message) -> {
+		messageSender = (message) -> {
 			if (nettyClient != null){
 				nettyClient.sendMessage(message);
 			}
-		});
+		};
 	}
 
 	@Override
 	public void clientMessageReceived(String id, String text) {
-		networkPlayerHelper.applyNetworkMessageToPlayer(text, id, context);
+		networkPlayerHelper.applyNetworkMessageToPlayer(text, id, context, messageSender);
 	}
 
 	@Override
