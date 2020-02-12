@@ -49,6 +49,7 @@ public ClientHandler() {
 	@Override
 	public void clientConnected(String id, String remoteAddress) {
 		this.context.postEvent(new NetworkConnectionEstablishedEvent(client, remoteAddress));
+		nettyClient.sendMessage("init"+500);
 	}
 
 	@Override
@@ -57,7 +58,7 @@ public ClientHandler() {
 	}
 	@Override
 	public void clientError(String id, Throwable e) {
-		e.printStackTrace();
+	e.printStackTrace();
 	}
 
 }
