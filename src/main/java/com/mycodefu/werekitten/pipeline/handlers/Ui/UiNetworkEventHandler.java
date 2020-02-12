@@ -61,14 +61,6 @@ public class UiNetworkEventHandler implements PipelineHandler, UIEventCallback, 
 					player.jump();
 					break;
 				}
-				case networkConnected: {
-                    ui.updateConnectionState(true);
-                    break;
-                }
-				case networkDisconnected: {
-                    ui.updateConnectionState(false);
-                    break;
-                }
 				case networkServerListening: {
 					if(ui == null) {
 						System.out.println("ui is null");

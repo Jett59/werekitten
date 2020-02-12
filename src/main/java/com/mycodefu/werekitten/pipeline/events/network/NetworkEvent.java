@@ -15,5 +15,5 @@ public abstract class NetworkEvent implements PipelineEvent {
 		return getNetworkEvent();
 	}
 
-	protected abstract NetworkEventType getNetworkEvent();
+	public abstract NetworkEventType getNetworkEvent();
 }

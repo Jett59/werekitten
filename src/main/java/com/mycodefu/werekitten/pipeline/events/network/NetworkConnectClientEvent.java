@@ -14,7 +14,7 @@ public class NetworkConnectClientEvent extends NetworkEvent {
     }
 
     @Override
-    protected NetworkEventType getNetworkEvent() {
+    public NetworkEventType getNetworkEvent() {
         return NetworkEventType.connect;
     }
 
