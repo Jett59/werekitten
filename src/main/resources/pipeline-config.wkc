@@ -23,6 +23,7 @@
       "name": "network",
       "eventsToRunPerFrame": 10,
       "handlers": [
+      "com.mycodefu.werekitten.pipeline.handlers.network.ClientHandler",
         "com.mycodefu.werekitten.pipeline.handlers.network.NetworkPlayerHandler"
       ]
     },
