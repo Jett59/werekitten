@@ -28,7 +28,7 @@ public class UiNetworkEventHandler implements PipelineHandler, UIEventCallback, 
     public void handleEvent(PipelineContext context, PipelineEvent event) {
     	this.context = context;
         if (event.getPipelineName().equalsIgnoreCase("Ui")) {
-			PixelScaleHelper pixelScaleHelper = context.level().get().getPixelScaleHelper();
+			PixelScaleHelper pixelScaleHelper = context.level().get() != null ? context.level().get().getPixelScaleHelper() : null;
 			switch ((UiEventType)event.getEvent()) {
                 case UiCreated: {
                     this.ui = ((UiCreatedEvent) event).getUI();
