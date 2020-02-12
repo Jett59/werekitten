@@ -10,7 +10,7 @@ public enum UiEventType implements Event{
 	networkMoveRight,
 	networkStopMovingLeft,
 	networkStopMovingRight,
-	networkJump, playerDestroyed;
+	networkJump, playerDestroyed, networkConnectionEstablished;
 
 
 	@Override

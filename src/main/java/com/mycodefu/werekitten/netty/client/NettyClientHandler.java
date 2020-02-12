@@ -56,7 +56,7 @@ public class NettyClientHandler extends SimpleChannelInboundHandler<Object> {
                 handshaker.finishHandshake(ch, (FullHttpResponse) msg);
                 System.out.println("WebSocket Client connected!");
                 handshakeFuture.setSuccess();
-                callback.clientConnected(id);
+                callback.clientConnected(id, ctx.channel().remoteAddress().toString());
 
             } catch (WebSocketHandshakeException e) {
                 System.out.println("WebSocket Client failed to connect");
@@ -108,7 +108,7 @@ public class NettyClientHandler extends SimpleChannelInboundHandler<Object> {
 
     public interface SocketCallback {
         void clientDisconnected(String id);
-        void clientConnected(String id);
+        void clientConnected(String id, String remoteAddress);
         void clientMessageReceived(String id, String text);
         void clientError(String id, Throwable e);
     }

@@ -5,7 +5,6 @@ import com.mycodefu.werekitten.netty.client.NettyClient;
 import com.mycodefu.werekitten.netty.client.NettyClientHandler;
 import com.mycodefu.werekitten.pipeline.PipelineContext;
 import com.mycodefu.werekitten.pipeline.PipelineEvent;
-import com.mycodefu.werekitten.pipeline.events.network.NetworkStartEvent;
 import com.mycodefu.werekitten.pipeline.events.ui.*;
 import com.mycodefu.werekitten.pipeline.handlers.PipelineHandler;
 import com.mycodefu.werekitten.player.Kitten;
@@ -101,7 +100,7 @@ public class UiNetworkEventHandler implements PipelineHandler, UIEventCallback, 
 
 	private NetworkPlayerHelper.NetworkPlayerMessageSender messageSender = null;
 	@Override
-	public void clientConnected(String id) {
+	public void clientConnected(String id, String s) {
 		messageSender = (message) -> {
 			if (nettyClient != null){
 				nettyClient.sendMessage(message);

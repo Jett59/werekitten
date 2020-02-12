@@ -6,12 +6,15 @@ import com.mycodefu.werekitten.pipeline.PipelineContext;
 import com.mycodefu.werekitten.pipeline.PipelineEvent;
 import com.mycodefu.werekitten.pipeline.events.network.NetworkConnectClientEvent;
 import com.mycodefu.werekitten.pipeline.events.network.NetworkEvent;
+import com.mycodefu.werekitten.pipeline.events.ui.NetworkConnectionEstablishedEvent;
 import com.mycodefu.werekitten.pipeline.handlers.PipelineHandler;
 import com.mycodefu.werekitten.player.NetworkPlayerHelper;
 
+import static com.mycodefu.werekitten.pipeline.events.ui.NetworkConnectionEstablishedEvent.ConnectionType.client;
+
 
 public class ClientHandler implements PipelineHandler, NettyClientHandler.SocketCallback{
-	private NetworkPlayerHelper networkPlayerHelper;
+	private final NetworkPlayerHelper networkPlayerHelper;
 	private NettyClient nettyClient;
 	private PipelineContext context;
 
@@ -42,13 +45,15 @@ public ClientHandler() {
 	public void clientDisconnected(String id) {
 		networkPlayerHelper.destroyNetworkPlayer(id, context);
 	}
+
 	@Override
-	public void clientConnected(String id) {
-		
+	public void clientConnected(String id, String remoteAddress) {
+		this.context.postEvent(new NetworkConnectionEstablishedEvent(client, remoteAddress));
 	}
+
 	@Override
 	public void clientMessageReceived(String id, String text) {
-		
+		networkPlayerHelper.applyNetworkMessageToPlayer(text, id, context, message -> nettyClient.sendMessage(message));
 	}
 	@Override
 	public void clientError(String id, Throwable e) {
