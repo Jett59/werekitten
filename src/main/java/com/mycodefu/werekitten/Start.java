@@ -14,6 +14,8 @@ import com.mycodefu.werekitten.player.Player;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.stage.Stage;
+
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -96,7 +98,7 @@ public class Start extends Application implements PipelineContext {
         	System.out.println("pipeline == null. event cannot be posted");
         } else {
             if (DEBUG_PIPELINE_EVENTS) {
-                System.out.println(String.format("Event posted: %s (%s), class: %s\n%s", event.getEvent(), event.getPipelineName(), event.getClass().getSimpleName(), event));
+                System.out.println(String.format("%s (%s): Event posted: %s (%s), class: %s", Instant.now().toString(), Thread.currentThread().getName(), event.getEvent(), event.getPipelineName(), event.getClass().getSimpleName()));
             }
             pipeline.addEvent(event);
         }
