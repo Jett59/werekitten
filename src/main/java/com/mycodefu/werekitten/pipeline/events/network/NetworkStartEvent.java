@@ -7,7 +7,7 @@ import com.mycodefu.werekitten.pipeline.events.ui.UiEvent;
 
 public class NetworkStartEvent extends NetworkEvent {
     @Override
-    public Event getEvent() {
+    public NetworkEventType getNetworkEvent() {
         return NetworkEventType.start;
     }
 }

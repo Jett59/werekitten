@@ -5,7 +5,7 @@ import com.mycodefu.werekitten.event.NetworkEventType;
 
 public class NetworkStopEvent extends NetworkEvent {
     @Override
-    public Event getEvent() {
+    public NetworkEventType getNetworkEvent() {
         return NetworkEventType.stop;
     }
 }

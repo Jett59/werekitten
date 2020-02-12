@@ -17,6 +17,7 @@ import com.mycodefu.werekitten.level.data.Size;
 import com.mycodefu.werekitten.pipeline.PipelineContext;
 import com.mycodefu.werekitten.pipeline.PipelineEvent;
 import com.mycodefu.werekitten.pipeline.events.game.LevelLoadedEvent;
+import com.mycodefu.werekitten.pipeline.events.network.NetworkConnectClientEvent;
 import com.mycodefu.werekitten.pipeline.handlers.PipelineHandler;
 
 import javafx.embed.swing.SwingFXUtils;
@@ -78,7 +79,7 @@ public class LoadLevelHandler implements PipelineHandler {
                     joinServer.setTranslateX(55);
                     joinServer.setStyle(buttonStyle);
                     joinServer.setOnAction(e->{
-                    	FlowPane serverPane = getJoinServerPane();
+                    	FlowPane serverPane = getJoinServerPane(context);
                     	context.getStage().setScene(new Scene(new Group(backgroundNode, serverPane)));
                     });
 
@@ -105,7 +106,7 @@ public class LoadLevelHandler implements PipelineHandler {
         context.postEvent(new LevelLoadedEvent(shouldListenOnLan));
     }
     
-    private FlowPane getJoinServerPane() {
+    private FlowPane getJoinServerPane(PipelineContext context) {
     	FlowPane flowPane;
     	Text addressText = new Text("address ->");
     	TextField accessibleAddress = new TextField("put the lan address in the box");
@@ -115,6 +116,11 @@ public class LoadLevelHandler implements PipelineHandler {
     	address.setStyle(buttonStyle);
     	Button connect = new Button("connect");
     	connect.setStyle(buttonStyle);
+
+    	connect.setOnAction(actionEvent -> {
+            NetworkConnectClientEvent networkConnectClientEvent = new NetworkConnectClientEvent(address.getText());
+            context.postEvent(networkConnectClientEvent);
+        });
     	
     	flowPane = new FlowPane(addressText, accessibleAddress, address, connect);
     	return flowPane;
