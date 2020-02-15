@@ -98,7 +98,7 @@ public class Start extends Application implements PipelineContext {
         	System.out.println("pipeline == null. event cannot be posted");
         } else {
             if (DEBUG_PIPELINE_EVENTS) {
-                System.out.println(String.format("%s (%s): Event posted: %s (%s), class: %s", Instant.now().toString(), Thread.currentThread().getName(), event.getEvent(), event.getPipelineName(), event.getClass().getSimpleName()));
+                System.out.println(String.format("%s (%s): Event posted: %s (%s), class: %s, posted by: %s", Instant.now().toString(), Thread.currentThread().getName(), event.getEvent(), event.getPipelineName(), event.getClass().getSimpleName(), new Exception().getStackTrace()[1].getClassName()));
             }
             pipeline.addEvent(event);
         }
