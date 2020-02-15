@@ -7,6 +7,8 @@ import com.mycodefu.werekitten.slide.LayerGroup;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +19,7 @@ public class GameUI implements UI, UIConnectCallback {
     private Group playerGroup = new Group();
     private List<UIEventCallback> callbacks = new ArrayList<>();
     private Scene scene;
+    private Text address = new Text();
 
     public SceneLevel getScene(GameLevel level) {
         try {
@@ -30,6 +33,8 @@ public class GameUI implements UI, UIConnectCallback {
                     combinedGroup.getChildren().add(layerGroup.getGroup());
                 }
             }
+            address.setFont(new Font(24));
+            combinedGroup.getChildren().add(address);
 
 
             Pane pane = new Pane();
@@ -74,7 +79,9 @@ public class GameUI implements UI, UIConnectCallback {
 
     @Override
     public void setPort(int port) {
-        System.out.println("TODO: Replace with something to display port: " + port);
+address.setText("port: "+port);
+address.setLayoutX(25);
+address.setLayoutY(25);
     }
 
     public void setIP(String localIPAddress) {
