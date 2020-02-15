@@ -74,7 +74,7 @@ public class GameUI implements UI, UIConnectCallback {
 
     @Override
     public void setPort(int port) {
-    
+        System.out.println("TODO: Replace with something to display port: " + port);
     }
 
     public void setIP(String localIPAddress) {
