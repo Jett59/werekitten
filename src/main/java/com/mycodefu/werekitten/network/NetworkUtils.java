@@ -39,7 +39,7 @@ public class NetworkUtils {
                         socket.socket().setSoTimeout(3000);
 
                         // bind the socket to your local interface
-                        socket.bind(new InetSocketAddress(address, 8080));
+                        socket.bind(new InetSocketAddress(address, 0));
 
                         // try to connect to *somewhere*
                         socket.connect(new InetSocketAddress("google.com", 80));

@@ -7,6 +7,7 @@ import com.mycodefu.werekitten.slide.LayerGroup;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
@@ -34,6 +35,7 @@ public class GameUI implements UI, UIConnectCallback {
                 }
             }
             address.setFont(new Font(24));
+            address.setFill(Color.WHITE);
             combinedGroup.getChildren().add(address);
 
 
