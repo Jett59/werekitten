@@ -1,15 +1,9 @@
 package com.mycodefu.werekitten.pipeline.handlers.game;
 
-import java.util.concurrent.atomic.AtomicReference;
-
 import com.mycodefu.werekitten.animation.AnimationCompiler;
 import com.mycodefu.werekitten.backgroundObjects.BackgroundObjectBuilder;
 import com.mycodefu.werekitten.event.GameEventType;
 import com.mycodefu.werekitten.image.ImageHelper;
-import com.mycodefu.werekitten.level.data.Element;
-import com.mycodefu.werekitten.level.data.ElementType;
-import com.mycodefu.werekitten.level.data.Location;
-import com.mycodefu.werekitten.level.data.Size;
 import com.mycodefu.werekitten.pipeline.PipelineContext;
 import com.mycodefu.werekitten.pipeline.PipelineEvent;
 import com.mycodefu.werekitten.pipeline.events.game.BuildLevelEvent;
@@ -17,10 +11,7 @@ import com.mycodefu.werekitten.pipeline.events.network.NetworkConnectClientEvent
 import com.mycodefu.werekitten.pipeline.handlers.PipelineHandler;
 
 import javafx.embed.swing.SwingFXUtils;
-import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.geometry.Orientation;
-import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -29,11 +20,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
-import javafx.scene.text.TextBoundsType;
 
 public class LoadLevelHandler implements PipelineHandler {
 	public static String buttonStyle = "-fx-background-color: #666666; -fx-text-fill: #ccccff; ";
@@ -75,15 +64,20 @@ public class LoadLevelHandler implements PipelineHandler {
                     joinServer.setFont(buttonFont);
 
                     joinServer.setStyle(buttonStyle);
+
+
+                    final FlowPane imagePane = new FlowPane(imageView);
+                    imagePane.setPrefWidth(230);
+
                     joinServer.setOnAction(e->{
-                    	FlowPane serverPane = getJoinServerPane(context);
-                    	context.getStage().setScene(new Scene(new Group( serverPane)));
+                    	Node serverNode = getJoinServerScreenNode(context, welcome, imagePane);
+                        Scene connectScene = new Scene(new Group(serverNode));
+                        connectScene.setFill(new Color(0.05, 0.2, 0.95, 0.25));
+                        context.getStage().setScene(connectScene);
                     });
                     VBox buttons = new VBox(10, singleplayer, hostServer, joinServer);
                     buttons.setPadding(new Insets(50, 0, 0, 0));
 
-                    FlowPane imagePane = new FlowPane(imageView);
-                    imagePane.setPrefWidth(230);
 
                     BorderPane border = new BorderPane();
                     border.setTop(welcome);
@@ -103,23 +97,30 @@ public class LoadLevelHandler implements PipelineHandler {
         }
     }
     
-    private FlowPane getJoinServerPane(PipelineContext context) {
-    	FlowPane flowPane;
-    	Text addressText = new Text("address ->");
-    	TextField accessibleAddress = new TextField("put the lan address in the box");
-    	accessibleAddress.setTranslateX(-500);
-    	accessibleAddress.setEditable(false);
-    	TextField address = new TextField();
-    	address.setStyle(buttonStyle);
-    	Button connect = new Button("connect");
-    	connect.setStyle(buttonStyle);
+    private BorderPane getJoinServerScreenNode(PipelineContext context, Text welcome, FlowPane imagePane) {
+        BorderPane border = new BorderPane();
+        border.setTop(welcome);
+        border.setLeft(imagePane);
 
-    	connect.setOnAction(actionEvent -> {
+        Text addressText = new Text("address ->");
+        TextField accessibleAddress = new TextField("put the lan address in the box");
+        accessibleAddress.setTranslateX(-500);
+        accessibleAddress.setEditable(false);
+        TextField address = new TextField();
+        address.setStyle(buttonStyle);
+        Button connect = new Button("connect");
+        connect.setStyle(buttonStyle);
+
+        connect.setOnAction(actionEvent -> {
             NetworkConnectClientEvent networkConnectClientEvent = new NetworkConnectClientEvent(address.getText());
             context.postEvent(networkConnectClientEvent);
         });
-    	
-    	flowPane = new FlowPane(addressText, accessibleAddress, address, connect);
-    	return flowPane;
+
+        HBox buttons = new HBox(10, addressText, address, connect);
+        buttons.setPadding(new Insets(50, 0, 0, 0));
+
+        border.setRight(buttons);
+
+    	return border;
     }
 }
