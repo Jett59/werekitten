@@ -33,7 +33,8 @@
       "eventsToRunPerFrame": 10,
       "handlers": [
         "com.mycodefu.werekitten.pipeline.handlers.Ui.PlayerAdditionHandler",
-        "com.mycodefu.werekitten.pipeline.handlers.Ui.ClientInformationHandler"
+        "com.mycodefu.werekitten.pipeline.handlers.Ui.ClientInformationHandler",
+        "com.mycodefu.werekitten.pipeline.handlers.Ui.UiNetworkEventHandler"
       ]
     }
   ]
