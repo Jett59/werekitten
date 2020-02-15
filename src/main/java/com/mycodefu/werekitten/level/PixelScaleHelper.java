@@ -24,4 +24,16 @@ public class PixelScaleHelper {
         double result = ratio * screenHeight;
         return result;
     }
+    
+    public double scaleXBack(double x) {
+    	double racio = screenHeight / x;
+    	double result = racio * scaleHeight;
+    	return result;
+    }
+    
+    public double scaleYBack(double y) {
+    	double racio = screenHeight / y;
+    	double result = racio * scaleHeight;
+    	return result;
+    }
 }

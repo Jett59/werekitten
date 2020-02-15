@@ -110,7 +110,7 @@ public class UiNetworkEventHandler implements PipelineHandler, UIEventCallback, 
 
 	@Override
 	public void clientMessageReceived(String id, String text) {
-		networkPlayerHelper.applyNetworkMessageToPlayer(text, id, context, messageSender);
+		networkPlayerHelper.applyNetworkMessageToPlayer(text, id, context, messageSender, false);
 	}
 
 	@Override

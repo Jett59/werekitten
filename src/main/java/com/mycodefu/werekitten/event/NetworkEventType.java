@@ -5,7 +5,9 @@ package com.mycodefu.werekitten.event;
  */
 public enum NetworkEventType implements Event{
     start,
-    stop, connect;
+    stop, 
+    connect,
+    readyForInitMessage;
 
 	@Override
 	public String getName() {

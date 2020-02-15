@@ -4,9 +4,11 @@ import com.mycodefu.werekitten.netty.client.NettyClient;
 import com.mycodefu.werekitten.netty.client.NettyClientHandler;
 import com.mycodefu.werekitten.pipeline.PipelineContext;
 import com.mycodefu.werekitten.pipeline.PipelineEvent;
+import com.mycodefu.werekitten.pipeline.events.game.BuildLevelEvent;
 import com.mycodefu.werekitten.pipeline.events.network.NetworkConnectClientEvent;
 import com.mycodefu.werekitten.pipeline.events.network.NetworkEvent;
 import com.mycodefu.werekitten.pipeline.events.ui.NetworkConnectionEstablishedEvent;
+import com.mycodefu.werekitten.pipeline.events.ui.NetworkConnectionEstablishedEvent.ConnectionType;
 import com.mycodefu.werekitten.pipeline.handlers.PipelineHandler;
 import com.mycodefu.werekitten.player.NetworkPlayerHelper;
 
@@ -30,7 +32,13 @@ public ClientHandler() {
 			case connect: {
 				System.out.println("connect event recieved "+event.toString());
 				nettyClient = new NettyClient(((NetworkConnectClientEvent)event).getServerAddress(), this);
+				context.postEvent(new BuildLevelEvent(false));
+				context.postEvent(new NetworkConnectionEstablishedEvent(ConnectionType.server, ((NetworkConnectClientEvent)event).getServerAddress()));
+				break;
+			}
+			case readyForInitMessage: {
 				nettyClient.connect();
+				
 				break;
 			}
 			
@@ -43,18 +51,19 @@ public ClientHandler() {
 	}
 	@Override
 	public void clientDisconnected(String id) {
+		System.out.println("client destroying player");
 		networkPlayerHelper.destroyNetworkPlayer(id, context);
 	}
 
 	@Override
 	public void clientConnected(String id, String remoteAddress) {
-		this.context.postEvent(new NetworkConnectionEstablishedEvent(client, remoteAddress));
-		nettyClient.sendMessage("init"+500);
+		//this.context.postEvent(new NetworkConnectionEstablishedEvent(client, remoteAddress));
+		nettyClient.sendMessage("init"+(int)context.level().get().getPixelScaleHelper().scaleXBack(context.level().get().getPlayerElement().getLocation().getX()));
 	}
 
 	@Override
 	public void clientMessageReceived(String id, String text) {
-		networkPlayerHelper.applyNetworkMessageToPlayer(text, id, context, message -> nettyClient.sendMessage(message));
+		networkPlayerHelper.applyNetworkMessageToPlayer(text, id, context, message -> nettyClient.sendMessage(message), false);
 	}
 	@Override
 	public void clientError(String id, Throwable e) {

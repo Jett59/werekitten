@@ -25,7 +25,6 @@ public class UICreationHandler implements PipelineHandler {
 			GameEventType gameEventType = (GameEventType)event.getEvent();
     		switch (gameEventType) {
     		case levelLoaded: {
-
 				GameUI ui;
 
 				context.getStage().setTitle("werekitten");
@@ -33,6 +32,7 @@ public class UICreationHandler implements PipelineHandler {
 				ui = new GameUI();
 				SceneLevel sceneLevel = ui.getScene(context.level().get());
 				context.level().set(sceneLevel.getLevel());
+				System.out.println("level built");
 				context.getStage().setScene(sceneLevel.getScene());
 				context.getStage().setFullScreen(true);
 				context.getStage().show();

@@ -1,14 +1,11 @@
 package com.mycodefu.werekitten.pipeline.handlers.game;
 
-import java.awt.Toolkit;
 import java.util.concurrent.atomic.AtomicReference;
 
 import com.mycodefu.werekitten.animation.AnimationCompiler;
 import com.mycodefu.werekitten.backgroundObjects.BackgroundObjectBuilder;
 import com.mycodefu.werekitten.event.GameEventType;
 import com.mycodefu.werekitten.image.ImageHelper;
-import com.mycodefu.werekitten.level.GameLevel;
-import com.mycodefu.werekitten.level.LevelBuilder;
 import com.mycodefu.werekitten.level.data.Color;
 import com.mycodefu.werekitten.level.data.Element;
 import com.mycodefu.werekitten.level.data.ElementType;
@@ -16,7 +13,7 @@ import com.mycodefu.werekitten.level.data.Location;
 import com.mycodefu.werekitten.level.data.Size;
 import com.mycodefu.werekitten.pipeline.PipelineContext;
 import com.mycodefu.werekitten.pipeline.PipelineEvent;
-import com.mycodefu.werekitten.pipeline.events.game.LevelLoadedEvent;
+import com.mycodefu.werekitten.pipeline.events.game.BuildLevelEvent;
 import com.mycodefu.werekitten.pipeline.events.network.NetworkConnectClientEvent;
 import com.mycodefu.werekitten.pipeline.handlers.PipelineHandler;
 
@@ -63,7 +60,7 @@ public class LoadLevelHandler implements PipelineHandler {
                     singleplayer.setTranslateX(-50);
                     singleplayer.setStyle(buttonStyle);
                     singleplayer.setOnAction(actionEvent -> {
-                        buildLevel(context, false);
+                        context.postEvent(new BuildLevelEvent(false));
                     });
                     Button hostServer = new Button("Host LAN Server");
                     hostServer.setScaleX(1.5);
@@ -71,7 +68,7 @@ public class LoadLevelHandler implements PipelineHandler {
                     hostServer.setTranslateX(0);
                     hostServer.setStyle(buttonStyle);
                     hostServer.setOnAction(e->{
-                    	buildLevel(context, true);
+                    	context.postEvent(new BuildLevelEvent(true));
                     });
                     Button joinServer = new Button("join lan server");
                     joinServer.setScaleX(1.5);
@@ -93,17 +90,6 @@ public class LoadLevelHandler implements PipelineHandler {
                 }
             }
         }
-    }
-    
-    private void buildLevel(PipelineContext context, boolean shouldListenOnLan) {
-    	var screen = Toolkit.getDefaultToolkit().getScreenSize();
-        BackgroundObjectBuilder backgroundObjectBuilder = new BackgroundObjectBuilder(new AnimationCompiler());
-        LevelBuilder levelBuilder = new LevelBuilder(backgroundObjectBuilder);
-        GameLevel level = levelBuilder.buildLevel("/level.wkl", screen.width, screen.height);
-        context.getStage().hide();
-
-        context.level().set(level);
-        context.postEvent(new LevelLoadedEvent(shouldListenOnLan));
     }
     
     private FlowPane getJoinServerPane(PipelineContext context) {

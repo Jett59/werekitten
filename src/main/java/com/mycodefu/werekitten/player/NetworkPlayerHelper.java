@@ -51,10 +51,16 @@ public class NetworkPlayerHelper implements RegisterKeyListenerEvent.KeyListener
         playerMessageSenders.remove(playerId);
     }
 
-    public void applyNetworkMessageToPlayer(String message, String playerId, PipelineContext context, NetworkPlayerMessageSender playerMessageSender) {
+    public void applyNetworkMessageToPlayer(String message, String playerId, PipelineContext context, NetworkPlayerMessageSender playerMessageSender, boolean shouldSendInit) {
 
     if(message.startsWith("init")) {
-    	createNetworkPlayer(playerId, context, playerMessageSender, (double)Integer.parseInt(message.substring(4)));
+    	if(shouldSendInit) {
+    	Player local = context.getPlayerMap().get("local");
+        int x = (int)context.level().get().getPixelScaleHelper().scaleXBack(local.getGroup().getTranslateX()+local.getGroup().getLayoutX());
+        playerMessageSender.sendMessage("init"+x);
+    	}
+    	double initialXPosition = context.level().get().getPixelScaleHelper().scaleX(Integer.parseInt(message.substring(4)));
+    	    	createNetworkPlayer(playerId, context, playerMessageSender, initialXPosition);
     	return;
     }
     

@@ -1,5 +1,6 @@
 package com.mycodefu.werekitten.pipeline;
 
+import com.mycodefu.werekitten.Start;
 import com.mycodefu.werekitten.pipeline.handlers.PipelineHandler;
 
 import java.util.Arrays;
@@ -45,6 +46,9 @@ public class Pipeline {
             //check if the event is null, if it is, that means that the queue is empty, exit early
             if (event == null) {
                 return;
+            }
+            if(Start.DEBUG_PIPELINE_EVENTS) {
+            System.out.println("rendering event "+event.getEvent().getName());
             }
 
             for (int i = 0; i < this.handlers.length; i++) {

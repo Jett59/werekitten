@@ -1,18 +1,6 @@
 {
   "pipelines": [
     {
-      "name": "game",
-      "eventsToRunPerFrame": 1,
-      "handlers": [
-        "com.mycodefu.werekitten.pipeline.handlers.game.LoadLevelHandler",
-        "com.mycodefu.werekitten.pipeline.handlers.game.UICreationHandler",
-        "com.mycodefu.werekitten.pipeline.handlers.game.LocalPlayerAdditionHandler",
-        "com.mycodefu.werekitten.pipeline.handlers.game.KeyboardEnablingHandler",
-        "com.mycodefu.werekitten.pipeline.handlers.game.MusicHandler",
-        "com.mycodefu.werekitten.pipeline.handlers.game.WindowCloseHandler"
-      ]
-    },
-    {
       "name": "keyboard",
       "eventsToRunPerFrame": 10,
       "handlers": [
@@ -28,11 +16,24 @@
       ]
     },
     {
+      "name": "game",
+      "eventsToRunPerFrame": 5,
+      "handlers": [
+        "com.mycodefu.werekitten.pipeline.handlers.game.LoadLevelHandler",
+        "com.mycodefu.werekitten.pipeline.handlers.game.UICreationHandler",
+        "com.mycodefu.werekitten.pipeline.handlers.game.LevelBuildHandler",
+        "com.mycodefu.werekitten.pipeline.handlers.game.LocalPlayerAdditionHandler",
+        "com.mycodefu.werekitten.pipeline.handlers.game.KeyboardEnablingHandler",
+        "com.mycodefu.werekitten.pipeline.handlers.game.MusicHandler",
+        "com.mycodefu.werekitten.pipeline.handlers.game.WindowCloseHandler"
+      ]
+    },
+    {
       "name": "UI",
       "eventsToRunPerFrame": 10,
       "handlers": [
         "com.mycodefu.werekitten.pipeline.handlers.Ui.PlayerAdditionHandler",
-        "com.mycodefu.werekitten.pipeline.handlers.Ui.UiNetworkEventHandler"
+        "com.mycodefu.werekitten.pipeline.handlers.Ui.ClientInformationHandler"
       ]
     }
   ]

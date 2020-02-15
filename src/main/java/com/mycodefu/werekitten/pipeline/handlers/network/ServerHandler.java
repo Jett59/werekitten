@@ -11,6 +11,8 @@ import com.mycodefu.werekitten.pipeline.events.ui.NetworkConnectionEstablishedEv
 import com.mycodefu.werekitten.pipeline.events.ui.NetworkServerListeningEvent;
 import com.mycodefu.werekitten.pipeline.handlers.PipelineHandler;
 import com.mycodefu.werekitten.player.NetworkPlayerHelper;
+import com.mycodefu.werekitten.player.Player;
+
 import io.netty.channel.ChannelId;
 
 import static com.mycodefu.werekitten.pipeline.events.ui.NetworkConnectionEstablishedEvent.ConnectionType.client;
@@ -40,11 +42,12 @@ public class ServerHandler implements PipelineHandler {
 
                         @Override
                         public void serverConnectionMessage(ChannelId id, String sourceIpAddress, String message) {
-                            networkPlayerHelper.applyNetworkMessageToPlayer(message, id.asLongText(), context, senders.get(id));
+                            networkPlayerHelper.applyNetworkMessageToPlayer(message, id.asLongText(), context, senders.get(id), true);
                         }
 
                         @Override
                         public void serverConnectionClosed(ChannelId id) {
+                        	System.out.println("server destroying player");
                             networkPlayerHelper.destroyNetworkPlayer(id.asLongText(), context);
                         }
                     });
