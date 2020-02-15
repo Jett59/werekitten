@@ -3,7 +3,7 @@ package com.mycodefu.werekitten.ui;
 import com.mycodefu.werekitten.player.Player;
 
 public interface UI {
-    void setPort(int port);
+    void setAddress(String address);
 
     void addPlayer(Player player);
 

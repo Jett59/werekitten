@@ -14,6 +14,7 @@ import io.netty.channel.group.DefaultChannelGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.address.DynamicAddressConnectHandler;
 import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpServerCodec;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
@@ -24,7 +25,6 @@ import io.netty.handler.logging.LoggingHandler;
 import io.netty.util.concurrent.DefaultEventExecutor;
 
 public class NettyServer {
-
 	private int initialPort;
 	private NioEventLoopGroup bossGroup;
 	private NioEventLoopGroup workerGroup;
@@ -66,6 +66,8 @@ public class NettyServer {
 
 	public void listen() {
         try {
+            DynamicAddressConnectHandler dynamicAddressConnectHandler = new DynamicAddressConnectHandler() {
+            };
             serverSocketChannel = this.bootstrap.bind(initialPort).sync().channel();
         } catch (InterruptedException e) {
             throw new RuntimeException("Failed attempting to listen on port " + initialPort + " for web socket connections.", e);

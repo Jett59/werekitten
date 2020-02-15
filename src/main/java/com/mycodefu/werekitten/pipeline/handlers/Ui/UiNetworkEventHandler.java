@@ -48,7 +48,7 @@ public class UiNetworkEventHandler implements PipelineHandler {
 					break;
 				}
 				case networkServerListening: {
-					ui.setPort(((NetworkServerListeningEvent)event).getPort());
+					ui.setAddress(((NetworkServerListeningEvent)event).getAddress());
 					break;
 				}
                 default:

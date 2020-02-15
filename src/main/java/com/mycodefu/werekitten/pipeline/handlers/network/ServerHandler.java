@@ -5,6 +5,7 @@ import java.util.concurrent.ConcurrentMap;
 
 import com.mycodefu.werekitten.netty.server.NettyServer;
 import com.mycodefu.werekitten.netty.server.NettyServerHandler;
+import com.mycodefu.werekitten.network.NetworkUtils;
 import com.mycodefu.werekitten.pipeline.PipelineContext;
 import com.mycodefu.werekitten.pipeline.PipelineEvent;
 import com.mycodefu.werekitten.pipeline.events.ui.NetworkConnectionEstablishedEvent;
@@ -52,7 +53,9 @@ public class ServerHandler implements PipelineHandler {
                         }
                     });
                     server.listen();
-                    context.postEvent(new NetworkServerListeningEvent(server.getPort()));
+                    String internetIpAddress = NetworkUtils.getInternetIpAddress();
+                    String wsAddress = String.format("ws://%s:%d", internetIpAddress, server.getPort());
+                    context.postEvent(new NetworkServerListeningEvent(wsAddress));
                     break;
                 }
                 case "stop": {

@@ -78,10 +78,11 @@ public class GameUI implements UI, UIConnectCallback {
     }
 
     @Override
-    public void setPort(int port) {
-address.setText("port: "+port);
+    public void setAddress(String wsAddress) {
+address.setText("Listening at: "+wsAddress);
 address.setLayoutX(25);
 address.setLayoutY(25);
+        System.out.println("Listening at: " + wsAddress);
     }
 
     public void setIP(String localIPAddress) {

@@ -4,15 +4,14 @@ import com.mycodefu.werekitten.event.Event;
 import com.mycodefu.werekitten.event.UiEventType;
 
 public class NetworkServerListeningEvent extends UiEvent {
-    int port;
+    private String address;
 
-    public NetworkServerListeningEvent(int port) {
-    	System.out.println(port);
-        this.port = port;
+    public NetworkServerListeningEvent(String address) {
+        this.address = address;
     }
 
-    public int getPort() {
-        return port;
+    public String getAddress() {
+        return address;
     }
 
     @Override
