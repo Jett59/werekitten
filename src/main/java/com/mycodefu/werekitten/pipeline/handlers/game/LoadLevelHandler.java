@@ -6,7 +6,6 @@ import com.mycodefu.werekitten.animation.AnimationCompiler;
 import com.mycodefu.werekitten.backgroundObjects.BackgroundObjectBuilder;
 import com.mycodefu.werekitten.event.GameEventType;
 import com.mycodefu.werekitten.image.ImageHelper;
-import com.mycodefu.werekitten.level.data.Color;
 import com.mycodefu.werekitten.level.data.Element;
 import com.mycodefu.werekitten.level.data.ElementType;
 import com.mycodefu.werekitten.level.data.Location;
@@ -18,22 +17,29 @@ import com.mycodefu.werekitten.pipeline.events.network.NetworkConnectClientEvent
 import com.mycodefu.werekitten.pipeline.handlers.PipelineHandler;
 
 import javafx.embed.swing.SwingFXUtils;
+import javafx.geometry.HPos;
+import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
+import javafx.scene.text.TextBoundsType;
 
 public class LoadLevelHandler implements PipelineHandler {
 	public static String buttonStyle = "-fx-background-color: #666666; -fx-text-fill: #ccccff; ";
 	
 	BackgroundObjectBuilder backgroundObjectBuilder;
-	Element backgroundElement = new Element();
-	
+
 	public LoadLevelHandler() {
 		backgroundObjectBuilder = new BackgroundObjectBuilder(new AnimationCompiler());
 	}
@@ -44,44 +50,49 @@ public class LoadLevelHandler implements PipelineHandler {
             GameEventType gameEventType = (GameEventType)event.getEvent();
             switch (gameEventType) {
                 case start: {
-                	backgroundElement.setFillColor(new Color(0.05, 0.2, 0.95, 0.25));
-                	backgroundElement.setType(ElementType.Rectangle);
-                	backgroundElement.setLocation(new Location(0, 0));
-                	backgroundElement.setSize(new Size(640, 480));
-                	AtomicReference<FlowPane> flowPane = new AtomicReference<>();
-                	Node backgroundNode = backgroundObjectBuilder.build(backgroundElement).getNode();
                 	Text welcome = new Text("WELCOME TO WEREKITTEN");
-                	welcome.setFont(new Font(50));
+                	welcome.setFont(new Font("Arial", 42));
+                	welcome.setTextAlignment(TextAlignment.CENTER);
+
                     ImageView imageView = new ImageView("/characters/cat/animations/idle/Idle (1).png");
                     imageView = new ImageView(SwingFXUtils.toFXImage(ImageHelper.scaleImage(SwingFXUtils.fromFXImage(imageView.getImage(), null), 0.5), null));
+
+                    Font buttonFont = new Font("Arial", 24);
+
                     Button singleplayer = new Button("Singleplayer");
-                    singleplayer.setScaleX(1.5);
-                    singleplayer.setScaleY(1.5);
-                    singleplayer.setTranslateX(-50);
                     singleplayer.setStyle(buttonStyle);
+                    singleplayer.setFont(buttonFont);
                     singleplayer.setOnAction(actionEvent -> {
                         context.postEvent(new BuildLevelEvent(false));
                     });
                     Button hostServer = new Button("Host LAN Server");
-                    hostServer.setScaleX(1.5);
-                    hostServer.setScaleY(1.5);
-                    hostServer.setTranslateX(0);
                     hostServer.setStyle(buttonStyle);
+                    hostServer.setFont(buttonFont);
                     hostServer.setOnAction(e->{
-                    	context.postEvent(new BuildLevelEvent(true));
+                        context.postEvent(new BuildLevelEvent(true));
                     });
                     Button joinServer = new Button("join lan server");
-                    joinServer.setScaleX(1.5);
-                    joinServer.setScaleY(1.5);
-                    joinServer.setTranslateX(55);
+                    joinServer.setFont(buttonFont);
+
                     joinServer.setStyle(buttonStyle);
                     joinServer.setOnAction(e->{
                     	FlowPane serverPane = getJoinServerPane(context);
-                    	context.getStage().setScene(new Scene(new Group(backgroundNode, serverPane)));
+                    	context.getStage().setScene(new Scene(new Group( serverPane)));
                     });
+                    VBox buttons = new VBox(10, singleplayer, hostServer, joinServer);
+                    buttons.setPadding(new Insets(50, 0, 0, 0));
 
-                    flowPane.set(new FlowPane(welcome, imageView, singleplayer, hostServer, joinServer));
-                    Scene scene = new Scene(new Group(backgroundNode, flowPane.get()));
+                    FlowPane imagePane = new FlowPane(imageView);
+                    imagePane.setPrefWidth(230);
+
+                    BorderPane border = new BorderPane();
+                    border.setTop(welcome);
+                    border.setLeft(imagePane);
+                    border.setRight(buttons);
+
+                    Group root = new Group(border);
+                    Scene scene = new Scene(root);
+                    scene.setFill(new Color(0.05, 0.2, 0.95, 0.25));
                     context.getStage().setTitle("werekitten launcher");
                     context.getStage().setScene(scene);
                     context.getStage().setWidth(640);
