@@ -142,6 +142,7 @@ jobs:
           command: |
             CIRCLE_TAG="$(cat ./artifacts/circle_tag.txt)"
             rm -f ./artifacts/circle_tag.txt
+            rm -f /root/project/artifacts/project/target/jpackage-app/._WereKitten-1.0.dmg
             echo "CIRCLE_TAG=${CIRCLE_TAG}"
 
             ghr -t "${GITHUB_TOKEN}" \
