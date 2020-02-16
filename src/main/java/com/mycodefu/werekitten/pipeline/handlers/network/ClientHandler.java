@@ -5,6 +5,7 @@ import com.mycodefu.werekitten.netty.client.NettyClientHandler;
 import com.mycodefu.werekitten.pipeline.PipelineContext;
 import com.mycodefu.werekitten.pipeline.PipelineEvent;
 import com.mycodefu.werekitten.pipeline.events.game.BuildLevelEvent;
+import com.mycodefu.werekitten.pipeline.events.game.StartGameEvent;
 import com.mycodefu.werekitten.pipeline.events.network.NetworkConnectClientEvent;
 import com.mycodefu.werekitten.pipeline.events.network.NetworkEvent;
 import com.mycodefu.werekitten.pipeline.events.ui.NetworkConnectionEstablishedEvent;
@@ -53,6 +54,7 @@ public ClientHandler() {
 	public void clientDisconnected(String id) {
 		System.out.println("client destroying player");
 		networkPlayerHelper.destroyNetworkPlayer(id, context);
+		context.postEvent(new StartGameEvent());
 	}
 
 	@Override
