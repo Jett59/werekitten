@@ -45,6 +45,8 @@ public class GameUI implements UI, UIConnectCallback {
 
             pane.getChildren().add(combinedGroup);
 
+            pane.setFocusTraversable(true);
+
             scene = new Scene(pane);
             return new SceneLevel(scene, level);
 
