@@ -11,6 +11,7 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -50,14 +51,14 @@ public class GameUI implements UI, UIConnectCallback {
             listeningAt.setFocusTraversable(true);
             listeningAt.setFill(Color.WHITE);
 
-            HBox addressBox = new HBox(5, listeningAt, address);
+            VBox addressBox = new VBox(5, listeningAt, address);
 
 
-            combinedGroup.getChildren().add(addressBox);
+            //combinedGroup.getChildren().add(addressBox);
 
             Pane pane = new Pane();
             pane.getChildren().add(combinedGroup);
-            pane.setFocusTraversable(true);
+            pane.getChildren().add(addressBox);
 
             scene = new Scene(pane);
             return new SceneLevel(scene, level);
