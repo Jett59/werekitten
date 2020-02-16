@@ -7,6 +7,9 @@ import com.mycodefu.werekitten.slide.LayerGroup;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -21,7 +24,7 @@ public class GameUI implements UI, UIConnectCallback {
     private Group playerGroup = new Group();
     private List<UIEventCallback> callbacks = new ArrayList<>();
     private Scene scene;
-    private Text address = new Text();
+    private TextField address = new TextField();
 
     public SceneLevel getScene(GameLevel level) {
         try {
@@ -36,19 +39,24 @@ public class GameUI implements UI, UIConnectCallback {
                 }
             }
             address.setFont(new Font(24));
-            address.setFill(Color.WHITE);
+            address.setEditable(false);
+            address.setBorder(Border.EMPTY);
+            address.setBackground(Background.EMPTY);
+            address.setStyle("-fx-text-fill: #fff;");
             address.setFocusTraversable(true);
-            combinedGroup.getChildren().add(address);
 
-            TextField test = new TextField();
-            test.setFocusTraversable(true);
-            combinedGroup.getChildren().add(test);
+            Text listeningAt = new Text("Listening at: ");
+            listeningAt.setFont(new Font(24));
+            listeningAt.setFocusTraversable(true);
+            listeningAt.setFill(Color.WHITE);
+
+            HBox addressBox = new HBox(5, listeningAt, address);
+
+
+            combinedGroup.getChildren().add(addressBox);
 
             Pane pane = new Pane();
-
-
             pane.getChildren().add(combinedGroup);
-
             pane.setFocusTraversable(true);
 
             scene = new Scene(pane);
@@ -88,7 +96,7 @@ public class GameUI implements UI, UIConnectCallback {
 
     @Override
     public void setAddress(String wsAddress) {
-address.setText("Listening at: "+wsAddress);
+address.setText(wsAddress);
 address.setLayoutX(25);
 address.setLayoutY(25);
         System.out.println("Listening at: " + wsAddress);
