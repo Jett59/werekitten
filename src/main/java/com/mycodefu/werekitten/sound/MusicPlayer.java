@@ -1,32 +1,19 @@
 package com.mycodefu.werekitten.sound;
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
+import javax.sound.sampled.*;
 import java.io.BufferedInputStream;
 import java.io.InputStream;
 
 public class MusicPlayer {
     private static Clip levelTheme = gameThemeInit("Level_Theme");
-    private static boolean shouldPlayLevel = false;
 
-    public static void playLevel() {
-    	shouldPlayLevel = true;
-        new Thread(() -> {
-            while (shouldPlayLevel) {
-                if (levelTheme.getFramePosition() == 0) {
-                    levelTheme.start();
-                } else if (levelTheme.getFramePosition() >= levelTheme.getFrameLength()) {
-                    levelTheme.setFramePosition(0);
-                }
-            }
-        }, "level theme thread").start();
-        levelTheme.stop();
+	public static void playLevel() {
+		levelTheme.loop(Clip.LOOP_CONTINUOUSLY);
     }
 
-    public static void stopPlayingLevel() {
-        shouldPlayLevel = false;
-    }
+	public static void stopPlayingLevel() {
+		levelTheme.stop();
+	}
 
     private static Clip gameThemeInit(String themeName) {
         try {
