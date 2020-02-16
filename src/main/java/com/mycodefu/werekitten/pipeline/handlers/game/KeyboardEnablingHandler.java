@@ -9,13 +9,17 @@ import com.mycodefu.werekitten.pipeline.handlers.PipelineHandler;
 import javafx.scene.input.KeyEvent;
 
 public class KeyboardEnablingHandler implements PipelineHandler{
+	private KeyboardListener keyboardListener = null;
 
 	@Override
 	public void handleEvent(PipelineContext context, PipelineEvent event) {
 		if(event.getPipelineName().equalsIgnoreCase("game")) {
 			switch (event.getEvent().getName()) {
 			case "start": {
-				KeyboardListener keyboardListener = new KeyboardListener(type-> {
+				if(keyboardListener != null) {
+					break;
+				}
+				keyboardListener = new KeyboardListener(type-> {
 					switch (type) {
 					case left: {
 						context.postEvent(new LeftKeyPressedEvent());
