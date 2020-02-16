@@ -17,7 +17,7 @@ public class MusicPlayer {
 
     private static Clip gameThemeInit(String themeName) {
         try {
-            InputStream in = new MusicPlayer().getClass().getResourceAsStream("/music/" + themeName + ".wav");
+            InputStream in = MusicPlayer.class.getResourceAsStream("/music/" + themeName + ".wav");
             BufferedInputStream bufIn = new BufferedInputStream(in);
             AudioInputStream audIn = AudioSystem.getAudioInputStream(bufIn);
             Clip c = AudioSystem.getClip();

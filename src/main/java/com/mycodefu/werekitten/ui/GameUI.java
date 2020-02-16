@@ -36,6 +36,7 @@ public class GameUI implements UI, UIConnectCallback {
             }
             address.setFont(new Font(24));
             address.setFill(Color.WHITE);
+            address.setFocusTraversable(true);
             combinedGroup.getChildren().add(address);
 
 
