@@ -14,7 +14,6 @@ public class MusicHandler implements PipelineHandler{
 		}else {
 			switch (event.getEvent().getName()) {
 			case "start": {
-				MusicPlayer.setInLevel();
 				MusicPlayer.stopPlayingLevel();
 				break;
 			}
