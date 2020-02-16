@@ -6,6 +6,7 @@ import com.mycodefu.werekitten.player.Player;
 import com.mycodefu.werekitten.slide.LayerGroup;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -39,6 +40,9 @@ public class GameUI implements UI, UIConnectCallback {
             address.setFocusTraversable(true);
             combinedGroup.getChildren().add(address);
 
+            TextField test = new TextField();
+            test.setFocusTraversable(true);
+            combinedGroup.getChildren().add(test);
 
             Pane pane = new Pane();
 
