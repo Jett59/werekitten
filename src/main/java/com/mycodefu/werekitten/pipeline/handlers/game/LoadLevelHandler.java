@@ -104,7 +104,7 @@ public class LoadLevelHandler implements PipelineHandler {
 
         Text addressText = new Text("address ->");
         TextField accessibleAddress = new TextField("put the lan address in the box");
-        accessibleAddress.setTranslateX(-500);
+        accessibleAddress.setTranslateX(-500000);
         accessibleAddress.setEditable(false);
         TextField address = new TextField();
         address.setStyle(buttonStyle);
@@ -116,10 +116,11 @@ public class LoadLevelHandler implements PipelineHandler {
             context.postEvent(networkConnectClientEvent);
         });
 
-        HBox buttons = new HBox(10, addressText, address, connect);
+        HBox buttons = new HBox(10, accessibleAddress, addressText, address, connect);
         buttons.setPadding(new Insets(50, 0, 0, 0));
+        VBox combinedAccessibilityAndButtons = new VBox(accessibleAddress, buttons);
 
-        border.setRight(buttons);
+        border.setRight(combinedAccessibilityAndButtons);
 
     	return border;
     }

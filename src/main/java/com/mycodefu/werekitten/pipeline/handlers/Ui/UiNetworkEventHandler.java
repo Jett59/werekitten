@@ -1,5 +1,8 @@
 package com.mycodefu.werekitten.pipeline.handlers.Ui;
 
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
+
 import com.mycodefu.werekitten.event.UiEventType;
 import com.mycodefu.werekitten.level.PixelScaleHelper;
 import com.mycodefu.werekitten.pipeline.PipelineContext;
@@ -12,6 +15,7 @@ import com.mycodefu.werekitten.ui.UI;
 
 public class UiNetworkEventHandler implements PipelineHandler {
 	private UI ui;
+	private List<PipelineEvent> unusedNetworkEvents = new CopyOnWriteArrayList<>();
 
 	@Override
     public void handleEvent(PipelineContext context, PipelineEvent event) {
@@ -42,9 +46,14 @@ public class UiNetworkEventHandler implements PipelineHandler {
 					player.stopMovingRight();
 					break;
 				}
-				case networkJump:{
-					Player player = context.getPlayerMap().get(((NetworkJumpEvent)event).getPlayerId());
-					player.jump();
+				case networkJump: {
+					NetworkJumpEvent jumpEvent = (NetworkJumpEvent)event;
+					if(checkPlayerIsValidAndExecuteEvents(jumpEvent.getPlayerId(), context)) {
+						Player player = context.getPlayerMap().get(jumpEvent.getPlayerId());
+						player.jump();
+					}else {
+						unusedNetworkEvents.add(event);
+					}
 					break;
 				}
 				case networkServerListening: {
@@ -54,7 +63,20 @@ public class UiNetworkEventHandler implements PipelineHandler {
                 default:
                     break;
             }
+        }else {
+        	throw new IllegalArgumentException("the UiNetworkEventHandler may only exist in the UI pipeline, not the pipeline: "+event.getPipelineName());
         }
     }
 
+private boolean checkPlayerIsValidAndExecuteEvents(String id, PipelineContext context) {
+	Player player = context.getPlayerMap().get(id);
+	if(player == null) {
+		return false;
+	}else {
+		for(PipelineEvent event: unusedNetworkEvents) {
+			handleEvent(context, event);
+		}
+		return true;
+	}
+}
 }
