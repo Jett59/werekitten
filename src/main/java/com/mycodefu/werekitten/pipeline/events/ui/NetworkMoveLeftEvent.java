@@ -5,11 +5,11 @@ import com.mycodefu.werekitten.event.UiEventType;
 
 public class NetworkMoveLeftEvent extends UiEvent {
     private String playerId;
-    public double amount;
+    public double x;
 
-    public NetworkMoveLeftEvent(String playerId, double amount) {
+    public NetworkMoveLeftEvent(String playerId, double x) {
         this.playerId = playerId;
-        this.amount = amount;
+        this.x = x;
     }
 
     public String getPlayerId() {
@@ -19,5 +19,9 @@ public class NetworkMoveLeftEvent extends UiEvent {
     @Override
     public Event getEvent() {
         return UiEventType.networkMoveLeft;
+    }
+    @Override
+    public String toString() {
+    	return "NetworkMoveLeft " + x;
     }
 }

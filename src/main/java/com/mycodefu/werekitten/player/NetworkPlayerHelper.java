@@ -76,13 +76,15 @@ public class NetworkPlayerHelper implements RegisterKeyListenerEvent.KeyListener
         if (message.startsWith("moveToX")) {
             System.out.println("recieved move message: " + message);
             String xAsString = message.substring("moveToX".length());
-            double x = context.level().get().getPixelScaleHelper().scaleX(Double.parseDouble(xAsString));
-            double oldX = context.getPlayerMap().get(playerId).getGroup().getTranslateX();
-            double difference = x - oldX;
+            Double x = context.level().get().getPixelScaleHelper().scaleX(Double.parseDouble(xAsString));
+            Double oldX = context.getPlayerMap().get(playerId).getGroup().getTranslateX();
+            Double difference = x - oldX;
+            System.out.println(context.level().get().getPixelScaleHelper().scaleX(200));
+            System.out.println("newX: "+x);
             if(difference < 0) {
-            context.postEvent(new NetworkMoveLeftEvent(playerId, 0 - difference));
+            context.postEvent(new NetworkMoveLeftEvent(playerId, x));
             }else {
-            	context.postEvent(new NetworkMoveRightEvent(playerId, difference));
+            	context.postEvent(new NetworkMoveRightEvent(playerId, x));
             }
         }
         switch (message) {

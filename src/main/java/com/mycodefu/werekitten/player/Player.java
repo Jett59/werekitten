@@ -56,6 +56,19 @@ public class Player {
         currentAnimation = playOneAnimation(animations, nameToAnimation.get(AnimationType.walkRight));
     }
 
+    public void moveLeftTo(double x) {    	
+        animationGroup.setTranslateX(x);
+        //TODO: Check for collisions and undo the move to the rightmost point of the colliding object if so
+        currentAnimation = playOneAnimation(animations, nameToAnimation.get(AnimationType.walkLeft));
+    }
+
+    public void moveRightTo(double x) {    	
+    	System.out.println("moving to "+x);
+        animationGroup.setTranslateX(x);
+        //TODO: Check for collisions and undo the move to the leftmost point of the colliding object if so
+        currentAnimation = playOneAnimation(animations, nameToAnimation.get(AnimationType.walkRight));
+    }
+
     public void jump() {
         jump.play();
     }
