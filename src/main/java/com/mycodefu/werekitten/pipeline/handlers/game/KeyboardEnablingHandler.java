@@ -15,7 +15,7 @@ public class KeyboardEnablingHandler implements PipelineHandler{
 	public void handleEvent(PipelineContext context, PipelineEvent event) {
 		if(event.getPipelineName().equalsIgnoreCase("game")) {
 			switch (event.getEvent().getName()) {
-			case "start": {
+			case "levelLoaded": {
 				if(keyboardListener != null) {
 					break;
 				}

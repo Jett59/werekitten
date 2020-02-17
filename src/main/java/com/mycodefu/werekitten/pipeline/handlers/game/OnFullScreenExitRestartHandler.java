@@ -27,8 +27,8 @@ public class OnFullScreenExitRestartHandler implements PipelineHandler, Register
 	}
 
 	@Override
-	public void keyEventOccurred(KeyboardEventType keyboardEventType) {
-		
+	public void keyEventOccurred(KeyboardEventType keyboardEventType, PipelineContext context) {
+			
 	}
 
 }

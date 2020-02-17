@@ -56,7 +56,7 @@ public class PlayerKeyboardHandler implements PipelineHandler {
 				}
             }
 			for (RegisterKeyListenerEvent.KeyListener listener : listeners) {
-				listener.keyEventOccurred(keyboardEventType);
+				listener.keyEventOccurred(keyboardEventType, context);
 			}
         }
     }

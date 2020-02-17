@@ -4,6 +4,7 @@ public enum GameEventType implements Event {
     start,
     buildLevel,
     levelLoaded,
+    enableKeyboardListener,
     quit;
 
     @Override

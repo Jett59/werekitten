@@ -19,9 +19,19 @@ public class NetworkPlayerHelper implements RegisterKeyListenerEvent.KeyListener
     private boolean registeredSelfAsKeyListener = false;
 
     @Override
-    public void keyEventOccurred(KeyboardEventType keyboardEventType) {
+    public void keyEventOccurred(KeyboardEventType keyboardEventType, PipelineContext context) {
         for (NetworkPlayerMessageSender playerMessageSender : playerMessageSenders.values()) {
-            playerMessageSender.sendMessage(keyboardEventType.getName());
+        String eventName = keyboardEventType.getName();
+        if(eventName.contains("space")) {
+        	playerMessageSender.sendMessage("jump");
+        	System.out.println("sending jump message");
+        }else if(eventName.contains("Pressed")) {
+        double localX = context.getPlayerMap().get("local").getGroup().getTranslateX();
+        playerMessageSender.sendMessage("move x to:"+(int)context.level().get().getPixelScaleHelper().scaleXBack(localX));
+        System.out.println("sending move message");
+        }else if(eventName.contains("released")) {
+        playerMessageSender.sendMessage(eventName);
+        }
         }
     }
 
@@ -64,16 +74,19 @@ public class NetworkPlayerHelper implements RegisterKeyListenerEvent.KeyListener
     	return;
     }
     
+    System.out.println("recieved message: "+message);
+    if(message.contains("move to x:")) {
+    	System.out.println("recieved move message: "+message);
+    String newMessage = message.substring(10);
+    double x = context.level().get().getPixelScaleHelper().scaleX((double)Integer.parseInt(newMessage));
+    double oldX = context.getPlayerMap().get(playerId).getGroup().getTranslateX();
+    double difference = x-oldX;
+    //if(difference < 0) {
+    	context.postEvent(new NetworkMoveLeftEvent(playerId, 0-difference));
+    //}
+    }
         switch (message) {
-            case "leftPressed": {
-                context.postEvent(new NetworkMoveLeftEvent(playerId));
-                break;
-            }
-            case "rightPressed": {
-                context.postEvent(new NetworkMoveRightEvent(playerId));
-                break;
-            }
-            case "leftReleased": {
+                        case "leftReleased": {
                 context.postEvent(new NetworkStopMovingLeftEvent(playerId));
                 break;
             }
@@ -81,7 +94,7 @@ public class NetworkPlayerHelper implements RegisterKeyListenerEvent.KeyListener
                 context.postEvent(new NetworkStopMovingRightEvent(playerId));
                 break;
             }
-            case "spacePressed": {
+            case "jump": {
                 context.postEvent(new NetworkJumpEvent(playerId));
             }
         }
