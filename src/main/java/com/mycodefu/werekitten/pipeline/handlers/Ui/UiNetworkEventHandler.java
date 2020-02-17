@@ -9,7 +9,6 @@ import com.mycodefu.werekitten.pipeline.PipelineContext;
 import com.mycodefu.werekitten.pipeline.PipelineEvent;
 import com.mycodefu.werekitten.pipeline.events.ui.*;
 import com.mycodefu.werekitten.pipeline.handlers.PipelineHandler;
-import com.mycodefu.werekitten.player.Kitten;
 import com.mycodefu.werekitten.player.Player;
 import com.mycodefu.werekitten.ui.UI;
 
@@ -33,7 +32,7 @@ public class UiNetworkEventHandler implements PipelineHandler {
 				}
 				case networkMoveRight:{
 					Player player = context.getPlayerMap().get(((NetworkMoveRightEvent)event).getPlayerId());
-					player.moveRight(pixelScaleHelper.scaleX(Kitten.MOVE_AMOUNT));
+					player.moveRight(pixelScaleHelper.scaleX(((NetworkMoveRightEvent)event).amount));
 					break;
 				}
 				case networkStopMovingLeft:{

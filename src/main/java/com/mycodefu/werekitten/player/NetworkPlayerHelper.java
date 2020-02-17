@@ -79,9 +79,11 @@ public class NetworkPlayerHelper implements RegisterKeyListenerEvent.KeyListener
             double x = context.level().get().getPixelScaleHelper().scaleX(Double.parseDouble(xAsString));
             double oldX = context.getPlayerMap().get(playerId).getGroup().getTranslateX();
             double difference = x - oldX;
-            //if(difference < 0) {
+            if(difference < 0) {
             context.postEvent(new NetworkMoveLeftEvent(playerId, 0 - difference));
-            //}
+            }else {
+            	context.postEvent(new NetworkMoveRightEvent(playerId, difference));
+            }
         }
         switch (message) {
             case "leftReleased": {
