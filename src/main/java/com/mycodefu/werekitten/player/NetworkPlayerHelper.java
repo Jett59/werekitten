@@ -81,7 +81,9 @@ public class NetworkPlayerHelper implements RegisterKeyListenerEvent.KeyListener
             Double difference = x - oldX;
             System.out.println(context.level().get().getPixelScaleHelper().scaleX(200));
             System.out.println("newX: "+x);
-            if(difference < 0) {
+            if(difference == 0) {
+            	return;
+            }else if(difference < 0) {
             context.postEvent(new NetworkMoveLeftEvent(playerId, x));
             }else {
             	context.postEvent(new NetworkMoveRightEvent(playerId, x));

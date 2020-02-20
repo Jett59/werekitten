@@ -98,7 +98,8 @@ public static boolean DEBUG_PIPELINE_EVENTS = true;
         	System.out.println("pipeline == null. event cannot be posted");
         } else {
             if (DEBUG_PIPELINE_EVENTS) {
-                System.out.println(String.format("%s (%s): Event posted: %s (%s), class: %s, posted by: %s\n%s", Instant.now().toString(), Thread.currentThread().getName(), event.getEvent(), event.getPipelineName(), event.getClass().getSimpleName(), new Exception().getStackTrace()[1].getClassName(), event.toString()));
+            	StackTraceElement calledBy = new Exception().getStackTrace()[1];
+                System.out.println(String.format("%s (%s): Event posted: %s (%s), class: %s, \n%s\npostedBy: %s, method %s, line number: %s, module: %s", Instant.now().toString(), Thread.currentThread().getName(), event.getEvent(), event.getPipelineName(), event.getClass().getSimpleName(), event.toString(), calledBy.getClassName(), calledBy.getMethodName(), Integer.toString(calledBy.getLineNumber()), calledBy.getModuleName()));
             }
             pipeline.addEvent(event);
         }
