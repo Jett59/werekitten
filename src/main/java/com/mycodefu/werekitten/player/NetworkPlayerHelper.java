@@ -39,7 +39,7 @@ public class NetworkPlayerHelper implements RegisterKeyListenerEvent.KeyListener
 
         double catJumpAmount = context.level().get().getPixelScaleHelper().scaleY(GameUI.CAT_JUMP_AMOUNT);
 
-        Player networkPlayer = Kitten.create(catJumpAmount, height, Duration.seconds(1), Player.AnimationType.idleLeft, initialXPosition);
+        Player networkPlayer = Kitten.create(playerId, catJumpAmount, height, Duration.seconds(1), Player.AnimationType.idleLeft, initialXPosition);
         context.getPlayerMap().put(playerId, networkPlayer);
         context.postEvent(new PlayerCreatedEvent(networkPlayer));
         context.postEvent(new NetworkConnectedEvent());

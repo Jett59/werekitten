@@ -6,20 +6,30 @@ import javafx.animation.TranslateTransition;
 import javafx.scene.Group;
 import javafx.scene.shape.Shape;
 import javafx.util.Duration;
+import org.w3c.dom.ls.LSOutput;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.zip.DataFormatException;
 
 public class Player {
+    private final String id;
+    private final double jumpAmount;
+    private final double initialXPosition;
     private Map<AnimationType, Animation> nameToAnimation = new ConcurrentHashMap<>();
     private List<Animation> animations = new ArrayList<>();
     private Group animationGroup;
     private TranslateTransition jump;
     private Animation currentAnimation;
 
-    Player(Animation idleRight, Animation idleLeft, Animation walkRight, Animation walkLeft, double jumpAmount, AnimationType initialAnimation, double initialXPosition) {
+    private static boolean DEBUG = true;
+
+    Player(String id, Animation idleRight, Animation idleLeft, Animation walkRight, Animation walkLeft, double jumpAmount, AnimationType initialAnimation, double initialXPosition) {
+        this.id = id;
+        this.jumpAmount = jumpAmount;
+        this.initialXPosition = initialXPosition;
         animations.addAll(List.of(idleRight, idleLeft, walkRight, walkLeft));
 
         nameToAnimation.put(AnimationType.idleRight, idleRight);
@@ -48,18 +58,32 @@ public class Player {
         animationGroup.setTranslateX(animationGroup.getTranslateX() - amount);
         //TODO: Check for collisions and undo the move to the rightmost point of the colliding object if so
         currentAnimation = playOneAnimation(animations, nameToAnimation.get(AnimationType.walkLeft));
+
+        if (DEBUG){
+            System.out.println(String.format("Kitten %s moved left by %f.1 to %f.1", id, amount, animationGroup.getTranslateX()));
+        }
     }
 
     public void moveRight(double amount) {
         animationGroup.setTranslateX(animationGroup.getTranslateX() + amount);
         //TODO: Check for collisions and undo the move to the leftmost point of the colliding object if so
         currentAnimation = playOneAnimation(animations, nameToAnimation.get(AnimationType.walkRight));
+
+        if (DEBUG){
+            System.out.println(String.format("Kitten %s moved right  by %f.1 to %f.1", id, amount, animationGroup.getTranslateX()));
+        }
+
     }
 
     public void moveLeftTo(double x) {    	
         animationGroup.setTranslateX(x);
         //TODO: Check for collisions and undo the move to the rightmost point of the colliding object if so
         currentAnimation = playOneAnimation(animations, nameToAnimation.get(AnimationType.walkLeft));
+
+        if (DEBUG){
+            System.out.println(String.format("Kitten %s moved left to %f.1", id, animationGroup.getTranslateX()));
+        }
+
     }
 
     public void moveRightTo(double x) {    	
@@ -67,6 +91,10 @@ public class Player {
         animationGroup.setTranslateX(x);
         //TODO: Check for collisions and undo the move to the leftmost point of the colliding object if so
         currentAnimation = playOneAnimation(animations, nameToAnimation.get(AnimationType.walkRight));
+
+        if (DEBUG){
+            System.out.println(String.format("Kitten %s moved right to %f.1", id, animationGroup.getTranslateX()));
+        }
     }
 
     public void jump() {
