@@ -33,13 +33,13 @@ public ClientHandler() {
 			case connect: {
 				System.out.println("connect event recieved "+event.toString());
 				nettyClient = new NettyClient(((NetworkConnectClientEvent)event).getServerAddress(), this);
+				nettyClient.connect();
 				context.postEvent(new BuildLevelEvent(false));
 				context.postEvent(new NetworkConnectionEstablishedEvent(ConnectionType.server, ((NetworkConnectClientEvent)event).getServerAddress()));
 				break;
 			}
 			case readyForInitMessage: {
-				nettyClient.connect();
-				
+				nettyClient.sendMessage("init"+(int)context.level().get().getPixelScaleHelper().scaleXBack(context.level().get().getPlayerElement().getLocation().getX()));
 				break;
 			}
 			
@@ -59,8 +59,7 @@ public ClientHandler() {
 
 	@Override
 	public void clientConnected(String id, String remoteAddress) {
-		//this.context.postEvent(new NetworkConnectionEstablishedEvent(client, remoteAddress));
-		nettyClient.sendMessage("init"+(int)context.level().get().getPixelScaleHelper().scaleXBack(context.level().get().getPlayerElement().getLocation().getX()));
+			
 	}
 
 	@Override
