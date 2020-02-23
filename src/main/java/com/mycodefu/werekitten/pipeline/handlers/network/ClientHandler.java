@@ -39,7 +39,7 @@ public ClientHandler() {
 				break;
 			}
 			case readyForInitMessage: {
-				nettyClient.sendMessage("init"+(int)context.level().get().getPixelScaleHelper().scaleXBack(context.level().get().getPlayerElement().getLocation().getX()));
+				nettyClient.sendMessage("init"+context.level().get().getPixelScaleHelper().scaleXBack(context.level().get().getPlayerElement().getLocation().getX()));
 				break;
 			}
 			

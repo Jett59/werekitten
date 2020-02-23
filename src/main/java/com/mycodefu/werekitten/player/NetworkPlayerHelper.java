@@ -31,7 +31,7 @@ public class NetworkPlayerHelper implements RegisterKeyListenerEvent.KeyListener
                 case leftPressed:
                 case rightPressed:
                     double localX = context.getPlayerMap().get("local").getGroup().getTranslateX();
-                    double scaledX = (int) context.level().get().getPixelScaleHelper().scaleXBack(localX);
+                    double scaledX = context.level().get().getPixelScaleHelper().scaleXBack(localX);
                     playerMessageSender.sendMessage(NETWORK_MESSAGE_MOVE_TO + scaledX);
                     break;
                 case leftReleased:
@@ -77,10 +77,10 @@ public class NetworkPlayerHelper implements RegisterKeyListenerEvent.KeyListener
         if (message.startsWith("init")) {
             if (shouldSendInit) {
                 Player local = context.getPlayerMap().get("local");
-                int x = (int) context.level().get().getPixelScaleHelper().scaleXBack(local.getGroup().getTranslateX() + local.getGroup().getLayoutX());
+                double x = context.level().get().getPixelScaleHelper().scaleXBack(local.getGroup().getTranslateX() + local.getGroup().getLayoutX());
                 playerMessageSender.sendMessage("init" + x);
             }
-            double initialXPosition = context.level().get().getPixelScaleHelper().scaleX(Integer.parseInt(message.substring(4)));
+            double initialXPosition = context.level().get().getPixelScaleHelper().scaleX(Double.parseDouble(message.substring(4)));
             createNetworkPlayer(playerId, context, playerMessageSender, initialXPosition);
             return;
         }
