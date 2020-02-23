@@ -2,14 +2,14 @@
   "pipelines": [
     {
       "name": "keyboard",
-      "eventsToRunPerFrame": 10,
+      "eventsToRunPerFrame": 5,
       "handlers": [
         "com.mycodefu.werekitten.pipeline.handlers.keyboard.PlayerKeyboardHandler"
       ]
     },
     {
       "name": "network",
-      "eventsToRunPerFrame": 10,
+      "eventsToRunPerFrame": 5,
       "handlers": [
       "com.mycodefu.werekitten.pipeline.handlers.network.ClientHandler",
         "com.mycodefu.werekitten.pipeline.handlers.network.ServerHandler"
@@ -30,7 +30,7 @@
     },
     {
       "name": "UI",
-      "eventsToRunPerFrame": 10,
+      "eventsToRunPerFrame": 5,
       "handlers": [
         "com.mycodefu.werekitten.pipeline.handlers.Ui.PlayerAdditionHandler",
         "com.mycodefu.werekitten.pipeline.handlers.Ui.ClientInformationHandler",

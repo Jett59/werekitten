@@ -23,6 +23,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class Start extends Application implements PipelineContext {
     public static boolean DEBUG_PIPELINE_EVENTS = false;
+    private static int listeningPort = 0;
 
     private final Map<String, Pipeline> pipelines;
     private Stage stage;
@@ -75,6 +76,13 @@ public class Start extends Application implements PipelineContext {
     }
 
     public static void main(String[] args) {
+        if (args.length == 1) {
+            try {
+                listeningPort = Integer.parseInt(args[0]);
+            } catch (Exception e) {
+                System.out.println("Failed to listen on port " + args[0]);
+            }
+        }
         launch(args);
     }
 
@@ -117,6 +125,11 @@ public class Start extends Application implements PipelineContext {
     @Override
     public Map<String, Player> getPlayerMap() {
         return playerMap;
+    }
+
+    @Override
+    public int getListeningPort() {
+        return listeningPort;
     }
 }
 	

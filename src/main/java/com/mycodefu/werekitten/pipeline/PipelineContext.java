@@ -14,4 +14,5 @@ public interface PipelineContext {
     Map<String, Player> getPlayerMap();
     void postEvent(PipelineEvent event);
     AtomicReference<GameLevel> level();
+    int getListeningPort();
 }

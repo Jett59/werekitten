@@ -32,7 +32,7 @@ public class ServerHandler implements PipelineHandler {
             switch (event.getEvent().getName()) {
                 case "start": {
                     System.out.println("Starting network listener...");
-                    server = new NettyServer(0, new NettyServerHandler.ServerConnectionCallback() {
+                    server = new NettyServer(context.getListeningPort(), new NettyServerHandler.ServerConnectionCallback() {
                     	ConcurrentMap<ChannelId, NetworkPlayerHelper.NetworkPlayerMessageSender> senders = new ConcurrentHashMap<>();
                     	
                         @Override
