@@ -28,8 +28,8 @@ public class NetworkPlayerHelper implements RegisterKeyListenerEvent.KeyListener
                     double scaledX = (int) context.level().get().getPixelScaleHelper().scaleXBack(localX);
                     playerMessageSender.sendMessage("moveToX" + scaledX);
                     break;
-                default:
-                    playerMessageSender.sendMessage(keyboardEventType.getName());
+                case spacePressed:
+                    playerMessageSender.sendMessage("jump");
             }
         }
     }
@@ -74,13 +74,10 @@ public class NetworkPlayerHelper implements RegisterKeyListenerEvent.KeyListener
         }
 
         if (message.startsWith("moveToX")) {
-            System.out.println("recieved move message: " + message);
             String xAsString = message.substring("moveToX".length());
-            Double x = context.level().get().getPixelScaleHelper().scaleX(Double.parseDouble(xAsString));
-            Double oldX = context.getPlayerMap().get(playerId).getGroup().getTranslateX();
-            Double difference = x - oldX;
-            System.out.println(context.level().get().getPixelScaleHelper().scaleX(200));
-            System.out.println("newX: "+x);
+            double x = context.level().get().getPixelScaleHelper().scaleX(Double.parseDouble(xAsString));
+            double oldX = context.getPlayerMap().get(playerId).getGroup().getTranslateX();
+            double difference = x - oldX;
             if(difference == 0) {
             	return;
             }else if(difference < 0) {

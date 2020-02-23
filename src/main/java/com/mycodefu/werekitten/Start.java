@@ -10,7 +10,6 @@ import com.mycodefu.werekitten.pipeline.config.PipelineConfiguration;
 import com.mycodefu.werekitten.pipeline.events.game.StartGameEvent;
 import com.mycodefu.werekitten.pipeline.handlers.PipelineHandler;
 import com.mycodefu.werekitten.player.Player;
-
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -23,14 +22,14 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class Start extends Application implements PipelineContext {
-public static boolean DEBUG_PIPELINE_EVENTS = true;
+    public static boolean DEBUG_PIPELINE_EVENTS = false;
 
     private final Map<String, Pipeline> pipelines;
     private Stage stage;
     private AtomicReference<GameLevel> level = new AtomicReference<>(null);
 
     @SuppressWarnings("deprecation")
-	public Start() {
+    public Start() {
         this.pipelines = new HashMap<>();
         PipelineConfig config = PipelineConfig.read();
         for (int i = 0; i < config.getPipelines().size(); i++) {
@@ -80,25 +79,25 @@ public static boolean DEBUG_PIPELINE_EVENTS = true;
     }
 
     @SuppressWarnings("exports")
-	@Override
+    @Override
     public Stage getStage() {
         return this.stage;
     }
 
     @SuppressWarnings("exports")
-	@Override
+    @Override
     public void postEvent(PipelineEvent event) {
-    	Pipeline pipeline;
-    	try {
-        pipeline = pipelines.get(event.getPipelineName());
-    	}catch(NullPointerException e) {
-    		throw new IllegalArgumentException("the pipeline "+event.getPipelineName()+"was not valid", e);
-    	}
-        if(pipeline == null) {
-        	System.out.println("pipeline == null. event cannot be posted");
+        Pipeline pipeline;
+        try {
+            pipeline = pipelines.get(event.getPipelineName());
+        } catch (NullPointerException e) {
+            throw new IllegalArgumentException("the pipeline " + event.getPipelineName() + "was not valid", e);
+        }
+        if (pipeline == null) {
+            System.out.println("pipeline == null. event cannot be posted");
         } else {
             if (DEBUG_PIPELINE_EVENTS) {
-            	StackTraceElement calledBy = new Exception().getStackTrace()[1];
+                StackTraceElement calledBy = new Exception().getStackTrace()[1];
                 System.out.println(String.format("%s (%s): Event posted: %s (%s), class: %s, \n%s\npostedBy: %s, method %s, line number: %s, module: %s", Instant.now().toString(), Thread.currentThread().getName(), event.getEvent(), event.getPipelineName(), event.getClass().getSimpleName(), event.toString(), calledBy.getClassName(), calledBy.getMethodName(), Integer.toString(calledBy.getLineNumber()), calledBy.getModuleName()));
             }
             pipeline.addEvent(event);
@@ -106,18 +105,18 @@ public static boolean DEBUG_PIPELINE_EVENTS = true;
     }
 
     @SuppressWarnings("exports")
-	@Override
+    @Override
     public AtomicReference<GameLevel> level() {
         return this.level;
     }
 
 
     private Map<String, Player> playerMap = new HashMap<>();
-    
-	@SuppressWarnings("exports")
-	@Override
-	public Map<String, Player> getPlayerMap() {
-		return playerMap;
-	}
+
+    @SuppressWarnings("exports")
+    @Override
+    public Map<String, Player> getPlayerMap() {
+        return playerMap;
+    }
 }
 	
