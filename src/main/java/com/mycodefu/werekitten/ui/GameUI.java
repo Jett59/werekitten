@@ -25,7 +25,7 @@ public class GameUI implements UI, UIConnectCallback {
     private Group playerGroup = new Group();
     private List<UIEventCallback> callbacks = new ArrayList<>();
     private Scene scene;
-    private TextField address = new TextField();
+    private TextField address = new TextField(" ".repeat(25));
 
     public SceneLevel getScene(GameLevel level) {
         try {
@@ -39,7 +39,7 @@ public class GameUI implements UI, UIConnectCallback {
                     combinedGroup.getChildren().add(layerGroup.getGroup());
                 }
             }
-            address.setFont(new Font(24));
+            address.setFont(new Font("Arial", 24));
             address.setEditable(false);
             address.setBorder(Border.EMPTY);
             address.setBackground(Background.EMPTY);
@@ -47,7 +47,7 @@ public class GameUI implements UI, UIConnectCallback {
             address.setFocusTraversable(true);
 
             Text listeningAt = new Text("Listening at: ");
-            listeningAt.setFont(new Font(24));
+            listeningAt.setFont(new Font("Arial", 24));
             listeningAt.setFocusTraversable(true);
             listeningAt.setFill(Color.WHITE);
 
