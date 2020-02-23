@@ -19,7 +19,7 @@
       "name": "game",
       "eventsToRunPerFrame": 5,
       "handlers": [
-        "com.mycodefu.werekitten.pipeline.handlers.game.LoadLevelHandler",
+        "com.mycodefu.werekitten.pipeline.handlers.game.StartPageHandler",
         "com.mycodefu.werekitten.pipeline.handlers.game.UICreationHandler",
         "com.mycodefu.werekitten.pipeline.handlers.game.LevelBuildHandler",
         "com.mycodefu.werekitten.pipeline.handlers.game.LocalPlayerAdditionHandler",

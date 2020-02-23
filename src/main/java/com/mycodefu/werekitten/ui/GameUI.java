@@ -24,6 +24,7 @@ public class GameUI implements UI, UIConnectCallback {
     private Group playerGroup = new Group();
     private List<UIEventCallback> callbacks = new ArrayList<>();
     private Scene scene;
+    VBox addressBox;
     private TextField address = new TextField();
 
     public SceneLevel getScene(GameLevel level) {
@@ -51,7 +52,8 @@ public class GameUI implements UI, UIConnectCallback {
             listeningAt.setFocusTraversable(true);
             listeningAt.setFill(Color.WHITE);
 
-            VBox addressBox = new VBox(5, listeningAt, address);
+            addressBox = new VBox(5, listeningAt, address);
+            addressBox.setVisible(false);
 
             Pane pane = new Pane();
             pane.getChildren().add(combinedGroup);
@@ -98,6 +100,8 @@ public class GameUI implements UI, UIConnectCallback {
         address.setLayoutX(25);
         address.setLayoutY(25);
         System.out.println("Listening at: " + wsAddress);
+
+        addressBox.setVisible(true);
     }
 
     public void setIP(String localIPAddress) {
