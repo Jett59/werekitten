@@ -11,6 +11,12 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class NetworkPlayerHelper implements RegisterKeyListenerEvent.KeyListener {
+
+    public static final String NETWORK_MESSAGE_MOVE_TO = "moveToX";
+    public static final String NETWORK_MESSAGE_IDLE_LEFT = "idleLeft";
+    public static final String NETWORK_MESSAGE_IDLE_RIGHT = "idleRight";
+    public static final String NETWORK_MESSAGE_JUMP = "jump";
+
     public interface NetworkPlayerMessageSender {
         void sendMessage(String message);
     }
@@ -26,10 +32,16 @@ public class NetworkPlayerHelper implements RegisterKeyListenerEvent.KeyListener
                 case rightPressed:
                     double localX = context.getPlayerMap().get("local").getGroup().getTranslateX();
                     double scaledX = (int) context.level().get().getPixelScaleHelper().scaleXBack(localX);
-                    playerMessageSender.sendMessage("moveToX" + scaledX);
+                    playerMessageSender.sendMessage(NETWORK_MESSAGE_MOVE_TO + scaledX);
+                    break;
+                case leftReleased:
+                    playerMessageSender.sendMessage(NETWORK_MESSAGE_IDLE_LEFT);
+                    break;
+                case rightReleased:
+                    playerMessageSender.sendMessage(NETWORK_MESSAGE_IDLE_RIGHT);
                     break;
                 case spacePressed:
-                    playerMessageSender.sendMessage("jump");
+                    playerMessageSender.sendMessage(NETWORK_MESSAGE_JUMP);
             }
         }
     }
@@ -73,8 +85,8 @@ public class NetworkPlayerHelper implements RegisterKeyListenerEvent.KeyListener
             return;
         }
 
-        if (message.startsWith("moveToX")) {
-            String xAsString = message.substring("moveToX".length());
+        if (message.startsWith(NETWORK_MESSAGE_MOVE_TO)) {
+            String xAsString = message.substring(NETWORK_MESSAGE_MOVE_TO.length());
             double x = context.level().get().getPixelScaleHelper().scaleX(Double.parseDouble(xAsString));
             double oldX = context.getPlayerMap().get(playerId).getGroup().getTranslateX();
             double difference = x - oldX;
@@ -87,15 +99,15 @@ public class NetworkPlayerHelper implements RegisterKeyListenerEvent.KeyListener
             }
         }
         switch (message) {
-            case "leftReleased": {
+            case NETWORK_MESSAGE_IDLE_LEFT: {
                 context.postEvent(new NetworkStopMovingLeftEvent(playerId));
                 break;
             }
-            case "rightReleased": {
+            case NETWORK_MESSAGE_IDLE_RIGHT: {
                 context.postEvent(new NetworkStopMovingRightEvent(playerId));
                 break;
             }
-            case "jump": {
+            case NETWORK_MESSAGE_JUMP: {
                 context.postEvent(new NetworkJumpEvent(playerId));
             }
         }
