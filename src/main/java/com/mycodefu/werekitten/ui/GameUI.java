@@ -9,7 +9,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.Border;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -25,7 +24,7 @@ public class GameUI implements UI, UIConnectCallback {
     private Group playerGroup = new Group();
     private List<UIEventCallback> callbacks = new ArrayList<>();
     private Scene scene;
-    private TextField address = new TextField(" ".repeat(25));
+    private TextField address = new TextField();
 
     public SceneLevel getScene(GameLevel level) {
         try {
@@ -45,6 +44,7 @@ public class GameUI implements UI, UIConnectCallback {
             address.setBackground(Background.EMPTY);
             address.setStyle("-fx-text-fill: #fff;");
             address.setFocusTraversable(true);
+            address.setPrefColumnCount(30);
 
             Text listeningAt = new Text("Listening at: ");
             listeningAt.setFont(new Font("Arial", 24));
@@ -52,9 +52,6 @@ public class GameUI implements UI, UIConnectCallback {
             listeningAt.setFill(Color.WHITE);
 
             VBox addressBox = new VBox(5, listeningAt, address);
-
-
-            //combinedGroup.getChildren().add(addressBox);
 
             Pane pane = new Pane();
             pane.getChildren().add(combinedGroup);
@@ -77,7 +74,7 @@ public class GameUI implements UI, UIConnectCallback {
 
     @Override
     public void updateConnectionState(boolean connected) {
-    
+
     }
 
 
@@ -97,14 +94,14 @@ public class GameUI implements UI, UIConnectCallback {
 
     @Override
     public void setAddress(String wsAddress) {
-address.setText(wsAddress);
-address.setLayoutX(25);
-address.setLayoutY(25);
+        address.setText(wsAddress);
+        address.setLayoutX(25);
+        address.setLayoutY(25);
         System.out.println("Listening at: " + wsAddress);
     }
 
     public void setIP(String localIPAddress) {
-        
+
     }
 
     @Override
