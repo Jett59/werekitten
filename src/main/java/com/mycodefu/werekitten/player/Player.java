@@ -24,7 +24,7 @@ public class Player {
     private TranslateTransition jump;
     private Animation currentAnimation;
 
-    private static boolean DEBUG = true;
+    private static boolean DEBUG = false;
 
     Player(String id, Animation idleRight, Animation idleLeft, Animation walkRight, Animation walkLeft, double jumpAmount, AnimationType initialAnimation, double initialXPosition) {
         this.id = id;
