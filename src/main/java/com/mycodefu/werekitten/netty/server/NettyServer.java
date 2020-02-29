@@ -1,13 +1,7 @@
 package com.mycodefu.werekitten.netty.server;
 
-import java.net.InetSocketAddress;
-import java.nio.ByteBuffer;
-
-import com.mycodefu.werekitten.netty.server.NettyServerHandler;
-
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.ByteBuf;
-import io.netty.buffer.ByteBufAllocator;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelId;
 import io.netty.channel.ChannelInitializer;
@@ -26,6 +20,8 @@ import io.netty.handler.codec.http.websocketx.extensions.compression.WebSocketSe
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 import io.netty.util.concurrent.DefaultEventExecutor;
+
+import java.net.InetSocketAddress;
 
 public class NettyServer {
 	private int initialPort;
@@ -90,12 +86,10 @@ public class NettyServer {
         }
     }
 
-    public void sendMessage(ChannelId id, ByteBuffer message) {
+    public void sendMessage(ChannelId id, ByteBuf message) {
         Channel channel = allChannels.find(id);
         if (channel != null) {
-        	ByteBuf buf = ByteBufAllocator.DEFAULT.buffer();
-        	buf.writeBytes(message);
-            WebSocketFrame frame = new BinaryWebSocketFrame(buf);
+            WebSocketFrame frame = new BinaryWebSocketFrame(message);
             channel.writeAndFlush(frame);
         }
     }

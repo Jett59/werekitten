@@ -14,10 +14,7 @@ import com.mycodefu.werekitten.pipeline.events.ui.NetworkConnectionEstablishedEv
 import com.mycodefu.werekitten.pipeline.events.ui.NetworkConnectionEstablishedEvent.ConnectionType;
 import com.mycodefu.werekitten.pipeline.handlers.PipelineHandler;
 import com.mycodefu.werekitten.player.NetworkPlayerHelper;
-
-import static com.mycodefu.werekitten.pipeline.events.ui.NetworkConnectionEstablishedEvent.ConnectionType.client;
-
-import java.nio.ByteBuffer;
+import io.netty.buffer.ByteBuf;
 
 
 public class ClientHandler implements PipelineHandler, NettyClientHandler.SocketCallback{
@@ -69,7 +66,7 @@ public ClientHandler() {
 	}
 
 	@Override
-	public void clientMessageReceived(String id, ByteBuffer content) {
+	public void clientMessageReceived(String id, ByteBuf content) {
 		networkPlayerHelper.applyNetworkMessageToPlayer(content, id, context, message -> nettyClient.sendMessage(message), false);
 	}
 	@Override

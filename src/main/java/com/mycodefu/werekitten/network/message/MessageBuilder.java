@@ -1,32 +1,35 @@
 package com.mycodefu.werekitten.network.message;
 
-import java.nio.ByteBuffer;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.ByteBufAllocator;
 
 public class MessageBuilder {
-private ByteBuffer buffer;
+    private static final ByteBufAllocator allocator = ByteBufAllocator.DEFAULT;
+    private ByteBuf buffer;
 
-public MessageBuilder(ByteBuffer buffer) {
-	this.buffer = buffer;
-}
+    public MessageBuilder(ByteBuf buffer) {
+        this.buffer = buffer;
+    }
 
-public MessageBuilder addDoubleAsShort(double d) {
-	short s = (short)(d*10);
-	buffer.putShort(s);
-	return this;
-}
+    public MessageBuilder addDoubleAsShort(double d) {
+        short s = (short) (d * 10);
+        buffer.writeShort(s);
+        return this;
+    }
 
-public MessageBuilder putByte(byte b) {
-	buffer.put(b);
-	return this;
-}
+    public MessageBuilder putByte(byte b) {
+        buffer.writeByte(b);
+        return this;
+    }
 
-public ByteBuffer getBuffer() {
-	return buffer.flip();
-}
+    public ByteBuf getBuffer() {
+        return buffer;
+    }
 
-public static MessageBuilder createNewMessageBuffer(MessageType messageType, int bufferCapacity) {
-	ByteBuffer buffer = ByteBuffer.allocate(bufferCapacity);
-	buffer.put(messageType.getCode());
-	return new MessageBuilder(buffer);
-}
+    public static MessageBuilder createNewMessageBuffer(MessageType messageType, int bufferCapacity) {
+        ByteBuf buffer = allocator.buffer(bufferCapacity, bufferCapacity);
+
+        return new MessageBuilder(buffer)
+                .putByte(messageType.getCode());
+    }
 }

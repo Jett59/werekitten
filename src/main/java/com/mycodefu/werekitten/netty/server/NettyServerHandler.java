@@ -1,9 +1,6 @@
 package com.mycodefu.werekitten.netty.server;
 
-import static io.netty.handler.codec.http.HttpHeaderNames.HOST;
-
-import java.nio.ByteBuffer;
-
+import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelId;
@@ -12,6 +9,8 @@ import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.websocketx.WebSocketFrame;
 import io.netty.handler.codec.http.websocketx.WebSocketServerHandshaker;
 import io.netty.handler.codec.http.websocketx.WebSocketServerHandshakerFactory;
+
+import static io.netty.handler.codec.http.HttpHeaderNames.HOST;
 
 public class NettyServerHandler extends SimpleChannelInboundHandler<Object> {
     private final ServerConnectionCallback callback;
@@ -38,16 +37,13 @@ public class NettyServerHandler extends SimpleChannelInboundHandler<Object> {
 
 	public interface ServerConnectionCallback {
         void serverConnectionOpened(ChannelId id, String remoteAddress);
-        void serverConnectionMessage(ChannelId id, String sourceIpAddress, ByteBuffer byteBuf);
+        void serverConnectionMessage(ChannelId id, String sourceIpAddress, ByteBuf byteBuf);
         void serverConnectionClosed(ChannelId id);
     }
 
 	private void handleWebSocketRequest(ChannelHandlerContext channelHandlerContext, WebSocketFrame msg) {
         String ip = channelHandlerContext.channel().remoteAddress().toString();
-        ByteBuffer buffer = ByteBuffer.allocate(msg.content().capacity());
-        msg.content().readBytes(buffer);
-        buffer.flip();
-        callback.serverConnectionMessage(channelHandlerContext.channel().id(), ip, buffer);
+        callback.serverConnectionMessage(channelHandlerContext.channel().id(), ip, msg.content());
     }
 
     private void handleHttpRequest(ChannelHandlerContext channelHandlerContext, FullHttpRequest msg) {

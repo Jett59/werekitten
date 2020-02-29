@@ -7,15 +7,15 @@ import com.mycodefu.werekitten.pipeline.PipelineContext;
 import com.mycodefu.werekitten.pipeline.events.keyboard.RegisterKeyListenerEvent;
 import com.mycodefu.werekitten.pipeline.events.ui.*;
 import com.mycodefu.werekitten.ui.GameUI;
+import io.netty.buffer.ByteBuf;
 import javafx.util.Duration;
 
-import java.nio.ByteBuffer;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class NetworkPlayerHelper implements RegisterKeyListenerEvent.KeyListener {
     public interface NetworkPlayerMessageSender {
-        void sendMessage(ByteBuffer message);
+        void sendMessage(ByteBuf message);
     }
 
     private Map<String, NetworkPlayerMessageSender> playerMessageSenders = new ConcurrentHashMap<>();
@@ -69,8 +69,8 @@ public class NetworkPlayerHelper implements RegisterKeyListenerEvent.KeyListener
         playerMessageSenders.remove(playerId);
     }
 
-    public void applyNetworkMessageToPlayer(ByteBuffer content, String playerId, PipelineContext context, NetworkPlayerMessageSender playerMessageSender, boolean shouldSendInit) {
-        MessageType messageType = MessageType.forCode(content.get());
+    public void applyNetworkMessageToPlayer(ByteBuf content, String playerId, PipelineContext context, NetworkPlayerMessageSender playerMessageSender, boolean shouldSendInit) {
+        MessageType messageType = MessageType.forCode(content.readByte());
         switch (messageType) {
             case init: {
                 if (shouldSendInit) {
@@ -78,12 +78,12 @@ public class NetworkPlayerHelper implements RegisterKeyListenerEvent.KeyListener
                     double x = context.level().get().getPixelScaleHelper().scaleXBack(local.getGroup().getLayoutX());
                     playerMessageSender.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.init, 3).addDoubleAsShort(x).getBuffer());
                 }
-                double initialXPosition = context.level().get().getPixelScaleHelper().scaleX(((double) content.getShort()) / 10);
+                double initialXPosition = context.level().get().getPixelScaleHelper().scaleX(((double) content.readShort()) / 10);
                 createNetworkPlayer(playerId, context, playerMessageSender, initialXPosition);
                 break;
             }
             case move: {
-                double x = ((double) content.getShort()) / 10;
+                double x = ((double) content.readShort()) / 10;
                 double xScaled = context.level().get().getPixelScaleHelper().scaleX(x);
                 double oldX = context.getPlayerMap().get(playerId).getGroup().getLayoutX();
                 double difference = xScaled - oldX;

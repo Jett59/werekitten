@@ -1,9 +1,5 @@
 package com.mycodefu.werekitten.pipeline.handlers.network;
 
-import java.nio.ByteBuffer;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
-
 import com.mycodefu.werekitten.netty.server.NettyServer;
 import com.mycodefu.werekitten.netty.server.NettyServerHandler;
 import com.mycodefu.werekitten.network.NetworkUtils;
@@ -13,7 +9,11 @@ import com.mycodefu.werekitten.pipeline.events.ui.NetworkConnectionEstablishedEv
 import com.mycodefu.werekitten.pipeline.events.ui.NetworkServerListeningEvent;
 import com.mycodefu.werekitten.pipeline.handlers.PipelineHandler;
 import com.mycodefu.werekitten.player.NetworkPlayerHelper;
+import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelId;
+
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 import static com.mycodefu.werekitten.pipeline.events.ui.NetworkConnectionEstablishedEvent.ConnectionType.client;
 
@@ -32,8 +32,8 @@ public class ServerHandler implements PipelineHandler {
                 case "start": {
                     System.out.println("Starting network listener...");
                     server = new NettyServer(context.getListeningPort(), new NettyServerHandler.ServerConnectionCallback() {
-                    	ConcurrentMap<ChannelId, NetworkPlayerHelper.NetworkPlayerMessageSender> senders = new ConcurrentHashMap<>();
-                    	
+                        ConcurrentMap<ChannelId, NetworkPlayerHelper.NetworkPlayerMessageSender> senders = new ConcurrentHashMap<>();
+
                         @Override
                         public void serverConnectionOpened(ChannelId id, String remoteAddress) {
                             senders.put(id, (playerMessage) -> server.sendMessage(id, playerMessage));
@@ -41,13 +41,13 @@ public class ServerHandler implements PipelineHandler {
                         }
 
                         @Override
-                        public void serverConnectionMessage(ChannelId id, String sourceIpAddress, ByteBuffer message) {
+                        public void serverConnectionMessage(ChannelId id, String sourceIpAddress, ByteBuf message) {
                             networkPlayerHelper.applyNetworkMessageToPlayer(message, id.asLongText(), context, senders.get(id), true);
                         }
 
                         @Override
                         public void serverConnectionClosed(ChannelId id) {
-                        	System.out.println("server destroying player");
+                            System.out.println("server destroying player");
                             networkPlayerHelper.destroyNetworkPlayer(id.asLongText(), context);
                         }
                     });

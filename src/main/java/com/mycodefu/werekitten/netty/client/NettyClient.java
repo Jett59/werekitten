@@ -1,12 +1,7 @@
 package com.mycodefu.werekitten.netty.client;
 
-import java.net.URI;
-import java.nio.ByteBuffer;
-import javax.net.ssl.SSLException;
-
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.ByteBuf;
-import io.netty.buffer.ByteBufAllocator;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
@@ -24,6 +19,9 @@ import io.netty.handler.codec.http.websocketx.extensions.compression.WebSocketCl
 import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.SslContextBuilder;
 import io.netty.handler.ssl.util.InsecureTrustManagerFactory;
+
+import javax.net.ssl.SSLException;
+import java.net.URI;
 
 public class NettyClient {
 	final URI uri;
@@ -78,11 +76,9 @@ public class NettyClient {
         }
     }
 
-    public boolean sendMessage(ByteBuffer message) {
+    public boolean sendMessage(ByteBuf message) {
         if (connected) {
-        	ByteBuf buf = ByteBufAllocator.DEFAULT.buffer();
-        	buf.writeBytes(message);
-            WebSocketFrame frame = new BinaryWebSocketFrame(buf);
+            WebSocketFrame frame = new BinaryWebSocketFrame(message);
             channel.writeAndFlush(frame);
             return true;
         } else {
