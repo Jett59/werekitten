@@ -24,7 +24,7 @@ public class SlideBackground {
     public void moveX(int moveAmount) {
         for (LayerGroup layerGroup : layerGroups) {
             Group group = layerGroup.getGroup();
-            group.setTranslateX(group.getTranslateX() + moveAmount * layerGroup.getSpeed());
+            group.setLayoutX(group.getLayoutX() + moveAmount * layerGroup.getSpeed());
         }
     }
 

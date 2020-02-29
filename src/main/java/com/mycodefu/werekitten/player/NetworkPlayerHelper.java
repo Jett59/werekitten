@@ -27,7 +27,7 @@ public class NetworkPlayerHelper implements RegisterKeyListenerEvent.KeyListener
             switch (keyboardEventType) {
                 case leftPressed:
                 case rightPressed:
-                    double localX = context.getPlayerMap().get("local").getGroup().getTranslateX();
+                    double localX = context.getPlayerMap().get("local").getGroup().getLayoutX();
                     double scaledX = context.level().get().getPixelScaleHelper().scaleXBack(localX);
                     playerMessageSender.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.move, 3).addDoubleAsShort(scaledX).getBuffer());
                     break;
@@ -70,32 +70,32 @@ public class NetworkPlayerHelper implements RegisterKeyListenerEvent.KeyListener
     }
 
     public void applyNetworkMessageToPlayer(ByteBuffer content, String playerId, PipelineContext context, NetworkPlayerMessageSender playerMessageSender, boolean shouldSendInit) {
-MessageType messageType = MessageType.forCode(content.get());
+        MessageType messageType = MessageType.forCode(content.get());
         switch (messageType) {
-        case init: {
-            if (shouldSendInit) {
-                Player local = context.getPlayerMap().get("local");
-                double x = context.level().get().getPixelScaleHelper().scaleXBack(local.getGroup().getTranslateX() + local.getGroup().getLayoutX());
-                playerMessageSender.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.init, 3).addDoubleAsShort(x).getBuffer());
+            case init: {
+                if (shouldSendInit) {
+                    Player local = context.getPlayerMap().get("local");
+                    double x = context.level().get().getPixelScaleHelper().scaleXBack(local.getGroup().getLayoutX());
+                    playerMessageSender.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.init, 3).addDoubleAsShort(x).getBuffer());
+                }
+                double initialXPosition = context.level().get().getPixelScaleHelper().scaleX(((double) content.getShort()) / 10);
+                createNetworkPlayer(playerId, context, playerMessageSender, initialXPosition);
+                break;
             }
-            double initialXPosition = context.level().get().getPixelScaleHelper().scaleX(((double)content.getShort())/10);
-            createNetworkPlayer(playerId, context, playerMessageSender, initialXPosition);
-            break;
-        }
-        case move: {
-        	double x = ((double)content.getShort())/10;
-        	double xScaled = context.level().get().getPixelScaleHelper().scaleX(x);
-        	double oldX = context.getPlayerMap().get(playerId).getGroup().getTranslateX();
-        	double difference = xScaled-oldX;
-        	if(difference == 0) {
-        		break;
-        	}else if(difference < 0) {
-        		context.postEvent(new NetworkMoveLeftEvent(playerId, xScaled));
-        	}else {
-        		context.postEvent(new NetworkMoveRightEvent(playerId, xScaled));
-        	}
-        	break;
-        }
+            case move: {
+                double x = ((double) content.getShort()) / 10;
+                double xScaled = context.level().get().getPixelScaleHelper().scaleX(x);
+                double oldX = context.getPlayerMap().get(playerId).getGroup().getLayoutX();
+                double difference = xScaled - oldX;
+                if (difference == 0) {
+                    break;
+                } else if (difference < 0) {
+                    context.postEvent(new NetworkMoveLeftEvent(playerId, xScaled));
+                } else {
+                    context.postEvent(new NetworkMoveRightEvent(playerId, xScaled));
+                }
+                break;
+            }
             case idleLeft: {
                 context.postEvent(new NetworkStopMovingLeftEvent(playerId));
                 break;

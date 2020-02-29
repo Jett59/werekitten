@@ -87,7 +87,7 @@ public class StartPageUI {
         TextField accessibleAddress = new TextField("put the lan address in the box");
         accessibleAddress.setTranslateX(-500000);
         accessibleAddress.setEditable(false);
-        TextField address = new TextField();
+        TextField address = new TextField("wss://echo.websocket.org");
         address.setStyle(buttonStyle);
         Button connect = new Button("connect");
         connect.setStyle(buttonStyle);
