@@ -14,6 +14,8 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class NetworkPlayerHelper implements RegisterKeyListenerEvent.KeyListener {
+    private double scaledXMove = 2;
+
     public interface NetworkPlayerMessageSender {
         void sendMessage(ByteBuf message);
     }
@@ -26,10 +28,10 @@ public class NetworkPlayerHelper implements RegisterKeyListenerEvent.KeyListener
         for (NetworkPlayerMessageSender playerMessageSender : playerMessageSenders.values()) {
             switch (keyboardEventType) {
                 case leftPressed:
+                    playerMessageSender.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.moveLeft, 1).getBuffer());
+                    break;
                 case rightPressed:
-                    double localX = context.getPlayerMap().get("local").getGroup().getLayoutX();
-                    double scaledX = context.level().get().getPixelScaleHelper().scaleXBack(localX);
-                    playerMessageSender.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.move, 3).addDoubleAsShort(scaledX).getBuffer());
+                    playerMessageSender.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.moveRight, 1).getBuffer());
                     break;
                 case leftReleased:
                     playerMessageSender.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.idleLeft, 1).getBuffer());
@@ -45,6 +47,7 @@ public class NetworkPlayerHelper implements RegisterKeyListenerEvent.KeyListener
 
     public void createNetworkPlayer(String playerId, PipelineContext context, NetworkPlayerMessageSender playerMessageSender, double initialXPosition) {
         double height = context.level().get().getPlayerElement().getSize().getHeight();
+        this.scaledXMove=context.level().get().getPixelScaleHelper().scaleX(2);
 
         double catJumpAmount = context.level().get().getPixelScaleHelper().scaleY(GameUI.CAT_JUMP_AMOUNT);
 
@@ -90,10 +93,18 @@ public class NetworkPlayerHelper implements RegisterKeyListenerEvent.KeyListener
                 if (difference == 0) {
                     break;
                 } else if (difference < 0) {
-                    context.postEvent(new NetworkMoveLeftEvent(playerId, xScaled));
+                    context.postEvent(new NetworkMoveLeftEvent(playerId, xScaled, NetworkMoveMode.MoveTo));
                 } else {
-                    context.postEvent(new NetworkMoveRightEvent(playerId, xScaled));
+                    context.postEvent(new NetworkMoveRightEvent(playerId, xScaled, NetworkMoveMode.MoveTo));
                 }
+                break;
+            }
+            case moveLeft: {
+                context.postEvent(new NetworkMoveLeftEvent(playerId, this.scaledXMove, NetworkMoveMode.MoveBy));
+                break;
+            }
+            case moveRight: {
+                context.postEvent(new NetworkMoveRightEvent(playerId, this.scaledXMove, NetworkMoveMode.MoveBy));
                 break;
             }
             case idleLeft: {

@@ -6,10 +6,12 @@ import com.mycodefu.werekitten.event.UiEventType;
 public class NetworkMoveRightEvent extends UiEvent {
     private String playerId;
     public double x;
+    private NetworkMoveMode mode;
 
-    public NetworkMoveRightEvent(String playerId, double x) {
+    public NetworkMoveRightEvent(String playerId, double x, NetworkMoveMode mode) {
         this.playerId = playerId;
         this.x=x;
+        this.mode = mode;
     }
 
     public String getPlayerId() {
@@ -23,6 +25,10 @@ public class NetworkMoveRightEvent extends UiEvent {
     
     @Override
     public String toString() {
-    	return "NetworkMoveRight " + x;
+        return String.format("NetworkMoveRight %s %f",  mode == NetworkMoveMode.MoveTo ? "to" : "by", x);
+    }
+
+    public NetworkMoveMode getMode() {
+        return mode;
     }
 }

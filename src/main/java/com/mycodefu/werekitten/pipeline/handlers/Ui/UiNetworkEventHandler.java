@@ -27,12 +27,23 @@ public class UiNetworkEventHandler implements PipelineHandler {
                 }
                 case networkMoveLeft: {
                     Player player = context.getPlayerMap().get(((NetworkMoveLeftEvent) event).getPlayerId());
-                    player.moveLeftTo(((NetworkMoveLeftEvent) event).x);
+
+                    NetworkMoveLeftEvent networkMoveLeftEvent = (NetworkMoveLeftEvent) event;
+                    if (networkMoveLeftEvent.getMode()==NetworkMoveMode.MoveTo) {
+                        player.moveLeftTo(networkMoveLeftEvent.x);
+                    } else {
+                        player.moveLeft(networkMoveLeftEvent.x);
+                    }
                     break;
                 }
                 case networkMoveRight: {
                     Player player = context.getPlayerMap().get(((NetworkMoveRightEvent) event).getPlayerId());
-                    player.moveRightTo(((NetworkMoveRightEvent) event).x);
+                    NetworkMoveRightEvent networkMoveRightEvent = (NetworkMoveRightEvent) event;
+                    if (networkMoveRightEvent.getMode()==NetworkMoveMode.MoveTo) {
+                        player.moveRightTo(networkMoveRightEvent.x);
+                    } else {
+                        player.moveRight(networkMoveRightEvent.x);
+                    }
                     break;
                 }
                 case networkStopMovingLeft: {
