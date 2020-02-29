@@ -1,24 +1,21 @@
 package com.mycodefu.werekitten.player;
 
 import com.mycodefu.werekitten.event.KeyboardEventType;
+import com.mycodefu.werekitten.network.message.MessageBuilder;
+import com.mycodefu.werekitten.network.message.MessageType;
 import com.mycodefu.werekitten.pipeline.PipelineContext;
 import com.mycodefu.werekitten.pipeline.events.keyboard.RegisterKeyListenerEvent;
 import com.mycodefu.werekitten.pipeline.events.ui.*;
 import com.mycodefu.werekitten.ui.GameUI;
 import javafx.util.Duration;
 
+import java.nio.ByteBuffer;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class NetworkPlayerHelper implements RegisterKeyListenerEvent.KeyListener {
-
-    public static final String NETWORK_MESSAGE_MOVE_TO = "moveToX";
-    public static final String NETWORK_MESSAGE_IDLE_LEFT = "idleLeft";
-    public static final String NETWORK_MESSAGE_IDLE_RIGHT = "idleRight";
-    public static final String NETWORK_MESSAGE_JUMP = "jump";
-
     public interface NetworkPlayerMessageSender {
-        void sendMessage(String message);
+        void sendMessage(ByteBuffer message);
     }
 
     private Map<String, NetworkPlayerMessageSender> playerMessageSenders = new ConcurrentHashMap<>();
@@ -32,16 +29,16 @@ public class NetworkPlayerHelper implements RegisterKeyListenerEvent.KeyListener
                 case rightPressed:
                     double localX = context.getPlayerMap().get("local").getGroup().getTranslateX();
                     double scaledX = context.level().get().getPixelScaleHelper().scaleXBack(localX);
-                    playerMessageSender.sendMessage(NETWORK_MESSAGE_MOVE_TO + scaledX);
+                    playerMessageSender.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.move, 3).addDoubleAsShort(scaledX).getBuffer());
                     break;
                 case leftReleased:
-                    playerMessageSender.sendMessage(NETWORK_MESSAGE_IDLE_LEFT);
+                    playerMessageSender.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.idleLeft, 1).getBuffer());
                     break;
                 case rightReleased:
-                    playerMessageSender.sendMessage(NETWORK_MESSAGE_IDLE_RIGHT);
+                    playerMessageSender.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.idleRight, 1).getBuffer());
                     break;
                 case spacePressed:
-                    playerMessageSender.sendMessage(NETWORK_MESSAGE_JUMP);
+                    playerMessageSender.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.jump, 1).getBuffer());
             }
         }
     }
@@ -72,42 +69,42 @@ public class NetworkPlayerHelper implements RegisterKeyListenerEvent.KeyListener
         playerMessageSenders.remove(playerId);
     }
 
-    public void applyNetworkMessageToPlayer(String message, String playerId, PipelineContext context, NetworkPlayerMessageSender playerMessageSender, boolean shouldSendInit) {
-
-        if (message.startsWith("init")) {
+    public void applyNetworkMessageToPlayer(ByteBuffer content, String playerId, PipelineContext context, NetworkPlayerMessageSender playerMessageSender, boolean shouldSendInit) {
+MessageType messageType = MessageType.forCode(content.get());
+        switch (messageType) {
+        case init: {
             if (shouldSendInit) {
                 Player local = context.getPlayerMap().get("local");
                 double x = context.level().get().getPixelScaleHelper().scaleXBack(local.getGroup().getTranslateX() + local.getGroup().getLayoutX());
-                playerMessageSender.sendMessage("init" + x);
+                playerMessageSender.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.init, 3).addDoubleAsShort(x).getBuffer());
             }
-            double initialXPosition = context.level().get().getPixelScaleHelper().scaleX(Double.parseDouble(message.substring(4)));
+            double initialXPosition = context.level().get().getPixelScaleHelper().scaleX(((double)content.getShort())/10);
             createNetworkPlayer(playerId, context, playerMessageSender, initialXPosition);
-            return;
+            break;
         }
-
-        if (message.startsWith(NETWORK_MESSAGE_MOVE_TO)) {
-            String xAsString = message.substring(NETWORK_MESSAGE_MOVE_TO.length());
-            double x = context.level().get().getPixelScaleHelper().scaleX(Double.parseDouble(xAsString));
-            double oldX = context.getPlayerMap().get(playerId).getGroup().getTranslateX();
-            double difference = x - oldX;
-            if(difference == 0) {
-            	return;
-            }else if(difference < 0) {
-            context.postEvent(new NetworkMoveLeftEvent(playerId, x));
-            }else {
-            	context.postEvent(new NetworkMoveRightEvent(playerId, x));
-            }
+        case move: {
+        	double x = ((double)content.getShort())/10;
+        	double xScaled = context.level().get().getPixelScaleHelper().scaleX(x);
+        	double oldX = context.getPlayerMap().get(playerId).getGroup().getTranslateX();
+        	double difference = xScaled-oldX;
+        	if(difference == 0) {
+        		break;
+        	}else if(difference < 0) {
+        		context.postEvent(new NetworkMoveLeftEvent(playerId, xScaled));
+        	}else {
+        		context.postEvent(new NetworkMoveRightEvent(playerId, xScaled));
+        	}
+        	break;
         }
-        switch (message) {
-            case NETWORK_MESSAGE_IDLE_LEFT: {
+            case idleLeft: {
                 context.postEvent(new NetworkStopMovingLeftEvent(playerId));
                 break;
             }
-            case NETWORK_MESSAGE_IDLE_RIGHT: {
+            case idleRight: {
                 context.postEvent(new NetworkStopMovingRightEvent(playerId));
                 break;
             }
-            case NETWORK_MESSAGE_JUMP: {
+            case jump: {
                 context.postEvent(new NetworkJumpEvent(playerId));
             }
         }

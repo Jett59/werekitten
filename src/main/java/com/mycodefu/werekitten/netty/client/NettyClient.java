@@ -1,10 +1,12 @@
 package com.mycodefu.werekitten.netty.client;
 
 import java.net.URI;
-
+import java.nio.ByteBuffer;
 import javax.net.ssl.SSLException;
 
 import io.netty.bootstrap.Bootstrap;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.ByteBufAllocator;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
@@ -14,7 +16,7 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.http.DefaultHttpHeaders;
 import io.netty.handler.codec.http.HttpClientCodec;
 import io.netty.handler.codec.http.HttpObjectAggregator;
-import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
+import io.netty.handler.codec.http.websocketx.BinaryWebSocketFrame;
 import io.netty.handler.codec.http.websocketx.WebSocketClientHandshakerFactory;
 import io.netty.handler.codec.http.websocketx.WebSocketFrame;
 import io.netty.handler.codec.http.websocketx.WebSocketVersion;
@@ -76,9 +78,11 @@ public class NettyClient {
         }
     }
 
-    public boolean sendMessage(String message) {
+    public boolean sendMessage(ByteBuffer message) {
         if (connected) {
-            WebSocketFrame frame = new TextWebSocketFrame(message);
+        	ByteBuf buf = ByteBufAllocator.DEFAULT.buffer();
+        	buf.writeBytes(message);
+            WebSocketFrame frame = new BinaryWebSocketFrame(buf);
             channel.writeAndFlush(frame);
             return true;
         } else {

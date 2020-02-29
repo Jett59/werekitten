@@ -1,10 +1,13 @@
 package com.mycodefu.werekitten.netty.server;
 
 import java.net.InetSocketAddress;
+import java.nio.ByteBuffer;
 
 import com.mycodefu.werekitten.netty.server.NettyServerHandler;
 
 import io.netty.bootstrap.ServerBootstrap;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.ByteBufAllocator;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelId;
 import io.netty.channel.ChannelInitializer;
@@ -17,7 +20,7 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.address.DynamicAddressConnectHandler;
 import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpServerCodec;
-import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
+import io.netty.handler.codec.http.websocketx.BinaryWebSocketFrame;
 import io.netty.handler.codec.http.websocketx.WebSocketFrame;
 import io.netty.handler.codec.http.websocketx.extensions.compression.WebSocketServerCompressionHandler;
 import io.netty.handler.logging.LogLevel;
@@ -66,7 +69,8 @@ public class NettyServer {
 
 	public void listen() {
         try {
-            DynamicAddressConnectHandler dynamicAddressConnectHandler = new DynamicAddressConnectHandler() {
+            @SuppressWarnings("unused")
+			DynamicAddressConnectHandler dynamicAddressConnectHandler = new DynamicAddressConnectHandler() {
             };
             serverSocketChannel = this.bootstrap.bind(initialPort).sync().channel();
         } catch (InterruptedException e) {
@@ -86,10 +90,12 @@ public class NettyServer {
         }
     }
 
-    public void sendMessage(ChannelId id, String message) {
+    public void sendMessage(ChannelId id, ByteBuffer message) {
         Channel channel = allChannels.find(id);
         if (channel != null) {
-            WebSocketFrame frame = new TextWebSocketFrame(message);
+        	ByteBuf buf = ByteBufAllocator.DEFAULT.buffer();
+        	buf.writeBytes(message);
+            WebSocketFrame frame = new BinaryWebSocketFrame(buf);
             channel.writeAndFlush(frame);
         }
     }

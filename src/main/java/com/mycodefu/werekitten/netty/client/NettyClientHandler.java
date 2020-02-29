@@ -1,5 +1,6 @@
 package com.mycodefu.werekitten.netty.client;
 
+import java.nio.ByteBuffer;
 import java.util.UUID;
 
 import io.netty.buffer.ByteBuf;
@@ -9,9 +10,9 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelPromise;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.FullHttpResponse;
+import io.netty.handler.codec.http.websocketx.BinaryWebSocketFrame;
 import io.netty.handler.codec.http.websocketx.CloseWebSocketFrame;
 import io.netty.handler.codec.http.websocketx.PongWebSocketFrame;
-import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import io.netty.handler.codec.http.websocketx.WebSocketClientHandshaker;
 import io.netty.handler.codec.http.websocketx.WebSocketFrame;
 import io.netty.handler.codec.http.websocketx.WebSocketHandshakeException;
@@ -77,12 +78,13 @@ public class NettyClientHandler extends SimpleChannelInboundHandler<Object> {
         }
 
         WebSocketFrame frame = (WebSocketFrame) msg;
-        if (frame instanceof TextWebSocketFrame) {
-            TextWebSocketFrame textFrame = (TextWebSocketFrame) frame;
-            String text = textFrame.text();
-//            System.out.println("WebSocket Client received message: " + text);
-            callback.clientMessageReceived(id, text);
-
+        if (frame instanceof BinaryWebSocketFrame) {
+            BinaryWebSocketFrame binaryFrame = (BinaryWebSocketFrame) frame;
+            ByteBuf buf = binaryFrame.content();
+            ByteBuffer buffer = ByteBuffer.allocate(buf.capacity());
+            buf.getBytes(0, buffer);
+            buffer.flip();
+            callback.clientMessageReceived(id, buffer);
         } else if (frame instanceof PongWebSocketFrame) {
             System.out.println("WebSocket Client received pong");
         } else if (frame instanceof CloseWebSocketFrame) {
@@ -109,7 +111,7 @@ public class NettyClientHandler extends SimpleChannelInboundHandler<Object> {
     public interface SocketCallback {
         void clientDisconnected(String id);
         void clientConnected(String id, String remoteAddress);
-        void clientMessageReceived(String id, String text);
+        void clientMessageReceived(String id, ByteBuffer buffer);
         void clientError(String id, Throwable e);
     }
 }

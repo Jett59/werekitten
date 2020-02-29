@@ -2,6 +2,8 @@ package com.mycodefu.werekitten.pipeline.handlers.network;
 
 import com.mycodefu.werekitten.netty.client.NettyClient;
 import com.mycodefu.werekitten.netty.client.NettyClientHandler;
+import com.mycodefu.werekitten.network.message.MessageBuilder;
+import com.mycodefu.werekitten.network.message.MessageType;
 import com.mycodefu.werekitten.pipeline.PipelineContext;
 import com.mycodefu.werekitten.pipeline.PipelineEvent;
 import com.mycodefu.werekitten.pipeline.events.game.BuildLevelEvent;
@@ -14,6 +16,8 @@ import com.mycodefu.werekitten.pipeline.handlers.PipelineHandler;
 import com.mycodefu.werekitten.player.NetworkPlayerHelper;
 
 import static com.mycodefu.werekitten.pipeline.events.ui.NetworkConnectionEstablishedEvent.ConnectionType.client;
+
+import java.nio.ByteBuffer;
 
 
 public class ClientHandler implements PipelineHandler, NettyClientHandler.SocketCallback{
@@ -39,7 +43,9 @@ public ClientHandler() {
 				break;
 			}
 			case readyForInitMessage: {
-				nettyClient.sendMessage("init"+context.level().get().getPixelScaleHelper().scaleXBack(context.level().get().getPlayerElement().getLocation().getX()));
+				MessageBuilder messageBuilder = MessageBuilder.createNewMessageBuffer(MessageType.init, 3)
+						.addDoubleAsShort(context.level().get().getPixelScaleHelper().scaleXBack(context.level().get().getPlayerElement().getLocation().getX()));
+				nettyClient.sendMessage(messageBuilder.getBuffer());
 				break;
 			}
 			
@@ -63,8 +69,8 @@ public ClientHandler() {
 	}
 
 	@Override
-	public void clientMessageReceived(String id, String text) {
-		networkPlayerHelper.applyNetworkMessageToPlayer(text, id, context, message -> nettyClient.sendMessage(message), false);
+	public void clientMessageReceived(String id, ByteBuffer content) {
+		networkPlayerHelper.applyNetworkMessageToPlayer(content, id, context, message -> nettyClient.sendMessage(message), false);
 	}
 	@Override
 	public void clientError(String id, Throwable e) {
