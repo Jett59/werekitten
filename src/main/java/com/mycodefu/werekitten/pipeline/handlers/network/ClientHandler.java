@@ -21,74 +21,72 @@ import com.mycodefu.werekitten.player.NetworkPlayerHelper;
 import io.netty.buffer.ByteBuf;
 
 public class ClientHandler implements PipelineHandler, NettyClientHandler.SocketCallback {
-	private final NetworkPlayerHelper networkPlayerHelper;
-	private NettyClient nettyClient;
-	private PipelineContext context;
+    private final NetworkPlayerHelper networkPlayerHelper;
+    private NettyClient nettyClient;
+    private PipelineContext context;
 
-	public ClientHandler() {
-		this.networkPlayerHelper = new NetworkPlayerHelper();
-	}
+    public ClientHandler() {
+        this.networkPlayerHelper = new NetworkPlayerHelper();
+    }
 
-	@Override
-	public void handleEvent(PipelineContext context, PipelineEvent event) {
-		if (event instanceof NetworkEvent) {
-			this.context = context;
-			NetworkEvent networkEvent = (NetworkEvent) event;
-			switch (networkEvent.getNetworkEvent()) {
-			case connect: {
-				System.out.println("connect event recieved " + event.toString());
-				nettyClient = new NettyClient(((NetworkConnectClientEvent) event).getServerAddress(), this);
-				nettyClient.connect();
-				context.postEvent(new BuildLevelEvent(false));
-				context.postEvent(new NetworkConnectionEstablishedEvent(ConnectionType.server,
-						((NetworkConnectClientEvent) event).getServerAddress()));
-				break;
-			}
+    @Override
+    public void handleEvent(PipelineContext context, PipelineEvent event) {
+        if (event instanceof NetworkEvent) {
+            this.context = context;
+            NetworkEvent networkEvent = (NetworkEvent) event;
+            switch (networkEvent.getNetworkEvent()) {
+                case connect: {
+                    nettyClient = new NettyClient(((NetworkConnectClientEvent) event).getServerAddress(), this);
+                    nettyClient.connect();
+                    context.postEvent(new BuildLevelEvent(false));
+                    context.postEvent(new NetworkConnectionEstablishedEvent(ConnectionType.server,
+                            ((NetworkConnectClientEvent) event).getServerAddress()));
+                    break;
+                }
 
-			default:
-				break;
-			}
-		} else if (event instanceof UiEvent) {
-			switch ((UiEventType) event.getEvent()) {
-			case UiCreated: {
-				MessageBuilder messageBuilder = MessageBuilder.createNewMessageBuffer(MessageType.init, 3)
-						.addDoubleAsShort(context.level().get().getPixelScaleHelper()
-								.scaleXBack(context.level().get().getPlayerElement().getLocation().getX()));
-				nettyClient.sendMessage(messageBuilder.getBuffer());
-				break;
-			}
-			default:
-				break;
-			}
-		}
-	}
+                default:
+                    break;
+            }
+        } else if (event instanceof UiEvent) {
+            switch ((UiEventType) event.getEvent()) {
+                case UiCreated: {
+                    MessageBuilder messageBuilder = MessageBuilder.createNewMessageBuffer(MessageType.init, 3)
+                            .addDoubleAsShort(context.level().get().getPixelScaleHelper()
+                                    .scaleXBack(context.level().get().getPlayerElement().getLocation().getX()));
+                    nettyClient.sendMessage(messageBuilder.getBuffer());
+                    break;
+                }
+                default:
+                    break;
+            }
+        }
+    }
 
-	@Override
-	public void clientDisconnected(String id) {
-		System.out.println("client destroying player");
-		networkPlayerHelper.destroyNetworkPlayer(id, context);
-		context.postEvent(new StartGameEvent());
-	}
+    @Override
+    public void clientDisconnected(String id) {
+        networkPlayerHelper.destroyNetworkPlayer(id, context);
+        context.postEvent(new StartGameEvent());
+    }
 
-	@Override
-	public void clientConnected(String id, String remoteAddress) {
+    @Override
+    public void clientConnected(String id, String remoteAddress) {
 
-	}
+    }
 
-	@Override
-	public void clientMessageReceived(String id, ByteBuf content) {
-		networkPlayerHelper.applyNetworkMessageToPlayer(content, id, context,
-				message -> nettyClient.sendMessage(message), false);
-	}
+    @Override
+    public void clientMessageReceived(String id, ByteBuf content) {
+        networkPlayerHelper.applyNetworkMessageToPlayer(content, id, context,
+                message -> nettyClient.sendMessage(message), false);
+    }
 
-	@Override
-	public void clientError(String id, Throwable e) {
-		e.printStackTrace();
-	}
+    @Override
+    public void clientError(String id, Throwable e) {
+        e.printStackTrace();
+    }
 
-	@Override
-	public Event[] getEventInterest() {
-		return new Event[] { UiEventType.UiCreated, NetworkEventType.connect };
-	}
+    @Override
+    public Event[] getEventInterest() {
+        return new Event[]{UiEventType.UiCreated, NetworkEventType.connect};
+    }
 
 }

@@ -30,10 +30,10 @@ public class ServerHandler implements PipelineHandler {
 
     @Override
     public void handleEvent(PipelineContext context, PipelineEvent event) {
-        if (event.getPipelineName().equalsIgnoreCase("pipeline") && event instanceof NetworkEvent) {
-            switch (event.getEvent().getName()) {
-                case "start": {
-                    System.out.println("Starting network listener...");
+        if (event instanceof NetworkEvent) {
+            NetworkEvent networkEvent = (NetworkEvent) event;
+            switch (networkEvent.getNetworkEvent()) {
+                case start: {
                     server = new NettyServer(context.getListeningPort(), new NettyServerHandler.ServerConnectionCallback() {
                         ConcurrentMap<ChannelId, NetworkPlayerHelper.NetworkPlayerMessageSender> senders = new ConcurrentHashMap<>();
 
@@ -50,7 +50,6 @@ public class ServerHandler implements PipelineHandler {
 
                         @Override
                         public void serverConnectionClosed(ChannelId id) {
-                            System.out.println("server destroying player");
                             networkPlayerHelper.destroyNetworkPlayer(id.asLongText(), context);
                         }
                     });
@@ -60,14 +59,10 @@ public class ServerHandler implements PipelineHandler {
                     context.postEvent(new NetworkServerListeningEvent(wsAddress));
                     break;
                 }
-                case "stop": {
-                    System.out.println("Stopping network listener...");
+                case stop: {
                     server.close();
                     break;
                 }
-
-                default:
-                    break;
             }
         }
     }

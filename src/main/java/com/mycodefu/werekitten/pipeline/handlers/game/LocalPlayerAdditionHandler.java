@@ -16,9 +16,9 @@ public class LocalPlayerAdditionHandler implements PipelineHandler {
 
     @Override
     public void handleEvent(PipelineContext context, PipelineEvent event) {
-        if (event.getPipelineName().equalsIgnoreCase("pipeline") && event instanceof GameEvent) {
-            GameEventType gameEventType = (GameEventType) event.getEvent();
-            switch (gameEventType) {
+        if (event instanceof GameEvent) {
+            GameEvent gameEvent = (GameEvent)event;
+            switch (gameEvent.getGameEvent()) {
 				case levelLoaded: {
                     double catHeight = context.level().get().getPlayerElement().getSize().getHeight();
 

@@ -12,9 +12,9 @@ import javafx.scene.Scene;
 public class StartPageHandler implements PipelineHandler {
     @Override
     public void handleEvent(PipelineContext context, PipelineEvent event) {
-        if (event.getPipelineName().equalsIgnoreCase("pipeline") && event instanceof GameEvent) {
-            GameEventType gameEventType = (GameEventType)event.getEvent();
-            switch (gameEventType) {
+        if (event instanceof GameEvent) {
+            GameEvent gameEvent = (GameEvent)event;
+            switch (gameEvent.getGameEvent()) {
                 case start: {
                     StartPageUI startPageUI = new StartPageUI();
                     Scene scene = startPageUI.getScene(context);

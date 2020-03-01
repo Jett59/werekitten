@@ -5,6 +5,7 @@ import com.mycodefu.werekitten.event.GameEventType;
 import com.mycodefu.werekitten.keyboard.KeyboardListener;
 import com.mycodefu.werekitten.pipeline.PipelineContext;
 import com.mycodefu.werekitten.pipeline.PipelineEvent;
+import com.mycodefu.werekitten.pipeline.events.game.GameEvent;
 import com.mycodefu.werekitten.pipeline.events.keyboard.*;
 import com.mycodefu.werekitten.pipeline.handlers.PipelineHandler;
 import javafx.scene.input.KeyEvent;
@@ -14,9 +15,10 @@ public class KeyboardEnablingHandler implements PipelineHandler {
 
     @Override
     public void handleEvent(PipelineContext context, PipelineEvent event) {
-        if (event.getPipelineName().equalsIgnoreCase("pipeline")) {
-            switch (event.getEvent().getName()) {
-                case "levelLoaded": {
+        if (event instanceof GameEvent) {
+            GameEvent gameEvent = (GameEvent)event;
+            switch (gameEvent.getGameEvent()) {
+                case levelLoaded: {
                     if (keyboardListener != null) {
                         break;
                     }
@@ -67,12 +69,9 @@ public class KeyboardEnablingHandler implements PipelineHandler {
                     keyboardListener.startListening();
                     break;
                 }
-
-                default:
-                    break;
             }
         } else {
-            throw new IllegalArgumentException("the gameHandler keyboardEnablingHandler is not allowed to be in the pipeline " + event.getPipelineName());
+            throw new IllegalArgumentException(String.format("the gameHandler keyboardEnablingHandler is not expecting to process event types other than GameEventType. got event type %s", event.getEvent()));
         }
     }
 

@@ -9,4 +9,8 @@ public abstract class UiEvent implements PipelineEvent {
     public String getPipelineName() {
         return "pipeline";
     }
+
+    public UiEventType getUIEvent() {
+        return (UiEventType)getEvent();
+    }
 }

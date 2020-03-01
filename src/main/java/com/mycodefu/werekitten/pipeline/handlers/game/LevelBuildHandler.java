@@ -1,7 +1,5 @@
 package com.mycodefu.werekitten.pipeline.handlers.game;
 
-import java.awt.Toolkit;
-
 import com.mycodefu.werekitten.animation.AnimationCompiler;
 import com.mycodefu.werekitten.backgroundObjects.BackgroundObjectBuilder;
 import com.mycodefu.werekitten.event.Event;
@@ -15,36 +13,38 @@ import com.mycodefu.werekitten.pipeline.events.game.GameEvent;
 import com.mycodefu.werekitten.pipeline.events.game.LevelLoadedEvent;
 import com.mycodefu.werekitten.pipeline.handlers.PipelineHandler;
 
-public class LevelBuildHandler implements PipelineHandler{
+import java.awt.*;
 
-	@Override
-	public void handleEvent(PipelineContext context, PipelineEvent event) {
-		if(event.getPipelineName().equalsIgnoreCase("pipeline") && event instanceof GameEvent) {
-			GameEventType eventType = (GameEventType)event.getEvent();
-			switch (eventType) {
-			case buildLevel: {
-			    	var screen = Toolkit.getDefaultToolkit().getScreenSize();
-			        BackgroundObjectBuilder backgroundObjectBuilder = new BackgroundObjectBuilder(new AnimationCompiler());
-			        LevelBuilder levelBuilder = new LevelBuilder(backgroundObjectBuilder);
-			        GameLevel level = levelBuilder.buildLevel("/level.wkl", screen.width, screen.height);
-			        context.getStage().hide();
+public class LevelBuildHandler implements PipelineHandler {
 
-			        context.level().set(level);
-			        context.postEvent(new LevelLoadedEvent(((BuildLevelEvent)event).shouldHost()));
-				break;
-			}
-			
-			default:
-				break;
-			}
-		}
-	}
+    @Override
+    public void handleEvent(PipelineContext context, PipelineEvent event) {
+        if (event instanceof GameEvent) {
+            GameEvent gameEvent = (GameEvent)event;
+            switch (gameEvent.getGameEvent()) {
+                case buildLevel: {
+                    var screen = Toolkit.getDefaultToolkit().getScreenSize();
+                    BackgroundObjectBuilder backgroundObjectBuilder = new BackgroundObjectBuilder(new AnimationCompiler());
+                    LevelBuilder levelBuilder = new LevelBuilder(backgroundObjectBuilder);
+                    GameLevel level = levelBuilder.buildLevel("/level.wkl", screen.width, screen.height);
+                    context.getStage().hide();
 
-	@Override
-	public Event[] getEventInterest() {
-		return new Event[] {
-				GameEventType.buildLevel
-		};
-	}
+                    context.level().set(level);
+                    context.postEvent(new LevelLoadedEvent(((BuildLevelEvent) event).shouldHost()));
+                    break;
+                }
+
+                default:
+                    break;
+            }
+        }
+    }
+
+    @Override
+    public Event[] getEventInterest() {
+        return new Event[]{
+                GameEventType.buildLevel
+        };
+    }
 
 }
