@@ -15,7 +15,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public class UiNetworkEventHandler implements PipelineHandler {
     private UI ui;
-    private List<PipelineEvent> unusedNetworkEvents = new CopyOnWriteArrayList<>();
 
     @Override
     public void handleEvent(PipelineContext context, PipelineEvent event) {
@@ -59,12 +58,8 @@ public class UiNetworkEventHandler implements PipelineHandler {
                 }
                 case networkJump: {
                     NetworkJumpEvent jumpEvent = (NetworkJumpEvent) event;
-                    if (checkPlayerIsValidAndExecuteEvents(jumpEvent.getPlayerId(), context)) {
-                        Player player = context.getPlayerMap().get(jumpEvent.getPlayerId());
-                        player.jump();
-                    } else {
-                        unusedNetworkEvents.add(event);
-                    }
+                    Player player = context.getPlayerMap().get(jumpEvent.getPlayerId());
+                    player.jump();
                     break;
                 }
                 case networkServerListening: {
@@ -72,18 +67,6 @@ public class UiNetworkEventHandler implements PipelineHandler {
                     break;
                 }
             }
-        }
-    }
-
-    private boolean checkPlayerIsValidAndExecuteEvents(String id, PipelineContext context) {
-        Player player = context.getPlayerMap().get(id);
-        if (player == null) {
-            return false;
-        } else {
-            for (PipelineEvent event : unusedNetworkEvents) {
-                handleEvent(context, event);
-            }
-            return true;
         }
     }
 
