@@ -12,7 +12,7 @@ public class KeyboardEnablingHandler implements PipelineHandler {
 
     @Override
     public void handleEvent(PipelineContext context, PipelineEvent event) {
-        if (event.getPipelineName().equalsIgnoreCase("game")) {
+        if (event.getPipelineName().equalsIgnoreCase("pipeline")) {
             switch (event.getEvent().getName()) {
                 case "levelLoaded": {
                     if (keyboardListener != null) {

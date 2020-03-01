@@ -7,6 +7,6 @@ import com.mycodefu.werekitten.pipeline.PipelineEvent;
 public abstract class UiEvent implements PipelineEvent {
     @Override
     public String getPipelineName() {
-        return "UI";
+        return "pipeline";
     }
 }

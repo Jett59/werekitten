@@ -9,7 +9,7 @@ public class MusicHandler implements PipelineHandler{
 
 	@Override
 	public void handleEvent(PipelineContext context, PipelineEvent event) {
-		if(!event.getPipelineName().equalsIgnoreCase("game")) {
+		if(!event.getPipelineName().equalsIgnoreCase("pipeline")) {
 			throw new IllegalArgumentException("the music handler is not allowed to be in a pipeline other than game, pipeline: "+event.getPipelineName());
 		}else {
 			switch (event.getEvent().getName()) {

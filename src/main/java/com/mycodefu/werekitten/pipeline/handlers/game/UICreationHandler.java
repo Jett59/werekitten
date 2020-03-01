@@ -7,7 +7,9 @@ import com.mycodefu.werekitten.level.GameLevel;
 import com.mycodefu.werekitten.level.LevelBuilder;
 import com.mycodefu.werekitten.pipeline.PipelineContext;
 import com.mycodefu.werekitten.pipeline.PipelineEvent;
+import com.mycodefu.werekitten.pipeline.events.game.GameEvent;
 import com.mycodefu.werekitten.pipeline.events.game.LevelLoadedEvent;
+import com.mycodefu.werekitten.pipeline.events.keyboard.KeyboardEvent;
 import com.mycodefu.werekitten.pipeline.events.network.NetworkStartEvent;
 import com.mycodefu.werekitten.pipeline.events.ui.UiCreatedEvent;
 import com.mycodefu.werekitten.pipeline.handlers.PipelineHandler;
@@ -21,7 +23,7 @@ import java.util.List;
 public class UICreationHandler implements PipelineHandler {
     @Override
     public void handleEvent(PipelineContext context, PipelineEvent event) {
-    	if(event.getPipelineName().equalsIgnoreCase("game")) {
+    	if(event.getPipelineName().equalsIgnoreCase("pipeline") && event instanceof GameEvent) {
 			GameEventType gameEventType = (GameEventType)event.getEvent();
     		switch (gameEventType) {
     		case levelLoaded: {

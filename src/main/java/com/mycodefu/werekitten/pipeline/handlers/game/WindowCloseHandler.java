@@ -9,7 +9,7 @@ public class WindowCloseHandler implements PipelineHandler {
 
     @Override
     public void handleEvent(PipelineContext context, PipelineEvent event) {
-        if (event.getPipelineName().equalsIgnoreCase("game")) {
+        if (event.getPipelineName().equalsIgnoreCase("pipeline")) {
             switch (event.getEvent().getName()) {
                 case "start": {
                     context.getStage().setOnCloseRequest(e -> {
@@ -23,8 +23,6 @@ public class WindowCloseHandler implements PipelineHandler {
                 default:
                     break;
             }
-        } else {
-            throw new IllegalArgumentException("the eventType " + event.getPipelineName() + " is not allowed in the handler windowCloseHandler");
         }
     }
 

@@ -13,7 +13,7 @@ private UI ui;
 
 	@Override
 	public void handleEvent(PipelineContext context, PipelineEvent event) {
-		if(event.getPipelineName().equalsIgnoreCase("Ui")) {
+		if(event.getPipelineName().equalsIgnoreCase("pipeline")) {
 			switch (event.getEvent().getName()) {
 			case "UiCreated": {
 				System.out.println("UI created");

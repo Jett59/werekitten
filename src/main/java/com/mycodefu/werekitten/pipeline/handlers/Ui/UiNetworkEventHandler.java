@@ -18,7 +18,7 @@ public class UiNetworkEventHandler implements PipelineHandler {
 
     @Override
     public void handleEvent(PipelineContext context, PipelineEvent event) {
-        if (event.getPipelineName().equalsIgnoreCase("Ui")) {
+        if (event.getPipelineName().equalsIgnoreCase("pipeline") && event instanceof UiEvent) {
             PixelScaleHelper pixelScaleHelper = context.level().get() != null ? context.level().get().getPixelScaleHelper() : null;
             switch ((UiEventType) event.getEvent()) {
                 case UiCreated: {
@@ -73,8 +73,6 @@ public class UiNetworkEventHandler implements PipelineHandler {
                 default:
                     break;
             }
-        } else {
-            throw new IllegalArgumentException("the UiNetworkEventHandler may only exist in the UI pipeline, not the pipeline: " + event.getPipelineName());
         }
     }
 

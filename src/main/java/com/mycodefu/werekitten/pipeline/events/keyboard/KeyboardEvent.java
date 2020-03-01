@@ -8,7 +8,7 @@ private Event event;
 
 @Override
 public String getPipelineName() {
-	return "keyboard";
+	return "pipeline";
 }
 
 @Override

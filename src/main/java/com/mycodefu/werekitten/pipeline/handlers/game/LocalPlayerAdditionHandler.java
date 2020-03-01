@@ -3,6 +3,7 @@ package com.mycodefu.werekitten.pipeline.handlers.game;
 import com.mycodefu.werekitten.event.GameEventType;
 import com.mycodefu.werekitten.pipeline.PipelineContext;
 import com.mycodefu.werekitten.pipeline.PipelineEvent;
+import com.mycodefu.werekitten.pipeline.events.game.GameEvent;
 import com.mycodefu.werekitten.pipeline.events.ui.PlayerCreatedEvent;
 import com.mycodefu.werekitten.pipeline.handlers.PipelineHandler;
 import com.mycodefu.werekitten.player.Kitten;
@@ -14,7 +15,7 @@ public class LocalPlayerAdditionHandler implements PipelineHandler {
 
     @Override
     public void handleEvent(PipelineContext context, PipelineEvent event) {
-        if (event.getPipelineName().equalsIgnoreCase("game")) {
+        if (event.getPipelineName().equalsIgnoreCase("pipeline") && event instanceof GameEvent) {
             GameEventType gameEventType = (GameEventType) event.getEvent();
             switch (gameEventType) {
 				case levelLoaded: {
@@ -32,8 +33,6 @@ public class LocalPlayerAdditionHandler implements PipelineHandler {
                 default:
                     break;
             }
-        } else {
-            throw new IllegalArgumentException("the handler LocalPlayerAdditionHandler is not allowed to be outside the pipeline game, current pipeline: " + event.getPipelineName());
         }
     }
 

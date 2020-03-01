@@ -10,6 +10,7 @@ import com.mycodefu.werekitten.level.LevelBuilder;
 import com.mycodefu.werekitten.pipeline.PipelineContext;
 import com.mycodefu.werekitten.pipeline.PipelineEvent;
 import com.mycodefu.werekitten.pipeline.events.game.BuildLevelEvent;
+import com.mycodefu.werekitten.pipeline.events.game.GameEvent;
 import com.mycodefu.werekitten.pipeline.events.game.LevelLoadedEvent;
 import com.mycodefu.werekitten.pipeline.handlers.PipelineHandler;
 
@@ -17,7 +18,7 @@ public class LevelBuildHandler implements PipelineHandler{
 
 	@Override
 	public void handleEvent(PipelineContext context, PipelineEvent event) {
-		if(event.getPipelineName().equalsIgnoreCase("game")) {
+		if(event.getPipelineName().equalsIgnoreCase("pipeline") && event instanceof GameEvent) {
 			GameEventType eventType = (GameEventType)event.getEvent();
 			switch (eventType) {
 			case buildLevel: {
@@ -35,8 +36,6 @@ public class LevelBuildHandler implements PipelineHandler{
 			default:
 				break;
 			}
-		}else {
-			throw new IllegalArgumentException("the handler LevelBuildHandler is only allow in pipeline: game, currently in pipeline: "+event.getPipelineName());
 		}
 	}
 

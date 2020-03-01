@@ -3,7 +3,9 @@ package com.mycodefu.werekitten.pipeline.handlers.keyboard;
 import com.mycodefu.werekitten.event.KeyboardEventType;
 import com.mycodefu.werekitten.pipeline.PipelineContext;
 import com.mycodefu.werekitten.pipeline.PipelineEvent;
+import com.mycodefu.werekitten.pipeline.events.keyboard.KeyboardEvent;
 import com.mycodefu.werekitten.pipeline.events.keyboard.RegisterKeyListenerEvent;
+import com.mycodefu.werekitten.pipeline.events.network.NetworkEvent;
 import com.mycodefu.werekitten.pipeline.handlers.PipelineHandler;
 import com.mycodefu.werekitten.player.Kitten;
 import com.mycodefu.werekitten.level.PixelScaleHelper;
@@ -20,7 +22,7 @@ public class PlayerKeyboardHandler implements PipelineHandler {
 		if(context.level().get() == null) {
 			return;
 		}
-        if (event.getPipelineName().equalsIgnoreCase("keyboard")) {
+        if (event.getPipelineName().equalsIgnoreCase("pipeline") && event instanceof KeyboardEvent) {
             PixelScaleHelper pixelScaleHelper = context.level().get().getPixelScaleHelper();
             KeyboardEventType keyboardEventType = (KeyboardEventType) event.getEvent();
             Player localPlayer = context.getPlayerMap().get("local");

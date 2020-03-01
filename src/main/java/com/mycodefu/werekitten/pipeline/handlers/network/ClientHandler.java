@@ -27,7 +27,7 @@ public ClientHandler() {
 }
 	@Override
 	public void handleEvent(PipelineContext context, PipelineEvent event) {
-		if(event.getPipelineName().equalsIgnoreCase("network")) {
+		if(event.getPipelineName().equalsIgnoreCase("pipeline") && event instanceof NetworkEvent) {
 			this.context = context;
 			NetworkEvent networkEvent = (NetworkEvent)event;
 			switch (networkEvent.getNetworkEvent()) {
@@ -49,8 +49,6 @@ public ClientHandler() {
 			default:
 				break;
 			}
-		}else {
-			 throw new IllegalArgumentException("the handler ClientHandler is not allow on the pipeline "+event.getPipelineName()+", should only be on network");
 		}
 	}
 	@Override

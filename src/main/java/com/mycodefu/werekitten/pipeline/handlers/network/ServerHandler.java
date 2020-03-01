@@ -5,6 +5,7 @@ import com.mycodefu.werekitten.netty.server.NettyServerHandler;
 import com.mycodefu.werekitten.network.NetworkUtils;
 import com.mycodefu.werekitten.pipeline.PipelineContext;
 import com.mycodefu.werekitten.pipeline.PipelineEvent;
+import com.mycodefu.werekitten.pipeline.events.network.NetworkEvent;
 import com.mycodefu.werekitten.pipeline.events.ui.NetworkConnectionEstablishedEvent;
 import com.mycodefu.werekitten.pipeline.events.ui.NetworkServerListeningEvent;
 import com.mycodefu.werekitten.pipeline.handlers.PipelineHandler;
@@ -27,7 +28,7 @@ public class ServerHandler implements PipelineHandler {
 
     @Override
     public void handleEvent(PipelineContext context, PipelineEvent event) {
-        if (event.getPipelineName().equalsIgnoreCase("network")) {
+        if (event.getPipelineName().equalsIgnoreCase("pipeline") && event instanceof NetworkEvent) {
             switch (event.getEvent().getName()) {
                 case "start": {
                     System.out.println("Starting network listener...");
@@ -66,8 +67,6 @@ public class ServerHandler implements PipelineHandler {
                 default:
                     break;
             }
-        } else {
-            throw new IllegalArgumentException("the network player handler is not allowed to be in the pipeline " + event.getPipelineName());
         }
     }
 

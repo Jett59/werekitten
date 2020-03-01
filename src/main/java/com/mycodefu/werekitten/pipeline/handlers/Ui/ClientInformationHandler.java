@@ -3,6 +3,7 @@ package com.mycodefu.werekitten.pipeline.handlers.Ui;
 import com.mycodefu.werekitten.event.UiEventType;
 import com.mycodefu.werekitten.pipeline.PipelineContext;
 import com.mycodefu.werekitten.pipeline.PipelineEvent;
+import com.mycodefu.werekitten.pipeline.events.network.NetworkEvent;
 import com.mycodefu.werekitten.pipeline.events.ui.UiEvent;
 import com.mycodefu.werekitten.pipeline.events.network.ReadyForNetworkInitMessageEvent;
 import com.mycodefu.werekitten.pipeline.events.ui.NetworkConnectionEstablishedEvent;
@@ -14,7 +15,7 @@ public class ClientInformationHandler implements PipelineHandler{
 
 	@Override
 	public void handleEvent(PipelineContext context, PipelineEvent event) {
-		if(event.getPipelineName().equalsIgnoreCase("ui")) {
+		if(event.getPipelineName().equalsIgnoreCase("pipeline") && event instanceof UiEvent) {
 			UiEventType eventType = (UiEventType)((UiEvent)event).getEvent();
 			switch (eventType) {
 			case networkConnectionEstablished: {
@@ -33,8 +34,6 @@ public class ClientInformationHandler implements PipelineHandler{
 			default:
 				break;
 			}
-		}else {
-			throw new IllegalArgumentException("the handler ClientInformationHandler is only allowed in the ui pipeline, not in "+event.getPipelineName());
 		}
 	}
 
