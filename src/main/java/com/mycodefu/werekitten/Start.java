@@ -22,7 +22,7 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class Start extends Application implements PipelineContext {
-    public static boolean DEBUG_PIPELINE_EVENTS = false;
+    public static boolean DEBUG_PIPELINE_EVENTS = true;
     private static int listeningPort = 0;
 
     private final Map<String, Pipeline> pipelines;

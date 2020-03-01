@@ -135,4 +135,9 @@ public class Player {
     public Animation getCurrentAnimation() {
         return currentAnimation;
     }
+
+    @Override
+    public String toString() {
+        return "{PlayerId: '" + id + "'}}";
+    }
 }

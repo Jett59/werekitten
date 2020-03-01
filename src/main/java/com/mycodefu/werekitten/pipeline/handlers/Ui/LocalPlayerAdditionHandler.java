@@ -1,11 +1,13 @@
-package com.mycodefu.werekitten.pipeline.handlers.game;
+package com.mycodefu.werekitten.pipeline.handlers.Ui;
 
 import com.mycodefu.werekitten.event.Event;
 import com.mycodefu.werekitten.event.GameEventType;
+import com.mycodefu.werekitten.event.UiEventType;
 import com.mycodefu.werekitten.pipeline.PipelineContext;
 import com.mycodefu.werekitten.pipeline.PipelineEvent;
 import com.mycodefu.werekitten.pipeline.events.game.GameEvent;
 import com.mycodefu.werekitten.pipeline.events.ui.PlayerCreatedEvent;
+import com.mycodefu.werekitten.pipeline.events.ui.UiEvent;
 import com.mycodefu.werekitten.pipeline.handlers.PipelineHandler;
 import com.mycodefu.werekitten.player.Kitten;
 import com.mycodefu.werekitten.player.Player;
@@ -16,10 +18,10 @@ public class LocalPlayerAdditionHandler implements PipelineHandler {
 
     @Override
     public void handleEvent(PipelineContext context, PipelineEvent event) {
-        if (event instanceof GameEvent) {
-            GameEvent gameEvent = (GameEvent)event;
-            switch (gameEvent.getGameEvent()) {
-				case levelLoaded: {
+        if (event instanceof UiEvent) {
+            UiEvent uiEvent = (UiEvent)event;
+            switch (uiEvent.getUIEvent()) {
+                case UiCreated: {
                     double catHeight = context.level().get().getPlayerElement().getSize().getHeight();
 
                     double initialXPosition = context.level().get().getPixelScaleHelper().scaleX(500);
@@ -40,7 +42,7 @@ public class LocalPlayerAdditionHandler implements PipelineHandler {
 	@Override
 	public Event[] getEventInterest() {
 		return new Event[] {
-				GameEventType.levelLoaded
+                UiEventType.UiCreated
 		};
 	}
 

@@ -67,7 +67,12 @@ public class Pipeline {
             PipelineHandler[] handlers = this.eventHandlers.get(event.getEvent());
             if (handlers != null) {
                 for (PipelineHandler handler : handlers) {
-                    handler.handleEvent(context, event);
+                    try {
+                        handler.handleEvent(context, event);
+                    } catch (Exception e) {
+                        System.out.printf("An error occurred processing event '%s' in handler '%s':\n", event, handler.getClass().getSimpleName());
+                        e.printStackTrace();
+                    }
                 }
             }
         }

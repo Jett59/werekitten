@@ -10,6 +10,7 @@ import com.mycodefu.werekitten.pipeline.events.ui.PlayerDestroyedEvent;
 import com.mycodefu.werekitten.pipeline.events.ui.UiCreatedEvent;
 import com.mycodefu.werekitten.pipeline.events.ui.UiEvent;
 import com.mycodefu.werekitten.pipeline.handlers.PipelineHandler;
+import com.mycodefu.werekitten.player.Player;
 import com.mycodefu.werekitten.ui.UI;
 
 public class PlayerAdditionHandler implements PipelineHandler {
@@ -26,7 +27,9 @@ public class PlayerAdditionHandler implements PipelineHandler {
                     break;
                 }
                 case playerCreated: {
-                    ui.addPlayer(((PlayerCreatedEvent) event).getPlayer());
+					Player player = ((PlayerCreatedEvent) event).getPlayer();
+					System.out.println("Player created: " + player);
+					ui.addPlayer(player);
                     break;
                 }
                 case playerDestroyed: {

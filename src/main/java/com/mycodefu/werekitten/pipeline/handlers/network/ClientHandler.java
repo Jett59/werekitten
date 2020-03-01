@@ -50,10 +50,12 @@ public class ClientHandler implements PipelineHandler, NettyClientHandler.Socket
         } else if (event instanceof UiEvent) {
             switch ((UiEventType) event.getEvent()) {
                 case UiCreated: {
-                    MessageBuilder messageBuilder = MessageBuilder.createNewMessageBuffer(MessageType.init, 3)
-                            .addDoubleAsShort(context.level().get().getPixelScaleHelper()
-                                    .scaleXBack(context.level().get().getPlayerElement().getLocation().getX()));
-                    nettyClient.sendMessage(messageBuilder.getBuffer());
+                    if (nettyClient != null) {
+                        MessageBuilder messageBuilder = MessageBuilder.createNewMessageBuffer(MessageType.init, 3)
+                                .addDoubleAsShort(context.level().get().getPixelScaleHelper()
+                                        .scaleXBack(context.level().get().getPlayerElement().getLocation().getX()));
+                        nettyClient.sendMessage(messageBuilder.getBuffer());
+                    }
                     break;
                 }
                 default:
