@@ -3,6 +3,8 @@ package com.mycodefu.werekitten.pipeline;
 import com.mycodefu.werekitten.Start;
 import com.mycodefu.werekitten.event.Event;
 import com.mycodefu.werekitten.event.NetworkEventType;
+import com.mycodefu.werekitten.event.TimeEventType;
+import com.mycodefu.werekitten.pipeline.events.time.TickEvent;
 import com.mycodefu.werekitten.pipeline.handlers.PipelineHandler;
 
 import java.util.*;
@@ -52,7 +54,10 @@ public class Pipeline {
         return name;
     }
 
-    public void processEvents() {
+    /**
+     * Call this method every frame of the game, from the game loop or timer.
+     */
+    public void tick() {
         for (int n = 0; n < eventsToRunPerFrame; n++) {
             //get the PipelineEvent from the front of the eventQueue
             PipelineEvent event = eventQueue.poll();
@@ -64,6 +69,15 @@ public class Pipeline {
             if(Start.DEBUG_PIPELINE_EVENTS) {
                 System.out.println("rendering event "+event.getEvent().getName());
             }
+
+            PipelineHandler[] tickHandlers = this.eventHandlers.get(TimeEventType.tick);
+            if (tickHandlers!=null){
+                TickEvent tickEvent = new TickEvent();
+                for (PipelineHandler tickHandler : tickHandlers) {
+                    tickHandler.handleEvent(context, tickEvent);
+                }
+            }
+
             PipelineHandler[] handlers = this.eventHandlers.get(event.getEvent());
             if (handlers != null) {
                 for (PipelineHandler handler : handlers) {

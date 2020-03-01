@@ -69,7 +69,7 @@ public class Start extends Application implements PipelineContext {
             @Override
             public void handle(long l) {
                 for (Pipeline pipeline : pipelines.values()) {
-                    pipeline.processEvents();
+                    pipeline.tick();
                 }
             }
         }.start();
