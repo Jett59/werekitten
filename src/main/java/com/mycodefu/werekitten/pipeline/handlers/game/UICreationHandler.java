@@ -2,6 +2,7 @@ package com.mycodefu.werekitten.pipeline.handlers.game;
 
 import com.mycodefu.werekitten.animation.AnimationCompiler;
 import com.mycodefu.werekitten.backgroundObjects.BackgroundObjectBuilder;
+import com.mycodefu.werekitten.event.Event;
 import com.mycodefu.werekitten.event.GameEventType;
 import com.mycodefu.werekitten.level.GameLevel;
 import com.mycodefu.werekitten.level.LevelBuilder;
@@ -58,4 +59,12 @@ public class UICreationHandler implements PipelineHandler {
     		}
     	}
     }
+
+	@Override
+	public Event[] getEventInterest() {
+		return new Event[] {
+				GameEventType.levelLoaded,
+				GameEventType.quit
+		};
+	}
 }

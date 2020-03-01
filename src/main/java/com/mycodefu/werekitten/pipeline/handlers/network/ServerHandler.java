@@ -1,5 +1,7 @@
 package com.mycodefu.werekitten.pipeline.handlers.network;
 
+import com.mycodefu.werekitten.event.Event;
+import com.mycodefu.werekitten.event.NetworkEventType;
 import com.mycodefu.werekitten.netty.server.NettyServer;
 import com.mycodefu.werekitten.netty.server.NettyServerHandler;
 import com.mycodefu.werekitten.network.NetworkUtils;
@@ -69,6 +71,14 @@ public class ServerHandler implements PipelineHandler {
             }
         }
     }
+
+	@Override
+	public Event[] getEventInterest() {
+		return new Event[] {
+				NetworkEventType.start,
+				NetworkEventType.stop
+		};
+	}
 
 
 }

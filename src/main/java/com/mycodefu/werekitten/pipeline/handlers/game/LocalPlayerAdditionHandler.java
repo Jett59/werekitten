@@ -1,5 +1,6 @@
 package com.mycodefu.werekitten.pipeline.handlers.game;
 
+import com.mycodefu.werekitten.event.Event;
 import com.mycodefu.werekitten.event.GameEventType;
 import com.mycodefu.werekitten.pipeline.PipelineContext;
 import com.mycodefu.werekitten.pipeline.PipelineEvent;
@@ -35,5 +36,12 @@ public class LocalPlayerAdditionHandler implements PipelineHandler {
             }
         }
     }
+
+	@Override
+	public Event[] getEventInterest() {
+		return new Event[] {
+				GameEventType.levelLoaded
+		};
+	}
 
 }

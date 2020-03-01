@@ -1,5 +1,6 @@
 package com.mycodefu.werekitten.pipeline.handlers.Ui;
 
+import com.mycodefu.werekitten.event.Event;
 import com.mycodefu.werekitten.event.UiEventType;
 import com.mycodefu.werekitten.level.PixelScaleHelper;
 import com.mycodefu.werekitten.pipeline.PipelineContext;
@@ -87,4 +88,17 @@ public class UiNetworkEventHandler implements PipelineHandler {
             return true;
         }
     }
+
+	@Override
+	public Event[] getEventInterest() {
+		return new Event[] {
+				UiEventType.UiCreated,
+				UiEventType.networkJump,
+				UiEventType.networkMoveLeft,
+				UiEventType.networkMoveRight,
+				UiEventType.networkServerListening,
+				UiEventType.networkStopMovingLeft,
+				UiEventType.networkStopMovingRight
+		};
+	}
 }

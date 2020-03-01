@@ -1,5 +1,6 @@
 package com.mycodefu.werekitten.pipeline.handlers.keyboard;
 
+import com.mycodefu.werekitten.event.Event;
 import com.mycodefu.werekitten.event.KeyboardEventType;
 import com.mycodefu.werekitten.pipeline.PipelineContext;
 import com.mycodefu.werekitten.pipeline.PipelineEvent;
@@ -62,5 +63,11 @@ public class PlayerKeyboardHandler implements PipelineHandler {
 			}
         }
     }
+
+	@Override
+	public Event[] getEventInterest() {
+		// TODO Auto-generated method stub
+		return KeyboardEventType.values();
+	}
 
 }

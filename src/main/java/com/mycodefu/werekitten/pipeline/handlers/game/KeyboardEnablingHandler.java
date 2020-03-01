@@ -1,5 +1,7 @@
 package com.mycodefu.werekitten.pipeline.handlers.game;
 
+import com.mycodefu.werekitten.event.Event;
+import com.mycodefu.werekitten.event.GameEventType;
 import com.mycodefu.werekitten.keyboard.KeyboardListener;
 import com.mycodefu.werekitten.pipeline.PipelineContext;
 import com.mycodefu.werekitten.pipeline.PipelineEvent;
@@ -73,5 +75,12 @@ public class KeyboardEnablingHandler implements PipelineHandler {
             throw new IllegalArgumentException("the gameHandler keyboardEnablingHandler is not allowed to be in the pipeline " + event.getPipelineName());
         }
     }
+
+	@Override
+	public Event[] getEventInterest() {
+		return new Event[] {
+				GameEventType.levelLoaded
+		};
+	}
 
 }

@@ -1,5 +1,7 @@
 package com.mycodefu.werekitten.pipeline.handlers.network;
 
+import com.mycodefu.werekitten.event.Event;
+import com.mycodefu.werekitten.event.NetworkEventType;
 import com.mycodefu.werekitten.netty.client.NettyClient;
 import com.mycodefu.werekitten.netty.client.NettyClientHandler;
 import com.mycodefu.werekitten.network.message.MessageBuilder;
@@ -70,6 +72,13 @@ public ClientHandler() {
 	@Override
 	public void clientError(String id, Throwable e) {
 	e.printStackTrace();
+	}
+	@Override
+	public Event[] getEventInterest() {
+		return new Event[] {
+				NetworkEventType.readyForInitMessage,
+				NetworkEventType.connect
+		};
 	}
 
 }

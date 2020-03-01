@@ -1,5 +1,7 @@
 package com.mycodefu.werekitten.pipeline.handlers.game;
 
+import com.mycodefu.werekitten.event.Event;
+import com.mycodefu.werekitten.event.GameEventType;
 import com.mycodefu.werekitten.pipeline.PipelineContext;
 import com.mycodefu.werekitten.pipeline.PipelineEvent;
 import com.mycodefu.werekitten.pipeline.events.game.QuitGameEvent;
@@ -25,5 +27,13 @@ public class WindowCloseHandler implements PipelineHandler {
             }
         }
     }
+
+	@Override
+	public Event[] getEventInterest() {
+		return new Event[]{
+				GameEventType.start,
+				GameEventType.quit
+		};
+	}
 
 }

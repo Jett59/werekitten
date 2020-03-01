@@ -4,6 +4,7 @@ import java.awt.Toolkit;
 
 import com.mycodefu.werekitten.animation.AnimationCompiler;
 import com.mycodefu.werekitten.backgroundObjects.BackgroundObjectBuilder;
+import com.mycodefu.werekitten.event.Event;
 import com.mycodefu.werekitten.event.GameEventType;
 import com.mycodefu.werekitten.level.GameLevel;
 import com.mycodefu.werekitten.level.LevelBuilder;
@@ -37,6 +38,13 @@ public class LevelBuildHandler implements PipelineHandler{
 				break;
 			}
 		}
+	}
+
+	@Override
+	public Event[] getEventInterest() {
+		return new Event[] {
+				GameEventType.buildLevel
+		};
 	}
 
 }

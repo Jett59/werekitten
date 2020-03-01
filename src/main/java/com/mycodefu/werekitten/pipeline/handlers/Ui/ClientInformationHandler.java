@@ -1,5 +1,6 @@
 package com.mycodefu.werekitten.pipeline.handlers.Ui;
 
+import com.mycodefu.werekitten.event.Event;
 import com.mycodefu.werekitten.event.UiEventType;
 import com.mycodefu.werekitten.pipeline.PipelineContext;
 import com.mycodefu.werekitten.pipeline.PipelineEvent;
@@ -35,6 +36,14 @@ public class ClientInformationHandler implements PipelineHandler{
 				break;
 			}
 		}
+	}
+
+	@Override
+	public Event[] getEventInterest() {
+		return new Event[] {
+				UiEventType.networkConnectionEstablished,
+				UiEventType.UiCreated
+		};
 	}
 
 }
