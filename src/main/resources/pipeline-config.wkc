@@ -15,7 +15,6 @@
         "com.mycodefu.werekitten.pipeline.handlers.network.ClientHandler",
         "com.mycodefu.werekitten.pipeline.handlers.network.ServerHandler",
         "com.mycodefu.werekitten.pipeline.handlers.Ui.PlayerAdditionHandler",
-        "com.mycodefu.werekitten.pipeline.handlers.Ui.ClientInformationHandler",
         "com.mycodefu.werekitten.pipeline.handlers.Ui.UiNetworkEventHandler"
       ]
     }
