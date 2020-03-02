@@ -10,7 +10,7 @@
         "com.mycodefu.werekitten.pipeline.handlers.game.KeyboardEnablingHandler",
         "com.mycodefu.werekitten.pipeline.handlers.game.MusicHandler",
         "com.mycodefu.werekitten.pipeline.handlers.game.WindowCloseHandler",
-        "com.mycodefu.werekitten.pipeline.handlers.keyboard.PlayerKeyboardHandler",
+        "com.mycodefu.werekitten.pipeline.handlers.keyboard.KeyboardHandler",
         "com.mycodefu.werekitten.pipeline.handlers.network.ClientHandler",
         "com.mycodefu.werekitten.pipeline.handlers.network.ServerHandler",
         "com.mycodefu.werekitten.pipeline.handlers.Ui.LocalPlayerAdditionHandler",

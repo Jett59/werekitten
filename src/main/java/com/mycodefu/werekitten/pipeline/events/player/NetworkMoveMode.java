@@ -1,4 +1,4 @@
-package com.mycodefu.werekitten.pipeline.events.ui;
+package com.mycodefu.werekitten.pipeline.events.player;
 
 public enum NetworkMoveMode {
     MoveTo,

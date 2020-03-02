@@ -5,7 +5,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public enum MessageType {
     init((byte) 0),
-    move((byte) 1),
+    //move((byte) 1),
     jump((byte) 2),
     idleLeft((byte) 3),
     idleRight((byte) 4),
