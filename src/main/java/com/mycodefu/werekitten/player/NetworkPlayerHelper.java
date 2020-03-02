@@ -5,10 +5,12 @@ import com.mycodefu.werekitten.network.message.MessageBuilder;
 import com.mycodefu.werekitten.network.message.MessageType;
 import com.mycodefu.werekitten.pipeline.PipelineContext;
 import com.mycodefu.werekitten.pipeline.events.keyboard.RegisterKeyListenerEvent;
-import com.mycodefu.werekitten.pipeline.events.player.NetworkJumpEvent;
-import com.mycodefu.werekitten.pipeline.events.player.NetworkMoveLeftEvent;
-import com.mycodefu.werekitten.pipeline.events.player.NetworkMoveMode;
-import com.mycodefu.werekitten.pipeline.events.player.NetworkMoveRightEvent;
+import com.mycodefu.werekitten.pipeline.events.player.JumpEvent;
+import com.mycodefu.werekitten.pipeline.events.player.MoveLeftEvent;
+import com.mycodefu.werekitten.pipeline.events.player.MoveMode;
+import com.mycodefu.werekitten.pipeline.events.player.MoveRightEvent;
+import com.mycodefu.werekitten.pipeline.events.player.StopMovingLeftEvent;
+import com.mycodefu.werekitten.pipeline.events.player.StopMovingRightEvent;
 import com.mycodefu.werekitten.pipeline.events.ui.*;
 import com.mycodefu.werekitten.ui.GameUI;
 import io.netty.buffer.ByteBuf;
@@ -97,30 +99,30 @@ public class NetworkPlayerHelper implements RegisterKeyListenerEvent.KeyListener
                 if (difference == 0) {
                     break;
                 } else if (difference < 0) {
-                    context.postEvent(new NetworkMoveLeftEvent(playerId, xScaled, NetworkMoveMode.MoveTo));
+                    context.postEvent(new MoveLeftEvent(playerId, xScaled, MoveMode.MoveTo));
                 } else {
-                    context.postEvent(new NetworkMoveRightEvent(playerId, xScaled, NetworkMoveMode.MoveTo));
+                    context.postEvent(new MoveRightEvent(playerId, xScaled, MoveMode.MoveTo));
                 }
                 break;
             }
             case moveLeft: {
-                context.postEvent(new NetworkMoveLeftEvent(playerId, this.scaledXMove, NetworkMoveMode.MoveBy));
+                context.postEvent(new MoveLeftEvent(playerId, this.scaledXMove, MoveMode.MoveBy));
                 break;
             }
             case moveRight: {
-                context.postEvent(new NetworkMoveRightEvent(playerId, this.scaledXMove, NetworkMoveMode.MoveBy));
+                context.postEvent(new MoveRightEvent(playerId, this.scaledXMove, MoveMode.MoveBy));
                 break;
             }
             case idleLeft: {
-                context.postEvent(new NetworkStopMovingLeftEvent(playerId));
+                context.postEvent(new StopMovingLeftEvent(playerId));
                 break;
             }
             case idleRight: {
-                context.postEvent(new NetworkStopMovingRightEvent(playerId));
+                context.postEvent(new StopMovingRightEvent(playerId));
                 break;
             }
             case jump: {
-                context.postEvent(new NetworkJumpEvent(playerId));
+                context.postEvent(new JumpEvent(playerId));
             }
         }
     }

@@ -1,6 +1,6 @@
 package com.mycodefu.werekitten.pipeline.events.player;
 
-public enum NetworkMoveMode {
+public enum MoveMode {
     MoveTo,
     MoveBy
 }

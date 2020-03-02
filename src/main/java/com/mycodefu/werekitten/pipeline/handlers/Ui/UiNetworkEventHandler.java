@@ -5,10 +5,12 @@ import com.mycodefu.werekitten.event.UiEventType;
 import com.mycodefu.werekitten.level.PixelScaleHelper;
 import com.mycodefu.werekitten.pipeline.PipelineContext;
 import com.mycodefu.werekitten.pipeline.PipelineEvent;
-import com.mycodefu.werekitten.pipeline.events.player.NetworkJumpEvent;
-import com.mycodefu.werekitten.pipeline.events.player.NetworkMoveLeftEvent;
-import com.mycodefu.werekitten.pipeline.events.player.NetworkMoveMode;
-import com.mycodefu.werekitten.pipeline.events.player.NetworkMoveRightEvent;
+import com.mycodefu.werekitten.pipeline.events.player.JumpEvent;
+import com.mycodefu.werekitten.pipeline.events.player.MoveLeftEvent;
+import com.mycodefu.werekitten.pipeline.events.player.MoveMode;
+import com.mycodefu.werekitten.pipeline.events.player.MoveRightEvent;
+import com.mycodefu.werekitten.pipeline.events.player.StopMovingLeftEvent;
+import com.mycodefu.werekitten.pipeline.events.player.StopMovingRightEvent;
 import com.mycodefu.werekitten.pipeline.events.ui.*;
 import com.mycodefu.werekitten.pipeline.handlers.PipelineHandler;
 import com.mycodefu.werekitten.player.Player;
@@ -30,10 +32,10 @@ public class UiNetworkEventHandler implements PipelineHandler {
                     break;
                 }
                 case networkMoveLeft: {
-                    Player player = context.getPlayerMap().get(((NetworkMoveLeftEvent) event).getPlayerId());
+                    Player player = context.getPlayerMap().get(((MoveLeftEvent) event).getPlayerId());
 
-                    NetworkMoveLeftEvent networkMoveLeftEvent = (NetworkMoveLeftEvent) event;
-                    if (networkMoveLeftEvent.getMode()==NetworkMoveMode.MoveTo) {
+                    MoveLeftEvent networkMoveLeftEvent = (MoveLeftEvent) event;
+                    if (networkMoveLeftEvent.getMode()==MoveMode.MoveTo) {
                         player.moveLeftTo(networkMoveLeftEvent.x);
                     } else {
                         player.moveLeft(networkMoveLeftEvent.x);
@@ -41,9 +43,9 @@ public class UiNetworkEventHandler implements PipelineHandler {
                     break;
                 }
                 case networkMoveRight: {
-                    Player player = context.getPlayerMap().get(((NetworkMoveRightEvent) event).getPlayerId());
-                    NetworkMoveRightEvent networkMoveRightEvent = (NetworkMoveRightEvent) event;
-                    if (networkMoveRightEvent.getMode()==NetworkMoveMode.MoveTo) {
+                    Player player = context.getPlayerMap().get(((MoveRightEvent) event).getPlayerId());
+                    MoveRightEvent networkMoveRightEvent = (MoveRightEvent) event;
+                    if (networkMoveRightEvent.getMode()==MoveMode.MoveTo) {
                         player.moveRightTo(networkMoveRightEvent.x);
                     } else {
                         player.moveRight(networkMoveRightEvent.x);
@@ -51,17 +53,17 @@ public class UiNetworkEventHandler implements PipelineHandler {
                     break;
                 }
                 case networkStopMovingLeft: {
-                    Player player = context.getPlayerMap().get(((NetworkStopMovingLeftEvent) event).getPlayerId());
+                    Player player = context.getPlayerMap().get(((StopMovingLeftEvent) event).getPlayerId());
                     player.stopMovingLeft();
                     break;
                 }
                 case networkStopMovingRight: {
-                    Player player = context.getPlayerMap().get(((NetworkStopMovingRightEvent) event).getPlayerId());
+                    Player player = context.getPlayerMap().get(((StopMovingRightEvent) event).getPlayerId());
                     player.stopMovingRight();
                     break;
                 }
                 case networkJump: {
-                    NetworkJumpEvent jumpEvent = (NetworkJumpEvent) event;
+                    JumpEvent jumpEvent = (JumpEvent) event;
                     Player player = context.getPlayerMap().get(jumpEvent.getPlayerId());
                     player.jump();
                     break;
