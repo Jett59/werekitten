@@ -1,6 +1,7 @@
 package com.mycodefu.werekitten.pipeline.handlers.network;
 
 import com.mycodefu.werekitten.event.Event;
+import com.mycodefu.werekitten.event.KeyboardEventType;
 import com.mycodefu.werekitten.event.NetworkEventType;
 import com.mycodefu.werekitten.event.UiEventType;
 import com.mycodefu.werekitten.netty.client.NettyClient;
@@ -11,6 +12,7 @@ import com.mycodefu.werekitten.pipeline.PipelineContext;
 import com.mycodefu.werekitten.pipeline.PipelineEvent;
 import com.mycodefu.werekitten.pipeline.events.game.BuildLevelEvent;
 import com.mycodefu.werekitten.pipeline.events.game.StartGameEvent;
+import com.mycodefu.werekitten.pipeline.events.keyboard.KeyboardEvent;
 import com.mycodefu.werekitten.pipeline.events.network.NetworkConnectClientEvent;
 import com.mycodefu.werekitten.pipeline.events.network.NetworkEvent;
 import com.mycodefu.werekitten.pipeline.events.ui.NetworkConnectionEstablishedEvent;
@@ -88,7 +90,7 @@ public class ClientHandler implements PipelineHandler, NettyClientHandler.Socket
 
     @Override
     public Event[] getEventInterest() {
-        return new Event[]{UiEventType.UiCreated, NetworkEventType.connect};
+        return new Event[] {UiEventType.UiCreated, NetworkEventType.connect};
     }
 
 }

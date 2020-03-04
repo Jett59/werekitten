@@ -22,7 +22,7 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class Start extends Application implements PipelineContext {
-    public static boolean DEBUG_PIPELINE_EVENTS = false;
+    public static boolean DEBUG_PIPELINE_EVENTS = true;
     private static int listeningPort = 0;
 
     private final Map<String, Pipeline> pipelines;
@@ -45,13 +45,16 @@ public class Start extends Application implements PipelineContext {
             List<PipelineHandler> handlers = new ArrayList<>();
             for (int j = 0; j < pipelineConfiguration.getHandlers().length; j++) {
                 String handlerClass = pipelineConfiguration.getHandlers()[j];
+                //System.out.println("loading "+handlerClass);
                 try {
                     handlers.add((PipelineHandler) Class.forName(handlerClass).newInstance());
                 } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
                     e.printStackTrace();
                     throw new IllegalArgumentException("Failed to load handler '" + handlerClass + "'.", e);
                 }
+            //System.out.println("loaded "+handlerClass);
             }
+            //System.out.println("finished creating the handlers, building the pipeline");
             Pipeline pipeline = new Pipeline(name, this, pipelineConfiguration.getEventsToRunPerFrame(), handlers.toArray(new PipelineHandler[]{}));
             pipelines.put(name, pipeline);
 
@@ -102,7 +105,7 @@ public class Start extends Application implements PipelineContext {
             throw new IllegalArgumentException("the pipeline " + event.getPipelineName() + "was not valid", e);
         }
         if (pipeline == null) {
-            System.out.println("pipeline == null. event cannot be posted");
+            System.out.println("pipeline == null. event cannot be posted\n"+event.toString());
         } else {
             if (DEBUG_PIPELINE_EVENTS) {
                 StackTraceElement calledBy = new Exception().getStackTrace()[1];

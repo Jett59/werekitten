@@ -7,7 +7,7 @@ private String playerId;
 
 	@Override
 	public String getPipelineName() {
-		return "player";
+		return "pipeline";
 	}
 
 PlayerEvent(String playerId){
