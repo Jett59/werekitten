@@ -1,9 +1,6 @@
 package com.mycodefu.werekitten.pipeline.handlers.network;
 
-import com.mycodefu.werekitten.event.Event;
-import com.mycodefu.werekitten.event.KeyboardEventType;
-import com.mycodefu.werekitten.event.NetworkEventType;
-import com.mycodefu.werekitten.event.UiEventType;
+import com.mycodefu.werekitten.event.*;
 import com.mycodefu.werekitten.netty.client.NettyClient;
 import com.mycodefu.werekitten.netty.client.NettyClientHandler;
 import com.mycodefu.werekitten.network.message.MessageBuilder;
@@ -15,12 +12,15 @@ import com.mycodefu.werekitten.pipeline.events.game.StartGameEvent;
 import com.mycodefu.werekitten.pipeline.events.keyboard.KeyboardEvent;
 import com.mycodefu.werekitten.pipeline.events.network.NetworkConnectClientEvent;
 import com.mycodefu.werekitten.pipeline.events.network.NetworkEvent;
+import com.mycodefu.werekitten.pipeline.events.player.PlayerEvent;
 import com.mycodefu.werekitten.pipeline.events.ui.NetworkConnectionEstablishedEvent;
 import com.mycodefu.werekitten.pipeline.events.ui.NetworkConnectionEstablishedEvent.ConnectionType;
 import com.mycodefu.werekitten.pipeline.events.ui.UiEvent;
 import com.mycodefu.werekitten.pipeline.handlers.PipelineHandler;
 import com.mycodefu.werekitten.player.NetworkPlayerHelper;
 import io.netty.buffer.ByteBuf;
+
+import static com.mycodefu.werekitten.event.UiEventType.UiCreated;
 
 public class ClientHandler implements PipelineHandler, NettyClientHandler.SocketCallback {
     private final NetworkPlayerHelper networkPlayerHelper;
@@ -63,6 +63,27 @@ public class ClientHandler implements PipelineHandler, NettyClientHandler.Socket
                 default:
                     break;
             }
+        } else if (event instanceof PlayerEvent) {
+            PlayerEvent playerEvent = (PlayerEvent) event;
+            if (nettyClient != null && playerEvent.getPlayerId().equalsIgnoreCase("local")) {
+                switch (playerEvent.getPlayerEvent()) {
+                    case moveLeft:
+                        nettyClient.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.moveLeft, 1).getBuffer());
+                        break;
+                    case moveRight:
+                        nettyClient.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.moveRight, 1).getBuffer());
+                        break;
+                    case stopMovingLeft:
+                        nettyClient.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.idleLeft, 1).getBuffer());
+                        break;
+                    case stopMovingRight:
+                        nettyClient.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.idleRight, 1).getBuffer());
+                        break;
+                    case jump:
+                        nettyClient.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.jump, 1).getBuffer());
+                        break;
+                }
+            }
         }
     }
 
@@ -90,7 +111,15 @@ public class ClientHandler implements PipelineHandler, NettyClientHandler.Socket
 
     @Override
     public Event[] getEventInterest() {
-        return new Event[] {UiEventType.UiCreated, NetworkEventType.connect};
+        return new Event[]{
+                UiCreated,
+                NetworkEventType.connect,
+                PlayerEventType.moveLeft,
+                PlayerEventType.moveRight,
+                PlayerEventType.stopMovingLeft,
+                PlayerEventType.stopMovingRight,
+                PlayerEventType.jump
+        };
     }
 
 }

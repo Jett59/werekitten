@@ -25,10 +25,10 @@ public static Event[] combineEvents(Event[]... events) {
 	}
 	return result;
 }
-public static Event[] combineEvents(Event[] array, Event... events) {
+public static Event[] combineEvents(Event[] array, Event event) {
 	//System.out.println("combining events");
 	try {
-	return combineEvents(array, events);
+	return combineEvents(array, new Event[] {event});
 	}catch (Exception e) {
 		//throw new RuntimeException(String.format("exception thrown %s in event combination process", e.toString()));
 		return null;

@@ -1,17 +1,13 @@
 package com.mycodefu.werekitten.player;
 
-import com.mycodefu.werekitten.event.KeyboardEventType;
 import com.mycodefu.werekitten.network.message.MessageBuilder;
 import com.mycodefu.werekitten.network.message.MessageType;
 import com.mycodefu.werekitten.pipeline.PipelineContext;
-import com.mycodefu.werekitten.pipeline.events.keyboard.RegisterKeyListenerEvent;
-import com.mycodefu.werekitten.pipeline.events.player.JumpEvent;
-import com.mycodefu.werekitten.pipeline.events.player.MoveLeftEvent;
-import com.mycodefu.werekitten.pipeline.events.player.MoveMode;
-import com.mycodefu.werekitten.pipeline.events.player.MoveRightEvent;
-import com.mycodefu.werekitten.pipeline.events.player.StopMovingLeftEvent;
-import com.mycodefu.werekitten.pipeline.events.player.StopMovingRightEvent;
-import com.mycodefu.werekitten.pipeline.events.ui.*;
+import com.mycodefu.werekitten.pipeline.events.player.*;
+import com.mycodefu.werekitten.pipeline.events.ui.NetworkConnectedEvent;
+import com.mycodefu.werekitten.pipeline.events.ui.NetworkDisconnectedEvent;
+import com.mycodefu.werekitten.pipeline.events.ui.PlayerCreatedEvent;
+import com.mycodefu.werekitten.pipeline.events.ui.PlayerDestroyedEvent;
 import com.mycodefu.werekitten.ui.GameUI;
 import io.netty.buffer.ByteBuf;
 import javafx.util.Duration;
@@ -19,7 +15,7 @@ import javafx.util.Duration;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class NetworkPlayerHelper implements RegisterKeyListenerEvent.KeyListener {
+public class NetworkPlayerHelper {
     private double scaledXMove = 2;
 
     public interface NetworkPlayerMessageSender {
@@ -28,28 +24,6 @@ public class NetworkPlayerHelper implements RegisterKeyListenerEvent.KeyListener
 
     private Map<String, NetworkPlayerMessageSender> playerMessageSenders = new ConcurrentHashMap<>();
     private boolean registeredSelfAsKeyListener = false;
-
-    @Override
-    public void keyEventOccurred(KeyboardEventType keyboardEventType, PipelineContext context) {
-        for (NetworkPlayerMessageSender playerMessageSender : playerMessageSenders.values()) {
-            switch (keyboardEventType) {
-                case leftPressed:
-                    playerMessageSender.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.moveLeft, 1).getBuffer());
-                    break;
-                case rightPressed:
-                    playerMessageSender.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.moveRight, 1).getBuffer());
-                    break;
-                case leftReleased:
-                    playerMessageSender.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.idleLeft, 1).getBuffer());
-                    break;
-                case rightReleased:
-                    playerMessageSender.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.idleRight, 1).getBuffer());
-                    break;
-                case spacePressed:
-                    playerMessageSender.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.jump, 1).getBuffer());
-            }
-        }
-    }
 
     public void createNetworkPlayer(String playerId, PipelineContext context, NetworkPlayerMessageSender playerMessageSender, double initialXPosition) {
         double height = context.level().get().getPlayerElement().getSize().getHeight();
@@ -63,11 +37,6 @@ public class NetworkPlayerHelper implements RegisterKeyListenerEvent.KeyListener
         context.postEvent(new NetworkConnectedEvent());
 
         playerMessageSenders.put(playerId, playerMessageSender);
-
-        if (!registeredSelfAsKeyListener) {
-            registeredSelfAsKeyListener = true;
-            context.postEvent(new RegisterKeyListenerEvent(this));
-        }
     }
 
     public void destroyNetworkPlayer(String playerId, PipelineContext context) {
