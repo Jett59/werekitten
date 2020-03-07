@@ -2,7 +2,6 @@ package com.mycodefu.werekitten.pipeline.handlers.Ui;
 
 import com.mycodefu.werekitten.event.Event;
 import com.mycodefu.werekitten.event.UiEventType;
-import com.mycodefu.werekitten.level.PixelScaleHelper;
 import com.mycodefu.werekitten.pipeline.PipelineContext;
 import com.mycodefu.werekitten.pipeline.PipelineEvent;
 import com.mycodefu.werekitten.pipeline.events.player.JumpEvent;
@@ -15,9 +14,6 @@ import com.mycodefu.werekitten.pipeline.events.ui.*;
 import com.mycodefu.werekitten.pipeline.handlers.PipelineHandler;
 import com.mycodefu.werekitten.player.Player;
 import com.mycodefu.werekitten.ui.UI;
-
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 public class UiNetworkEventHandler implements PipelineHandler {
     private UI ui;
@@ -72,6 +68,8 @@ public class UiNetworkEventHandler implements PipelineHandler {
                     ui.setAddress(((NetworkServerListeningEvent) event).getAddress());
                     break;
                 }
+			default:
+				break;
             }
         }
     }

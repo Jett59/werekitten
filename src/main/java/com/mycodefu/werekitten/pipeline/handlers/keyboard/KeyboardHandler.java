@@ -57,6 +57,8 @@ public class KeyboardHandler implements PipelineHandler {
                                     }
                                     break;
                                 }
+							default:
+								break;
                             }
                         };
                         context.getStage().addEventHandler(KeyEvent.KEY_PRESSED, keyPressedEventHandler);
@@ -78,12 +80,16 @@ public class KeyboardHandler implements PipelineHandler {
                                         keysDown.remove(KeyCode.SPACE);
                                         break;
                                     }
+								default:
+									break;
                             }
                         };
                         context.getStage().addEventHandler(KeyEvent.KEY_RELEASED, keyReleasedEventHandler);
                         break;
                     }
                 }
+			default:
+				break;
             }
         }
     }

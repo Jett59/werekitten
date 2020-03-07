@@ -25,6 +25,8 @@ public class StartPageHandler implements PipelineHandler {
                     context.getStage().setHeight(480);
                     context.getStage().show();
                 }
+			default:
+				break;
             }
         }
     }

@@ -1,11 +1,9 @@
 package com.mycodefu.werekitten.pipeline.handlers.Ui;
 
 import com.mycodefu.werekitten.event.Event;
-import com.mycodefu.werekitten.event.GameEventType;
 import com.mycodefu.werekitten.event.UiEventType;
 import com.mycodefu.werekitten.pipeline.PipelineContext;
 import com.mycodefu.werekitten.pipeline.PipelineEvent;
-import com.mycodefu.werekitten.pipeline.events.game.GameEvent;
 import com.mycodefu.werekitten.pipeline.events.ui.PlayerCreatedEvent;
 import com.mycodefu.werekitten.pipeline.events.ui.UiEvent;
 import com.mycodefu.werekitten.pipeline.handlers.PipelineHandler;

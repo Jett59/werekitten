@@ -1,7 +1,5 @@
 package com.mycodefu.werekitten.level.data;
 
-import com.mycodefu.werekitten.slide.LayerGroup;
-
 import java.util.ArrayList;
 import java.util.List;
 

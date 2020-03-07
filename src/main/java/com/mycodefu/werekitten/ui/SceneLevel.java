@@ -1,7 +1,6 @@
 package com.mycodefu.werekitten.ui;
 
 import com.mycodefu.werekitten.level.GameLevel;
-import com.mycodefu.werekitten.level.data.Level;
 import javafx.scene.Scene;
 
 public class SceneLevel {

@@ -24,6 +24,8 @@ public class WindowCloseHandler implements PipelineHandler {
                 case quit: {
                     System.exit(0);
                 }
+			default:
+				break;
             }
         }
     }

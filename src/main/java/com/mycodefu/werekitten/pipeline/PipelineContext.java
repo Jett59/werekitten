@@ -4,7 +4,6 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
 import com.mycodefu.werekitten.level.GameLevel;
-import com.mycodefu.werekitten.level.data.Level;
 import com.mycodefu.werekitten.player.Player;
 
 import javafx.stage.Stage;

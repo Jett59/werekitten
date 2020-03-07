@@ -4,7 +4,6 @@ import com.mycodefu.werekitten.event.Event;
 import com.mycodefu.werekitten.event.UiEventType;
 import com.mycodefu.werekitten.pipeline.PipelineContext;
 import com.mycodefu.werekitten.pipeline.PipelineEvent;
-import com.mycodefu.werekitten.pipeline.events.network.NetworkEvent;
 import com.mycodefu.werekitten.pipeline.events.ui.PlayerCreatedEvent;
 import com.mycodefu.werekitten.pipeline.events.ui.PlayerDestroyedEvent;
 import com.mycodefu.werekitten.pipeline.events.ui.UiCreatedEvent;
@@ -36,6 +35,8 @@ public class PlayerAdditionHandler implements PipelineHandler {
                     ui.removePlayer(((PlayerDestroyedEvent) event).getPlayer());
                     break;
                 }
+			default:
+				break;
             }
         }
     }

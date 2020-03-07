@@ -9,7 +9,6 @@ import com.mycodefu.werekitten.pipeline.PipelineContext;
 import com.mycodefu.werekitten.pipeline.PipelineEvent;
 import com.mycodefu.werekitten.pipeline.events.game.BuildLevelEvent;
 import com.mycodefu.werekitten.pipeline.events.game.StartGameEvent;
-import com.mycodefu.werekitten.pipeline.events.keyboard.KeyboardEvent;
 import com.mycodefu.werekitten.pipeline.events.network.NetworkConnectClientEvent;
 import com.mycodefu.werekitten.pipeline.events.network.NetworkEvent;
 import com.mycodefu.werekitten.pipeline.events.player.PlayerEvent;

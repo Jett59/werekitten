@@ -23,8 +23,6 @@ public class NetworkPlayerHelper {
     }
 
     private Map<String, NetworkPlayerMessageSender> playerMessageSenders = new ConcurrentHashMap<>();
-    private boolean registeredSelfAsKeyListener = false;
-
     public void createNetworkPlayer(String playerId, PipelineContext context, NetworkPlayerMessageSender playerMessageSender, double initialXPosition) {
         double height = context.level().get().getPlayerElement().getSize().getHeight();
         this.scaledXMove=context.level().get().getPixelScaleHelper().scaleX(2);

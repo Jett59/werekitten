@@ -25,6 +25,8 @@ public class MusicHandler implements PipelineHandler {
                     MusicPlayer.playLevel();
                     break;
                 }
+			default:
+				break;
 			}
         }
     }

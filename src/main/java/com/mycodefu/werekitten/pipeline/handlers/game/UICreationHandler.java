@@ -44,6 +44,8 @@ public class UICreationHandler implements PipelineHandler {
                     context.getStage().hide();
                     break;
                 }
+			default:
+				break;
             }
         }
     }

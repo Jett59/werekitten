@@ -6,18 +6,13 @@ import javafx.animation.TranslateTransition;
 import javafx.scene.Group;
 import javafx.scene.shape.Shape;
 import javafx.util.Duration;
-import org.w3c.dom.ls.LSOutput;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.zip.DataFormatException;
 
 public class Player {
     private final String id;
-    private final double jumpAmount;
-    private final double initialXPosition;
     private Map<AnimationType, Animation> nameToAnimation = new ConcurrentHashMap<>();
     private List<Animation> animations = new ArrayList<>();
     private Group animationGroup;
@@ -28,8 +23,6 @@ public class Player {
 
     Player(String id, Animation idleRight, Animation idleLeft, Animation walkRight, Animation walkLeft, double jumpAmount, AnimationType initialAnimation, double initialXPosition) {
         this.id = id;
-        this.jumpAmount = jumpAmount;
-        this.initialXPosition = initialXPosition;
         animations.addAll(List.of(idleRight, idleLeft, walkRight, walkLeft));
 
         nameToAnimation.put(AnimationType.idleRight, idleRight);
