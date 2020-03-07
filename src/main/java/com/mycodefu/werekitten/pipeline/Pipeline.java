@@ -57,26 +57,13 @@ public class Pipeline {
      * Call this method every frame of the game, from the game loop or timer.
      */
     public void tick() {
-    	PipelineHandler[] tickHandlers = this.eventHandlers.get(TimeEventType.tick);
-        if (tickHandlers!=null){
-            TickEvent tickEvent = new TickEvent();
-            for (PipelineHandler tickHandler : tickHandlers) {
-            	try {
-                tickHandler.handleEvent(context, tickEvent);
-            	}catch(Exception e) {
-            		System.out.printf("An error occurred processing event '%s' in handler '%s':\n", tickEvent, tickHandler.getClass().getSimpleName());
-                    e.printStackTrace();
-            	}
-            }
-        }
-        
         for (int n = 0; n < eventsToRunPerFrame; n++) {
             //get the PipelineEvent from the front of the eventQueue
             PipelineEvent event = eventQueue.poll();
 
             //check if the event is null, if it is, that means that the queue is empty, exit early
             if (event == null) {
-                return;
+                break;
             }
             if(Start.DEBUG_PIPELINE_EVENTS) {
                 System.out.println("rendering event "+event.getEvent().getName());
@@ -94,6 +81,20 @@ public class Pipeline {
                 }
             }
         }
+
+        PipelineHandler[] tickHandlers = this.eventHandlers.get(TimeEventType.tick);
+        if (tickHandlers!=null){
+            TickEvent tickEvent = new TickEvent();
+            for (PipelineHandler tickHandler : tickHandlers) {
+                try {
+                    tickHandler.handleEvent(context, tickEvent);
+                }catch(Exception e) {
+                    System.out.printf("An error occurred processing event '%s' in handler '%s':\n", tickEvent, tickHandler.getClass().getSimpleName());
+                    e.printStackTrace();
+                }
+            }
+        }
+
     }
 
     public void addEvent(PipelineEvent event) {

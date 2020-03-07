@@ -52,7 +52,7 @@ public class Start extends Application implements PipelineContext {
                     e.printStackTrace();
                     throw new IllegalArgumentException("Failed to load handler '" + handlerClass + "'.", e);
                 }
-            //System.out.println("loaded "+handlerClass);
+                //System.out.println("loaded "+handlerClass);
             }
             //System.out.println("finished creating the handlers, building the pipeline");
             Pipeline pipeline = new Pipeline(name, this, pipelineConfiguration.getEventsToRunPerFrame(), handlers.toArray(new PipelineHandler[]{}));
@@ -105,7 +105,7 @@ public class Start extends Application implements PipelineContext {
             throw new IllegalArgumentException("the pipeline " + event.getPipelineName() + "was not valid", e);
         }
         if (pipeline == null) {
-            System.out.println("pipeline == null. event cannot be posted\n"+event.toString());
+            System.out.println("pipeline == null. event cannot be posted\n" + event.toString());
         } else {
             if (DEBUG_PIPELINE_EVENTS) {
                 StackTraceElement calledBy = new Exception().getStackTrace()[1];

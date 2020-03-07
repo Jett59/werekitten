@@ -2,7 +2,6 @@ package com.mycodefu.werekitten.pipeline.handlers.keyboard;
 
 import com.mycodefu.werekitten.event.Event;
 import com.mycodefu.werekitten.event.TimeEventType;
-import com.mycodefu.werekitten.keyboard.KeyType;
 import com.mycodefu.werekitten.pipeline.PipelineContext;
 import com.mycodefu.werekitten.pipeline.PipelineEvent;
 import com.mycodefu.werekitten.pipeline.events.keyboard.*;
@@ -12,22 +11,16 @@ import javafx.event.EventHandler;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.HashSet;
+import java.util.Set;
 
 import static com.mycodefu.werekitten.event.UiEventType.UiCreated;
 
 public class KeyboardHandler implements PipelineHandler {
-    private final Map<KeyCode, KeyType> codeToType = new HashMap<>();
+    private Set<KeyCode> keysDown = new HashSet<>();
 
     private EventHandler<KeyEvent> keyPressedEventHandler;
     private EventHandler<KeyEvent> keyReleasedEventHandler;
-
-    public KeyboardHandler() {
-        codeToType.put(KeyCode.LEFT, KeyType.left);
-        codeToType.put(KeyCode.RIGHT, KeyType.right);
-        codeToType.put(KeyCode.SPACE, KeyType.space);
-    }
 
     @Override
     public Event[] getEventInterest() {
@@ -42,43 +35,49 @@ public class KeyboardHandler implements PipelineHandler {
                 case UiCreated: {
                     if (keyPressedEventHandler == null || keyReleasedEventHandler == null) {
                         keyPressedEventHandler = keyEvent -> {
-                            KeyType key = codeToType.get(keyEvent.getCode());
-                            if (key != null) {
-								switch (key) {
-									case left: {
-										context.postEvent(new LeftKeyPressedEvent());
-										break;
-									}
-									case right: {
-										context.postEvent(new RightKeyPressedEvent());
-										break;
-									}
-									case space: {
-										context.postEvent(new SpaceKeyPressedEvent());
-										break;
-									}
-								}
+                            switch (keyEvent.getCode()) {
+                                case LEFT: {
+                                    if (!keysDown.contains(KeyCode.LEFT)){
+                                        keysDown.add(KeyCode.LEFT);
+                                        context.postEvent(new LeftKeyPressedEvent());
+                                    }
+                                    break;
+                                }
+                                case RIGHT: {
+                                    if (!keysDown.contains(KeyCode.RIGHT)){
+                                        keysDown.add(KeyCode.RIGHT);
+                                        context.postEvent(new RightKeyPressedEvent());
+                                    }
+                                    break;
+                                }
+                                case SPACE: {
+                                    if (!keysDown.contains(KeyCode.SPACE)) {
+                                        keysDown.add(KeyCode.SPACE);
+                                        context.postEvent(new SpaceKeyPressedEvent());
+                                    }
+                                    break;
+                                }
                             }
                         };
                         context.getStage().addEventHandler(KeyEvent.KEY_PRESSED, keyPressedEventHandler);
 
                         keyReleasedEventHandler = keyEvent -> {
-                            KeyType key = codeToType.get(keyEvent.getCode());
-                            if (key != null) {
-                                switch (key) {
-                                    case left: {
+                                switch (keyEvent.getCode()) {
+                                    case LEFT: {
                                         context.postEvent(new LeftKeyReleasedEvent());
+                                        keysDown.remove(KeyCode.LEFT);
                                         break;
                                     }
-                                    case right: {
+                                    case RIGHT: {
                                         context.postEvent(new RightKeyReleasedEvent());
+                                        keysDown.remove(KeyCode.RIGHT);
                                         break;
                                     }
-                                    case space: {
+                                    case SPACE: {
                                         context.postEvent(new SpaceKeyReleasedEvent());
+                                        keysDown.remove(KeyCode.SPACE);
                                         break;
                                     }
-                                }
                             }
                         };
                         context.getStage().addEventHandler(KeyEvent.KEY_RELEASED, keyReleasedEventHandler);
