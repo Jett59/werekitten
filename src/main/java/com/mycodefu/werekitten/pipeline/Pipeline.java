@@ -57,14 +57,8 @@ public class Pipeline {
      * Call this method every frame of the game, from the game loop or timer.
      */
     public void tick() {
-        for (int n = 0; n < eventsToRunPerFrame; n++) {
-            //get the PipelineEvent from the front of the eventQueue
-            PipelineEvent event = eventQueue.poll();
-
-            //check if the event is null, if it is, that means that the queue is empty, exit early
-            if (event == null) {
-                break;
-            }
+        PipelineEvent event;
+        while((event = eventQueue.poll()) != null) {
             if(Start.DEBUG_PIPELINE_EVENTS) {
                 System.out.println("rendering event "+event.getEvent().getName());
             }
