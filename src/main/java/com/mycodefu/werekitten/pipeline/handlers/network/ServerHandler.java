@@ -111,15 +111,9 @@ public class ServerHandler implements PipelineHandler {
 
 	@Override
 	public Event[] getEventInterest() {
-		return new Event[] {
+		return Event.combineEvents(PlayerEventType.values(),
 				NetworkEventType.start,
-				NetworkEventType.stop,
-				PlayerEventType.moveLeft,
-                PlayerEventType.moveRight,
-                PlayerEventType.stopMovingLeft,
-                PlayerEventType.stopMovingRight,
-                PlayerEventType.jump
-		};
+				NetworkEventType.stop);
 	}
 
 

@@ -16,40 +16,40 @@ import com.mycodefu.werekitten.player.Kitten;
 
 public class PlayerKeyboardHandler implements PipelineHandler {
 
-	@Override
-	public Event[] getEventInterest() {
-		return KeyboardEventType.values();
-	}
+    @Override
+    public Event[] getEventInterest() {
+        return KeyboardEventType.values();
+    }
 
-	@Override
-	public void handleEvent(PipelineContext context, PipelineEvent event) {
-		if(event instanceof KeyboardEvent) {
-			switch ((KeyboardEventType)event.getEvent()) {
-			case leftPressed: {
-				context.postEvent(new MoveLeftEvent("local", context.level().get().getPixelScaleHelper().scaleX(Kitten.MOVE_AMOUNT), MoveMode.MoveBy));
-				break;
-			}
-			case leftReleased: {
-				context.postEvent(new StopMovingLeftEvent("local"));
-				break;
-			}
-			case rightPressed: {
-				context.postEvent(new MoveRightEvent("local", context.level().get().getPixelScaleHelper().scaleX(Kitten.MOVE_AMOUNT), MoveMode.MoveBy));
-				break;
-			}
-			case rightReleased: {
-				context.postEvent(new StopMovingRightEvent("local"));
-				break;
-			}
-			case spacePressed: {
-				context.postEvent(new JumpEvent("local"));
-				break;
-			}
-			
-			default:
-				break;
-			}
-		}
-	}
+    @Override
+    public void handleEvent(PipelineContext context, PipelineEvent event) {
+        if (event instanceof KeyboardEvent) {
+            switch ((KeyboardEventType) event.getEvent()) {
+                case leftPressed: {
+                    context.postEvent(new MoveLeftEvent("local", context.level().get().getPixelScaleHelper().scaleX(Kitten.MOVE_AMOUNT), MoveMode.MoveBy));
+                    break;
+                }
+                case leftReleased: {
+                    context.postEvent(new StopMovingLeftEvent("local"));
+                    break;
+                }
+                case rightPressed: {
+                    context.postEvent(new MoveRightEvent("local", context.level().get().getPixelScaleHelper().scaleX(Kitten.MOVE_AMOUNT), MoveMode.MoveBy));
+                    break;
+                }
+                case rightReleased: {
+                    context.postEvent(new StopMovingRightEvent("local"));
+                    break;
+                }
+                case spaceReleased: {
+                    context.postEvent(new JumpEvent("local"));
+                    break;
+                }
+
+                default:
+                    break;
+            }
+        }
+    }
 
 }

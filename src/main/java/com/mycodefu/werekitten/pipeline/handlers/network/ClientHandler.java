@@ -111,15 +111,9 @@ public class ClientHandler implements PipelineHandler, NettyClientHandler.Socket
 
     @Override
     public Event[] getEventInterest() {
-        return new Event[]{
+        return Event.combineEvents(PlayerEventType.values(),
                 UiCreated,
-                NetworkEventType.connect,
-                PlayerEventType.moveLeft,
-                PlayerEventType.moveRight,
-                PlayerEventType.stopMovingLeft,
-                PlayerEventType.stopMovingRight,
-                PlayerEventType.jump
-        };
+                NetworkEventType.connect);
     }
 
 }
