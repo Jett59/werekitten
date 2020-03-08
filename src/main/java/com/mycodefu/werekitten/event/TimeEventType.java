@@ -1,7 +1,8 @@
 package com.mycodefu.werekitten.event;
 
 public enum TimeEventType implements Event {
-    tick;
+    tick,
+    framerate;
 
     @Override
     public String getName() {

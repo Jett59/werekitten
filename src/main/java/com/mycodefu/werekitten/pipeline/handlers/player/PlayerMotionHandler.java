@@ -14,6 +14,7 @@ import com.mycodefu.werekitten.pipeline.handlers.PipelineHandler;
 import com.mycodefu.werekitten.player.Player;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -38,62 +39,63 @@ public class PlayerMotionHandler implements PipelineHandler {
                 }
                 case moveLeft:
                 case moveRight: {
-                	Map<PlayerEventType, PlayerEvent> eventMap = new HashMap<>();
-                	eventMap.put(playerEvent.getPlayerEvent(), playerEvent);
+                    Map<PlayerEventType, PlayerEvent> eventMap = new HashMap<>();
+                    eventMap.put(playerEvent.getPlayerEvent(), playerEvent);
                     playerMovementEventMap.put(playerId, eventMap);
                     break;
                 }
                 case stopMovingLeft:
                 case stopMovingRight: {
-                	playerMovementEventMap.get(playerId).put(playerEvent.getPlayerEvent(), playerEvent);
+                    playerMovementEventMap.get(playerId).put(playerEvent.getPlayerEvent(), playerEvent);
                 }
             }
         } else if (event instanceof TickEvent) {
             Set<String> playersToMove = playerMovementEventMap.keySet();
             for (String playerId : playersToMove) {
-            	for(PlayerEventType movementEventType : playerMovementEventMap.get(playerId).keySet()) {
-                PlayerEvent playerMovementEvent = playerMovementEventMap.get(playerId).get(movementEventType);
-                if (playerMovementEvent != null) {
-                    switch (movementEventType) {
-                        case moveLeft: {
-                            MoveLeftEvent moveEvent = (MoveLeftEvent) playerMovementEvent;
-                            if (moveEvent.getMode().equals(MoveMode.MoveBy)) {
-                                Player player = context.getPlayerMap().get(playerId);
-                                if (player != null) {
-                                    player.moveLeft(moveEvent.x);
+                Set<PlayerEventType> playerEventTypes = new HashSet(playerMovementEventMap.get(playerId).keySet());
+                for (PlayerEventType movementEventType : playerEventTypes) {
+                    PlayerEvent playerMovementEvent = playerMovementEventMap.get(playerId).get(movementEventType);
+                    if (playerMovementEvent != null) {
+                        switch (movementEventType) {
+                            case moveLeft: {
+                                MoveLeftEvent moveEvent = (MoveLeftEvent) playerMovementEvent;
+                                if (moveEvent.getMode().equals(MoveMode.MoveBy)) {
+                                    Player player = context.getPlayerMap().get(playerId);
+                                    if (player != null) {
+                                        player.moveLeft(moveEvent.x);
+                                    }
                                 }
+                                break;
                             }
-                            break;
-                        }
-                        case moveRight: {
-                            MoveRightEvent moveEvent = (MoveRightEvent) playerMovementEvent;
-                            if (moveEvent.getMode().equals(MoveMode.MoveBy)) {
-                                Player player = context.getPlayerMap().get(playerId);
-                                if (player != null) {
-                                    player.moveRight(moveEvent.x);
+                            case moveRight: {
+                                MoveRightEvent moveEvent = (MoveRightEvent) playerMovementEvent;
+                                if (moveEvent.getMode().equals(MoveMode.MoveBy)) {
+                                    Player player = context.getPlayerMap().get(playerId);
+                                    if (player != null) {
+                                        player.moveRight(moveEvent.x);
+                                    }
                                 }
+                                break;
                             }
-                            break;
+                            case stopMovingLeft: {
+                                context.getPlayerMap().get(playerId).stopMovingLeft();
+                                playerMovementEventMap.get(playerId).remove(movementEventType);
+                                playerMovementEventMap.get(playerId).remove(PlayerEventType.moveLeft);
+                                break;
+                            }
+                            case stopMovingRight: {
+                                context.getPlayerMap().get(playerId).stopMovingRight();
+                                playerMovementEventMap.get(playerId).remove(movementEventType);
+                                playerMovementEventMap.get(playerId).remove(PlayerEventType.moveRight);
+                                break;
+                            }
+
+                            default:
+                                break;
                         }
-                        case stopMovingLeft: {
-                            context.getPlayerMap().get(playerId).stopMovingLeft();
-                            playerMovementEventMap.get(playerId).remove(movementEventType);
-                            playerMovementEventMap.get(playerId).remove(PlayerEventType.moveLeft);
-                            break;
-                        }
-                        case stopMovingRight: {
-                            context.getPlayerMap().get(playerId).stopMovingRight();
-                            playerMovementEventMap.get(playerId).remove(movementEventType);
-                            playerMovementEventMap.get(playerId).remove(PlayerEventType.moveRight);
-                            break;
-                        }
-                        
-					default:
-						break;
                     }
                 }
             }
-        }
         }
     }
 }

@@ -21,13 +21,11 @@ public class PlayerAdditionHandler implements PipelineHandler {
 			UiEvent uiEvent = (UiEvent) event;
 			switch (uiEvent.getUIEvent()) {
                 case UiCreated: {
-                    System.out.println("UI created");
                     this.ui = ((UiCreatedEvent) event).getUI();
                     break;
                 }
                 case playerCreated: {
 					Player player = ((PlayerCreatedEvent) event).getPlayer();
-					System.out.println("Player created: " + player);
 					ui.addPlayer(player);
                     break;
                 }

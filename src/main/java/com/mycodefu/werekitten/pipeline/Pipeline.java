@@ -3,9 +3,11 @@ package com.mycodefu.werekitten.pipeline;
 import com.mycodefu.werekitten.Start;
 import com.mycodefu.werekitten.event.Event;
 import com.mycodefu.werekitten.event.TimeEventType;
+import com.mycodefu.werekitten.pipeline.events.time.FrameRateEvent;
 import com.mycodefu.werekitten.pipeline.events.time.TickEvent;
 import com.mycodefu.werekitten.pipeline.handlers.PipelineHandler;
 
+import java.time.Instant;
 import java.util.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
@@ -16,6 +18,8 @@ public class Pipeline {
     private final int eventsToRunPerFrame;
     private String name;
     private final PipelineContext context;
+    private long eventsInSecond = 0;
+    private long nextEventFrameMillis = 0;
 
     public Pipeline(String name, PipelineContext context, int eventsToRunPerFrame, PipelineHandler... handlers) {
         this.name = name;
@@ -57,10 +61,12 @@ public class Pipeline {
      * Call this method every frame of the game, from the game loop or timer.
      */
     public void tick() {
+        monitorFrameRate();
+
         PipelineEvent event;
-        while((event = eventQueue.poll()) != null) {
-            if(Start.DEBUG_PIPELINE_EVENTS) {
-                System.out.println("rendering event "+event.getEvent().getName());
+        while ((event = eventQueue.poll()) != null) {
+            if (Start.DEBUG_PIPELINE_EVENTS) {
+                System.out.println("rendering event " + event.getEvent().getName());
             }
 
             PipelineHandler[] handlers = this.eventHandlers.get(event.getEvent());
@@ -77,18 +83,29 @@ public class Pipeline {
         }
 
         PipelineHandler[] tickHandlers = this.eventHandlers.get(TimeEventType.tick);
-        if (tickHandlers!=null){
+        if (tickHandlers != null) {
             TickEvent tickEvent = new TickEvent();
             for (PipelineHandler tickHandler : tickHandlers) {
                 try {
                     tickHandler.handleEvent(context, tickEvent);
-                }catch(Exception e) {
+                } catch (Exception e) {
                     System.out.printf("An error occurred processing event '%s' in handler '%s':\n", tickEvent, tickHandler.getClass().getSimpleName());
                     e.printStackTrace();
                 }
             }
         }
 
+    }
+
+    private void monitorFrameRate() {
+        if (nextEventFrameMillis == 0) {
+            nextEventFrameMillis = System.currentTimeMillis() + 1000;
+        } else if (System.currentTimeMillis() > nextEventFrameMillis) {
+            context.postEvent(new FrameRateEvent(eventsInSecond));
+            nextEventFrameMillis = System.currentTimeMillis() + 1000;
+            eventsInSecond = 0;
+        }
+        eventsInSecond++;
     }
 
     public void addEvent(PipelineEvent event) {
