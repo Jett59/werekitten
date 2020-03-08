@@ -59,20 +59,30 @@ public class PlayerMotionHandler implements PipelineHandler {
                         switch (movementEventType) {
                             case moveLeft: {
                                 MoveLeftEvent moveEvent = (MoveLeftEvent) playerMovementEvent;
-                                if (moveEvent.getMode().equals(MoveMode.MoveBy)) {
-                                    Player player = context.getPlayerMap().get(playerId);
-                                    if (player != null) {
-                                        player.moveLeft(moveEvent.x);
+                                Player player = context.getPlayerMap().get(playerId);
+                                if (player != null) {
+                                    switch (moveEvent.getMode()) {
+                                        case MoveBy:
+                                            player.moveLeft(moveEvent.x);
+                                            break;
+                                        case MoveTo:
+                                            player.moveLeftTo(moveEvent.x);
+                                            break;
                                     }
                                 }
                                 break;
                             }
                             case moveRight: {
                                 MoveRightEvent moveEvent = (MoveRightEvent) playerMovementEvent;
-                                if (moveEvent.getMode().equals(MoveMode.MoveBy)) {
-                                    Player player = context.getPlayerMap().get(playerId);
-                                    if (player != null) {
-                                        player.moveRight(moveEvent.x);
+                                Player player = context.getPlayerMap().get(playerId);
+                                if (player != null) {
+                                    switch (moveEvent.getMode()) {
+                                        case MoveBy:
+                                            player.moveRight(moveEvent.x);
+                                            break;
+                                        case MoveTo:
+                                            player.moveRightTo(moveEvent.x);
+                                            break;
                                     }
                                 }
                                 break;
