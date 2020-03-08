@@ -4,9 +4,19 @@ import com.mycodefu.werekitten.event.Event;
 import com.mycodefu.werekitten.event.PlayerEventType;
 
 public class StopMovingLeftEvent extends PlayerEvent {
+    private final double lastX;
 
     public StopMovingLeftEvent(String playerId) {
+        this(playerId, 0);
+    }
+
+    public StopMovingLeftEvent(String playerId, double lastX) {
         super(playerId);
+        this.lastX = lastX;
+    }
+
+    public double getLastX() {
+        return lastX;
     }
 
     @Override

@@ -73,19 +73,29 @@ public class NetworkPlayerHelper {
                 break;
             }
             case moveLeft: {
+                double x = ((double) content.readShort()) / 10d;
+                double xScaled = context.level().get().getPixelScaleHelper().scaleX(x);
+                context.postEvent(new MoveLeftEvent(playerId, xScaled, MoveMode.MoveTo));
                 context.postEvent(new MoveLeftEvent(playerId, this.scaledXMove, MoveMode.MoveBy));
                 break;
             }
             case moveRight: {
+                double x = ((double) content.readShort()) / 10d;
+                double xScaled = context.level().get().getPixelScaleHelper().scaleX(x);
+                context.postEvent(new MoveRightEvent(playerId, xScaled, MoveMode.MoveTo));
                 context.postEvent(new MoveRightEvent(playerId, this.scaledXMove, MoveMode.MoveBy));
                 break;
             }
             case idleLeft: {
-                context.postEvent(new StopMovingLeftEvent(playerId));
+                double x = ((double) content.readShort()) / 10d;
+                double xScaled = context.level().get().getPixelScaleHelper().scaleX(x);
+                context.postEvent(new StopMovingLeftEvent(playerId, xScaled));
                 break;
             }
             case idleRight: {
-                context.postEvent(new StopMovingRightEvent(playerId));
+                double x = ((double) content.readShort()) / 10d;
+                double xScaled = context.level().get().getPixelScaleHelper().scaleX(x);
+                context.postEvent(new StopMovingRightEvent(playerId, xScaled));
                 break;
             }
             case jump: {

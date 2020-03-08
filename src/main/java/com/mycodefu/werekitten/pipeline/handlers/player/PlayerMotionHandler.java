@@ -5,10 +5,7 @@ import com.mycodefu.werekitten.event.PlayerEventType;
 import com.mycodefu.werekitten.event.TimeEventType;
 import com.mycodefu.werekitten.pipeline.PipelineContext;
 import com.mycodefu.werekitten.pipeline.PipelineEvent;
-import com.mycodefu.werekitten.pipeline.events.player.MoveLeftEvent;
-import com.mycodefu.werekitten.pipeline.events.player.MoveMode;
-import com.mycodefu.werekitten.pipeline.events.player.MoveRightEvent;
-import com.mycodefu.werekitten.pipeline.events.player.PlayerEvent;
+import com.mycodefu.werekitten.pipeline.events.player.*;
 import com.mycodefu.werekitten.pipeline.events.time.TickEvent;
 import com.mycodefu.werekitten.pipeline.handlers.PipelineHandler;
 import com.mycodefu.werekitten.player.Player;
@@ -39,14 +36,39 @@ public class PlayerMotionHandler implements PipelineHandler {
                 }
                 case moveLeft:
                 case moveRight: {
-                    Map<PlayerEventType, PlayerEvent> eventMap = new HashMap<>();
-                    eventMap.put(playerEvent.getPlayerEvent(), playerEvent);
-                    playerMovementEventMap.put(playerId, eventMap);
+                    PlayerMovementEvent moveEvent = (PlayerMovementEvent) playerEvent;
+                    if (moveEvent.getMode() == MoveMode.MoveTo) {
+                        Player player = context.getPlayerMap().get(playerId);
+                        switch (moveEvent.getPlayerEvent()) {
+                            case moveLeft:
+                                player.moveLeftTo(moveEvent.x);
+                                break;
+                            case moveRight:
+                                player.moveRightTo(moveEvent.x);
+                                break;
+                        }
+                    } else {
+                        Map<PlayerEventType, PlayerEvent> eventMap = new HashMap<>();
+                        eventMap.put(playerEvent.getPlayerEvent(), playerEvent);
+                        playerMovementEventMap.put(playerId, eventMap);
+                    }
                     break;
                 }
-                case stopMovingLeft:
-                case stopMovingRight: {
+                case stopMovingLeft: {
+                    double lastX = ((StopMovingLeftEvent) playerEvent).getLastX();
+                    if (lastX != 0d) {
+                        context.getPlayerMap().get(playerId).moveTo(lastX);
+                    }
                     playerMovementEventMap.get(playerId).put(playerEvent.getPlayerEvent(), playerEvent);
+                    break;
+                }
+                case stopMovingRight: {
+                    double lastX = ((StopMovingRightEvent) playerEvent).getLastX();
+                    if (lastX != 0d) {
+                        context.getPlayerMap().get(playerId).moveTo(lastX);
+                    }
+                    playerMovementEventMap.get(playerId).put(playerEvent.getPlayerEvent(), playerEvent);
+                    break;
                 }
             }
         } else if (event instanceof TickEvent) {
@@ -61,13 +83,8 @@ public class PlayerMotionHandler implements PipelineHandler {
                                 MoveLeftEvent moveEvent = (MoveLeftEvent) playerMovementEvent;
                                 Player player = context.getPlayerMap().get(playerId);
                                 if (player != null) {
-                                    switch (moveEvent.getMode()) {
-                                        case MoveBy:
-                                            player.moveLeft(moveEvent.x);
-                                            break;
-                                        case MoveTo:
-                                            player.moveLeftTo(moveEvent.x);
-                                            break;
+                                    if (moveEvent.getMode() == MoveMode.MoveBy) {
+                                        player.moveLeft(moveEvent.x);
                                     }
                                 }
                                 break;
@@ -76,13 +93,8 @@ public class PlayerMotionHandler implements PipelineHandler {
                                 MoveRightEvent moveEvent = (MoveRightEvent) playerMovementEvent;
                                 Player player = context.getPlayerMap().get(playerId);
                                 if (player != null) {
-                                    switch (moveEvent.getMode()) {
-                                        case MoveBy:
-                                            player.moveRight(moveEvent.x);
-                                            break;
-                                        case MoveTo:
-                                            player.moveRightTo(moveEvent.x);
-                                            break;
+                                    if (moveEvent.getMode() == MoveMode.MoveBy) {
+                                        player.moveRight(moveEvent.x);
                                     }
                                 }
                                 break;

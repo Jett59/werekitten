@@ -118,6 +118,10 @@ public class Player {
         return animationToPlay;
     }
 
+    public void moveTo(double x) {
+        animationGroup.setLayoutX(x);
+    }
+
     public enum AnimationType {
         idleRight,
         idleLeft,
