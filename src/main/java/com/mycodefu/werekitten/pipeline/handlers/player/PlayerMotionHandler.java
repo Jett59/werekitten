@@ -37,13 +37,15 @@ public class PlayerMotionHandler implements PipelineHandler {
                     break;
                 }
                 case moveLeft:
-                case moveRight:
-                case stopMovingLeft:
-                case stopMovingRight: {
+                case moveRight: {
                 	Map<PlayerEventType, PlayerEvent> eventMap = new HashMap<>();
                 	eventMap.put(playerEvent.getPlayerEvent(), playerEvent);
                     playerMovementEventMap.put(playerId, eventMap);
                     break;
+                }
+                case stopMovingLeft:
+                case stopMovingRight: {
+                	playerMovementEventMap.get(playerId).put(playerEvent.getPlayerEvent(), playerEvent);
                 }
             }
         } else if (event instanceof TickEvent) {
@@ -76,11 +78,13 @@ public class PlayerMotionHandler implements PipelineHandler {
                         case stopMovingLeft: {
                             context.getPlayerMap().get(playerId).stopMovingLeft();
                             playerMovementEventMap.get(playerId).remove(movementEventType);
+                            playerMovementEventMap.get(playerId).remove(PlayerEventType.moveLeft);
                             break;
                         }
                         case stopMovingRight: {
                             context.getPlayerMap().get(playerId).stopMovingRight();
                             playerMovementEventMap.get(playerId).remove(movementEventType);
+                            playerMovementEventMap.get(playerId).remove(PlayerEventType.moveRight);
                             break;
                         }
                         
