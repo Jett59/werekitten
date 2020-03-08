@@ -47,7 +47,7 @@ public class ServerHandler implements PipelineHandler {
 
                         @Override
                         public void serverConnectionOpened(ChannelId id, String remoteAddress) {
-                        	channelIds.add(id);
+                            channelIds.add(id);
                             senders.put(id, (playerMessage) -> server.sendMessage(id, playerMessage));
                             context.postEvent(new NetworkConnectionEstablishedEvent(client, remoteAddress));
                         }
@@ -72,49 +72,52 @@ public class ServerHandler implements PipelineHandler {
                     server.close();
                     break;
                 }
-			default:
-				break;
+                default:
+                    break;
             }
-        }else if(event instanceof PlayerEvent) {
-        	PlayerEvent playerEvent = (PlayerEvent) event;
+        } else if (event instanceof PlayerEvent) {
+            PlayerEvent playerEvent = (PlayerEvent) event;
             if (server != null && playerEvent.getPlayerId().equalsIgnoreCase("local")) {
+                String playerId = playerEvent.getPlayerId();
+                double layoutX = context.getPlayerMap().get(playerId).getGroup().getLayoutX();
+                double scaledBackLayoutX = context.level().get().getPixelScaleHelper().scaleXBack(layoutX);
                 switch (playerEvent.getPlayerEvent()) {
                     case moveLeft:
-                    	for(ChannelId id: channelIds) {
-                        server.sendMessage(id, MessageBuilder.createNewMessageBuffer(MessageType.moveLeft, 1).getBuffer());
-                    	}
+                        for (ChannelId id : channelIds) {
+                            server.sendMessage(id, MessageBuilder.createNewMessageBuffer(MessageType.moveLeft, 3).addDoubleAsShort(scaledBackLayoutX).getBuffer());
+                        }
                         break;
                     case moveRight:
-                    	for(ChannelId id : channelIds) {
-                        server.sendMessage(id, MessageBuilder.createNewMessageBuffer(MessageType.moveRight, 1).getBuffer());
-                    	}
+                        for (ChannelId id : channelIds) {
+                            server.sendMessage(id, MessageBuilder.createNewMessageBuffer(MessageType.moveRight, 3).addDoubleAsShort(scaledBackLayoutX).getBuffer());
+                        }
                         break;
                     case stopMovingLeft:
-                    	for(ChannelId id : channelIds) {
-                        server.sendMessage(id, MessageBuilder.createNewMessageBuffer(MessageType.idleLeft, 1).getBuffer());
-                    	}
+                        for (ChannelId id : channelIds) {
+                            server.sendMessage(id, MessageBuilder.createNewMessageBuffer(MessageType.idleLeft, 3).addDoubleAsShort(scaledBackLayoutX).getBuffer());
+                        }
                         break;
                     case stopMovingRight:
-                    	for(ChannelId id : channelIds) {
-                        server.sendMessage(id, MessageBuilder.createNewMessageBuffer(MessageType.idleRight, 1).getBuffer());
-                    	}
+                        for (ChannelId id : channelIds) {
+                            server.sendMessage(id, MessageBuilder.createNewMessageBuffer(MessageType.idleRight, 3).addDoubleAsShort(scaledBackLayoutX).getBuffer());
+                        }
                         break;
                     case jump:
-                    	for(ChannelId id : channelIds) {
-                        server.sendMessage(id, MessageBuilder.createNewMessageBuffer(MessageType.jump, 1).getBuffer());
-                    	}
+                        for (ChannelId id : channelIds) {
+                            server.sendMessage(id, MessageBuilder.createNewMessageBuffer(MessageType.jump, 3).addDoubleAsShort(scaledBackLayoutX).getBuffer());
+                        }
                         break;
                 }
             }
         }
     }
 
-	@Override
-	public Event[] getEventInterest() {
-		return Event.combineEvents(PlayerEventType.values(),
-				NetworkEventType.start,
-				NetworkEventType.stop);
-	}
+    @Override
+    public Event[] getEventInterest() {
+        return Event.combineEvents(PlayerEventType.values(),
+                NetworkEventType.start,
+                NetworkEventType.stop);
+    }
 
 
 }
