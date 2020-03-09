@@ -140,6 +140,7 @@ public class PlayerMotionHandler implements PipelineHandler {
                 otherPlayerShape.setLayoutX(otherPlayer.getGroup().getLayoutX());
                 if (!Shape.intersect(playerShape, otherPlayerShape).getBoundsInLocal().isEmpty()) {
                     otherPlayer.moveTo(x * 5);
+                    otherPlayer.dealDamage(5);
                     return false;
                 }
             }
