@@ -9,6 +9,8 @@ import com.mycodefu.werekitten.pipeline.events.player.*;
 import com.mycodefu.werekitten.pipeline.events.time.TickEvent;
 import com.mycodefu.werekitten.pipeline.handlers.PipelineHandler;
 import com.mycodefu.werekitten.player.Player;
+import javafx.scene.shape.Polygon;
+import javafx.scene.shape.Shape;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -84,7 +86,9 @@ public class PlayerMotionHandler implements PipelineHandler {
                                 Player player = context.getPlayerMap().get(playerId);
                                 if (player != null) {
                                     if (moveEvent.getMode() == MoveMode.MoveBy) {
-                                        player.moveLeft(moveEvent.x);
+                                        if (canMoveLeft(player, moveEvent.x, context)) {
+                                            player.moveLeft(moveEvent.x);
+                                        }
                                     }
                                 }
                                 break;
@@ -94,7 +98,9 @@ public class PlayerMotionHandler implements PipelineHandler {
                                 Player player = context.getPlayerMap().get(playerId);
                                 if (player != null) {
                                     if (moveEvent.getMode() == MoveMode.MoveBy) {
-                                        player.moveRight(moveEvent.x);
+                                        if (canMoveRight(player, moveEvent.x, context)) {
+                                            player.moveRight(moveEvent.x);
+                                        }
                                     }
                                 }
                                 break;
@@ -119,5 +125,24 @@ public class PlayerMotionHandler implements PipelineHandler {
                 }
             }
         }
+    }
+
+    private boolean canMoveLeft(Player player, double x, PipelineContext context) {
+        return canMoveRight(player, -x, context);
+    }
+
+    private boolean canMoveRight(Player player, double x, PipelineContext context) {
+        Polygon playerShape = player.getCurrentAnimation().getCurrentShape();
+        playerShape.setLayoutX(player.getGroup().getLayoutX() + x);
+        for (Player otherPlayer : context.getPlayerMap().values()) {
+            if (player != otherPlayer) {
+                Polygon otherPlayerShape = otherPlayer.getCurrentAnimation().getCurrentShape();
+                otherPlayerShape.setLayoutX(otherPlayer.getGroup().getLayoutX());
+                if (!Shape.intersect(playerShape, otherPlayerShape).getBoundsInLocal().isEmpty()) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }
