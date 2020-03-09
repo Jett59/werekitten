@@ -139,6 +139,7 @@ public class PlayerMotionHandler implements PipelineHandler {
                 Polygon otherPlayerShape = otherPlayer.getCurrentAnimation().getCurrentShape();
                 otherPlayerShape.setLayoutX(otherPlayer.getGroup().getLayoutX());
                 if (!Shape.intersect(playerShape, otherPlayerShape).getBoundsInLocal().isEmpty()) {
+                    otherPlayer.moveTo(x * 5);
                     return false;
                 }
             }
