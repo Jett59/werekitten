@@ -5,6 +5,7 @@ import javafx.animation.Interpolator;
 import javafx.animation.TranslateTransition;
 import javafx.scene.Group;
 import javafx.scene.shape.Shape;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +19,8 @@ public class Player {
     private Group animationGroup;
     private TranslateTransition jump;
     private Animation currentAnimation;
+    private double health = 1;
+    private Text healthDisplayText = new Text(""+((int)health)*999);
 
     private static boolean DEBUG = false;
 
@@ -30,7 +33,7 @@ public class Player {
         nameToAnimation.put(AnimationType.walkRight, walkRight);
         nameToAnimation.put(AnimationType.walkLeft, walkLeft);
 
-        animationGroup = new Group(idleRight.getImageView(), idleLeft.getImageView(), walkRight.getImageView(), walkLeft.getImageView());
+        animationGroup = new Group(idleRight.getImageView(), idleLeft.getImageView(), walkRight.getImageView(), walkLeft.getImageView(), healthDisplayText);
 
         jump = new TranslateTransition(Duration.millis(150), animationGroup);
         //jump.interpolatorProperty().set(Interpolator.SPLINE(.1, .1, .7, .7));
@@ -132,6 +135,20 @@ public class Player {
     public Animation getCurrentAnimation() {
         return currentAnimation;
     }
+    
+public void dealDamage(double amount) {
+	health-=amount;
+	healthDisplayText.setText(""+(int)(health*999d));
+}
+
+public void recoverHealth(double amount) {
+	health+=amount;
+	healthDisplayText.setText(""+(int)(health*999d));
+}
+
+public double getHealth() {
+	return health;
+}
 
     @Override
     public String toString() {
