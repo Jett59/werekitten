@@ -9,9 +9,11 @@ import com.mycodefu.werekitten.pipeline.events.player.*;
 import com.mycodefu.werekitten.pipeline.events.time.TickEvent;
 import com.mycodefu.werekitten.pipeline.handlers.PipelineHandler;
 import com.mycodefu.werekitten.player.Player;
+import com.mycodefu.werekitten.sound.MusicPlayer;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Shape;
 
+import javax.sound.sampled.Clip;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -20,6 +22,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class PlayerMotionHandler implements PipelineHandler {
     private Map<String, Map<PlayerEventType, PlayerEvent>> playerMovementEventMap = new ConcurrentHashMap<>();
+    private final Clip ouch = MusicPlayer.getClipFromResource("/characters/cat/sounds/ouch.wav");
 
     @Override
     public Event[] getEventInterest() {
@@ -141,6 +144,8 @@ public class PlayerMotionHandler implements PipelineHandler {
                 if (!Shape.intersect(playerShape, otherPlayerShape).getBoundsInLocal().isEmpty()) {
                     otherPlayer.moveTo(x * 5);
                     otherPlayer.dealDamage(5);
+                    ouch.setFramePosition(0);
+                    ouch.start();
                     return false;
                 }
             }
