@@ -51,6 +51,8 @@ public class PlayerMotionHandler implements PipelineHandler {
                             case moveRight:
                                 player.moveRightTo(moveEvent.x);
                                 break;
+						default:
+							break;
                         }
                     } else {
                         Map<PlayerEventType, PlayerEvent> eventMap = new HashMap<>();
@@ -79,7 +81,7 @@ public class PlayerMotionHandler implements PipelineHandler {
         } else if (event instanceof TickEvent) {
             Set<String> playersToMove = playerMovementEventMap.keySet();
             for (String playerId : playersToMove) {
-                Set<PlayerEventType> playerEventTypes = new HashSet(playerMovementEventMap.get(playerId).keySet());
+                Set<PlayerEventType> playerEventTypes = new HashSet<PlayerEventType>(playerMovementEventMap.get(playerId).keySet());
                 for (PlayerEventType movementEventType : playerEventTypes) {
                     PlayerEvent playerMovementEvent = playerMovementEventMap.get(playerId).get(movementEventType);
                     if (playerMovementEvent != null) {
@@ -135,15 +137,15 @@ public class PlayerMotionHandler implements PipelineHandler {
     }
 
     private boolean canMoveRight(Player player, double x, PipelineContext context) {
-        Polygon playerShape = player.getCurrentAnimation().getCurrentShape();
+        Shape playerShape = player.getCurrentShape();
         playerShape.setLayoutX(player.getGroup().getLayoutX() + x);
         for (Player otherPlayer : context.getPlayerMap().values()) {
             if (player != otherPlayer) {
                 Polygon otherPlayerShape = otherPlayer.getCurrentAnimation().getCurrentShape();
                 otherPlayerShape.setLayoutX(otherPlayer.getGroup().getLayoutX());
                 if (!Shape.intersect(playerShape, otherPlayerShape).getBoundsInLocal().isEmpty()) {
-                    otherPlayer.moveTo(x * 5);
-                    otherPlayer.dealDamage(5);
+                    otherPlayer.moveTo(otherPlayer.getGroup().getLayoutX()+x);
+                    otherPlayer.dealDamage(0.001);
                     ouch.setFramePosition(0);
                     ouch.start();
                     return false;

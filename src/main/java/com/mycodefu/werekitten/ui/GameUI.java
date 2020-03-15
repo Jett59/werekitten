@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameUI implements UI, UIConnectCallback {
-    public static final double CAT_JUMP_AMOUNT = 100;
+    public static final double CAT_JUMP_AMOUNT = 10;
 
     private Group playerGroup = new Group();
     private List<UIEventCallback> callbacks = new ArrayList<>();
