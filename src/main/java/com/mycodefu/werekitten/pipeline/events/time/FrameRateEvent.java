@@ -24,4 +24,8 @@ public class FrameRateEvent implements PipelineEvent {
     public Event getEvent() {
         return TimeEventType.framerate;
     }
+    
+    public String toString() {
+    	return "frame rate: "+ticksPerSecond;
+    }
 }

@@ -9,6 +9,7 @@ import com.mycodefu.werekitten.pipeline.events.player.JumpEvent;
 import com.mycodefu.werekitten.pipeline.events.player.MoveLeftEvent;
 import com.mycodefu.werekitten.pipeline.events.player.MoveMode;
 import com.mycodefu.werekitten.pipeline.events.player.MoveRightEvent;
+import com.mycodefu.werekitten.pipeline.events.player.PlayerEvent;
 import com.mycodefu.werekitten.pipeline.events.player.StopMovingLeftEvent;
 import com.mycodefu.werekitten.pipeline.events.player.StopMovingRightEvent;
 import com.mycodefu.werekitten.pipeline.handlers.PipelineHandler;
@@ -18,7 +19,7 @@ public class PlayerKeyboardHandler implements PipelineHandler {
 
     @Override
     public Event[] getEventInterest() {
-        return KeyboardEventType.values();
+        return PlayerEvent.playerKeyboardEventTypes;
     }
 
     @Override

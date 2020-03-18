@@ -5,6 +5,7 @@ import com.mycodefu.werekitten.level.data.LayerType;
 import com.mycodefu.werekitten.player.Player;
 import com.mycodefu.werekitten.slide.LayerGroup;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Background;
@@ -19,13 +20,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameUI implements UI, UIConnectCallback {
-    public static final double CAT_JUMP_AMOUNT = 10;
+    public static final double CAT_JUMP_AMOUNT = 150;
 
     private Group playerGroup = new Group();
     private List<UIEventCallback> callbacks = new ArrayList<>();
     private Scene scene;
-    VBox addressBox;
+    private VBox addressBox;
     private TextField address = new TextField();
+    private Group otherObjects = new Group();
 
     public SceneLevel getScene(GameLevel level) {
         try {
@@ -54,10 +56,11 @@ public class GameUI implements UI, UIConnectCallback {
 
             addressBox = new VBox(5, listeningAt, address);
             addressBox.setVisible(false);
-
+            
             Pane pane = new Pane();
             pane.getChildren().add(combinedGroup);
             pane.getChildren().add(addressBox);
+            pane.getChildren().add(otherObjects);
 
             scene = new Scene(pane);
             return new SceneLevel(scene, level);
@@ -119,4 +122,9 @@ public class GameUI implements UI, UIConnectCallback {
         playerGroup.getChildren().remove(player.getGroup());
     }
 
+    @Override
+    public void addNode(Node n) {
+    	otherObjects.getChildren().add(n);
+    }
+    
 }

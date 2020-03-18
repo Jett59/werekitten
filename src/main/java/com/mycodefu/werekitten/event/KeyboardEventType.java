@@ -1,6 +1,8 @@
 package com.mycodefu.werekitten.event;
 
 public enum KeyboardEventType implements Event{
+	F3Pressed,
+	F3Released,
 leftPressed,
 leftReleased,
 rightPressed,

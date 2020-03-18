@@ -57,6 +57,13 @@ public class KeyboardHandler implements PipelineHandler {
                                     }
                                     break;
                                 }
+                                case F3: {
+                                	if (!keysDown.contains(KeyCode.F3)) {
+                                	keysDown.add(KeyCode.F3);
+                                	context.postEvent(new F3PressedEvent());
+                                	}
+                                	break;
+                                }
 							default:
 								break;
                             }
@@ -79,6 +86,11 @@ public class KeyboardHandler implements PipelineHandler {
                                         context.postEvent(new SpaceKeyReleasedEvent());
                                         keysDown.remove(KeyCode.SPACE);
                                         break;
+                                    }
+                                    case F3: {
+                                    	context.postEvent(new F3ReleasedEvent());
+                                    	keysDown.remove(KeyCode.F3);
+                                    	break;
                                     }
 								default:
 									break;
