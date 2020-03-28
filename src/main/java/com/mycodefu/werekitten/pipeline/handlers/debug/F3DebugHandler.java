@@ -13,10 +13,12 @@ import com.mycodefu.werekitten.event.UiEventType;
 import com.mycodefu.werekitten.pipeline.PipelineContext;
 import com.mycodefu.werekitten.pipeline.PipelineEvent;
 import com.mycodefu.werekitten.pipeline.events.keyboard.F3PressedEvent;
-import com.mycodefu.werekitten.pipeline.events.keyboard.KeyboardEvent;
+import com.mycodefu.werekitten.pipeline.events.keyboard.F3ReleasedEvent;
 import com.mycodefu.werekitten.pipeline.events.player.PlayerEvent;
 import com.mycodefu.werekitten.pipeline.events.time.FrameRateEvent;
 import com.mycodefu.werekitten.pipeline.events.time.TickEvent;
+import com.mycodefu.werekitten.pipeline.events.ui.PlayerCreatedEvent;
+import com.mycodefu.werekitten.pipeline.events.ui.PlayerDestroyedEvent;
 import com.mycodefu.werekitten.pipeline.events.ui.UiCreatedEvent;
 import com.mycodefu.werekitten.pipeline.handlers.PipelineHandler;
 import com.mycodefu.werekitten.ui.UI;
@@ -35,7 +37,7 @@ lastPlayerEvents = new HashMap<>();
 
 	@Override
 	public Event[] getEventInterest() {
-		return Event.combineEvents(PlayerEventType.values(), new Event[] {TimeEventType.framerate, TimeEventType.tick, UiEventType.UiCreated, KeyboardEventType.F3Pressed, KeyboardEventType.F3Released});
+		return Event.combineEvents(PlayerEventType.values(), new Event[] {TimeEventType.framerate, TimeEventType.tick, UiEventType.UiCreated, KeyboardEventType.F3Released, UiEventType.playerCreated, UiEventType.playerDestroyed});
 	}
 
 	@Override
@@ -46,7 +48,11 @@ lastPlayerEvents = new HashMap<>();
 			debugText.setFocusTraversable(true);
 			debugText.setVisible(false);
 			this.ui.addNode(debugText);
-		}else if(event instanceof F3PressedEvent) {
+		}else if(event instanceof PlayerDestroyedEvent) {
+			lastPlayerEvents.remove(((PlayerDestroyedEvent)event).getPlayer().getId());
+		}else if(event instanceof PlayerCreatedEvent) {
+			lastPlayerEvents.put(((PlayerCreatedEvent)event).getPlayer().getId(), null);
+		}else if(event instanceof F3ReleasedEvent) {
 		debugText.setVisible(!debugText.isVisible());
 		}else if(event instanceof PlayerEvent) {
 			PlayerEvent playerEvent = (PlayerEvent)event;
@@ -57,7 +63,7 @@ lastPlayerEvents = new HashMap<>();
 			String debugText = String.format("fps: %s\n", ""+fps);
 			Set<String> keySet = new HashSet<>(lastPlayerEvents.keySet());
 			for(String playerId : keySet) {
-				debugText+=playerId+": "+lastPlayerEvents.get(playerId)+"\n";
+				debugText+=playerId+": "+lastPlayerEvents.get(playerId) != null ? lastPlayerEvents.get(playerId) : "this player has not recieved any events"+"\n";
 			}
 			this.debugText.setText(debugText);
 					}

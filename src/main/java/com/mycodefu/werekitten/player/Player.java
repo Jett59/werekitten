@@ -135,6 +135,10 @@ public class Player {
     public Animation getCurrentAnimation() {
         return currentAnimation;
     }
+
+    public String getId() {
+    	return id;
+    }
     
 public void dealDamage(double amount) {
 	health-=amount;

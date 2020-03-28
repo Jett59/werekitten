@@ -1,8 +1,8 @@
 {
   "type": "level",
-  "version": "0.0.1",
-  "name": "Christmas Level",
-  "description": "The Christmas edition of WereKitten sees the kitten playing with a christmas tree and being chased by elves.",
+  "version": "0.1.4",
+  "name": "Default Level",
+  "description": "the default Werekitten level.",
   "size": {
     "width": 1024,
     "height": 768
@@ -63,9 +63,9 @@
             "y": 0
           },
           "fillColor": {
-            "red": 0.071,
-            "green": 0.137,
-            "blue": 0.329,
+            "red": 0.095,
+            "green": 0.247,
+            "blue": 0.509,
             "opacity": 1.0
           },
           "strokeWidth": 0.0
