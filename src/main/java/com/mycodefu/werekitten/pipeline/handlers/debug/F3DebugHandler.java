@@ -63,7 +63,7 @@ lastPlayerEvents = new HashMap<>();
 			String debugText = String.format("fps: %s\n", ""+fps);
 			Set<String> keySet = new HashSet<>(lastPlayerEvents.keySet());
 			for(String playerId : keySet) {
-				debugText+=playerId+": "+lastPlayerEvents.get(playerId) != null ? lastPlayerEvents.get(playerId) : "this player has not recieved any events"+"\n";
+				debugText+=playerId+": "+(lastPlayerEvents.get(playerId) != null ? lastPlayerEvents.get(playerId) : "this player has not recieved any events")+"\n";
 			}
 			this.debugText.setText(debugText);
 					}
