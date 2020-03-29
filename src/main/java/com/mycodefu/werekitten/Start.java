@@ -1,6 +1,7 @@
 package com.mycodefu.werekitten;
 
 
+import com.mycodefu.werekitten.animation.GameLoopAnimation;
 import com.mycodefu.werekitten.level.GameLevel;
 import com.mycodefu.werekitten.pipeline.Pipeline;
 import com.mycodefu.werekitten.pipeline.PipelineContext;
@@ -10,9 +11,9 @@ import com.mycodefu.werekitten.pipeline.config.PipelineConfiguration;
 import com.mycodefu.werekitten.pipeline.events.game.StartGameEvent;
 import com.mycodefu.werekitten.pipeline.handlers.PipelineHandler;
 import com.mycodefu.werekitten.player.Player;
-import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -22,7 +23,7 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class Start extends Application implements PipelineContext {
-    public static boolean DEBUG_PIPELINE_EVENTS = false;
+    public static boolean DEBUG_PIPELINE_EVENTS = true;
     private static int listeningPort = 0;
 
     private final Map<String, Pipeline> pipelines;
@@ -68,14 +69,9 @@ public class Start extends Application implements PipelineContext {
 
         this.postEvent(new StartGameEvent());
 
-        new AnimationTimer() {
-            @Override
-            public void handle(long l) {
-                for (Pipeline pipeline : pipelines.values()) {
-                    pipeline.tick();
-                }
-            }
-        }.start();
+        GameLoopAnimation gameLoop = new GameLoopAnimation(pipelines.values(), 30, Duration.millis(1000));
+        gameLoop.setCycleCount(-1);
+        gameLoop.play();
     }
 
     public static void main(String[] args) {
