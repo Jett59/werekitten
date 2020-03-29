@@ -23,6 +23,7 @@ import java.util.List;
  * The transition between cells will be spaced across the duration time period.
  */
 public class Animation extends Transition {
+    private final List<Polygon> cellPolygons;
     private final ImageView imageView;
     private final int cellCount;
     private final int cellWidth;
@@ -30,22 +31,20 @@ public class Animation extends Transition {
 
     private int cellIndex;
     private int lastCellIndex;
-    private List<Polygon> cellPolygons;
 
-    Animation(ImageView imageView, Duration duration, int cellCount, int cellWidth, int cellHeight, List<Polygon> cellPolygons) {
-        this.cellPolygons = cellPolygons;
+    public Animation(ImageView imageView, Duration duration, int cellCount, int cellWidth, int cellHeight, List<Polygon> cellPolygons) {
         checkImageView(imageView, cellCount, cellWidth, cellHeight);
 
+        this.cellPolygons = cellPolygons;
         this.imageView = imageView;
         this.cellCount = cellCount;
         this.cellWidth = cellWidth;
         this.cellHeight = cellHeight;
+        this.cellIndex = 0;
+        this.lastCellIndex = 0;
 
         this.setCycleDuration(duration);
         this.setInterpolator(Interpolator.LINEAR);
-
-        this.cellIndex = 0;
-        this.lastCellIndex = 0;
 
         updateViewPort();
     }
