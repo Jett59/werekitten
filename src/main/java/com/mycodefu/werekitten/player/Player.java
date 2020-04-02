@@ -1,18 +1,24 @@
 package com.mycodefu.werekitten.player;
 
 import com.mycodefu.werekitten.animation.Animation;
+import com.mycodefu.werekitten.animation.MovementAnimation;
+
 import javafx.animation.Interpolator;
 import javafx.animation.TranslateTransition;
 import javafx.scene.Group;
 import javafx.scene.shape.Shape;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
+
+import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Player {
+	public static final double MOTION_PIXEL_RATE = 15000d;
+	
     private final String id;
     private Map<AnimationType, Animation> nameToAnimation = new ConcurrentHashMap<>();
     private List<Animation> animations = new ArrayList<>();
@@ -21,8 +27,9 @@ public class Player {
     private Animation currentAnimation;
     private double health = 1;
     private Text healthDisplayText = new Text(""+((int)health)*999);
+    private MovementAnimation[] moveTransitions = new MovementAnimation[2];
 
-    private static boolean DEBUG = false;
+    private static boolean DEBUG = true;
 
     Player(String id, Animation idleRight, Animation idleLeft, Animation walkRight, Animation walkLeft, double jumpAmount, AnimationType initialAnimation, double initialXPosition) {
         this.id = id;
@@ -41,9 +48,19 @@ public class Player {
         jump.setByY(-jumpAmount);
         jump.setAutoReverse(true);
         jump.setCycleCount(2);
-
+        
+        int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
+MovementAnimation moveRight = new MovementAnimation(animationGroup, MOTION_PIXEL_RATE, x-> {
+	return x < screenWidth-walkRight.getImageView().getViewport().getWidth();
+}, Duration.seconds(1));
+        moveTransitions[0] = moveRight;
+        MovementAnimation moveLeft = new MovementAnimation(animationGroup, MOTION_PIXEL_RATE*-1, x-> {
+        	return x > 0;
+        }, Duration.seconds(1));
+        moveTransitions[1] = moveLeft;
+        
         currentAnimation = playOneAnimation(animations, nameToAnimation.get(initialAnimation));
-        animationGroup.setLayoutX(animationGroup.getLayoutX() + initialXPosition);
+        animationGroup.setTranslateX(animationGroup.getLayoutX() + initialXPosition);
     }
 
     public Group getGroup() {
@@ -51,8 +68,7 @@ public class Player {
     }
 
     public void moveLeft(double amount) {
-        animationGroup.setLayoutX(animationGroup.getLayoutX() - amount);
-        //TODO: Check for collisions and undo the move to the rightmost point of the colliding object if so
+    	moveTransitions[1].play();
         currentAnimation = playOneAnimation(animations, nameToAnimation.get(AnimationType.walkLeft));
 
         if (DEBUG){
@@ -61,8 +77,7 @@ public class Player {
     }
 
     public void moveRight(double amount) {
-        animationGroup.setLayoutX(animationGroup.getLayoutX() + amount);
-        //TODO: Check for collisions and undo the move to the leftmost point of the colliding object if so
+        moveTransitions[0].play();
         currentAnimation = playOneAnimation(animations, nameToAnimation.get(AnimationType.walkRight));
 
         if (DEBUG){
@@ -97,10 +112,12 @@ public class Player {
     }
 
     public void stopMovingLeft() {
+    	moveTransitions[1].stop();
         currentAnimation = playOneAnimation(animations, nameToAnimation.get(AnimationType.idleLeft));
     }
 
     public void stopMovingRight() {
+    	moveTransitions[0].stop();
         currentAnimation = playOneAnimation(animations, nameToAnimation.get(AnimationType.idleRight));
     }
     

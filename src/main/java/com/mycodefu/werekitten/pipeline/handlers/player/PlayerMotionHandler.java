@@ -14,7 +14,6 @@ import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Shape;
 
 import javax.sound.sampled.Clip;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -39,25 +38,35 @@ public class PlayerMotionHandler implements PipelineHandler {
                     context.getPlayerMap().get(playerId).jump();
                     break;
                 }
-                case moveLeft:
+                case moveLeft:{
+                	PlayerMovementEvent moveEvent = (PlayerMovementEvent) playerEvent;
+                	switch(moveEvent.getMode()) {
+                	case MoveBy: {
+                		context.getPlayerMap().get(playerId).moveLeft(moveEvent.x);
+                		break;
+                	}
+                	case MoveTo: {
+                		context.getPlayerMap().get(playerId).moveLeftTo(moveEvent.x);
+                		break;
+                	}
+                	default:
+                		break;
+                }
+                	break;
+                }
                 case moveRight: {
                     PlayerMovementEvent moveEvent = (PlayerMovementEvent) playerEvent;
-                    if (moveEvent.getMode() == MoveMode.MoveTo) {
-                        Player player = context.getPlayerMap().get(playerId);
-                        switch (moveEvent.getPlayerEvent()) {
-                            case moveLeft:
-                                player.moveLeftTo(moveEvent.x);
-                                break;
-                            case moveRight:
-                                player.moveRightTo(moveEvent.x);
-                                break;
-						default:
-							break;
-                        }
-                    } else {
-                        Map<PlayerEventType, PlayerEvent> eventMap = new HashMap<>();
-                        eventMap.put(playerEvent.getPlayerEvent(), playerEvent);
-                        playerMovementEventMap.put(playerId, eventMap);
+                    switch (moveEvent.getMode()) {
+                    case MoveBy: {
+                    	context.getPlayerMap().get(playerId).moveRight(moveEvent.x);
+                    	break;
+                    }
+                    case MoveTo: {
+                    	context.getPlayerMap().get(playerId).moveRightTo(moveEvent.x);
+                    	break;
+                    }
+                    default:
+                    	break;
                     }
                     break;
                 }
@@ -66,7 +75,7 @@ public class PlayerMotionHandler implements PipelineHandler {
                     if (lastX != 0d) {
                         context.getPlayerMap().get(playerId).moveTo(lastX);
                     }
-                    playerMovementEventMap.get(playerId).put(playerEvent.getPlayerEvent(), playerEvent);
+                    context.getPlayerMap().get(playerId).stopMovingLeft();
                     break;
                 }
                 case stopMovingRight: {
@@ -74,7 +83,7 @@ public class PlayerMotionHandler implements PipelineHandler {
                     if (lastX != 0d) {
                         context.getPlayerMap().get(playerId).moveTo(lastX);
                     }
-                    playerMovementEventMap.get(playerId).put(playerEvent.getPlayerEvent(), playerEvent);
+context.getPlayerMap().get(playerId).stopMovingRight();
                     break;
                 }
             }
