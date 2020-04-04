@@ -17,9 +17,9 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Player {
-    public static final double MOTION_PIXEL_RATE = 4d;
 
     private final String id;
+    private final double speed;
     private Map<AnimationType, Animation> nameToAnimation = new ConcurrentHashMap<>();
     private List<Animation> animations = new ArrayList<>();
     private Group animationGroup;
@@ -31,8 +31,9 @@ public class Player {
 
     private static boolean DEBUG = true;
 
-    Player(String id, Animation idleRight, Animation idleLeft, Animation walkRight, Animation walkLeft, double jumpAmount, AnimationType initialAnimation, double initialXPosition) {
+    Player(String id, Animation idleRight, Animation idleLeft, Animation walkRight, Animation walkLeft, double jumpAmount, AnimationType initialAnimation, double initialXPosition, double speed) {
         this.id = id;
+        this.speed = speed;
         animations.addAll(List.of(idleRight, idleLeft, walkRight, walkLeft));
 
         nameToAnimation.put(AnimationType.idleRight, idleRight);
@@ -51,9 +52,9 @@ public class Player {
 
         int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
         double rightBound = screenWidth - walkRight.getImageView().getViewport().getWidth();
-        MovementAnimation moveRight = new MovementAnimation(animationGroup, MOTION_PIXEL_RATE, x -> x < rightBound, Duration.INDEFINITE);
+        MovementAnimation moveRight = new MovementAnimation(animationGroup, speed, x -> x < rightBound, Duration.INDEFINITE);
         moveTransitions[0] = moveRight;
-        MovementAnimation moveLeft = new MovementAnimation(animationGroup, MOTION_PIXEL_RATE * -1, x -> x > 0, Duration.INDEFINITE);
+        MovementAnimation moveLeft = new MovementAnimation(animationGroup, speed * -1, x -> x > 0, Duration.INDEFINITE);
         moveTransitions[1] = moveLeft;
 
         currentAnimation = playOneAnimation(animations, nameToAnimation.get(initialAnimation));

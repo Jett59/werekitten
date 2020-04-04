@@ -29,7 +29,7 @@ public class NetworkPlayerHelper {
 
         double catJumpAmount = context.level().get().getPixelScaleHelper().scaleY(GameUI.CAT_JUMP_AMOUNT);
 
-        Player networkPlayer = Kitten.create(playerId, catJumpAmount, height, Duration.seconds(1), Player.AnimationType.idleLeft, initialXPosition);
+        Player networkPlayer = Kitten.create(playerId, catJumpAmount, height, Duration.seconds(1), Player.AnimationType.idleLeft, initialXPosition, context.level().get().getPixelScaleHelper());
         context.getPlayerMap().put(playerId, networkPlayer);
         context.postEvent(new PlayerCreatedEvent(networkPlayer));
         context.postEvent(new NetworkConnectedEvent());
