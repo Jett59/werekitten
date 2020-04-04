@@ -25,48 +25,50 @@ import com.mycodefu.werekitten.ui.UI;
 
 import javafx.scene.text.Text;
 
-public class F3DebugHandler implements PipelineHandler{
-	private UI ui;
-private Map<String, PlayerEvent> lastPlayerEvents;
-private long fps = 0;
-private Text debugText = new Text();
+public class F3DebugHandler implements PipelineHandler {
+    private UI ui;
+    private Map<String, PlayerEvent> lastPlayerEvents;
+    private long fps = 0;
+    private Text debugText = new Text();
 
-public F3DebugHandler() {
-lastPlayerEvents = new HashMap<>();
-}
+    public F3DebugHandler() {
+        lastPlayerEvents = new HashMap<>();
+    }
 
-	@Override
-	public Event[] getEventInterest() {
-		return Event.combineEvents(PlayerEventType.values(), new Event[] {TimeEventType.framerate, TimeEventType.tick, UiEventType.UiCreated, KeyboardEventType.F3Released, UiEventType.playerCreated, UiEventType.playerDestroyed});
-	}
+    @Override
+    public Event[] getEventInterest() {
+        return Event.combineEvents(PlayerEventType.values(), new Event[]{TimeEventType.framerate, TimeEventType.tick, UiEventType.UiCreated, KeyboardEventType.F3Released, UiEventType.playerCreated, UiEventType.playerDestroyed});
+    }
 
-	@Override
-	public void handleEvent(PipelineContext context, PipelineEvent event) {
-		if(event instanceof UiCreatedEvent) {
-			this.ui = ((UiCreatedEvent)event).getUI();
-			debugText.setTranslateY(150);
-			debugText.setFocusTraversable(true);
-			debugText.setVisible(false);
-			this.ui.addNode(debugText);
-		}else if(event instanceof PlayerDestroyedEvent) {
-			lastPlayerEvents.remove(((PlayerDestroyedEvent)event).getPlayer().getId());
-		}else if(event instanceof PlayerCreatedEvent) {
-			lastPlayerEvents.put(((PlayerCreatedEvent)event).getPlayer().getId(), null);
-		}else if(event instanceof F3ReleasedEvent) {
-		debugText.setVisible(!debugText.isVisible());
-		}else if(event instanceof PlayerEvent) {
-			PlayerEvent playerEvent = (PlayerEvent)event;
-			lastPlayerEvents.put(playerEvent.getPlayerId(), playerEvent);
-		}else if(event instanceof FrameRateEvent) {
-			fps = ((FrameRateEvent)event).getTicksPerSecond();
-		}else if(event instanceof TickEvent) {
-			String debugText = String.format("fps: %s\n", ""+fps);
-			Set<String> keySet = new HashSet<>(lastPlayerEvents.keySet());
-			for(String playerId : keySet) {
-				debugText+=playerId+": "+(lastPlayerEvents.get(playerId) != null ? lastPlayerEvents.get(playerId) : "this player has not recieved any events")+"\ncurrent x position: "+context.getPlayerMap().get(playerId).getGroup().getTranslateX()+"\n";
-			}
-			this.debugText.setText(debugText);
-					}
-	}
+    @Override
+    public void handleEvent(PipelineContext context, PipelineEvent event) {
+        if (event instanceof UiCreatedEvent) {
+            this.ui = ((UiCreatedEvent) event).getUI();
+            debugText.setTranslateY(150);
+            debugText.setFocusTraversable(true);
+            debugText.setVisible(false);
+            this.ui.addNode(debugText);
+        } else if (event instanceof PlayerDestroyedEvent) {
+            lastPlayerEvents.remove(((PlayerDestroyedEvent) event).getPlayer().getId());
+        } else if (event instanceof PlayerCreatedEvent) {
+            lastPlayerEvents.put(((PlayerCreatedEvent) event).getPlayer().getId(), null);
+        } else if (event instanceof F3ReleasedEvent) {
+            debugText.setVisible(!debugText.isVisible());
+        } else if (event instanceof PlayerEvent) {
+            PlayerEvent playerEvent = (PlayerEvent) event;
+            lastPlayerEvents.put(playerEvent.getPlayerId(), playerEvent);
+        } else if (event instanceof FrameRateEvent) {
+            fps = ((FrameRateEvent) event).getTicksPerSecond();
+        } else if (event instanceof TickEvent) {
+            String debugText = String.format("fps: %s\n", "" + fps);
+            Set<String> keySet = new HashSet<>(lastPlayerEvents.keySet());
+            for (String playerId : keySet) {
+                double translateX = context.getPlayerMap().get(playerId).getGroup().getTranslateX();
+                double scaledBackX = context.level().get().getPixelScaleHelper().scaleXBack(translateX);
+                debugText += playerId + ": " + (lastPlayerEvents.get(playerId) != null ? lastPlayerEvents.get(playerId) : "this player has not recieved any events") + "\ncurrent x position: " + scaledBackX + "\n";
+            }
+            this.debugText.setText(debugText);
+        }
+    }
 
 }
