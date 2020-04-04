@@ -17,6 +17,7 @@ import com.mycodefu.werekitten.pipeline.events.ui.NetworkConnectionEstablishedEv
 import com.mycodefu.werekitten.pipeline.events.ui.UiEvent;
 import com.mycodefu.werekitten.pipeline.handlers.PipelineHandler;
 import com.mycodefu.werekitten.player.NetworkPlayerHelper;
+import com.mycodefu.werekitten.preferences.Preferences;
 import io.netty.buffer.ByteBuf;
 
 import static com.mycodefu.werekitten.event.UiEventType.UiCreated;
@@ -25,6 +26,7 @@ public class ClientHandler implements PipelineHandler, NettyClientHandler.Socket
     private final NetworkPlayerHelper networkPlayerHelper;
     private NettyClient nettyClient;
     private PipelineContext context;
+    private String serverAddress;
 
     public ClientHandler() {
         this.networkPlayerHelper = new NetworkPlayerHelper();
@@ -37,11 +39,12 @@ public class ClientHandler implements PipelineHandler, NettyClientHandler.Socket
             NetworkEvent networkEvent = (NetworkEvent) event;
             switch (networkEvent.getNetworkEvent()) {
                 case connect: {
-                    nettyClient = new NettyClient(((NetworkConnectClientEvent) event).getServerAddress(), this);
+                    serverAddress = ((NetworkConnectClientEvent) event).getServerAddress();
+
+                    nettyClient = new NettyClient(serverAddress, this);
                     nettyClient.connect();
                     context.postEvent(new BuildLevelEvent(false));
-                    context.postEvent(new NetworkConnectionEstablishedEvent(ConnectionType.server,
-                            ((NetworkConnectClientEvent) event).getServerAddress()));
+                    context.postEvent(new NetworkConnectionEstablishedEvent(ConnectionType.server, serverAddress));
                     break;
                 }
 
@@ -97,7 +100,7 @@ public class ClientHandler implements PipelineHandler, NettyClientHandler.Socket
 
     @Override
     public void clientConnected(String id, String remoteAddress) {
-
+        context.getPreferences().put(Preferences.CLIENT_CONNECT_IP_PREFERENCE, serverAddress);
     }
 
     @Override

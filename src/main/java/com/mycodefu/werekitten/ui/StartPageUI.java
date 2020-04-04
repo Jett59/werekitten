@@ -23,6 +23,11 @@ import javafx.util.Duration;
 
 public class StartPageUI {
     public static String buttonStyle = "-fx-background-color: #666666; -fx-text-fill: #ccccff; ";
+    private String preferredIp;
+
+    public StartPageUI(String preferredIp) {
+        this.preferredIp = preferredIp;
+    }
 
     public Scene getScene(PipelineContext context){
         Text welcome = new Text("WELCOME TO WEREKITTEN");
@@ -87,7 +92,7 @@ public class StartPageUI {
         TextField accessibleAddress = new TextField("put the lan address in the box");
         accessibleAddress.setTranslateX(-500000);
         accessibleAddress.setEditable(false);
-        TextField address = new TextField("wss://echo.websocket.org");
+        TextField address = new TextField(preferredIp != null && !preferredIp.equals("") ? preferredIp : "wss://echo.websocket.org");
         address.setStyle(buttonStyle);
         Button connect = new Button("connect");
         connect.setStyle(buttonStyle);

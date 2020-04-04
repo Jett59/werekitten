@@ -16,11 +16,14 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.prefs.BackingStoreException;
+import java.util.prefs.Preferences;
+
+import static com.mycodefu.werekitten.preferences.Preferences.loadPreferences;
+import static com.mycodefu.werekitten.preferences.Preferences.savePreferences;
 
 public class Start extends Application implements PipelineContext {
     public static boolean DEBUG_PIPELINE_EVENTS = true;
@@ -29,6 +32,7 @@ public class Start extends Application implements PipelineContext {
     private final Map<String, Pipeline> pipelines;
     private Stage stage;
     private AtomicReference<GameLevel> level = new AtomicReference<>(null);
+    private Map<String, String> preferences = new ConcurrentHashMap<>();
 
     @SuppressWarnings("deprecation")
     public Start() {
@@ -66,6 +70,9 @@ public class Start extends Application implements PipelineContext {
     @Override
     public void start(@SuppressWarnings("exports") Stage stage) {
         this.stage = stage;
+
+        stage.setOnHidden(e -> savePreferences(this.preferences));
+        this.preferences = loadPreferences();
 
         this.postEvent(new StartGameEvent());
 
@@ -129,6 +136,11 @@ public class Start extends Application implements PipelineContext {
     @Override
     public int getListeningPort() {
         return listeningPort;
+    }
+
+    @Override
+    public Map<String, String> getPreferences() {
+        return preferences;
     }
 }
 	

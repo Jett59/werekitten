@@ -12,6 +12,7 @@ open module com.mycodefu.werekitten {
     requires io.netty.transport;
     requires io.netty.buffer;
     requires jdk.unsupported;
+    requires java.prefs;
 
     exports com.mycodefu.werekitten to java.base;
 }
