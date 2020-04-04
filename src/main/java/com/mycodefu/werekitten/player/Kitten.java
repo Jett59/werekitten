@@ -29,8 +29,8 @@ public static Kitten create(String id, double jumpAmount, double height, Duratio
 	
 	addPropertiesToAnimation(idleRight, -1, Interpolator.LINEAR);
 	addPropertiesToAnimation(idleLeft, -1, Interpolator.LINEAR);
-	addPropertiesToAnimation(walkRight, 1, Interpolator.LINEAR);
-	addPropertiesToAnimation(walkLeft, 1, Interpolator.LINEAR);
+	addPropertiesToAnimation(walkRight, -1, Interpolator.LINEAR);
+	addPropertiesToAnimation(walkLeft, -1, Interpolator.LINEAR);
 	
 	Kitten result = new Kitten(id, idleRight, idleLeft, walkRight, walkLeft, jumpAmount, initialAnimation, initialXPosition);
 	return result;

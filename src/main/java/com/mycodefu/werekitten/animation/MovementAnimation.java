@@ -7,7 +7,7 @@ import javafx.scene.Node;
 import javafx.util.Duration;
 
 public class MovementAnimation extends Transition {
-    public static final double TARGET_FRAME_RATE = 30d;
+    public static final double TARGET_FRAME_RATE = 60d;
 
     private Node node;
     private double x = Double.MAX_VALUE;

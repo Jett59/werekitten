@@ -65,6 +65,7 @@ public class Player {
     }
 
     public void moveLeft(double amount) {
+    	stopMovingRight();
         moveTransitions[1].play();
         currentAnimation = playOneAnimation(animations, nameToAnimation.get(AnimationType.walkLeft));
 
@@ -74,6 +75,7 @@ public class Player {
     }
 
     public void moveRight(double amount) {
+    	stopMovingLeft();
         moveTransitions[0].play();
         currentAnimation = playOneAnimation(animations, nameToAnimation.get(AnimationType.walkRight));
 
