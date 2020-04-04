@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Player {
-	public static final double MOTION_PIXEL_RATE = 15000d;
+	public static final double MOTION_PIXEL_RATE = 4d;
 	
     private final String id;
     private Map<AnimationType, Animation> nameToAnimation = new ConcurrentHashMap<>();
