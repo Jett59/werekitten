@@ -16,6 +16,8 @@ import com.mycodefu.werekitten.pipeline.events.ui.NetworkConnectionEstablishedEv
 import com.mycodefu.werekitten.pipeline.events.ui.NetworkServerListeningEvent;
 import com.mycodefu.werekitten.pipeline.handlers.PipelineHandler;
 import com.mycodefu.werekitten.player.NetworkPlayerHelper;
+import com.mycodefu.werekitten.preferences.Preferences;
+
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelId;
 
@@ -42,7 +44,9 @@ public class ServerHandler implements PipelineHandler {
             NetworkEvent networkEvent = (NetworkEvent) event;
             switch (networkEvent.getNetworkEvent()) {
                 case start: {
-                    server = new NettyServer(context.getListeningPort(), new NettyServerHandler.ServerConnectionCallback() {
+                	String portPreference = context.getPreferences().get(Preferences.LISTENING_PORT_PREFERENCE);
+                	int port = portPreference == null || portPreference == "" ? context.getListeningPort() : Integer.parseInt(portPreference);
+                    server = new NettyServer(port, new NettyServerHandler.ServerConnectionCallback() {
                         ConcurrentMap<ChannelId, NetworkPlayerHelper.NetworkPlayerMessageSender> senders = new ConcurrentHashMap<>();
 
                         @Override
@@ -63,6 +67,7 @@ public class ServerHandler implements PipelineHandler {
                         }
                     });
                     server.listen();
+                    context.getPreferences().put(Preferences.LISTENING_PORT_PREFERENCE, Integer.toString(server.getPort()));
                     String internetIpAddress = NetworkUtils.getInternetIpAddress();
                     String wsAddress = String.format("ws://%s:%d", internetIpAddress, server.getPort());
                     context.postEvent(new NetworkServerListeningEvent(wsAddress));

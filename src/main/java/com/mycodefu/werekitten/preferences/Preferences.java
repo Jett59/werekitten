@@ -9,6 +9,7 @@ public class Preferences {
     private static final String PREFERENCES_PATH = "/com/mycodefu/werekitten";
 
     public static final String CLIENT_CONNECT_IP_PREFERENCE = "CLIENT_CONNECT_IP";
+    public static final String LISTENING_PORT_PREFERENCE = "LISTENING_PORT";
 
     public static Map<String,String> loadPreferences() {
         Map<String,String> preferences = new ConcurrentHashMap<>();
