@@ -1,5 +1,7 @@
 package com.mycodefu.werekitten.ui;
 
+import javax.swing.GroupLayout.Alignment;
+
 import com.mycodefu.werekitten.animation.Animation;
 import com.mycodefu.werekitten.animation.AnimationCompiler;
 import com.mycodefu.werekitten.pipeline.PipelineContext;
@@ -31,6 +33,7 @@ public class StartPageUI {
 
     public Scene getScene(PipelineContext context){
         Text welcome = new Text("WELCOME TO WEREKITTEN");
+        welcome.setFocusTraversable(true);
         welcome.setFont(new Font("Arial", 42));
         welcome.setTextAlignment(TextAlignment.CENTER);
 
@@ -67,7 +70,12 @@ public class StartPageUI {
             connectScene.setFill(new Color(0.05, 0.2, 0.95, 0.25));
             context.getStage().setScene(connectScene);
         });
-        VBox buttons = new VBox(10, singleplayer, hostServer, joinServer);
+        Button settings = new Button("settings");
+        settings.setFont(buttonFont);
+        settings.setStyle(buttonStyle);
+        settings.setAlignment(Alignment.CENTER);
+        
+        VBox buttons = new VBox(10, singleplayer, hostServer, joinServer, settings);
         buttons.setPadding(new Insets(50, 0, 0, 0));
 
 
