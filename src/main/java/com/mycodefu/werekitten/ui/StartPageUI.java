@@ -141,12 +141,14 @@ public class StartPageUI {
       
       Button apply = new Button("apply");
       apply.setStyle(buttonStyle);
+      
       apply.setOnAction(e->{
       for(HBox box : preferences) {
       String key = ((Text)(box.getChildren().get(0))).getText();
       String value = ((TextField)(box.getChildren().get(1))).getText();
       context.getPreferences().put(key, value);
       }
+      context.getStage().setScene(getScene(context));
       });
       
       result.setRight(new VBox(new VBox(preferences), apply));
