@@ -102,6 +102,13 @@ public class StartPageUI {
         border.setTop(welcome);
         border.setLeft(imagePane);
 
+        Button back = new Button("back");
+        back.setStyle(buttonStyle);
+        
+        back.setOnAction(e->{
+        	context.getStage().setScene(getScene(context));
+        });
+        
         Text addressText = new Text("address ->");
         Text accessibleAddress = new Text("put the lan address in the box");
         accessibleAddress.setTranslateX(-500000);
@@ -117,7 +124,7 @@ public class StartPageUI {
             context.postEvent(networkConnectClientEvent);
         });
 
-        HBox buttons = new HBox(10, accessibleAddress, addressText, address, connect);
+        HBox buttons = new HBox(10, back, accessibleAddress, addressText, address, connect);
         buttons.setPadding(new Insets(50, 0, 0, 0));
         VBox combinedAccessibilityAndButtons = new VBox(accessibleAddress, buttons);
 
