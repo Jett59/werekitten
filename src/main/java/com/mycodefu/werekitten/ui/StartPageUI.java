@@ -1,7 +1,5 @@
 package com.mycodefu.werekitten.ui;
 
-import javax.swing.GroupLayout.Alignment;
-
 import com.mycodefu.werekitten.animation.Animation;
 import com.mycodefu.werekitten.animation.AnimationCompiler;
 import com.mycodefu.werekitten.pipeline.PipelineContext;
@@ -73,7 +71,13 @@ public class StartPageUI {
         Button settings = new Button("settings");
         settings.setFont(buttonFont);
         settings.setStyle(buttonStyle);
-        settings.setAlignment(Alignment.CENTER);
+        
+        settings.setOnAction(e->{
+        	Node settingsNode = getSettingsScreenNode(context, welcome, imagePane);
+        	Scene settingsScene = new Scene(new Group(settingsNode));
+        	settingsScene.setFill(new Color(0.05, 0.2, 0.95, 0.25));
+        	context.getStage().setScene(settingsScene);
+        });
         
         VBox buttons = new VBox(10, singleplayer, hostServer, joinServer, settings);
         buttons.setPadding(new Insets(50, 0, 0, 0));
@@ -97,9 +101,10 @@ public class StartPageUI {
         border.setLeft(imagePane);
 
         Text addressText = new Text("address ->");
-        TextField accessibleAddress = new TextField("put the lan address in the box");
+        Text accessibleAddress = new Text("put the lan address in the box");
         accessibleAddress.setTranslateX(-500000);
-        accessibleAddress.setEditable(false);
+        accessibleAddress.setFocusTraversable(true);
+        
         TextField address = new TextField(preferredIp != null && !preferredIp.equals("") ? preferredIp : "wss://echo.websocket.org");
         address.setStyle(buttonStyle);
         Button connect = new Button("connect");
@@ -117,5 +122,12 @@ public class StartPageUI {
         border.setRight(combinedAccessibilityAndButtons);
 
         return border;
+    }
+    private BorderPane getSettingsScreenNode(PipelineContext context, Text welcome, FlowPane imagePane) {
+    	BorderPane result = new BorderPane();
+    	result.setTop(welcome);
+    	result.setLeft(imagePane);
+    	
+    	return result;
     }
 }
