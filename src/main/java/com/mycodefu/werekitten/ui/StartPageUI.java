@@ -1,5 +1,7 @@
 package com.mycodefu.werekitten.ui;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 import com.mycodefu.werekitten.animation.Animation;
 import com.mycodefu.werekitten.animation.AnimationCompiler;
 import com.mycodefu.werekitten.pipeline.PipelineContext;
@@ -127,7 +129,27 @@ public class StartPageUI {
     	BorderPane result = new BorderPane();
     	result.setTop(welcome);
     	result.setLeft(imagePane);
-    	
-    	return result;
+      
+      HBox[] preferences = new HBox[context.getPreferences().keySet().size()];
+      AtomicInteger index = new AtomicInteger();
+      context.getPreferences().forEach((key, value)->{
+    	  Text text = new Text(key);
+    	  text.setFocusTraversable(true);
+      preferences[index.get()] = new HBox(text, new TextField(value));
+      index.addAndGet(1);
+      });
+      
+      Button apply = new Button("apply");
+      apply.setStyle(buttonStyle);
+      apply.setOnAction(e->{
+      for(HBox box : preferences) {
+      String key = ((Text)(box.getChildren().get(0))).getText();
+      String value = ((TextField)(box.getChildren().get(1))).getText();
+      context.getPreferences().put(key, value);
+      }
+      });
+      
+      result.setRight(new VBox(new VBox(preferences), apply));
+      return result;
     }
 }
