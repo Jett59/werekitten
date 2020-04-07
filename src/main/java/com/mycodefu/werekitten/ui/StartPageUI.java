@@ -146,19 +146,35 @@ public class StartPageUI {
       index.addAndGet(1);
       });
       
+      Button cancel = new Button("cancel");
+      cancel.setStyle(buttonStyle);
+      
+      cancel.setOnAction(e->{
+      context.getStage().setScene(getScene(context));
+      });
       Button apply = new Button("apply");
       apply.setStyle(buttonStyle);
       
       apply.setOnAction(e->{
-      for(HBox box : preferences) {
-      String key = ((Text)(box.getChildren().get(0))).getText();
-      String value = ((TextField)(box.getChildren().get(1))).getText();
-      context.getPreferences().put(key, value);
-      }
+      applyPreferences(context, preferences);
+      });
+      Button applyAndClose = new Button("apply and close");
+      applyAndClose.setStyle(buttonStyle);
+      
+      applyAndClose.setOnAction(e->{
+      applyPreferences(context, preferences);
       context.getStage().setScene(getScene(context));
       });
       
-      result.setRight(new VBox(new VBox(preferences), apply));
+      result.setRight(new VBox(new VBox(preferences), new HBox(cancel, apply, applyAndClose)));
       return result;
+    }
+    
+    private void applyPreferences(PipelineContext context, HBox[] preferences) {
+    	for(HBox box : preferences) {
+    	      String key = ((Text)(box.getChildren().get(0))).getText();
+    	      String value = ((TextField)(box.getChildren().get(1))).getText();
+    	      context.getPreferences().put(key, value);
+    	}
     }
 }
