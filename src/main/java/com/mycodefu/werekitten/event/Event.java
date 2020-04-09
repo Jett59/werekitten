@@ -4,12 +4,10 @@ public interface Event {
     String getName();
 
     static Event[] combineEvents(Event[]... events) {
-        System.out.println("combining arrays");
         int totalLength = 0;
         for (Event[] eventArray : events) {
             totalLength += eventArray.length;
         }
-        System.out.println("array to be combined has a length of " + totalLength);
         Event[] result = new Event[totalLength];
         int totalIndex = 0;
         for (Event[] eventArray : events) {
