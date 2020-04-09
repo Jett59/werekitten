@@ -6,6 +6,7 @@ import com.mycodefu.werekitten.animation.Animation;
 import com.mycodefu.werekitten.animation.AnimationCompiler;
 import com.mycodefu.werekitten.pipeline.PipelineContext;
 import com.mycodefu.werekitten.pipeline.events.game.BuildLevelEvent;
+import com.mycodefu.werekitten.pipeline.events.game.QuitGameEvent;
 import com.mycodefu.werekitten.pipeline.events.network.NetworkConnectClientEvent;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
@@ -80,8 +81,14 @@ public class StartPageUI {
         	settingsScene.setFill(new Color(0.05, 0.2, 0.95, 0.25));
         	context.getStage().setScene(settingsScene);
         });
+        Button quit = new Button("quit game");
+        quit.setStyle(buttonStyle);
+        quit.setFont(buttonFont);
+        quit.setOnAction(e->context.postEvent(new QuitGameEvent()));
         
-        VBox buttons = new VBox(10, singleplayer, hostServer, joinServer, settings);
+        HBox settingsAndQuit = new HBox(10, settings, quit);
+        
+        VBox buttons = new VBox(10, singleplayer, hostServer, joinServer, settingsAndQuit);
         buttons.setPadding(new Insets(50, 0, 0, 0));
 
 
