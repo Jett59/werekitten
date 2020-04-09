@@ -33,6 +33,8 @@ public class StartPageUI {
     }
 
     public Scene getScene(PipelineContext context){
+    double width = 250d;
+    
         Text welcome = new Text("WELCOME TO WEREKITTEN");
         welcome.setFocusTraversable(true);
         welcome.setFont(new Font("Arial", 42));
@@ -48,12 +50,14 @@ public class StartPageUI {
         Button singleplayer = new Button("Single Player");
         singleplayer.setStyle(buttonStyle);
         singleplayer.setFont(buttonFont);
+        singleplayer.setPrefWidth(width);
         singleplayer.setOnAction(actionEvent -> {
             context.postEvent(new BuildLevelEvent(false));
         });
         Button hostServer = new Button("Host LAN Server");
         hostServer.setStyle(buttonStyle);
         hostServer.setFont(buttonFont);
+        hostServer.setPrefWidth(width);
         hostServer.setOnAction(e->{
             context.postEvent(new BuildLevelEvent(true));
         });
@@ -62,6 +66,8 @@ public class StartPageUI {
 
         joinServer.setStyle(buttonStyle);
 
+        joinServer.setPrefWidth(width);
+        
         final FlowPane imagePane = new FlowPane(catAnimation.getImageView());
         imagePane.setPrefWidth(230);
 
@@ -74,6 +80,7 @@ public class StartPageUI {
         Button settings = new Button("settings");
         settings.setFont(buttonFont);
         settings.setStyle(buttonStyle);
+        settings.setPrefWidth(width/2d);
         
         settings.setOnAction(e->{
         	Node settingsNode = getSettingsScreenNode(context, welcome, imagePane);
@@ -81,9 +88,10 @@ public class StartPageUI {
         	settingsScene.setFill(new Color(0.05, 0.2, 0.95, 0.25));
         	context.getStage().setScene(settingsScene);
         });
-        Button quit = new Button("quit game");
+        Button quit = new Button("quit");
         quit.setStyle(buttonStyle);
         quit.setFont(buttonFont);
+        quit.setPrefWidth(width/2d);
         quit.setOnAction(e->context.postEvent(new QuitGameEvent()));
         
         HBox settingsAndQuit = new HBox(10, settings, quit);
