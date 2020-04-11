@@ -23,4 +23,11 @@ public class StopMovingRightEvent extends PlayerEvent {
     public Event getEvent() {
         return PlayerEventType.stopMovingRight;
     }
+
+    @Override
+    public String toString() {
+        return "StopMovingRightEvent{" +
+                "lastX=" + lastX +
+                '}';
+    }
 }
