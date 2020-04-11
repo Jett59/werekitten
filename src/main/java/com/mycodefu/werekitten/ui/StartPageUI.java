@@ -1,6 +1,7 @@
 package com.mycodefu.werekitten.ui;
 
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Supplier;
 
 import com.mycodefu.werekitten.animation.Animation;
 import com.mycodefu.werekitten.animation.AnimationCompiler;
@@ -26,9 +27,9 @@ import javafx.util.Duration;
 
 public class StartPageUI {
     public static String buttonStyle = "-fx-background-color: #666666; -fx-text-fill: #ccccff; ";
-    private String preferredIp;
+    private Supplier<String> preferredIp;
 
-    public StartPageUI(String preferredIp) {
+    public StartPageUI(Supplier<String> preferredIp) {
         this.preferredIp = preferredIp;
     }
 
@@ -129,7 +130,7 @@ public class StartPageUI {
         accessibleAddress.setTranslateX(-500000);
         accessibleAddress.setFocusTraversable(true);
         
-        TextField address = new TextField(preferredIp != null && !preferredIp.equals("") ? preferredIp : "wss://echo.websocket.org");
+        TextField address = new TextField(preferredIp.get() != null && !preferredIp.get().equals("") ? preferredIp.get() : "wss://echo.websocket.org");
         address.setStyle(buttonStyle);
         Button connect = new Button("connect");
         connect.setStyle(buttonStyle);

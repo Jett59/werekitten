@@ -6,10 +6,9 @@ import com.mycodefu.werekitten.pipeline.PipelineContext;
 import com.mycodefu.werekitten.pipeline.PipelineEvent;
 import com.mycodefu.werekitten.pipeline.events.game.GameEvent;
 import com.mycodefu.werekitten.pipeline.handlers.PipelineHandler;
+import com.mycodefu.werekitten.preferences.Preferences;
 import com.mycodefu.werekitten.ui.StartPageUI;
 import javafx.scene.Scene;
-
-import static com.mycodefu.werekitten.preferences.Preferences.CLIENT_CONNECT_IP_PREFERENCE;
 
 public class StartPageHandler implements PipelineHandler {
     @Override
@@ -18,9 +17,7 @@ public class StartPageHandler implements PipelineHandler {
             GameEvent gameEvent = (GameEvent)event;
             switch (gameEvent.getGameEvent()) {
                 case start: {
-                    String preferredIp = context.getPreferences().get(CLIENT_CONNECT_IP_PREFERENCE);
-
-                    StartPageUI startPageUI = new StartPageUI(preferredIp);
+                    StartPageUI startPageUI = new StartPageUI(()->context.getPreferences().get(Preferences.CLIENT_CONNECT_IP_PREFERENCE));
                     Scene scene = startPageUI.getScene(context);
 
                     context.getStage().setTitle("werekitten launcher");
