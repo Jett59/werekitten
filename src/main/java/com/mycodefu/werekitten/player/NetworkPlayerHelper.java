@@ -25,7 +25,7 @@ public class NetworkPlayerHelper {
     private Map<String, NetworkPlayerMessageSender> playerMessageSenders = new ConcurrentHashMap<>();
     public void createNetworkPlayer(String playerId, PipelineContext context, NetworkPlayerMessageSender playerMessageSender, double initialXPosition) {
         double height = context.level().get().getPlayerElement().getSize().getHeight();
-        this.scaledXMove=context.level().get().getPixelScaleHelper().scaleX(2);
+        this.scaledXMove=context.level().get().getPixelScaleHelper().scaleX(Kitten.KITTEN_SPEED);
 
         double catJumpAmount = context.level().get().getPixelScaleHelper().scaleY(GameUI.CAT_JUMP_AMOUNT);
 
