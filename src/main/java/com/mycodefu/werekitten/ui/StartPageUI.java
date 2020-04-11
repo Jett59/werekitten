@@ -80,7 +80,7 @@ public class StartPageUI {
         Button settings = new Button("settings");
         settings.setFont(buttonFont);
         settings.setStyle(buttonStyle);
-        settings.setPrefWidth(width/2d);
+        settings.setPrefWidth(width/2d-5d);
         
         settings.setOnAction(e->{
         	Node settingsNode = getSettingsScreenNode(context, welcome, imagePane);
@@ -91,7 +91,7 @@ public class StartPageUI {
         Button quit = new Button("quit");
         quit.setStyle(buttonStyle);
         quit.setFont(buttonFont);
-        quit.setPrefWidth(width/2d);
+        quit.setPrefWidth(width/2d-5d);
         quit.setOnAction(e->context.postEvent(new QuitGameEvent()));
         
         HBox settingsAndQuit = new HBox(10, settings, quit);
