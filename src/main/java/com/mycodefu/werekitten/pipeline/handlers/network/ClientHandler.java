@@ -69,23 +69,23 @@ public class ClientHandler implements PipelineHandler, NettyClientHandler.Socket
             PlayerEvent playerEvent = (PlayerEvent) event;
             if (nettyClient != null && playerEvent.getPlayerId().equalsIgnoreCase("local")) {
                 String playerId = playerEvent.getPlayerId();
-                double layoutX = context.getPlayerMap().get(playerId).getGroup().getLayoutX();
-                double scaledBackLayoutX = context.level().get().getPixelScaleHelper().scaleXBack(layoutX);
+                double x = context.getPlayerMap().get(playerId).getX();
+                double scaledBackX = context.level().get().getPixelScaleHelper().scaleXBack(x);
                 switch (playerEvent.getPlayerEvent()) {
                     case moveLeft:
-                        nettyClient.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.moveLeft, 3).addDoubleAsShort(scaledBackLayoutX).getBuffer());
+                        nettyClient.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.moveLeft, 3).addDoubleAsShort(scaledBackX).getBuffer());
                         break;
                     case moveRight:
-                        nettyClient.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.moveRight, 3).addDoubleAsShort(scaledBackLayoutX).getBuffer());
+                        nettyClient.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.moveRight, 3).addDoubleAsShort(scaledBackX).getBuffer());
                         break;
                     case stopMovingLeft:
-                        nettyClient.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.idleLeft, 3).addDoubleAsShort(scaledBackLayoutX).getBuffer());
+                        nettyClient.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.idleLeft, 3).addDoubleAsShort(scaledBackX).getBuffer());
                         break;
                     case stopMovingRight:
-                        nettyClient.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.idleRight, 3).addDoubleAsShort(scaledBackLayoutX).getBuffer());
+                        nettyClient.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.idleRight, 3).addDoubleAsShort(scaledBackX).getBuffer());
                         break;
                     case jump:
-                        nettyClient.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.jump, 3).addDoubleAsShort(scaledBackLayoutX).getBuffer());
+                        nettyClient.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.jump, 3).addDoubleAsShort(scaledBackX).getBuffer());
                         break;
                 }
             }

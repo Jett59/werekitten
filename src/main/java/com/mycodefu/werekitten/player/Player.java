@@ -171,6 +171,10 @@ public class Player {
         return health;
     }
 
+    public double getX() {
+    	return animationGroup.getTranslateX();
+    }
+    
     @Override
     public String toString() {
         return "{PlayerId: '" + id + "'}}";
