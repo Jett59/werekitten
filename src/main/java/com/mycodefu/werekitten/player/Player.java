@@ -89,7 +89,7 @@ public class Player {
     public void moveLeftTo(double x) {
         animationGroup.setTranslateX(x);
         //TODO: Check for collisions and undo the move to the rightmost point of the colliding object if so
-        currentAnimation = playOneAnimation(animations, nameToAnimation.get(AnimationType.walkLeft));
+        currentAnimation = playOneAnimation(animations, nameToAnimation.get(AnimationType.idleLeft));
 
         if (DEBUG) {
             System.out.println(String.format("Kitten %s moved left to %f.1", id, animationGroup.getTranslateX()));
@@ -100,7 +100,7 @@ public class Player {
     public void moveRightTo(double x) {
         animationGroup.setTranslateX(x);
         //TODO: Check for collisions and undo the move to the leftmost point of the colliding object if so
-        currentAnimation = playOneAnimation(animations, nameToAnimation.get(AnimationType.walkRight));
+        currentAnimation = playOneAnimation(animations, nameToAnimation.get(AnimationType.idleRight));
 
         if (DEBUG) {
             System.out.println(String.format("Kitten %s moved right to %f.1", id, animationGroup.getTranslateX()));
