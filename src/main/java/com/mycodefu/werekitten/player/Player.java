@@ -65,23 +65,27 @@ public class Player {
         return animationGroup;
     }
 
-    public void moveLeft(double amount) {
+    public void moveLeft(double xSync) {
+        animationGroup.setTranslateX(xSync);
+
     	stopMovingRight();
         moveTransitions[1].play();
         currentAnimation = playOneAnimation(animations, nameToAnimation.get(AnimationType.walkLeft));
 
         if (DEBUG) {
-            System.out.println(String.format("Kitten %s moved left by %f.1 to %f.1", id, amount, animationGroup.getLayoutX()));
+            System.out.println(String.format("Kitten %s moved left by %f.1 to %f.1", id, xSync, animationGroup.getLayoutX()));
         }
     }
 
-    public void moveRight(double amount) {
+    public void moveRight(double xSync) {
+        animationGroup.setTranslateX(xSync);
+        
     	stopMovingLeft();
         moveTransitions[0].play();
         currentAnimation = playOneAnimation(animations, nameToAnimation.get(AnimationType.walkRight));
 
         if (DEBUG) {
-            System.out.println(String.format("Kitten %s moved right  by %f.1 to %f.1", id, amount, animationGroup.getLayoutX()));
+            System.out.println(String.format("Kitten %s moved right  by %f.1 to %f.1", id, xSync, animationGroup.getLayoutX()));
         }
 
     }

@@ -7,7 +7,6 @@ import com.mycodefu.werekitten.pipeline.PipelineEvent;
 import com.mycodefu.werekitten.pipeline.events.keyboard.KeyboardEvent;
 import com.mycodefu.werekitten.pipeline.events.player.JumpEvent;
 import com.mycodefu.werekitten.pipeline.events.player.MoveLeftEvent;
-import com.mycodefu.werekitten.pipeline.events.player.MoveMode;
 import com.mycodefu.werekitten.pipeline.events.player.MoveRightEvent;
 import com.mycodefu.werekitten.pipeline.events.player.PlayerEvent;
 import com.mycodefu.werekitten.pipeline.events.player.StopMovingLeftEvent;
@@ -27,7 +26,7 @@ public class PlayerKeyboardHandler implements PipelineHandler {
         if (event instanceof KeyboardEvent) {
             switch ((KeyboardEventType) event.getEvent()) {
                 case leftPressed: {
-                    context.postEvent(new MoveLeftEvent("local", context.level().get().getPixelScaleHelper().scaleX(Kitten.KITTEN_SPEED), MoveMode.MoveBy));
+                    context.postEvent(new MoveLeftEvent("local", context.level().get().getPixelScaleHelper().scaleX(Kitten.KITTEN_SPEED)));
                     break;
                 }
                 case leftReleased: {
@@ -35,7 +34,7 @@ public class PlayerKeyboardHandler implements PipelineHandler {
                     break;
                 }
                 case rightPressed: {
-                    context.postEvent(new MoveRightEvent("local", context.level().get().getPixelScaleHelper().scaleX(Kitten.KITTEN_SPEED), MoveMode.MoveBy));
+                    context.postEvent(new MoveRightEvent("local", context.level().get().getPixelScaleHelper().scaleX(Kitten.KITTEN_SPEED)));
                     break;
                 }
                 case rightReleased: {

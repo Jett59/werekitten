@@ -38,36 +38,14 @@ public class PlayerMotionHandler implements PipelineHandler {
                     context.getPlayerMap().get(playerId).jump();
                     break;
                 }
-                case moveLeft:{
-                	PlayerMovementEvent moveEvent = (PlayerMovementEvent) playerEvent;
-                	switch(moveEvent.getMode()) {
-                	case MoveBy: {
-                		context.getPlayerMap().get(playerId).moveLeft(moveEvent.x);
-                		break;
-                	}
-                	case MoveTo: {
-                		context.getPlayerMap().get(playerId).moveLeftTo(moveEvent.x);
-                		break;
-                	}
-                	default:
-                		break;
-                }
-                	break;
+                case moveLeft: {
+                    double x = ((MoveLeftEvent) event).getX();
+                    context.getPlayerMap().get(playerId).moveLeft(x);
+                    break;
                 }
                 case moveRight: {
-                    PlayerMovementEvent moveEvent = (PlayerMovementEvent) playerEvent;
-                    switch (moveEvent.getMode()) {
-                    case MoveBy: {
-                    	context.getPlayerMap().get(playerId).moveRight(moveEvent.x);
-                    	break;
-                    }
-                    case MoveTo: {
-                    	context.getPlayerMap().get(playerId).moveRightTo(moveEvent.x);
-                    	break;
-                    }
-                    default:
-                    	break;
-                    }
+                    double x = ((MoveRightEvent) event).getX();
+                    context.getPlayerMap().get(playerId).moveRight(x);
                     break;
                 }
                 case stopMovingLeft: {
@@ -83,7 +61,7 @@ public class PlayerMotionHandler implements PipelineHandler {
                     if (lastX != 0d) {
                         context.getPlayerMap().get(playerId).moveTo(lastX);
                     }
-context.getPlayerMap().get(playerId).stopMovingRight();
+                    context.getPlayerMap().get(playerId).stopMovingRight();
                     break;
                 }
             }
@@ -153,7 +131,7 @@ context.getPlayerMap().get(playerId).stopMovingRight();
                 Polygon otherPlayerShape = otherPlayer.getCurrentAnimation().getCurrentShape();
                 otherPlayerShape.setLayoutX(otherPlayer.getGroup().getLayoutX());
                 if (!Shape.intersect(playerShape, otherPlayerShape).getBoundsInLocal().isEmpty()) {
-                    otherPlayer.moveTo(otherPlayer.getGroup().getLayoutX()+x);
+                    otherPlayer.moveTo(otherPlayer.getGroup().getLayoutX() + x);
                     otherPlayer.dealDamage(0.001);
                     ouch.setFramePosition(0);
                     ouch.start();
