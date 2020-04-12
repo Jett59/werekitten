@@ -87,23 +87,23 @@ public class Player {
     }
 
     public void moveLeftTo(double x) {
-        animationGroup.setLayoutX(x);
+        animationGroup.setTranslateX(x);
         //TODO: Check for collisions and undo the move to the rightmost point of the colliding object if so
         currentAnimation = playOneAnimation(animations, nameToAnimation.get(AnimationType.walkLeft));
 
         if (DEBUG) {
-            System.out.println(String.format("Kitten %s moved left to %f.1", id, animationGroup.getLayoutX()));
+            System.out.println(String.format("Kitten %s moved left to %f.1", id, animationGroup.getTranslateX()));
         }
 
     }
 
     public void moveRightTo(double x) {
-        animationGroup.setLayoutX(x);
+        animationGroup.setTranslateX(x);
         //TODO: Check for collisions and undo the move to the leftmost point of the colliding object if so
         currentAnimation = playOneAnimation(animations, nameToAnimation.get(AnimationType.walkRight));
 
         if (DEBUG) {
-            System.out.println(String.format("Kitten %s moved right to %f.1", id, animationGroup.getLayoutX()));
+            System.out.println(String.format("Kitten %s moved right to %f.1", id, animationGroup.getTranslateX()));
         }
     }
 
@@ -139,7 +139,7 @@ public class Player {
     }
 
     public void moveTo(double x) {
-        animationGroup.setLayoutX(x);
+        animationGroup.setTranslateX(x);
     }
 
     public enum AnimationType {
