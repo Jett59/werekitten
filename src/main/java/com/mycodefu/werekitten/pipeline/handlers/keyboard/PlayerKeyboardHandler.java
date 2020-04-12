@@ -26,7 +26,7 @@ public class PlayerKeyboardHandler implements PipelineHandler {
         if (event instanceof KeyboardEvent) {
             switch ((KeyboardEventType) event.getEvent()) {
                 case leftPressed: {
-                    context.postEvent(new MoveLeftEvent("local", context.level().get().getPixelScaleHelper().scaleX(Kitten.KITTEN_SPEED)));
+                    context.postEvent(new MoveLeftEvent("local"));
                     break;
                 }
                 case leftReleased: {
@@ -34,7 +34,7 @@ public class PlayerKeyboardHandler implements PipelineHandler {
                     break;
                 }
                 case rightPressed: {
-                    context.postEvent(new MoveRightEvent("local", context.level().get().getPixelScaleHelper().scaleX(Kitten.KITTEN_SPEED)));
+                    context.postEvent(new MoveRightEvent("local"));
                     break;
                 }
                 case rightReleased: {

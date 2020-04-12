@@ -7,7 +7,7 @@ public class StopMovingRightEvent extends PlayerEvent {
     private final double lastX;
 
     public StopMovingRightEvent(String playerId) {
-        this(playerId, 0);
+        this(playerId, Double.NaN);
     }
 
     public StopMovingRightEvent(String playerId, double lastX) {

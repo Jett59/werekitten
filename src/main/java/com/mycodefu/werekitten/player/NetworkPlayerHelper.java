@@ -16,8 +16,6 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class NetworkPlayerHelper {
-    private double scaledXMove = 2;
-
     public interface NetworkPlayerMessageSender {
         void sendMessage(ByteBuf message);
     }
@@ -25,7 +23,6 @@ public class NetworkPlayerHelper {
     private Map<String, NetworkPlayerMessageSender> playerMessageSenders = new ConcurrentHashMap<>();
     public void createNetworkPlayer(String playerId, PipelineContext context, NetworkPlayerMessageSender playerMessageSender, double initialXPosition) {
         double height = context.level().get().getPlayerElement().getSize().getHeight();
-        this.scaledXMove=context.level().get().getPixelScaleHelper().scaleX(Kitten.KITTEN_SPEED);
 
         double catJumpAmount = context.level().get().getPixelScaleHelper().scaleY(GameUI.CAT_JUMP_AMOUNT);
 
@@ -58,32 +55,16 @@ public class NetworkPlayerHelper {
                 createNetworkPlayer(playerId, context, playerMessageSender, initialXPosition);
                 break;
             }
-            case move: {
-                double x = ((double) content.readShort()) / 10;
-                double xScaled = context.level().get().getPixelScaleHelper().scaleX(x);
-                double oldX = context.getPlayerMap().get(playerId).getGroup().getLayoutX();
-                double difference = xScaled - oldX;
-                if (difference == 0) {
-                    break;
-                } else if (difference < 0) {
-                    context.postEvent(new MoveLeftEvent(playerId, xScaled, MoveMode.MoveTo));
-                } else {
-                    context.postEvent(new MoveRightEvent(playerId, xScaled, MoveMode.MoveTo));
-                }
-                break;
-            }
             case moveLeft: {
                 double x = ((double) content.readShort()) / 10d;
                 double xScaled = context.level().get().getPixelScaleHelper().scaleX(x);
-                context.postEvent(new MoveLeftEvent(playerId, xScaled, MoveMode.MoveTo));
-                context.postEvent(new MoveLeftEvent(playerId, this.scaledXMove, MoveMode.MoveBy));
+                context.postEvent(new MoveLeftEvent(playerId, xScaled));
                 break;
             }
             case moveRight: {
                 double x = ((double) content.readShort()) / 10d;
                 double xScaled = context.level().get().getPixelScaleHelper().scaleX(x);
-                context.postEvent(new MoveRightEvent(playerId, xScaled, MoveMode.MoveTo));
-                context.postEvent(new MoveRightEvent(playerId, this.scaledXMove, MoveMode.MoveBy));
+                context.postEvent(new MoveRightEvent(playerId, xScaled));
                 break;
             }
             case idleLeft: {

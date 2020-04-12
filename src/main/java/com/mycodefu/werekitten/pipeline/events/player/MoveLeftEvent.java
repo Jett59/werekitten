@@ -6,6 +6,9 @@ import com.mycodefu.werekitten.event.PlayerEventType;
 public class MoveLeftEvent extends PlayerEvent {
     private final double x;
 
+    public MoveLeftEvent(String playerId) {
+        this(playerId, Double.NaN);
+    }
     public MoveLeftEvent(String playerId, double x) {
         super(playerId);
         this.x = x;
@@ -22,4 +25,10 @@ public class MoveLeftEvent extends PlayerEvent {
         return PlayerEventType.moveLeft;
     }
 
+    @Override
+    public String toString() {
+        return "MoveLeftEvent{" +
+                "x=" + x +
+                '}';
+    }
 }

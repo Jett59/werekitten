@@ -66,7 +66,9 @@ public class Player {
     }
 
     public void moveLeft(double xSync) {
-        animationGroup.setTranslateX(xSync);
+        if (!Double.isNaN(xSync)) {
+            animationGroup.setTranslateX(xSync);
+        }
 
     	stopMovingRight();
         moveTransitions[1].play();
@@ -78,7 +80,9 @@ public class Player {
     }
 
     public void moveRight(double xSync) {
-        animationGroup.setTranslateX(xSync);
+        if (!Double.isNaN(xSync)) {
+            animationGroup.setTranslateX(xSync);
+        }
         
     	stopMovingLeft();
         moveTransitions[0].play();

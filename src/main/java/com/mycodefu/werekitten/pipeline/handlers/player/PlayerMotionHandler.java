@@ -2,30 +2,20 @@ package com.mycodefu.werekitten.pipeline.handlers.player;
 
 import com.mycodefu.werekitten.event.Event;
 import com.mycodefu.werekitten.event.PlayerEventType;
-import com.mycodefu.werekitten.event.TimeEventType;
 import com.mycodefu.werekitten.pipeline.PipelineContext;
 import com.mycodefu.werekitten.pipeline.PipelineEvent;
 import com.mycodefu.werekitten.pipeline.events.player.*;
-import com.mycodefu.werekitten.pipeline.events.time.TickEvent;
 import com.mycodefu.werekitten.pipeline.handlers.PipelineHandler;
-import com.mycodefu.werekitten.player.Player;
 import com.mycodefu.werekitten.sound.MusicPlayer;
-import javafx.scene.shape.Polygon;
-import javafx.scene.shape.Shape;
 
 import javax.sound.sampled.Clip;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class PlayerMotionHandler implements PipelineHandler {
-    private Map<String, Map<PlayerEventType, PlayerEvent>> playerMovementEventMap = new ConcurrentHashMap<>();
     private final Clip ouch = MusicPlayer.getClipFromResource("/characters/cat/sounds/ouch.wav");
 
     @Override
     public Event[] getEventInterest() {
-        return Event.combineEvents(PlayerEventType.values(), TimeEventType.tick);
+        return Event.combineEvents(PlayerEventType.values());
     }
 
     @Override
@@ -50,95 +40,21 @@ public class PlayerMotionHandler implements PipelineHandler {
                 }
                 case stopMovingLeft: {
                     double lastX = ((StopMovingLeftEvent) playerEvent).getLastX();
+                    context.getPlayerMap().get(playerId).stopMovingLeft();
                     if (lastX != 0d) {
                         context.getPlayerMap().get(playerId).moveTo(lastX);
                     }
-                    context.getPlayerMap().get(playerId).stopMovingLeft();
                     break;
                 }
                 case stopMovingRight: {
                     double lastX = ((StopMovingRightEvent) playerEvent).getLastX();
+                    context.getPlayerMap().get(playerId).stopMovingRight();
                     if (lastX != 0d) {
                         context.getPlayerMap().get(playerId).moveTo(lastX);
                     }
-                    context.getPlayerMap().get(playerId).stopMovingRight();
                     break;
                 }
             }
-        } else if (event instanceof TickEvent) {
-            Set<String> playersToMove = playerMovementEventMap.keySet();
-            for (String playerId : playersToMove) {
-                Set<PlayerEventType> playerEventTypes = new HashSet<PlayerEventType>(playerMovementEventMap.get(playerId).keySet());
-                for (PlayerEventType movementEventType : playerEventTypes) {
-                    PlayerEvent playerMovementEvent = playerMovementEventMap.get(playerId).get(movementEventType);
-                    if (playerMovementEvent != null) {
-                        switch (movementEventType) {
-                            case moveLeft: {
-                                MoveLeftEvent moveEvent = (MoveLeftEvent) playerMovementEvent;
-                                Player player = context.getPlayerMap().get(playerId);
-                                if (player != null) {
-                                    if (moveEvent.getMode() == MoveMode.MoveBy) {
-                                        if (canMoveLeft(player, moveEvent.x, context)) {
-                                            player.moveLeft(moveEvent.x);
-                                        }
-                                    }
-                                }
-                                break;
-                            }
-                            case moveRight: {
-                                MoveRightEvent moveEvent = (MoveRightEvent) playerMovementEvent;
-                                Player player = context.getPlayerMap().get(playerId);
-                                if (player != null) {
-                                    if (moveEvent.getMode() == MoveMode.MoveBy) {
-                                        if (canMoveRight(player, moveEvent.x, context)) {
-                                            player.moveRight(moveEvent.x);
-                                        }
-                                    }
-                                }
-                                break;
-                            }
-                            case stopMovingLeft: {
-                                context.getPlayerMap().get(playerId).stopMovingLeft();
-                                playerMovementEventMap.get(playerId).remove(movementEventType);
-                                playerMovementEventMap.get(playerId).remove(PlayerEventType.moveLeft);
-                                break;
-                            }
-                            case stopMovingRight: {
-                                context.getPlayerMap().get(playerId).stopMovingRight();
-                                playerMovementEventMap.get(playerId).remove(movementEventType);
-                                playerMovementEventMap.get(playerId).remove(PlayerEventType.moveRight);
-                                break;
-                            }
-
-                            default:
-                                break;
-                        }
-                    }
-                }
-            }
         }
-    }
-
-    private boolean canMoveLeft(Player player, double x, PipelineContext context) {
-        return canMoveRight(player, -x, context);
-    }
-
-    private boolean canMoveRight(Player player, double x, PipelineContext context) {
-        Shape playerShape = player.getCurrentShape();
-        playerShape.setLayoutX(player.getGroup().getLayoutX() + x);
-        for (Player otherPlayer : context.getPlayerMap().values()) {
-            if (player != otherPlayer) {
-                Polygon otherPlayerShape = otherPlayer.getCurrentAnimation().getCurrentShape();
-                otherPlayerShape.setLayoutX(otherPlayer.getGroup().getLayoutX());
-                if (!Shape.intersect(playerShape, otherPlayerShape).getBoundsInLocal().isEmpty()) {
-                    otherPlayer.moveTo(otherPlayer.getGroup().getLayoutX() + x);
-                    otherPlayer.dealDamage(0.001);
-                    ouch.setFramePosition(0);
-                    ouch.start();
-                    return false;
-                }
-            }
-        }
-        return true;
     }
 }

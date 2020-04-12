@@ -9,7 +9,6 @@ import javafx.util.Duration;
 
 public class Kitten extends Player{
 	public static final double KITTEN_SPEED = 2.13d;
-	public static double MOVE_AMOUNT = 2;
 
 private Kitten(String id, Animation idleRight, Animation idleLeft, Animation walkRight, Animation walkLeft, double jumpAmount, AnimationType initialAnimation, double initialXPosition, double speed) {
 	super(id, idleRight, idleLeft, walkRight, walkLeft, jumpAmount, initialAnimation, initialXPosition, speed);
