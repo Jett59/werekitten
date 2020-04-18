@@ -1,6 +1,7 @@
 package com.mycodefu.werekitten.pipeline.handlers.network;
 
 import com.mycodefu.werekitten.event.Event;
+import com.mycodefu.werekitten.event.GameEventType;
 import com.mycodefu.werekitten.event.NetworkEventType;
 import com.mycodefu.werekitten.event.PlayerEventType;
 import com.mycodefu.werekitten.netty.server.NettyServer;
@@ -114,6 +115,10 @@ public class ServerHandler implements PipelineHandler {
                         break;
                 }
             }
+        }else if(event instanceof QuitGameEvent) {
+        	if(server != null) {
+        		server.close();
+        	}
         }
     }
 
@@ -121,7 +126,8 @@ public class ServerHandler implements PipelineHandler {
     public Event[] getEventInterest() {
         return Event.combineEvents(PlayerEventType.values(),
                 NetworkEventType.start,
-                NetworkEventType.stop);
+                NetworkEventType.stop,
+                GameEventType.quit);
     }
 
 
