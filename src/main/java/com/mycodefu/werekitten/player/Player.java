@@ -104,16 +104,20 @@ public class Player {
         if (!Double.isNaN(xSync)) {
             moveTransition.syncX(xSync);
         }
+        if(moveTransition.getDirection().equals(MovementAnimation.MovementDirection.Left)) {
         moveTransition.stop();
         currentAnimation = playOneAnimation(animations, nameToAnimation.get(AnimationType.idleLeft));
+        }
     }
 
     public void stopMovingRight(double xSync) {
         if (!Double.isNaN(xSync)) {
             moveTransition.syncX(xSync);
         }
+        if(moveTransition.getDirection().equals(MovementAnimation.MovementDirection.Right)) {
         moveTransition.stop();
         currentAnimation = playOneAnimation(animations, nameToAnimation.get(AnimationType.idleRight));
+        }
     }
 
     public Shape getCurrentShape() {

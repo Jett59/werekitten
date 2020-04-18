@@ -1,7 +1,5 @@
 package com.mycodefu.werekitten.animation;
 
-import java.util.function.Function;
-
 import javafx.animation.Transition;
 import javafx.scene.Node;
 import javafx.util.Duration;
@@ -47,6 +45,10 @@ public class MovementAnimation extends Transition {
         node.setTranslateX(x);
     }
 
+    public MovementDirection getDirection() {
+    	return direction;
+    }
+    
     public void setDirection(MovementDirection direction){
         this.direction = direction;
     }
