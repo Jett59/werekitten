@@ -10,6 +10,7 @@ import com.mycodefu.werekitten.pipeline.handlers.PipelineHandler;
 import java.time.Instant;
 import java.util.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.stream.Collectors;
 
 public class Pipeline {
     private final Queue<PipelineEvent> eventQueue;
@@ -65,11 +66,17 @@ public class Pipeline {
 
         PipelineEvent event;
         while ((event = eventQueue.poll()) != null) {
-            if (Start.DEBUG_PIPELINE_EVENTS) {
-                System.out.println("rendering event " + event.getEvent().getName());
-            }
 
             PipelineHandler[] handlers = this.eventHandlers.get(event.getEvent());
+            
+            if (Start.DEBUG_PIPELINE_EVENTS) {
+            	if(handlers != null) {
+                System.out.printf("rendering event %s in the handlers %s\n", event.getEvent().getName(), Arrays.stream(handlers).map(pipeline->pipeline.getClass().getSimpleName()).collect(Collectors.toList()).toString());
+            	}else {
+            		System.out.printf("rendering event %s in no handlers", event.getEvent().getName());
+            	}
+            }
+            
             if (handlers != null) {
                 for (PipelineHandler handler : handlers) {
                     try {
