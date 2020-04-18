@@ -34,6 +34,6 @@ public abstract class PlayerEvent implements PipelineEvent {
     		leftReleased,
     		rightPressed,
     		rightReleased,
-    		spaceReleased
+    		spacePressed
     };
 }

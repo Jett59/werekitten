@@ -41,7 +41,7 @@ public class PlayerKeyboardHandler implements PipelineHandler {
                     context.postEvent(new StopMovingRightEvent("local"));
                     break;
                 }
-                case spaceReleased: {
+                case spacePressed: {
                     context.postEvent(new JumpEvent("local"));
                     break;
                 }
