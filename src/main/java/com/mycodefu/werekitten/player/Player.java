@@ -16,6 +16,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import static com.mycodefu.werekitten.animation.MovementAnimation.MovementDirection.Left;
+import static com.mycodefu.werekitten.animation.MovementAnimation.MovementDirection.Right;
+
 public class Player {
 
     private final String id;
@@ -27,7 +30,7 @@ public class Player {
     private Animation currentAnimation;
     private double health = 1;
     private Text healthDisplayText = new Text("" + ((int) health) * 999);
-    private MovementAnimation[] moveTransitions = new MovementAnimation[2];
+    private final MovementAnimation moveTransition;
 
     private static boolean DEBUG = true;
 
@@ -52,10 +55,7 @@ public class Player {
 
         int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
         double rightBound = screenWidth - walkRight.getImageView().getViewport().getWidth();
-        MovementAnimation moveRight = new MovementAnimation(animationGroup, speed, x -> x < rightBound, Duration.INDEFINITE);
-        moveTransitions[0] = moveRight;
-        MovementAnimation moveLeft = new MovementAnimation(animationGroup, speed * -1, x -> x > 0, Duration.INDEFINITE);
-        moveTransitions[1] = moveLeft;
+        moveTransition = new MovementAnimation(animationGroup, speed, MovementAnimation.MovementDirection.Left, rightBound, Duration.INDEFINITE);
 
         currentAnimation = playOneAnimation(animations, nameToAnimation.get(initialAnimation));
         animationGroup.setTranslateX(animationGroup.getLayoutX() + initialXPosition);
@@ -67,12 +67,13 @@ public class Player {
 
     public void moveLeft(double xSync) {
         if (!Double.isNaN(xSync)) {
-            animationGroup.setTranslateX(xSync);
+            moveTransition.syncX(xSync);
         }
-
-    	stopMovingRight();
-        moveTransitions[1].play();
-        currentAnimation = playOneAnimation(animations, nameToAnimation.get(AnimationType.walkLeft));
+        moveTransition.setDirection(Left);
+        if (!moveTransition.getStatus().equals(javafx.animation.Animation.Status.RUNNING)) {
+            moveTransition.play();
+        }
+        this.currentAnimation = playOneAnimation(animations, nameToAnimation.get(AnimationType.walkLeft));
 
         if (DEBUG) {
             System.out.println(String.format("Kitten %s moved left by %f.1 to %f.1", id, xSync, animationGroup.getLayoutX()));
@@ -81,51 +82,37 @@ public class Player {
 
     public void moveRight(double xSync) {
         if (!Double.isNaN(xSync)) {
-            animationGroup.setTranslateX(xSync);
+            moveTransition.syncX(xSync);
         }
-        
-    	stopMovingLeft();
-        moveTransitions[0].play();
-        currentAnimation = playOneAnimation(animations, nameToAnimation.get(AnimationType.walkRight));
+        moveTransition.setDirection(Right);
+        if (!moveTransition.getStatus().equals(javafx.animation.Animation.Status.RUNNING)) {
+            moveTransition.play();
+        }
+        this.currentAnimation = playOneAnimation(animations, nameToAnimation.get(AnimationType.walkRight));
 
         if (DEBUG) {
             System.out.println(String.format("Kitten %s moved right  by %f.1 to %f.1", id, xSync, animationGroup.getLayoutX()));
         }
-
     }
 
-    public void moveLeftTo(double x) {
-        animationGroup.setTranslateX(x);
-        //TODO: Check for collisions and undo the move to the rightmost point of the colliding object if so
-        currentAnimation = playOneAnimation(animations, nameToAnimation.get(AnimationType.idleLeft));
-
-        if (DEBUG) {
-            System.out.println(String.format("Kitten %s moved left to %f.1", id, animationGroup.getTranslateX()));
-        }
-
-    }
-
-    public void moveRightTo(double x) {
-        animationGroup.setTranslateX(x);
-        //TODO: Check for collisions and undo the move to the leftmost point of the colliding object if so
-        currentAnimation = playOneAnimation(animations, nameToAnimation.get(AnimationType.idleRight));
-
-        if (DEBUG) {
-            System.out.println(String.format("Kitten %s moved right to %f.1", id, animationGroup.getTranslateX()));
-        }
-    }
 
     public void jump() {
         jump.play();
     }
 
-    public void stopMovingLeft() {
-        moveTransitions[1].stop();
+    public void stopMovingLeft(double xSync) {
+        if (!Double.isNaN(xSync)) {
+            moveTransition.syncX(xSync);
+        }
+        moveTransition.stop();
         currentAnimation = playOneAnimation(animations, nameToAnimation.get(AnimationType.idleLeft));
     }
 
-    public void stopMovingRight() {
-        moveTransitions[0].stop();
+    public void stopMovingRight(double xSync) {
+        if (!Double.isNaN(xSync)) {
+            moveTransition.syncX(xSync);
+        }
+        moveTransition.stop();
         currentAnimation = playOneAnimation(animations, nameToAnimation.get(AnimationType.idleRight));
     }
 
@@ -144,10 +131,6 @@ public class Player {
             }
         }
         return animationToPlay;
-    }
-
-    public void moveTo(double x) {
-        animationGroup.setTranslateX(x);
     }
 
     public enum AnimationType {
@@ -180,9 +163,9 @@ public class Player {
     }
 
     public double getX() {
-    	return animationGroup.getTranslateX();
+        return animationGroup.getTranslateX();
     }
-    
+
     @Override
     public String toString() {
         return "{PlayerId: '" + id + "'}}";

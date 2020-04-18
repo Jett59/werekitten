@@ -40,18 +40,12 @@ public class PlayerMotionHandler implements PipelineHandler {
                 }
                 case stopMovingLeft: {
                     double lastX = ((StopMovingLeftEvent) playerEvent).getLastX();
-                    context.getPlayerMap().get(playerId).stopMovingLeft();
-                    if (!Double.isNaN(lastX)) {
-                        context.getPlayerMap().get(playerId).moveTo(lastX);
-                    }
+                    context.getPlayerMap().get(playerId).stopMovingLeft(lastX);
                     break;
                 }
                 case stopMovingRight: {
                     double lastX = ((StopMovingRightEvent) playerEvent).getLastX();
-                    context.getPlayerMap().get(playerId).stopMovingRight();
-                    if (!Double.isNaN(lastX)) {
-                        context.getPlayerMap().get(playerId).moveTo(lastX);
-                    }
+                    context.getPlayerMap().get(playerId).stopMovingRight(lastX);
                     break;
                 }
             }
