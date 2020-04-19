@@ -7,7 +7,7 @@ public class MessageBuilder {
     private static final ByteBufAllocator allocator = ByteBufAllocator.DEFAULT;
     private ByteBuf buffer;
 
-    public MessageBuilder(ByteBuf buffer) {
+    private MessageBuilder(ByteBuf buffer) {
         this.buffer = buffer;
     }
 
@@ -22,6 +22,13 @@ public class MessageBuilder {
         return this;
     }
 
+    public MessageBuilder putBytes(byte[] bytes) {
+    	for(byte b : bytes) {
+    		putByte(b);
+    	}
+    	return this;
+    }
+    
     public ByteBuf getBuffer() {
         return buffer;
     }
