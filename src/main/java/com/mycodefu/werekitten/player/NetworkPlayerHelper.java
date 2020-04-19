@@ -10,6 +10,7 @@ import com.mycodefu.werekitten.pipeline.events.ui.PlayerCreatedEvent;
 import com.mycodefu.werekitten.pipeline.events.ui.PlayerDestroyedEvent;
 import com.mycodefu.werekitten.ui.GameUI;
 import io.netty.buffer.ByteBuf;
+import io.netty.util.CharsetUtil;
 import javafx.util.Duration;
 
 import java.util.Map;
@@ -81,6 +82,12 @@ public class NetworkPlayerHelper {
             }
             case jump: {
                 context.postEvent(new JumpEvent(playerId));
+                break;
+            }
+            case chat: {
+            	byte[] bytes = new byte[content.readByte()];
+            	content.readBytes(bytes);
+            	String chatMessage = new String(bytes, CharsetUtil.UTF_8);
             }
         }
     }

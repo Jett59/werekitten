@@ -10,7 +10,8 @@ public enum MessageType {
     idleLeft((byte) 3),
     idleRight((byte) 4),
 	moveLeft((byte) 5),
-	moveRight((byte) 6);
+	moveRight((byte) 6),
+	chat((byte)7);
 
     private final byte code;
 
