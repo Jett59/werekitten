@@ -130,29 +130,6 @@
         }
       ]
     },
-    {
-      "name": "shrews",
-      "depth": 1,
-      "scrollSpeed": 1,
-      "elements": [
-        {
-          "type": "Animation",
-          "name": "shadyshrew.Idle",
-          "size": {
-            "height": 25
-          },
-          "location": {
-            "x": 325,
-            "y": 487
-          },
-          "animationConfig": {
-            "durationMillis": 250,
-            "framesInAnimation": 2,
-            "reversed": true
-          }
-        }
-      ]
-    },
 {
 "name": "foreground",
 "depth": 1,
