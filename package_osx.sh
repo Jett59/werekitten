@@ -1,7 +1,7 @@
 set -e
 set +x
 
-JDK_14_EXTRACTED_PATH=jdk-14.jdk
+JDK_14_EXTRACTED_PATH=jdk-14.0.1.jdk
 export JPACKAGE_HOME=./${JDK_14_EXTRACTED_PATH}
 
 export JAVA_HOME="${JPACKAGE_HOME}/Contents/Home"
