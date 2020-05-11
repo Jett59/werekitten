@@ -52,6 +52,28 @@
 "blue": 0.0125,
 "opacity": 1
 }
+},
+{
+"type": "Image",
+"name": "stone",
+"size": {
+"width": 10
+},
+"location": {
+"x": 500,
+"y": 350
+}
+},
+{
+"type": "Image",
+"name": "tree_2",
+"size": {
+"height": 100
+},
+"location": {
+"x": 900,
+"y": 244
+}
 }
 ]
 },
@@ -75,6 +97,17 @@
 "green": 0.4,
 "blue": 0.025,
 "opacity": 1
+}
+},
+{
+"type": "Image",
+"name": "stone",
+"size": {
+"width": 100
+},
+"location": {
+"x": 924,
+"y": 500
 }
 }
 ]
