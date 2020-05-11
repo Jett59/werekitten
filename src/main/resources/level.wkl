@@ -96,6 +96,23 @@
 }
 }
 ]
+},
+{
+"name": "foreground",
+"depth": 1,
+"elements": [
+{
+"type": "Image",
+"name": "tree_2",
+"size": {
+"height": 1000
+},
+"location": {
+"x": 0,
+"y": -388
+}
+}
+]
 }
 ]
 }
