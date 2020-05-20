@@ -39,10 +39,7 @@ public class LevelBuilder {
 
         List<LayerGroup> layerGroups = defaultLevel.getLayers().stream()
                 .map(layer -> {
-                    List<NodeObject> elements = layer.getElements().stream().map(backgroundElement -> {
-                        NodeObject nodeObject = backgroundObjectBuilder.build(backgroundElement);
-                        return nodeObject;
-                    }).collect(Collectors.toList());
+                    List<NodeObject> elements = layer.getElements().stream().map(backgroundObjectBuilder::build).collect(Collectors.toList());
 
                     Group group = new Group(elements.stream().map(NodeObject::getNode).collect(Collectors.toList()));
                     return new LayerGroup(layer.getName(), layer.getType(), group, layer.getElements(), layer.getScrollSpeed(), layer.getDepth());
