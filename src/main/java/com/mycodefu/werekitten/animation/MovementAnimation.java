@@ -11,6 +11,7 @@ public class MovementAnimation extends Transition {
     private Node node;
     private double x = Double.MAX_VALUE;
     private double rightBound;
+    private double leftBound;
     private MovementDirection direction;
     private double distanceToEdge = Double.MAX_VALUE;
 private double lastFrac = 0;
@@ -20,10 +21,10 @@ private double lastFrac = 0;
         switch (direction) {
         case Left: {
         	if(distanceToEdge == Double.MAX_VALUE) {
-        		distanceToEdge = node.getTranslateX();
+        		distanceToEdge = node.getTranslateX()-leftBound;
         	}
         	if(frac > lastFrac) {
-        	x = distanceToEdge*(1-frac);
+        		x = distanceToEdge*(1-frac)+leftBound;
         	node.setTranslateX(x);
         	lastFrac = frac;
         	}
@@ -44,9 +45,10 @@ private double lastFrac = 0;
         }
     }
 
-    public MovementAnimation(Node node, double pixelRate, MovementDirection initialDirection, double rightBound, Duration duration) {
+    public MovementAnimation(Node node, double pixelRate, MovementDirection initialDirection, double rightBound, double leftBound, Duration duration) {
         this.node = node;
         this.rightBound = rightBound;
+        this.leftBound = leftBound;
         this.direction = initialDirection;
         setInterpolator(Interpolator.LINEAR);
         setCycleCount(1);
@@ -73,7 +75,7 @@ private double lastFrac = 0;
         this.direction = direction;
         switch (direction) {
         case Left: {
-        	super.setCycleDuration(Duration.millis((node.getTranslateX()/pixelRate)*1000));
+        	super.setCycleDuration(Duration.millis((node.getTranslateX()-leftBound)/pixelRate*1000));
         	break;
         }
         case Right: {

@@ -20,7 +20,6 @@ import static com.mycodefu.werekitten.animation.MovementAnimation.MovementDirect
 import static com.mycodefu.werekitten.animation.MovementAnimation.MovementDirection.Right;
 
 public class Player {
-
     private final String id;
     private final double speed;
     private Map<AnimationType, Animation> nameToAnimation = new ConcurrentHashMap<>();
@@ -54,8 +53,9 @@ public class Player {
         jump.setCycleCount(2);
 
         int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
-        double rightBound = screenWidth - walkRight.getImageView().getViewport().getWidth();
-        moveTransition = new MovementAnimation(animationGroup, speed, MovementAnimation.MovementDirection.Left, rightBound, Duration.INDEFINITE);
+        double rightBound = screenWidth - walkRight.getCurrentShape().maxWidth(-1);
+        double leftBound = walkLeft.getCurrentShape().maxWidth(-1)-walkLeft.getImageView().getViewport().getWidth();
+        moveTransition = new MovementAnimation(animationGroup, speed, MovementAnimation.MovementDirection.Left, rightBound, leftBound, Duration.INDEFINITE);
 
         currentAnimation = playOneAnimation(animations, nameToAnimation.get(initialAnimation));
         animationGroup.setTranslateX(animationGroup.getLayoutX() + initialXPosition);
