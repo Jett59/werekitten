@@ -11,6 +11,7 @@
         "com.mycodefu.werekitten.pipeline.handlers.keyboard.KeyboardHandler",
         "com.mycodefu.werekitten.pipeline.handlers.keyboard.PlayerKeyboardHandler",
         "com.mycodefu.werekitten.pipeline.handlers.player.PlayerMotionHandler",
+        "com.mycodefu.werekitten.pipeline.handlers.chat.ChatMessageSendHandler",
         "com.mycodefu.werekitten.pipeline.handlers.network.ClientHandler",
         "com.mycodefu.werekitten.pipeline.handlers.network.ServerHandler",
         "com.mycodefu.werekitten.pipeline.handlers.Ui.LocalPlayerAdditionHandler",
