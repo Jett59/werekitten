@@ -40,6 +40,7 @@ public ChatMessageSendHandler() {
 			((UiCreatedEvent)event).getUI().addNode(chatSendInterface);
 			send.setOnAction(e->{
 				context.postEvent(new ChatMessageSendEvent(textField.getText()));
+				textField.requestFocus();
 			});
 		}
 	}
