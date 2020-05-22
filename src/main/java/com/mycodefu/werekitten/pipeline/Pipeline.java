@@ -73,7 +73,7 @@ public class Pipeline {
             	if(handlers != null) {
                 System.out.printf("rendering event %s in the handlers %s\n", event.getEvent().getName(), Arrays.stream(handlers).map(pipeline->pipeline.getClass().getSimpleName()).collect(Collectors.toList()).toString());
             	}else {
-            		System.out.printf("rendering event %s in no handlers", event.getEvent().getName());
+            		System.out.printf("rendering event %s in no handlers\n", event.getEvent().getName());
             	}
             }
             
