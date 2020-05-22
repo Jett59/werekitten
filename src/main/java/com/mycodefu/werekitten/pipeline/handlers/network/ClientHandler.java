@@ -7,6 +7,8 @@ import com.mycodefu.werekitten.network.message.MessageBuilder;
 import com.mycodefu.werekitten.network.message.MessageType;
 import com.mycodefu.werekitten.pipeline.PipelineContext;
 import com.mycodefu.werekitten.pipeline.PipelineEvent;
+import com.mycodefu.werekitten.pipeline.events.chat.ChatMessageSendEvent;
+import com.mycodefu.werekitten.pipeline.events.chat.ChatMessageSentEvent;
 import com.mycodefu.werekitten.pipeline.events.game.BuildLevelEvent;
 import com.mycodefu.werekitten.pipeline.events.game.StartGameEvent;
 import com.mycodefu.werekitten.pipeline.events.network.NetworkConnectClientEvent;
@@ -19,6 +21,7 @@ import com.mycodefu.werekitten.pipeline.handlers.PipelineHandler;
 import com.mycodefu.werekitten.player.NetworkPlayerHelper;
 import com.mycodefu.werekitten.preferences.Preferences;
 import io.netty.buffer.ByteBuf;
+import io.netty.util.CharsetUtil;
 
 import static com.mycodefu.werekitten.event.UiEventType.UiCreated;
 
@@ -65,6 +68,17 @@ public class ClientHandler implements PipelineHandler, NettyClientHandler.Socket
                 default:
                     break;
             }
+        }else if(event instanceof ChatMessageSendEvent) {
+        	if(nettyClient != null) {
+        		ChatMessageSendEvent sendEvent = (ChatMessageSendEvent)event;
+        		if(sendEvent.message.length() < Byte.MAX_VALUE) {
+        		nettyClient.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.chat, sendEvent.message.length()+2).putByte((byte)sendEvent.message.length()).putBytes(sendEvent.message.getBytes(CharsetUtil.UTF_8)).getBuffer());
+        		context.postEvent(new ChatMessageSentEvent());
+        		System.out.println("posted sent event");
+        		}else {
+        			throw new IllegalArgumentException(String.format("message %s is larger than the size limit of %s", sendEvent.message, Byte.MAX_VALUE));
+        		}
+        	}
         } else if (event instanceof PlayerEvent) {
             PlayerEvent playerEvent = (PlayerEvent) event;
             if (nettyClient != null && playerEvent.getPlayerId().equalsIgnoreCase("local")) {
@@ -117,6 +131,7 @@ public class ClientHandler implements PipelineHandler, NettyClientHandler.Socket
     @Override
     public Event[] getEventInterest() {
         return Event.combineEvents(PlayerEventType.values(),
+        		ChatEventType.send,
                 UiCreated,
                 NetworkEventType.connect);
     }

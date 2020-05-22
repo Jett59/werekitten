@@ -6,7 +6,7 @@ public class ChatMessageSentEvent extends ChatEvent {
 
 	@Override
 	public ChatEventType getChatEvent() {
-		return ChatEventType.send;
+		return ChatEventType.sent;
 	}
 
 }

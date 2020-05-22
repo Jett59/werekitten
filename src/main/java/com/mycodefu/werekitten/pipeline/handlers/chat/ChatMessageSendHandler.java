@@ -11,6 +11,7 @@ import com.mycodefu.werekitten.pipeline.events.chat.ChatMessageSendEvent;
 import com.mycodefu.werekitten.pipeline.events.ui.UiCreatedEvent;
 import com.mycodefu.werekitten.pipeline.handlers.PipelineHandler;
 
+import javafx.scene.AccessibleRole;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
@@ -22,6 +23,7 @@ private Button send;
 
 public ChatMessageSendHandler() {
 	this.textField = new TextField();
+	textField.setAccessibleRole(AccessibleRole.TEXT_AREA);
 	this.send = new Button("send");
 	this.chatSendInterface = new HBox(20, textField, send);
 }
@@ -40,7 +42,7 @@ public ChatMessageSendHandler() {
 			((UiCreatedEvent)event).getUI().addNode(chatSendInterface);
 			send.setOnAction(e->{
 				context.postEvent(new ChatMessageSendEvent(textField.getText()));
-				textField.requestFocus();
+				//textField.requestFocus();
 			});
 		}
 	}

@@ -3,6 +3,7 @@ package com.mycodefu.werekitten.player;
 import com.mycodefu.werekitten.network.message.MessageBuilder;
 import com.mycodefu.werekitten.network.message.MessageType;
 import com.mycodefu.werekitten.pipeline.PipelineContext;
+import com.mycodefu.werekitten.pipeline.events.chat.ChatMessageRecievedEvent;
 import com.mycodefu.werekitten.pipeline.events.player.*;
 import com.mycodefu.werekitten.pipeline.events.ui.NetworkConnectedEvent;
 import com.mycodefu.werekitten.pipeline.events.ui.NetworkDisconnectedEvent;
@@ -88,7 +89,10 @@ public class NetworkPlayerHelper {
             	byte[] bytes = new byte[content.readByte()];
             	content.readBytes(bytes);
             	String chatMessage = new String(bytes, CharsetUtil.UTF_8);
+            	context.postEvent(new ChatMessageRecievedEvent(chatMessage));
             }
+		default:
+			break;
         }
     }
 }

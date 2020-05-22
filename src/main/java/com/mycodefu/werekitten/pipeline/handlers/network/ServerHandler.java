@@ -1,5 +1,6 @@
 package com.mycodefu.werekitten.pipeline.handlers.network;
 
+import com.mycodefu.werekitten.event.ChatEventType;
 import com.mycodefu.werekitten.event.Event;
 import com.mycodefu.werekitten.event.GameEventType;
 import com.mycodefu.werekitten.event.NetworkEventType;
@@ -11,6 +12,7 @@ import com.mycodefu.werekitten.network.message.MessageBuilder;
 import com.mycodefu.werekitten.network.message.MessageType;
 import com.mycodefu.werekitten.pipeline.PipelineContext;
 import com.mycodefu.werekitten.pipeline.PipelineEvent;
+import com.mycodefu.werekitten.pipeline.events.chat.ChatMessageSendEvent;
 import com.mycodefu.werekitten.pipeline.events.game.QuitGameEvent;
 import com.mycodefu.werekitten.pipeline.events.network.NetworkEvent;
 import com.mycodefu.werekitten.pipeline.events.player.PlayerEvent;
@@ -22,6 +24,7 @@ import com.mycodefu.werekitten.preferences.Preferences;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelId;
+import io.netty.util.CharsetUtil;
 
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
@@ -82,6 +85,14 @@ public class ServerHandler implements PipelineHandler {
                 default:
                     break;
             }
+        }else if(event instanceof ChatMessageSendEvent) {
+        	if(server != null) {
+        		String message = ((ChatMessageSendEvent)event).message;
+        		MessageBuilder messageBuilder = MessageBuilder.createNewMessageBuffer(MessageType.chat, message.length()+2).putByte((byte)message.length()).putBytes(message.getBytes(CharsetUtil.UTF_8));
+        		for (ChannelId id : channelIds) {
+        			server.sendMessage(id, messageBuilder.getBuffer());
+        		}
+        	}
         } else if (event instanceof PlayerEvent) {
             PlayerEvent playerEvent = (PlayerEvent) event;
             if (server != null && playerEvent.getPlayerId().equalsIgnoreCase("local")) {
@@ -125,10 +136,11 @@ public class ServerHandler implements PipelineHandler {
 
     @Override
     public Event[] getEventInterest() {
-        return Event.combineEvents(PlayerEventType.values(),
+        return Event.combineEvents(PlayerEventType.values(), new Event[] {
                 NetworkEventType.start,
                 NetworkEventType.stop,
-                GameEventType.quit);
+                GameEventType.quit,
+                ChatEventType.send});
     }
 
 

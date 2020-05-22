@@ -14,6 +14,7 @@
         "com.mycodefu.werekitten.pipeline.handlers.chat.ChatMessageSendHandler",
         "com.mycodefu.werekitten.pipeline.handlers.network.ClientHandler",
         "com.mycodefu.werekitten.pipeline.handlers.network.ServerHandler",
+        "com.mycodefu.werekitten.pipeline.handlers.chat.ChatMessageDisplayHandler",
         "com.mycodefu.werekitten.pipeline.handlers.Ui.LocalPlayerAdditionHandler",
         "com.mycodefu.werekitten.pipeline.handlers.Ui.PlayerAdditionHandler",
         "com.mycodefu.werekitten.pipeline.handlers.Ui.UiNetworkEventHandler",
