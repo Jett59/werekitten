@@ -63,7 +63,11 @@ public class ServerHandler implements PipelineHandler {
 
                         @Override
                         public void serverConnectionMessage(ChannelId id, String sourceIpAddress, ByteBuf message) {
+                        	if(message.getByte(0) == MessageType.ping.getCode()) {
+                        		server.sendMessage(id, MessageBuilder.createNewMessageBuffer(MessageType.pong, 0).getBuffer());
+                        	}else {
                             networkPlayerHelper.applyNetworkMessageToPlayer(message, id.asLongText(), context, senders.get(id), true);
+                        	}
                         }
 
                         @Override
