@@ -115,10 +115,14 @@ public class ClientHandler implements PipelineHandler, NettyClientHandler.Socket
     @Override
     public void clientConnected(String id, String remoteAddress) {
         context.getPreferences().put(Preferences.CLIENT_CONNECT_IP_PREFERENCE, serverAddress);
+        nettyClient.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.ping, 0).getBuffer());
     }
 
     @Override
     public void clientMessageReceived(String id, ByteBuf content) {
+    	if(content.getByte(0) == MessageType.pong.getCode()) {
+    		System.out.println("recieved pong!");
+    	}
         networkPlayerHelper.applyNetworkMessageToPlayer(content, id, context,
                 message -> nettyClient.sendMessage(message), false);
     }
