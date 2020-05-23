@@ -50,7 +50,7 @@ public class NetworkPlayerHelper {
         long timeSent = content.readLong();
         long latency = System.currentTimeMillis() - timeSent;
         if (Start.DEBUG_PIPELINE_EVENTS){
-            System.out.printf("Latency: %d", latency);
+            System.out.printf("Latency: %d\n", latency);
         }
         switch (messageType) {
             case init: {

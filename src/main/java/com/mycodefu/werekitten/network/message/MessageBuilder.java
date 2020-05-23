@@ -6,7 +6,7 @@ import io.netty.buffer.ByteBufAllocator;
 public class MessageBuilder {
     private static final ByteBufAllocator allocator = ByteBufAllocator.DEFAULT;
     public static final int MESSAGE_TYPE_SIZE = 1;
-    public static final int MESSAGE_TIME_SIZE = 4;
+    public static final int MESSAGE_TIME_SIZE = 8;
     private ByteBuf buffer;
 
     private MessageBuilder(ByteBuf buffer) {
@@ -41,7 +41,7 @@ public class MessageBuilder {
     }
 
     public static MessageBuilder createNewMessageBuffer(MessageType messageType, int bufferCapacity) {
-        int size = MESSAGE_TYPE_SIZE + MESSAGE_TIME_SIZE + bufferCapacity;
+        int size = MESSAGE_TYPE_SIZE + Long.BYTES + bufferCapacity;
         ByteBuf buffer = allocator.buffer(size, size);
 
         return new MessageBuilder(buffer)
