@@ -69,6 +69,7 @@ public class Player {
         if (!Double.isNaN(xSync)) {
             moveTransition.syncX(xSync);
         }
+        moveTransition.stop();
         moveTransition.setDirection(Left);
         if (!moveTransition.getStatus().equals(javafx.animation.Animation.Status.RUNNING)) {
             moveTransition.play();
@@ -84,6 +85,7 @@ public class Player {
         if (!Double.isNaN(xSync)) {
             moveTransition.syncX(xSync);
         }
+        moveTransition.stop();
         moveTransition.setDirection(Right);
         if (!moveTransition.getStatus().equals(javafx.animation.Animation.Status.RUNNING)) {
             moveTransition.play();
