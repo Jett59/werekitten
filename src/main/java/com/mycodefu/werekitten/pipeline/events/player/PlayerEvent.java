@@ -30,10 +30,10 @@ public abstract class PlayerEvent implements PipelineEvent {
     }
     
     public static final KeyboardEventType[] playerKeyboardEventTypes = new KeyboardEventType[] {
-    		leftPressed,
-    		leftReleased,
-    		rightPressed,
-    		rightReleased,
+    		aPressed,
+    		aReleased,
+    		dPressed,
+    		dReleased,
     		spacePressed
     };
 }

@@ -25,19 +25,19 @@ public class PlayerKeyboardHandler implements PipelineHandler {
     public void handleEvent(PipelineContext context, PipelineEvent event) {
         if (event instanceof KeyboardEvent) {
             switch ((KeyboardEventType) event.getEvent()) {
-                case leftPressed: {
+                case aPressed: {
                     context.postEvent(new MoveLeftEvent("local"));
                     break;
                 }
-                case leftReleased: {
+                case aReleased: {
                     context.postEvent(new StopMovingLeftEvent("local"));
                     break;
                 }
-                case rightPressed: {
+                case dPressed: {
                     context.postEvent(new MoveRightEvent("local"));
                     break;
                 }
-                case rightReleased: {
+                case dReleased: {
                     context.postEvent(new StopMovingRightEvent("local"));
                     break;
                 }

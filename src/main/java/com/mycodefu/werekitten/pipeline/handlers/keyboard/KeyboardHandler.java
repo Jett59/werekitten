@@ -36,17 +36,17 @@ public class KeyboardHandler implements PipelineHandler {
                     if (keyPressedEventHandler == null || keyReleasedEventHandler == null) {
                         keyPressedEventHandler = keyEvent -> {
                             switch (keyEvent.getCode()) {
-                                case LEFT: {
-                                    if (!keysDown.contains(KeyCode.LEFT)){
-                                        keysDown.add(KeyCode.LEFT);
-                                        context.postEvent(new LeftKeyPressedEvent());
+                                case A: {
+                                    if (!keysDown.contains(KeyCode.A)){
+                                        keysDown.add(KeyCode.A);
+                                        context.postEvent(new AKeyPressedEvent());
                                     }
                                     break;
                                 }
-                                case RIGHT: {
-                                    if (!keysDown.contains(KeyCode.RIGHT)){
-                                        keysDown.add(KeyCode.RIGHT);
-                                        context.postEvent(new RightKeyPressedEvent());
+                                case D: {
+                                    if (!keysDown.contains(KeyCode.D)){
+                                        keysDown.add(KeyCode.D);
+                                        context.postEvent(new DKeyPressedEvent());
                                     }
                                     break;
                                 }
@@ -72,14 +72,14 @@ public class KeyboardHandler implements PipelineHandler {
 
                         keyReleasedEventHandler = keyEvent -> {
                                 switch (keyEvent.getCode()) {
-                                    case LEFT: {
-                                        context.postEvent(new LeftKeyReleasedEvent());
-                                        keysDown.remove(KeyCode.LEFT);
+                                    case A: {
+                                        context.postEvent(new AKeyReleasedEvent());
+                                        keysDown.remove(KeyCode.A);
                                         break;
                                     }
-                                    case RIGHT: {
-                                        context.postEvent(new RightKeyReleasedEvent());
-                                        keysDown.remove(KeyCode.RIGHT);
+                                    case D: {
+                                        context.postEvent(new DKeyReleasedEvent());
+                                        keysDown.remove(KeyCode.D);
                                         break;
                                     }
                                     case SPACE: {
