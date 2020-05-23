@@ -6,7 +6,7 @@ import javafx.scene.Node;
 import javafx.util.Duration;
 
 public class MovementAnimation extends Transition {
-	public static double pixelRate = 120;
+    private double pixelRate = 120;
 
     private Node node;
     private double x = Double.MAX_VALUE;
@@ -14,34 +14,34 @@ public class MovementAnimation extends Transition {
     private double leftBound;
     private MovementDirection direction;
     private double distanceToEdge = Double.MAX_VALUE;
-private double lastFrac = 0;
-    
+    private double lastFrac = 0;
+
     @Override
     protected void interpolate(double frac) {
         switch (direction) {
-        case Left: {
-        	if(distanceToEdge == Double.MAX_VALUE) {
-        		distanceToEdge = node.getTranslateX()-leftBound;
-        	}
-        	if(frac > lastFrac) {
-        		x = distanceToEdge*(1-frac)+leftBound;
-        	node.setTranslateX(x);
-        	lastFrac = frac;
-        	}
-        	break;
-        }
-		case Right:{
-			if(distanceToEdge == Double.MAX_VALUE) {
-				distanceToEdge = rightBound-node.getTranslateX();
-			}
-			if(frac > lastFrac) {
-				x = rightBound-distanceToEdge*(1-frac);
-				node.setTranslateX(x);
-				lastFrac = frac;
-			}
-		}
-		default:
-			break;
+            case Left: {
+                if (distanceToEdge == Double.MAX_VALUE) {
+                    distanceToEdge = node.getTranslateX() - leftBound;
+                }
+                if (frac > lastFrac) {
+                    x = distanceToEdge * (1 - frac) + leftBound;
+                    node.setTranslateX(x);
+                    lastFrac = frac;
+                }
+                break;
+            }
+            case Right: {
+                if (distanceToEdge == Double.MAX_VALUE) {
+                    distanceToEdge = rightBound - node.getTranslateX();
+                }
+                if (frac > lastFrac) {
+                    x = rightBound - distanceToEdge * (1 - frac);
+                    node.setTranslateX(x);
+                    lastFrac = frac;
+                }
+            }
+            default:
+                break;
         }
     }
 
@@ -50,6 +50,7 @@ private double lastFrac = 0;
         this.rightBound = rightBound;
         this.leftBound = leftBound;
         this.direction = initialDirection;
+        this.pixelRate = pixelRate;
         setInterpolator(Interpolator.LINEAR);
         setCycleCount(1);
     }
@@ -62,25 +63,25 @@ private double lastFrac = 0;
         super.play();
     }
 
-    public void syncX(double x){
+    public void syncX(double x) {
         this.x = x;
         node.setTranslateX(x);
     }
 
     public MovementDirection getDirection() {
-    	return direction;
+        return direction;
     }
-    
-    public void setDirection(MovementDirection direction){
+
+    public void setDirection(MovementDirection direction) {
         this.direction = direction;
         switch (direction) {
-        case Left: {
-        	super.setCycleDuration(Duration.millis((node.getTranslateX()-leftBound)/pixelRate*1000));
-        	break;
-        }
-        case Right: {
-        	super.setCycleDuration(Duration.millis((rightBound-node.getTranslateX())/pixelRate*1000));
-        }
+            case Left: {
+                super.setCycleDuration(Duration.millis((node.getTranslateX() - leftBound) / pixelRate * 1000));
+                break;
+            }
+            case Right: {
+                super.setCycleDuration(Duration.millis((rightBound - node.getTranslateX()) / pixelRate * 1000));
+            }
         }
     }
 
