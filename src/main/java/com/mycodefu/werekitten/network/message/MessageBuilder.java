@@ -5,6 +5,8 @@ import io.netty.buffer.ByteBufAllocator;
 
 public class MessageBuilder {
     private static final ByteBufAllocator allocator = ByteBufAllocator.DEFAULT;
+    public static final int MESSAGE_TYPE_SIZE = 1;
+    public static final int MESSAGE_TIME_SIZE = 4;
     private ByteBuf buffer;
 
     private MessageBuilder(ByteBuf buffer) {
@@ -22,6 +24,11 @@ public class MessageBuilder {
         return this;
     }
 
+    private MessageBuilder putLong(long value) {
+        buffer.writeLong(value);
+        return this;
+    }
+
     public MessageBuilder putBytes(byte[] bytes) {
     	for(byte b : bytes) {
     		putByte(b);
@@ -34,9 +41,11 @@ public class MessageBuilder {
     }
 
     public static MessageBuilder createNewMessageBuffer(MessageType messageType, int bufferCapacity) {
-        ByteBuf buffer = allocator.buffer(bufferCapacity, bufferCapacity);
+        int size = MESSAGE_TYPE_SIZE + MESSAGE_TIME_SIZE + bufferCapacity;
+        ByteBuf buffer = allocator.buffer(size, size);
 
         return new MessageBuilder(buffer)
-                .putByte(messageType.getCode());
+                .putByte(messageType.getCode())
+                .putLong(System.currentTimeMillis());
     }
 }

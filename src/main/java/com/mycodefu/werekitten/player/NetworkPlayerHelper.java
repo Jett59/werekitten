@@ -1,5 +1,6 @@
 package com.mycodefu.werekitten.player;
 
+import com.mycodefu.werekitten.Start;
 import com.mycodefu.werekitten.network.message.MessageBuilder;
 import com.mycodefu.werekitten.network.message.MessageType;
 import com.mycodefu.werekitten.pipeline.PipelineContext;
@@ -46,12 +47,17 @@ public class NetworkPlayerHelper {
 
     public void applyNetworkMessageToPlayer(ByteBuf content, String playerId, PipelineContext context, NetworkPlayerMessageSender playerMessageSender, boolean shouldSendInit) {
         MessageType messageType = MessageType.forCode(content.readByte());
+        long timeSent = content.readLong();
+        long latency = System.currentTimeMillis() - timeSent;
+        if (Start.DEBUG_PIPELINE_EVENTS){
+            System.out.printf("Latency: %d", latency);
+        }
         switch (messageType) {
             case init: {
                 if (shouldSendInit) {
                     Player local = context.getPlayerMap().get("local");
                     double x = context.level().get().getPixelScaleHelper().scaleXBack(local.getGroup().getLayoutX());
-                    playerMessageSender.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.init, 3).addDoubleAsShort(x).getBuffer());
+                    playerMessageSender.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.init, 2).addDoubleAsShort(x).getBuffer());
                 }
                 double initialXPosition = context.level().get().getPixelScaleHelper().scaleX(((double) content.readShort()) / 10);
                 createNetworkPlayer(playerId, context, playerMessageSender, initialXPosition);

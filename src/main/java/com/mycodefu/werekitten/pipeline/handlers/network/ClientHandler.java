@@ -58,7 +58,7 @@ public class ClientHandler implements PipelineHandler, NettyClientHandler.Socket
             switch ((UiEventType) event.getEvent()) {
                 case UiCreated: {
                     if (nettyClient != null) {
-                        MessageBuilder messageBuilder = MessageBuilder.createNewMessageBuffer(MessageType.init, 3)
+                        MessageBuilder messageBuilder = MessageBuilder.createNewMessageBuffer(MessageType.init, 2)
                                 .addDoubleAsShort(context.level().get().getPixelScaleHelper()
                                         .scaleXBack(context.level().get().getPlayerElement().getLocation().getX()));
                         nettyClient.sendMessage(messageBuilder.getBuffer());
@@ -72,7 +72,7 @@ public class ClientHandler implements PipelineHandler, NettyClientHandler.Socket
         	if(nettyClient != null) {
         		ChatMessageSendEvent sendEvent = (ChatMessageSendEvent)event;
         		if(sendEvent.message.length() < Byte.MAX_VALUE) {
-        		nettyClient.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.chat, sendEvent.message.length()+2).putByte((byte)sendEvent.message.length()).putBytes(sendEvent.message.getBytes(CharsetUtil.UTF_8)).getBuffer());
+        		nettyClient.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.chat, sendEvent.message.length()+1).putByte((byte)sendEvent.message.length()).putBytes(sendEvent.message.getBytes(CharsetUtil.UTF_8)).getBuffer());
         		context.postEvent(new ChatMessageSentEvent());
         		System.out.println("posted sent event");
         		}else {
@@ -87,19 +87,19 @@ public class ClientHandler implements PipelineHandler, NettyClientHandler.Socket
                 double scaledBackX = context.level().get().getPixelScaleHelper().scaleXBack(x);
                 switch (playerEvent.getPlayerEvent()) {
                     case moveLeft:
-                        nettyClient.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.moveLeft, 3).addDoubleAsShort(scaledBackX).getBuffer());
+                        nettyClient.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.moveLeft, 2).addDoubleAsShort(scaledBackX).getBuffer());
                         break;
                     case moveRight:
-                        nettyClient.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.moveRight, 3).addDoubleAsShort(scaledBackX).getBuffer());
+                        nettyClient.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.moveRight, 2).addDoubleAsShort(scaledBackX).getBuffer());
                         break;
                     case stopMovingLeft:
-                        nettyClient.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.idleLeft, 3).addDoubleAsShort(scaledBackX).getBuffer());
+                        nettyClient.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.idleLeft, 2).addDoubleAsShort(scaledBackX).getBuffer());
                         break;
                     case stopMovingRight:
-                        nettyClient.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.idleRight, 3).addDoubleAsShort(scaledBackX).getBuffer());
+                        nettyClient.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.idleRight, 2).addDoubleAsShort(scaledBackX).getBuffer());
                         break;
                     case jump:
-                        nettyClient.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.jump, 3).addDoubleAsShort(scaledBackX).getBuffer());
+                        nettyClient.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.jump, 2).addDoubleAsShort(scaledBackX).getBuffer());
                         break;
                 }
             }

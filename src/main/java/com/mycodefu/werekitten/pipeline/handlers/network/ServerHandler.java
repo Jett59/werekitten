@@ -88,7 +88,7 @@ public class ServerHandler implements PipelineHandler {
         }else if(event instanceof ChatMessageSendEvent) {
         	if(server != null) {
         		String message = ((ChatMessageSendEvent)event).message;
-        		MessageBuilder messageBuilder = MessageBuilder.createNewMessageBuffer(MessageType.chat, message.length()+2).putByte((byte)message.length()).putBytes(message.getBytes(CharsetUtil.UTF_8));
+        		MessageBuilder messageBuilder = MessageBuilder.createNewMessageBuffer(MessageType.chat, message.length()+1).putByte((byte)message.length()).putBytes(message.getBytes(CharsetUtil.UTF_8));
         		for (ChannelId id : channelIds) {
         			server.sendMessage(id, messageBuilder.getBuffer());
         		}
@@ -102,27 +102,27 @@ public class ServerHandler implements PipelineHandler {
                 switch (playerEvent.getPlayerEvent()) {
                     case moveLeft:
                         for (ChannelId id : channelIds) {
-                            server.sendMessage(id, MessageBuilder.createNewMessageBuffer(MessageType.moveLeft, 3).addDoubleAsShort(scaledBackX).getBuffer());
+                            server.sendMessage(id, MessageBuilder.createNewMessageBuffer(MessageType.moveLeft, 2).addDoubleAsShort(scaledBackX).getBuffer());
                         }
                         break;
                     case moveRight:
                         for (ChannelId id : channelIds) {
-                            server.sendMessage(id, MessageBuilder.createNewMessageBuffer(MessageType.moveRight, 3).addDoubleAsShort(scaledBackX).getBuffer());
+                            server.sendMessage(id, MessageBuilder.createNewMessageBuffer(MessageType.moveRight, 2).addDoubleAsShort(scaledBackX).getBuffer());
                         }
                         break;
                     case stopMovingLeft:
                         for (ChannelId id : channelIds) {
-                            server.sendMessage(id, MessageBuilder.createNewMessageBuffer(MessageType.idleLeft, 3).addDoubleAsShort(scaledBackX).getBuffer());
+                            server.sendMessage(id, MessageBuilder.createNewMessageBuffer(MessageType.idleLeft, 2).addDoubleAsShort(scaledBackX).getBuffer());
                         }
                         break;
                     case stopMovingRight:
                         for (ChannelId id : channelIds) {
-                            server.sendMessage(id, MessageBuilder.createNewMessageBuffer(MessageType.idleRight, 3).addDoubleAsShort(scaledBackX).getBuffer());
+                            server.sendMessage(id, MessageBuilder.createNewMessageBuffer(MessageType.idleRight, 2).addDoubleAsShort(scaledBackX).getBuffer());
                         }
                         break;
                     case jump:
                         for (ChannelId id : channelIds) {
-                            server.sendMessage(id, MessageBuilder.createNewMessageBuffer(MessageType.jump, 3).addDoubleAsShort(scaledBackX).getBuffer());
+                            server.sendMessage(id, MessageBuilder.createNewMessageBuffer(MessageType.jump, 2).addDoubleAsShort(scaledBackX).getBuffer());
                         }
                         break;
                 }
