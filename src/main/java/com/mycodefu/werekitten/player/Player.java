@@ -22,7 +22,7 @@ import static com.mycodefu.werekitten.animation.MovementAnimation.MovementDirect
 public class Player {
     private final String id;
     private final double speed;
-    private Map<AnimationType, Animation> nameToAnimation = new ConcurrentHashMap<>();
+    private  Map<AnimationType, Animation> nameToAnimation = new ConcurrentHashMap<>();
     private List<Animation> animations = new ArrayList<>();
     private Group animationGroup;
     private TranslateTransition jump;
