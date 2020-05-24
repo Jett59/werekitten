@@ -24,7 +24,7 @@ public class MessageBuilder {
         return this;
     }
 
-    private MessageBuilder putLong(long value) {
+    public MessageBuilder putLong(long value) {
         buffer.writeLong(value);
         return this;
     }

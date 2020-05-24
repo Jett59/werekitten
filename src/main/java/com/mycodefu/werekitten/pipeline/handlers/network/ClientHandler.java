@@ -112,16 +112,34 @@ public class ClientHandler implements PipelineHandler, NettyClientHandler.Socket
         context.postEvent(new StartGameEvent());
     }
 
+    int pongs = 0;
+    long start = 0;
+    long finished = 0;
+    long time = 0;
+    
     @Override
     public void clientConnected(String id, String remoteAddress) {
         context.getPreferences().put(Preferences.CLIENT_CONNECT_IP_PREFERENCE, serverAddress);
         nettyClient.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.ping, 0).getBuffer());
+        start = System.nanoTime();
     }
 
     @Override
     public void clientMessageReceived(String id, ByteBuf content) {
     	if(content.getByte(0) == MessageType.pong.getCode()) {
-    		System.out.println("recieved pong!");
+    		finished = System.nanoTime();
+    		pongs++;
+    		time+= finished-start;
+    		if(pongs < 10) {
+    			nettyClient.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.ping, 0).getBuffer());
+    			start = System.nanoTime();
+    		}else {
+    			time/=pongs;
+    			time/=1000000;
+    			time/=2;
+    			System.out.println("average latency: "+time/2);
+    			nettyClient.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.pang, 8).putLong(time).getBuffer());
+    			}
     	}
         networkPlayerHelper.applyNetworkMessageToPlayer(content, id, context,
                 message -> nettyClient.sendMessage(message), false);

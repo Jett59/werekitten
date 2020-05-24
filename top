@@ -1,0 +1,2666 @@
+[33mcommit bc08769b15514b200c1dbf406228b04690d6c9a2[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sun May 24 09:09:16 2020 +1000
+
+    added one ping pong message
+
+[33mcommit 7a2482fc9e338a5de55a38463d79aa6d7ce4b0b8[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sun May 24 08:53:39 2020 +1000
+
+    added server ponging ability
+
+[33mcommit c036741cf22f741d2f49b9c40b99f501058a2514[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sun May 24 08:36:25 2020 +1000
+
+    added the message types for ping pong pang
+
+[33mcommit 46db651139ccb6d83f02c3009682df52a1cf35f0[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sat May 23 18:28:17 2020 +1000
+
+    add latency printout and fix bug in long size
+
+[33mcommit 498d849ad3a01dfa09cd82001d51b653adfaf553[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sat May 23 18:21:59 2020 +1000
+
+    add system time to all messages. print latency
+
+[33mcommit 9941cdd16c3ac6b6d59917868f1c2c2018c8e35c[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sat May 23 17:56:31 2020 +1000
+
+    make the pixelRate (speed) scaled
+
+[33mcommit c7aca099462fe07905216d70088f4002040d8c13[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sat May 23 17:45:00 2020 +1000
+
+    fixed the teleportation bug
+
+[33mcommit 87de9855e0fedd40cb2e44e26325c49b9b74f231[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sat May 23 17:20:06 2020 +1000
+
+    changed to using a and d for left and right
+
+[33mcommit 51406721ceabf0a0d6fdf759c066e710ca4fb4a7[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sat May 23 17:09:41 2020 +1000
+
+    made the combined group focusable
+
+[33mcommit 91cbe3df2dc28e897942ff285625e4a5681a92b9[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sat May 23 09:44:41 2020 +1000
+
+    added a \n to the pipeline's log
+
+[33mcommit bbdb7a82fee20118223949d649872b84fd24ca5d[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sat May 23 09:08:25 2020 +1000
+
+    finished adding chat to werekitten
+
+[33mcommit af5d58d816fe03544af237091fdd2a39aa5e91dc[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Fri May 22 11:43:22 2020 +1000
+
+    made the ChatMessageSendHandler put focus onto the text box when you send a message
+
+[33mcommit 673369b1709b3fef98bbc43f071d17fd97900f0d[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Thu May 21 18:49:47 2020 +1000
+
+    added a handler for sending chat messages
+
+[33mcommit b381f781ce1efb7b3bd9f45243420387a38cc4ce[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Wed May 20 19:33:06 2020 +1000
+
+    made the border collisions slightly more accurate
+
+[33mcommit 6c6c2533a0ef1249cc65e4de38d65688da962950[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Wed May 20 19:09:42 2020 +1000
+
+    moved the tree down slightly
+
+[33mcommit 68659d62c0ba56cb2d5878888a096a6027820b40[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Wed May 20 19:02:06 2020 +1000
+
+    made a small improvement to the level builder, simplified a lamder for constructing node objects
+
+[33mcommit 7d9a62370eabb9c9e5bf1f09f389f6a40d886bc6[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Wed May 20 15:43:18 2020 +1000
+
+    refactored the movement system in an attempt to fix various sync bugs
+
+[33mcommit 3ef1aae71904eb66a9f65959c5db26522e0d36a5[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Mon May 11 20:12:59 2020 +1000
+
+    fixed the windows jdk paths
+
+[33mcommit d7c0bab7e838cfc62f6e3d195d78d662191f8477[m
+Author: lthompson <lthompson@infomedia.com.au>
+Date:   Mon May 11 19:37:56 2020 +1000
+
+    fix paths for GA java 14
+
+[33mcommit 7d9483161d79a66699df6de3abd9e6857b57d613[m
+Author: lthompson <lthompson@infomedia.com.au>
+Date:   Mon May 11 19:26:21 2020 +1000
+
+    small things 2
+
+[33mcommit 49298d9033ff10acea4997a484aac8e298d940ce[m[33m ([m[1;33mtag: v0.1.5clear[m[33m, [m[1;33mtag: v0.1.5.1[m[33m)[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Mon May 11 18:16:40 2020 +1000
+
+    fixed the jdk downloads
+
+[33mcommit 61959aa4791f156e097a139293231d7c298a6c88[m[33m ([m[1;33mtag: v[m[33m)[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Mon May 11 15:26:59 2020 +1000
+
+    added reference points on the back hill for distance
+
+[33mcommit d8fcc40b18ed709fce7b456c38b01f5936b5dedf[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Mon May 11 12:03:27 2020 +1000
+
+    moved the tree down slightly so that it is not exactly level with the cat
+
+[33mcommit ea84519cb26a5b48121675bc3459b7cbd65d9150[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Mon May 11 11:37:22 2020 +1000
+
+    added a tree that the cat can go behind
+
+[33mcommit a914e18864038e67113ad0212a09e86e9031f01a[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sun May 10 16:54:32 2020 +1000
+
+    rewrote the level.wkl file without anything other than the sky, back hill and front hill
+
+[33mcommit c7778944bd710bcaf8e2222f071522c756401ce8[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sun May 10 15:25:34 2020 +1000
+
+    removed the shrew
+
+[33mcommit edfebab2dd96a13d6e1017a806bf1bf029e7cf03[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Mon Apr 20 08:14:58 2020 +1000
+
+    added the case for the chat message to the NetworkPlayerHelper.applyNetworkMessageToPlayer
+
+[33mcommit 283a60e5049468ab3a7e38797b4d68fa21764414[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Mon Apr 20 07:38:26 2020 +1000
+
+    added putBytes(byte[] bytes) to the MessageBuilder
+
+[33mcommit 96a36301cb7fbee268ca31e20507c88c1b827678[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sat Apr 18 20:07:04 2020 +1000
+
+    moved the WindowCloseHandler to the end of the pipeline
+
+[33mcommit c6321e284b4375b8e57cde1b9cc5e946ec7d2304[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sat Apr 18 20:04:50 2020 +1000
+
+    made the ServerHandler close the server at the end of game
+
+[33mcommit 53ae39e57d3e1c42a7c61b9cf19b22f6a5119a2c[m
+Author: lthompson <lthompson@infomedia.com.au>
+Date:   Sat Apr 18 20:02:32 2020 +1000
+
+    switch to space pressed
+
+[33mcommit 51f9dd58ca5e09d0b91f68714a0a4e188ddf711d[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sat Apr 18 19:38:37 2020 +1000
+
+    removed the bug where the cat got stuck if you spammed the arrow keys
+
+[33mcommit 81dc9336e03b4c9ddf816ddcc45b8b81c065aca4[m
+Author: lthompson <lthompson@infomedia.com.au>
+Date:   Sat Apr 18 19:25:52 2020 +1000
+
+    simplify movement transition
+
+[33mcommit 4d34b37e43095101f2c2d011f0df8aa8b325d64f[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sat Apr 18 19:08:52 2020 +1000
+
+    added more debugging to the pipeline rendering of events
+
+[33mcommit a90f9cb1153d1f40852e186143189f0f9b0d9839[m
+Author: lthompson <lthompson@infomedia.com.au>
+Date:   Sat Apr 18 18:53:41 2020 +1000
+
+    add network ui event listener, restricted to only the server listening
+
+[33mcommit 276100b13fa9130f0bba6b1876df10694fbf65c8[m
+Author: lthompson <lthompson@infomedia.com.au>
+Date:   Sat Apr 18 18:09:38 2020 +1000
+
+    fix bug in stop moving
+
+[33mcommit 718a32e02e5d4ef795ede456088a836f0bd46212[m
+Author: lthompson <lthompson@infomedia.com.au>
+Date:   Sun Apr 12 19:03:10 2020 +1000
+
+    Remove MoveTo and MoveBy - just moveLeft moveRight
+
+[33mcommit 5422e13a8230d92b9a5e7c9b4d1f25915945540e[m[33m ([m[1;31morigin/experiment-change-move-events[m[33m)[m
+Author: lthompson <lthompson@infomedia.com.au>
+Date:   Sun Apr 12 18:22:09 2020 +1000
+
+    partial commit
+
+[33mcommit b056ff66932d3ff97e75ccb1462e5fa05a5fb7d8[m
+Author: lthompson <lthompson@infomedia.com.au>
+Date:   Sun Apr 12 18:21:38 2020 +1000
+
+    fix animation type for moveRightTo and moveLeftTo
+
+[33mcommit d0aa5816e82227e008d573256ea8528aa7501c36[m
+Author: lthompson <lthompson@infomedia.com.au>
+Date:   Sun Apr 12 18:01:49 2020 +1000
+
+    fix animation type for moveRightTo and moveLeftTo
+
+[33mcommit d1e84781506d1cdf67997cca73854dca1f215000[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sun Apr 12 17:37:27 2020 +1000
+
+    changed the server handler and client handler to use a new player function called getX
+
+[33mcommit 976526ce090731ea54283f6dc1146d2c6c9955de[m
+Author: lthompson <lthompson@infomedia.com.au>
+Date:   Sun Apr 12 17:25:46 2020 +1000
+
+    fix the Player class to use TranslateX instead of LayoutX
+
+[33mcommit 0458fe69a3dfb6a2f674b88a61ad2e22d0e8392d[m
+Author: lthompson <lthompson@infomedia.com.au>
+Date:   Sun Apr 12 09:30:02 2020 +1000
+
+    show stop positions
+
+[33mcommit 19d364e23ce17be8058ead816255b07c92a3f25e[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sun Apr 12 09:28:01 2020 +1000
+
+    made the playerKeyboardHandler use KITTEN_SPEED
+
+[33mcommit 366f6aef07bbd386d7c0c9eee38985687a308f7a[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sun Apr 12 09:20:11 2020 +1000
+
+    atempted to fix the bug where the kittens are not in sync
+
+[33mcommit 85b5a53a6d7700449bd70fabf0c87c13e435da55[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sun Apr 12 08:48:35 2020 +1000
+
+    made the preference for CLIENT_CONNECT_IP take effect when the setting is applied
+
+[33mcommit 92a0e258f69865a65c6281cabe3ce86b4db55c91[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sat Apr 11 16:05:05 2020 +1000
+
+    made the settings and quit buttons aligned better
+
+[33mcommit 9d5e1b6544a099a27cb83aed0b4cf3f2d4772e26[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Fri Apr 10 08:43:33 2020 +1000
+
+    made a width for all of the buttons to help make them orginized
+
+[33mcommit 6f8425e3ad3cefe38e4b61e23ba3fa0944c0d6d2[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Fri Apr 10 08:26:30 2020 +1000
+
+    added a quitGame button
+
+[33mcommit 83f3097efb5ddc2d87c8def83d170133b8f42a50[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Fri Apr 10 08:05:06 2020 +1000
+
+    removed the souts from the combineEvents function
+
+[33mcommit e6541e1027785f72513ef6289efc4f8b003ca156[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Tue Apr 7 19:53:18 2020 +1000
+
+    changed the settings page to use the three buttons cancel apply and applyAndClose
+
+[33mcommit 13f204ade42cc2024e40f18ae7ffee644ef68f23[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Mon Apr 6 17:13:26 2020 +1000
+
+    added a back button to the connect page
+
+[33mcommit 43ff681c435535fea1a494ee352cac47ee45e451[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Mon Apr 6 16:38:43 2020 +1000
+
+    made the apply button take you back to the start page
+
+[33mcommit b5084c3a95f0534257ad54fd18de25bd4bee0673[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Mon Apr 6 15:27:35 2020 +1000
+
+    made the settings page contain all of the preferences and allow the user to change and apply them
+
+[33mcommit 8e3bef49fbc48902701b500986c9159f997afe21[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Mon Apr 6 12:02:59 2020 +1000
+
+    made the settings button do something
+
+[33mcommit 50687cdfc13aa4b0be562aaa97a3f953b37ff55f[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Mon Apr 6 11:46:30 2020 +1000
+
+    added the settings button
+
+[33mcommit 709ce4e84613faa559bfe7c8521f5132d6dcf791[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sun Apr 5 13:29:29 2020 +1000
+
+    made the listening port a preference so each player uses the same one every time
+
+[33mcommit b5a2dd3759a3377d636ff15b803400c8ade3217c[m
+Author: lthompson <lthompson@infomedia.com.au>
+Date:   Sat Apr 4 20:23:11 2020 +1100
+
+    add Preferences capability
+
+[33mcommit 676a0ba6de007e091379560e092eba13533e3cc3[m
+Author: lthompson <lthompson@infomedia.com.au>
+Date:   Sat Apr 4 19:47:22 2020 +1100
+
+    scale back the x coordinate
+
+[33mcommit b514ec5ce7906853a7ef529fb845099eba39b4bc[m
+Author: lthompson <lthompson@infomedia.com.au>
+Date:   Sat Apr 4 19:31:56 2020 +1100
+
+    small improvements to speed - scale for screen
+
+[33mcommit 57d0a84a52ff158d313facf7dc725c4e8083ad8c[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sat Apr 4 19:22:15 2020 +1100
+
+    made the movement very smooth.
+
+[33mcommit ac3d407b0f9af58e691ceacda2984435d4a3d025[m
+Author: lthompson <lthompson@infomedia.com.au>
+Date:   Sat Apr 4 18:44:01 2020 +1100
+
+    small improvements to Animation - remove a few calculations during interpolate and go to INDEFINITE animations
+
+[33mcommit 8b6a2624ddc7c5a6d7662a70f897cf427dae3b37[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sat Apr 4 18:29:04 2020 +1100
+
+    made the movement a bit smoother and a lot simpler
+
+[33mcommit 465ca44fecb12fe6601d09842e94132b52233e3f[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sat Apr 4 17:31:48 2020 +1100
+
+    made the movement better
+
+[33mcommit 2930294007a0dae548b6d18ce638b26662efeedd[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Thu Apr 2 15:54:20 2020 +1100
+
+    readded player motion an dmade it smooth
+
+[33mcommit 57938c156ee39d09356bc73204a9f8146da1473f[m
+Author: lthompson <lthompson@infomedia.com.au>
+Date:   Sun Mar 29 16:01:55 2020 +1100
+
+    small improvements to Animation
+
+[33mcommit 9ed5b1418ffac0b029b3636b9c665251a6987c92[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sun Mar 29 16:00:45 2020 +1100
+
+    moderated the framerate
+
+[33mcommit 83b97a38ef0f8e62a86adf3d385ff62cdf308384[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sun Mar 29 08:57:27 2020 +1100
+
+    fixed the f3debughandler
+
+[33mcommit ecea4af9dd712250240d3cf5a9a4c383eade5040[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sun Mar 29 07:34:15 2020 +1100
+
+    improved the F3DebugHandler and the level.wkl
+
+[33mcommit 097747b500e6a7c4572a23e317551d9fc092dc57[m
+Merge: a56a21c 14264cd
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Wed Mar 18 20:39:15 2020 +1100
+
+    Merge branch 'master' of https://github.com/jett59/werekitten
+
+[33mcommit a56a21c2233a7680ab9f0cb974f2ff629bfc635f[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Wed Mar 18 20:38:48 2020 +1100
+
+    added f3 debugging
+
+[33mcommit 14264cdbf17ede8490eb086a027acac5d3cbabea[m
+Author: luke-at-367441249711 <lthompson@infomedia.com.au>
+Date:   Sun Mar 15 20:17:04 2020 +1100
+
+    remove other classes
+
+[33mcommit d63ed11c009704ee0cd8ed7d49c86700b0c49728[m
+Author: luke-at-367441249711 <lthompson@infomedia.com.au>
+Date:   Sun Mar 15 20:16:31 2020 +1100
+
+    remove events
+
+[33mcommit d50a48f3329004eeace99ab2d06d493e98d1f6aa[m
+Author: luke-at-367441249711 <lthompson@infomedia.com.au>
+Date:   Sun Mar 15 20:07:26 2020 +1100
+
+    deleted old classes
+
+[33mcommit 113ef588fa76c077b08e8538069c6ea0312b4e04[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sun Mar 15 20:04:06 2020 +1100
+
+    improved the bouncing
+
+[33mcommit 6309f5bff8c7a53645d33cf51a90f719aab4ad46[m
+Author: luke-at-367441249711 <lthompson@infomedia.com.au>
+Date:   Mon Mar 9 18:31:40 2020 +1100
+
+    add the ouch
+
+[33mcommit 6b6857bfb4b6d0026d5682f5a950454bb7a47220[m
+Author: luke-at-367441249711 <lthompson@infomedia.com.au>
+Date:   Mon Mar 9 18:05:05 2020 +1100
+
+    try adding bump
+
+[33mcommit f02085c2fbb0ac8d375d421aee1efb0d19b19bd6[m
+Author: luke-at-367441249711 <lthompson@infomedia.com.au>
+Date:   Mon Mar 9 18:04:09 2020 +1100
+
+    try adding bump
+
+[33mcommit c592975982ad6b01e10be8ee434db58e06bafef8[m
+Author: luke-at-367441249711 <lthompson@infomedia.com.au>
+Date:   Mon Mar 9 17:53:14 2020 +1100
+
+    test left and right moves
+
+[33mcommit a0c745aac7b1bb6aa4554cfaf79cc6b50152f328[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Mon Mar 9 17:21:31 2020 +1100
+
+    added player health
+
+[33mcommit 9e724634fa54192480ee56107ec3c7204ef13678[m[33m ([m[1;33mtag: v0.1.4[m[33m)[m
+Author: luke-at-367441249711 <lthompson@infomedia.com.au>
+Date:   Sun Mar 8 12:50:59 2020 +1100
+
+    synchronise positions on start walk and end walk
+
+[33mcommit 2749274f7606a28ba6069f4f805b3dc823c4bd3d[m
+Author: luke-at-367441249711 <lthompson@infomedia.com.au>
+Date:   Sun Mar 8 12:22:24 2020 +1100
+
+    implement moveBy and moveTo in the player motion handler
+
+[33mcommit 4ddb1730c5ffd6d4e63509c1c219c7362d01570a[m
+Author: luke-at-367441249711 <lthompson@infomedia.com.au>
+Date:   Sun Mar 8 12:16:32 2020 +1100
+
+    add x position to all network messages
+
+[33mcommit 7909a3004a6bb835ac16ebdea17756bc7c3b20b9[m
+Author: luke-at-367441249711 <lthompson@infomedia.com.au>
+Date:   Sun Mar 8 12:07:18 2020 +1100
+
+    add frame rate event + fix a concurrent modification exception in PlayerMotionHandler
+
+[33mcommit 25fa1e01361fe2e8c5b69b2d748bf002bbcff7ff[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sun Mar 8 11:49:51 2020 +1100
+
+    FIXED THE BUG!
+
+[33mcommit 5ff614655f92bfca4c42b5b7dac96fce250e1378[m
+Merge: 900ff7f cea0a8b
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sun Mar 8 08:01:52 2020 +1100
+
+    Merge branch 'master' of https://github.com/jett59/werekitten
+    
+    t merge --abor
+    
+    git merge --abort
+
+[33mcommit 900ff7fd9c9433800b5da894e7a318be0b84dc53[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sun Mar 8 08:01:12 2020 +1100
+
+    failed to fix the bug, removed every warning in the game
+
+[33mcommit cea0a8ba40c2d6715727f863b998a594a7e167e3[m
+Author: luke-at-367441249711 <lthompson@infomedia.com.au>
+Date:   Sat Mar 7 20:46:47 2020 +1100
+
+    keep looping while there are events in the queue
+
+[33mcommit 3370dc3818e3f77b44c2eecf2656da4e26801a31[m
+Author: luke-at-367441249711 <lthompson@infomedia.com.au>
+Date:   Sat Mar 7 20:30:42 2020 +1100
+
+    improvements to keyboard handling - only send one down event on key pressed
+
+[33mcommit 2837bd01b9f17e90269cc8e61261606a9e7957dd[m
+Author: luke-at-367441249711 <lthompson@infomedia.com.au>
+Date:   Sat Mar 7 19:55:20 2020 +1100
+
+    remove classes we don't use
+
+[33mcommit 1605b63927535c657d035493b0d75312afe859cb[m
+Author: luke-at-367441249711 <lthompson@infomedia.com.au>
+Date:   Sat Mar 7 19:31:45 2020 +1100
+
+    remove classes we don't use
+
+[33mcommit 43ea974799989afe8984c6f7f99900ef145e6290[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sat Mar 7 19:24:32 2020 +1100
+
+    atempted to reimplement the serverHandler
+
+[33mcommit 51ab0b3dcf1fd6f369bcede316f7c46785c4135c[m
+Author: luke-at-367441249711 <lthompson@infomedia.com.au>
+Date:   Wed Mar 4 22:33:17 2020 +1100
+
+    worked on keyboard handling and new ClientHandler message sending
+
+[33mcommit 56363d76fbc78e9d02f5ad7d545e81274033563d[m
+Author: luke-at-367441249711 <lthompson@infomedia.com.au>
+Date:   Wed Mar 4 21:36:09 2020 +1100
+
+    set debugging off
+
+[33mcommit 75274dc4df96f0f55fb08f93a831361b36f8df33[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Wed Mar 4 17:26:32 2020 +1100
+
+    re-enabled the keyboard for local player
+
+[33mcommit f9267692abeb677e862592d85dec99316eda4acf[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Tue Mar 3 07:55:59 2020 +1100
+
+    refactoring for keyboard
+
+[33mcommit 3d4156529d46ccbbb5cd0643c052b6d6daee610b[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Tue Mar 3 07:29:54 2020 +1100
+
+    finished refactor of playerEvents
+
+[33mcommit 7ba9d47569122e59a0c2b62f3066aaddcf94ae9f[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Mon Mar 2 18:06:02 2020 +1100
+
+    uncomment move
+
+[33mcommit 619bd0a345ea2a275ec0d5b16be96b6024f07716[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Mon Mar 2 18:04:19 2020 +1100
+
+    had compile errors while adding new features
+
+[33mcommit 904cd33af4a319428ee98131c2798992320d9627[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Mar 1 17:42:40 2020 +1100
+
+    add a tick event
+
+[33mcommit 51dcf95544c1e511a02e45826b01523f0b461efa[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Mar 1 16:53:50 2020 +1100
+
+    disable debug logging
+
+[33mcommit 7c6aa8ff50aba92684a9f612128af58fc6e5adf8[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Mar 1 16:51:36 2020 +1100
+
+    refactor to fix an exception in the ClientHandler when Hosting LAN
+
+[33mcommit b18daded38f7f0a03f015dd4ea5974e355741493[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Mar 1 16:33:40 2020 +1100
+
+    small improvements to the jump handling code
+
+[33mcommit 48a474ed95db8322bc5197c858619964f56e9f48[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Mar 1 16:25:09 2020 +1100
+
+    small improvements to the if checks on handlers
+
+[33mcommit 904dea25d21ab7d438986a3986693f54695479f6[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sun Mar 1 16:03:57 2020 +1100
+
+    removed the clientInformationHandler
+
+[33mcommit 18ed1015747531c7c346563121bf9b51ee504f44[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Mar 1 15:29:29 2020 +1100
+
+    only send events to handlers that are interested
+
+[33mcommit 760d2242ccdf1154684ece7b37890045f46b0000[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sun Mar 1 15:27:49 2020 +1100
+
+    added a new function to the pipelineHandler that allows them to select which events they want
+
+[33mcommit eedf55106a8d294ffc3c68e477dcabedb6764ebe[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Mar 1 14:52:30 2020 +1100
+
+    go to a single pipeline
+
+[33mcommit b1b2033a602c29836864bf2908746362352b3afb[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Mar 1 08:26:41 2020 +1100
+
+    improved network - back to relative moves
+
+[33mcommit 2ab00878b0a86a29bfde65843b81087c2d124752[m
+Author: luke-at-367441249711 <lthompson@infomedia.com.au>
+Date:   Sat Feb 29 21:14:25 2020 +1100
+
+    remove the ByteBuffers and use ByteBuf everywhere
+
+[33mcommit 3a81b52a48a8ed4cc2a5d2bea7897b40aa1cd07b[m
+Author: luke-at-367441249711 <lthompson@infomedia.com.au>
+Date:   Sat Feb 29 18:57:40 2020 +1100
+
+    switch to layoutx
+
+[33mcommit 995c617e9f01d99686fb980ed902b256c8317252[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sat Feb 29 18:37:22 2020 +1100
+
+    optimised the pixelScaleHelper
+
+[33mcommit 84966b0336de98c7a8097a9c57af777e8a0c9dd7[m
+Author: luke-at-367441249711 <lthompson@infomedia.com.au>
+Date:   Sat Feb 29 18:16:43 2020 +1100
+
+    update number of events
+
+[33mcommit 1dc8615ebf22e76b778f04983423d87e8aa3060f[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sat Feb 29 11:36:11 2020 +1100
+
+    switched to using binary websocketframes instead of text
+
+[33mcommit 2a8ebb7900bd04e18c768817fcef018061db0add[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Mon Feb 24 07:35:48 2020 +1100
+
+    remove int casting on x positions communicated over the network
+
+[33mcommit 6e20b5602008a56f98bb285671d4186937df87e1[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Mon Feb 24 07:30:26 2020 +1100
+
+    go to 1 event for everything but game
+
+[33mcommit 826c26fed7bf4873ed07bd8ee89d799ff620d012[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Mon Feb 24 07:15:49 2020 +1100
+
+    allow listening port to be passed as a parameter
+
+[33mcommit c5d5afe174762478293c3290e07a516d8ea19aab[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Feb 23 12:21:15 2020 +1100
+
+    make the start page a separate class and animate the cat
+
+[33mcommit a605d9c95c8724643270f90afa2bcf4a2d28587d[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Feb 23 12:00:31 2020 +1100
+
+    add idle messages
+
+[33mcommit e20755af9b2e368f1eaad09e9b408a87d2ad95f4[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Feb 23 11:52:08 2020 +1100
+
+    remove logging
+
+[33mcommit e4ad4f27d48ed3ff39537dffc7bc5b2b648752f5[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Feb 23 11:50:21 2020 +1100
+
+    remove logging
+
+[33mcommit dddb1ca7e0f8f10e750ee59c58090b044fef2ae3[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Feb 23 11:47:44 2020 +1100
+
+    remove logging and convert network message from spacePressed to 'jump'
+
+[33mcommit 63f75214450b7e8d6b3e31ec4ec8123f1171ad46[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Feb 23 11:34:46 2020 +1100
+
+    remove the double-scaling of the x value in the UiNetworkEventHandler
+
+[33mcommit 1eca786650e1171dd7715bfa12e3a37aeb450d43[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Feb 23 11:15:31 2020 +1100
+
+    fix width of wss address field
+
+[33mcommit 8070e222bcabf5e56e0604da87028c0d4a357ed6[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Feb 23 11:04:29 2020 +1100
+
+    update font in address bar
+
+[33mcommit 61bb819a690e3e781b2648ff0d90685b262bf54f[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sat Feb 22 08:13:56 2020 +1100
+
+    fixed the connection bug where if you specified an address that it couldn't connect to it yould still let you play on your own
+
+[33mcommit bb457734305e5c26e8d324cc59b4386850b4b370[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sat Feb 22 07:54:13 2020 +1100
+
+    add logging to Player
+
+[33mcommit 9979f30cc7b76926863680c723073bfd8a91ceec[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Thu Feb 20 16:56:50 2020 +1100
+
+    added some more debugging
+
+[33mcommit ea66bf7bab17a104ccb51f7364c36998362b6dac[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Tue Feb 18 07:31:37 2020 +1100
+
+    can't think of a message
+
+[33mcommit a2e8b558d1b270a2e4ec2e3e74e3c5a9fd0107fb[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Mon Feb 17 18:05:57 2020 +1100
+
+    fixed the last bug that we currently know about
+
+[33mcommit 8922baef2ea687747c8cb5e3392da6aaed028927[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Mon Feb 17 17:58:42 2020 +1100
+
+    fix the network events. general cleanup
+
+[33mcommit fb7c71ecba76bda2a49e88016b365ed8df08fc9a[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Mon Feb 17 17:32:51 2020 +1100
+
+    started to refactor how we send network messages
+
+[33mcommit b4cc8219d01dc6105befbcf141f4d869153e99d9[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Mon Feb 17 07:25:46 2020 +1100
+
+    fixed the racing kitten bug
+
+[33mcommit 0d5283a68150ca69bd2645f2b0649b64a89e8325[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sun Feb 16 16:36:51 2020 +1100
+
+    fixed teh addressBox by making it a vBox instead
+
+[33mcommit 236f1246929a3fa48c726d6bc4209a3cd9c9d76f[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Feb 16 16:29:09 2020 +1100
+
+    style text
+
+[33mcommit a3fbb5bc241507ffd60d7942d9dec49743b8691b[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Feb 16 16:14:56 2020 +1100
+
+    set focus traversable on new text field
+
+[33mcommit 46ae397397bbdd8dadf080e34c1ba78dc617af33[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Feb 16 16:09:51 2020 +1100
+
+    set focus traversable on game pane
+
+[33mcommit 6d77f780964e2ef234deeb769726fc6039a6a0ac[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Feb 16 16:07:35 2020 +1100
+
+    set focus traversable on Text for address
+
+[33mcommit 8a81d21aec0e88cfd1a52e075df95ed1db3c1886[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Feb 16 15:51:16 2020 +1100
+
+    switch to using loop for music
+
+[33mcommit d3c275a940d16060ec1ac7e509521d13857c0d13[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Feb 16 15:26:46 2020 +1100
+
+    fix issue in logic for music stop/start
+
+[33mcommit ee42f077f4fc209a369ef5e21a639b42080217d0[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Feb 16 15:21:35 2020 +1100
+
+    stop playing musing on restart
+
+[33mcommit a9c901bdeb18accb1219ac6a5378d2940d851e20[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sun Feb 16 15:19:50 2020 +1100
+
+    made the program restart when connections to a host are lost
+
+[33mcommit 83fa24e4ee696cef856b4cf774862175f07c8e71[m[33m ([m[1;33mtag: v0.1.3[m[33m)[m
+Merge: 0d05abc b2db8c7
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sun Feb 16 12:18:50 2020 +1100
+
+    Merge branch 'master' of https://github.com/jett59/werekitten
+
+[33mcommit 0d05abccbba88454f5888b21e69f39839327601d[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sun Feb 16 12:18:28 2020 +1100
+
+    fixed the cleanup-tag.sh file
+
+[33mcommit b2db8c7e6cecb78d3a6247c5c94619d404ed9648[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sat Feb 15 22:30:41 2020 +1100
+
+    remove the _ hidden file before uploading to GitHub
+
+[33mcommit 68cd0f797800ce7df4cfedb0fa2c3156a7869ece[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sat Feb 15 20:22:25 2020 +1100
+
+    improve style of connect form
+
+[33mcommit 3f359c6ac1be64e1fdc1510ef443d8ae6deadfd6[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sat Feb 15 20:13:55 2020 +1100
+
+    fix bug in internet IP detection (port 0 should always work, picking an empty ephemeral)
+
+[33mcommit 54bc06d0744454131dc9b996ac0c64fe389c2ccf[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sat Feb 15 20:05:21 2020 +1100
+
+    add code to get local internet interface and display along with port
+
+[33mcommit 0cca176449b0be13b8fed3dc3ce6a14b3073c50a[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sat Feb 15 19:46:21 2020 +1100
+
+    put the port on the screen
+
+[33mcommit c7a7e8d39f4d7e74adac50c2a9644216f3d51a65[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sat Feb 15 19:33:23 2020 +1100
+
+    add setPort call
+
+[33mcommit 98ba3c83dd9a5a124179aca19f4eebe6c9938c83[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sat Feb 15 18:49:27 2020 +1100
+
+    improve start screen
+
+[33mcommit d80b88845635727390d0e155099ce53351d36772[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sat Feb 15 18:05:58 2020 +1100
+
+    turned debug off
+
+[33mcommit 4a1bc61683e226d8ad10193dc20df32141863917[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sat Feb 15 17:59:37 2020 +1100
+
+    re-enable the UI Network Event Handler (processes
+
+[33mcommit a38864812b533b6e59837e57d63b33cede30c175[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sat Feb 15 17:51:33 2020 +1100
+
+    added the posted by to the log
+
+[33mcommit b9ec9c7261d35ba9ec9ddfb8ade084d8f400f32d[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sat Feb 15 17:30:39 2020 +1100
+
+    fix scale back and add tests
+
+[33mcommit 132f086d70a5935aab772f93c9e93c9b4e2d4cbb[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sat Feb 15 17:23:13 2020 +1100
+
+    fix typo
+
+[33mcommit 739abf9996d89f1730e87d192ea061b3d923f4fa[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sat Feb 15 17:04:22 2020 +1100
+
+    enabled multiplayer, still not moving the network and putting it in the right place
+
+[33mcommit 968a3d1597512cd692115dd5690d5de3eb66ca48[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Thu Feb 13 07:26:12 2020 +1100
+
+    fixed a null
+
+[33mcommit 1f4d9cd44a0320751d4153619594596ce74fc9be[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Thu Feb 13 07:21:31 2020 +1100
+
+    null protection on pixelScaleHelper
+
+[33mcommit 70e1394647b29fe62a5fb0e0740ffe1cfeff9ee6[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Thu Feb 13 07:09:34 2020 +1100
+
+    fix the handler name
+
+[33mcommit a0668579a407f1a4af188900aed8eee092d37732[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Thu Feb 13 07:08:32 2020 +1100
+
+    added a NetworkConnectionEstablishedEvent and hooked up network messages to the player helper
+
+[33mcommit d5d846668a871fcbb462a39ff480e5529984fb75[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Thu Feb 13 07:07:53 2020 +1100
+
+    added a NetworkConnectionEstablishedEvent and hooked up network messages to the player helper
+
+[33mcommit 1ae20629749025058d3bae4bc98f6998d0b2a4f9[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Thu Feb 13 06:49:32 2020 +1100
+
+    added the NettyClient and NetworkPlayerHelper to the new handler
+
+[33mcommit 2833cd50700f0f9d265aee340430f4a6fe6b5a2f[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Wed Feb 12 21:00:23 2020 +1100
+
+    improve log message
+
+[33mcommit be85727efab079333351189610758cd0f6bde915[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Wed Feb 12 20:59:40 2020 +1100
+
+    added the new handler to the pipeline
+
+[33mcommit 45cff22ffd386bc7d0fdeb5533363c4b437123aa[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Wed Feb 12 20:52:11 2020 +1100
+
+    add event debugging
+
+[33mcommit db339d5df452ce79c823a9467f4d0916bb316fa1[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Wed Feb 12 20:51:19 2020 +1100
+
+    added a handler for client
+
+[33mcommit 5cefbe06cebb7a38a88f2701039991e5fd93832e[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Wed Feb 12 20:30:49 2020 +1100
+
+    send network event when button is clicked
+
+[33mcommit 75b50e7e26ea9b55edd7e72d440d72be6e6965cb[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Wed Feb 12 20:13:07 2020 +1100
+
+    fixed a few problems with adding itit messages
+
+[33mcommit 5196a68c96fa48bbac6b981b61c3a28a2ec5fac8[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Thu Feb 6 19:56:01 2020 +1100
+
+    swapped the crate for a bush
+
+[33mcommit 5f5e428c747828ee3adabbaaa41fd3fc6ac31726[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Thu Feb 6 19:42:03 2020 +1100
+
+    improved the buttons and background of the start screen
+
+[33mcommit d5bd61dac0172d668f1b50d18e17f4affa1583fd[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Thu Feb 6 16:57:53 2020 +1100
+
+    made more improvments to the start screen
+
+[33mcommit 69617f07ad6a0bc1e6cc21f4e03d352b05163a7c[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Wed Feb 5 20:38:48 2020 +1100
+
+    improved the style of the start screen
+
+[33mcommit 9186274333428804daee835292631d7cb60523e2[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Wed Feb 5 17:42:17 2020 +1100
+
+    added the join server button to the start screen
+
+[33mcommit 7fc9fe7f40e5018449aed673965603d9482c9d9b[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Mon Feb 3 20:25:02 2020 +1100
+
+    removed the topBar
+
+[33mcommit a6089bff7bbff35a3883b9946aafd1e53d86a8a0[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Mon Feb 3 17:55:17 2020 +1100
+
+    added a getShape to the player class
+
+[33mcommit 83ecf76aed268ce416f73cafa71cf48d3757e92a[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Mon Feb 3 17:50:45 2020 +1100
+
+    add getShape to the NodeObject interface and implement it for Images, Rectangles and Animations. Still need to handle Player.
+
+[33mcommit b30943acd0050140423591ec301656ba48d30d4c[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Mon Feb 3 17:50:07 2020 +1100
+
+    add getShape to the NodeObject interface and implement it for Images, Rectangles and Animations. Still need to handle Player.
+
+[33mcommit 1402aee691f5ecf4f2ab40ec672ad0188b2a801f[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Mon Feb 3 17:24:31 2020 +1100
+
+    improved the start screen
+
+[33mcommit c416672984825b25dad0ad8fd2979fd2b1b5ccb4[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Mon Feb 3 16:40:25 2020 +1100
+
+    add an initial small start screen which will be the first part of the app load before the level loads
+
+[33mcommit d1d2ef157246a81ec497661be2bdbb020565f95c[m
+Merge: c7bd600 be9cc56
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Mon Feb 3 16:09:29 2020 +1100
+
+    Merge branch 'master' of https://github.com/jett59/werekitten
+
+[33mcommit c7bd6000e43ebdc07754627c48ea907889fe78a0[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Mon Feb 3 16:07:29 2020 +1100
+
+    added a few more element sto the background
+
+[33mcommit be9cc561e53bf087e8a2d9353f2a98be1d121c0f[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Feb 2 17:50:13 2020 +1100
+
+    small moves toward collision detection
+
+[33mcommit 9a326dcb73bddcde578c8d2ef8f4e3c0869f6e78[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sun Feb 2 17:28:17 2020 +1100
+
+    added a few more elements to th background
+
+[33mcommit 052d915b7fed0525ebaa8bd11fbd8d6488d4567e[m[33m ([m[1;33mtag: v0.1.2[m[33m)[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Feb 2 16:18:24 2020 +1100
+
+    scale the amounts for the kitten initial figures to the scale
+
+[33mcommit 0bd1bea238ec92e952232fca15a9a18f80de55e8[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Feb 2 16:11:16 2020 +1100
+
+    switch to doubles
+
+[33mcommit 1b44cc5eaee3a205acc5eba9a05298e0f6ea46d5[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Feb 2 15:56:27 2020 +1100
+
+    add speed scaling for left/right keys and network events
+
+[33mcommit 806bf282edf7ed4af4288261c196c1e76f323e5d[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sun Feb 2 15:55:43 2020 +1100
+
+    put the shrew back on the screen
+
+[33mcommit 362754f0baa67ef181d3f58ee87da7fe60c76c02[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sun Feb 2 15:48:45 2020 +1100
+
+    fixed the network player size
+
+[33mcommit 3c84db0fc8aaaf450e25bb434ba82d1763e3accc[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Feb 2 15:29:49 2020 +1100
+
+    Fix type in start.java
+
+[33mcommit 4d5976f48aaeb2bc09cd65419611e819bed4296e[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Feb 2 12:20:49 2020 +1100
+
+    Add current level data to the context
+
+[33mcommit bcf3becbf89f3234a99d8cac8afe4efccea97d28[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sun Feb 2 11:32:01 2020 +1100
+
+    added the playerGroup and playerElement on the gameUI
+
+[33mcommit 764b1687fbd5ab11739a19c0f14a92defa162d81[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sun Feb 2 11:09:26 2020 +1100
+
+    fixed the exception and prepared to add the kitten from the wkl
+
+[33mcommit 03975c288be6a8c6a3004eb4fca2cefc5ac9fc04[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Feb 2 10:30:56 2020 +1100
+
+    add a type to Layer
+
+[33mcommit 4f59a16b7897e464052990d2fd6311c9d93730d8[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sun Feb 2 10:02:32 2020 +1100
+
+    changed the rounding for the pixelScaleHelper to use Math.ceal instead of casting
+
+[33mcommit db7921ec0e581f4ed833b0e70c94b0fd07e1a477[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Feb 2 09:50:40 2020 +1100
+
+    scale the layer elements to the screen size using the pixel scale helper class
+
+[33mcommit 4325be9e0ec8b04b0bb0a697314c1e4b7bf67f63[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sun Feb 2 09:46:20 2020 +1100
+
+    added the pixelScaleHelper class
+
+[33mcommit 549dfd2aca14f272f061661f06665bd143d46966[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Feb 2 08:53:40 2020 +1100
+
+    add events to remove network player on disconnect
+
+[33mcommit be18390942e276d1b178275fbd93eaec8893dcf9[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sun Feb 2 08:43:55 2020 +1100
+
+    changed the network player position to be the same as the local player
+
+[33mcommit ec889c851d9f4c44b11eee395927cab1fb7ef581[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sun Feb 2 08:35:53 2020 +1100
+
+    pulled the level builder out of the gameUI class
+
+[33mcommit f14445801ca59efb6255ec9af3bcd1666a894c4e[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sun Jan 26 09:22:23 2020 +1100
+
+    added the PixelPercentageHandler class
+
+[33mcommit cbf9ad3c9acb57e354c9f7cffa177e21b33ad76c[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Jan 26 01:11:12 2020 +1100
+
+    add networking back in through pipeline events (first draft needs some improvements to the structure and simplification)
+
+[33mcommit 08d65675a83053eab6da7ff15600ed6e584c2bf1[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Wed Jan 22 15:42:23 2020 +1100
+
+    iproved the jump animation
+
+[33mcommit 8039cec059953676b982414eb6cbec08d7de3385[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Tue Jan 21 15:50:26 2020 +1100
+
+    enabled player walking again
+
+[33mcommit 1801eaaa7710c28d863f3cefc549ec1e4780d1c5[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Tue Jan 21 10:24:34 2020 +1100
+
+    added the player to the screen
+
+[33mcommit cc8dfde68d0d5433f755569cf4ffc08b11cfada0[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Mon Jan 20 11:32:02 2020 +1100
+
+    added the PlayerAdditionHandler to add players, also removed every single warning in the game
+
+[33mcommit 5c76012b14a6ddb8383d8cd0b2a24b7266da1b97[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Mon Jan 20 08:51:16 2020 +1100
+
+    wip: adding the player ability move
+
+[33mcommit 6be11ccf649e58a84d52b44b291aed790aa5d29c[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Mon Jan 20 08:49:08 2020 +1100
+
+    remove unused imports
+
+[33mcommit b0b44f89f20bbadf38060f1730cebc604ab4ea30[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Mon Jan 20 08:47:44 2020 +1100
+
+    refactor to use abstract base GameEvent class more effectively
+
+[33mcommit f3a6b7ec2e203aa63589edb9fa43837574142093[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sun Jan 12 13:58:50 2020 +1100
+
+    fixed a few compile errors and added the new handler to the pipeline-config.wkc file
+
+[33mcommit 1222ce824176e1d7e03d5894ccdfc9a7b576d97e[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sun Jan 12 13:50:31 2020 +1100
+
+    added the classes for keyboard events
+
+[33mcommit 2969a41a7ee910f97abb9ba07a7e7869acac00ee[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sun Jan 12 12:06:54 2020 +1100
+
+    removed the exceptions when the handlers didn't recognise the event being passed
+
+[33mcommit 1853dd378966638fab5bcefb89c026681ca5a043[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sat Jan 11 10:02:54 2020 +1100
+
+    added the music handler to the pipelne
+
+[33mcommit 54a12b5c05505b61d97fdc58601be951b370b781[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Fri Jan 10 16:16:40 2020 +1100
+
+    readded the window
+
+[33mcommit 4a01c217ce2f41c8d3f9e4236d583557030421d9[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Fri Jan 10 15:51:37 2020 +1100
+
+    refactor to construct the piplelines from a configuration file
+
+[33mcommit 4be7e8daa93e905d4bc42547ef320bd53449580b[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Fri Jan 10 15:12:17 2020 +1100
+
+    added another handler to the pipeline
+
+[33mcommit ef5b5e772f3bad9fa9666e57229e793ab4816522[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Fri Jan 10 14:27:17 2020 +1100
+
+    refactor Start to establish pipeline and offer the StartGameEvent to kick things off
+
+[33mcommit 2aa4b8c5e8b205d7f0a0c68114826724cd99c463[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Fri Jan 10 12:44:14 2020 +1100
+
+    began preparing for a refactor where the game operats on pipelines
+
+[33mcommit c572e2a393ce6d91b10e8c27f3b140c4e7b318e3[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Thu Jan 9 12:04:06 2020 +1100
+
+    add ideas for pipeline classes
+
+[33mcommit 708c420db3e4276f9809ebe70dbb5d3d326c92a1[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Tue Jan 7 13:53:11 2020 +1100
+
+    changed the description of the game in the package_osx file
+
+[33mcommit ac76f728788c991abe4856e0728e349dd905d5ac[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Tue Jan 7 13:51:21 2020 +1100
+
+    changed the description of the game in the package_win64 file
+
+[33mcommit 2c2e5d4a47859c71b3cce9744eedc209f0589cea[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Tue Jan 7 11:53:07 2020 +1100
+
+    fixed a tiny problem with the release.sh file
+
+[33mcommit 98dc04f6368c3d45e0b409d6932deb1c74ab50c7[m[33m ([m[1;33mtag: v0.1.1[m[33m)[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Tue Jan 7 11:50:20 2020 +1100
+
+    fixed the release and cleanup-tag scripts so that they support any version
+
+[33mcommit f78bef822485f3fc4578cf683513a9ecf82ef9c6[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Tue Jan 7 11:36:21 2020 +1100
+
+    fixed a bug where the second kitten was not going into idle
+
+[33mcommit 56698f4d2201712f1b28edb7655b20e4e6d308f3[m[33m ([m[1;33mtag: v0.0.5[m[33m)[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Tue Jan 7 10:20:25 2020 +1100
+
+    fix paths
+
+[33mcommit 8cbc5e5fd7efbf1a117e0d763e47a84b3f940065[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Tue Jan 7 09:36:49 2020 +1100
+
+    Update config.yml
+
+[33mcommit c5235fdf758a0cf9722ca9912ee580b3fa29eadd[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Tue Jan 7 09:32:11 2020 +1100
+
+    Update config.yml
+
+[33mcommit ac34f3e23993b2b189a9f710edb78c91d9dea967[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Mon Jan 6 17:37:09 2020 +1100
+
+    small script updates
+
+[33mcommit cd554d15ff5aa1fc61f26bc5f3ee78b58142825f[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Mon Jan 6 17:27:30 2020 +1100
+
+    figured out module syntax that worked for Netty. back to modules!
+
+[33mcommit 601646dac3c74a294dcd9ef87c629701e138b91e[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Mon Jan 6 16:35:06 2020 +1100
+
+    drop the modules and go back to full jdk 11 corretto distro - Netty is not yet compatible with modules. May return to modular deployment once it is.
+
+[33mcommit 0120dd2ad6f8fdd1a352ee7649e4ed7b05e48638[m
+Merge: 9c927ac 1bbb4b0
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Mon Jan 6 16:31:10 2020 +1100
+
+    Merge remote-tracking branch 'origin/master'
+
+[33mcommit 9c927acc5e8d27365f28cc3b83b166ea9214de9f[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Mon Jan 6 16:30:54 2020 +1100
+
+    fix case on resources
+
+[33mcommit 1bbb4b0889da46e3dc435c2487fbf319dd4e9344[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sat Jan 4 19:58:55 2020 +1100
+
+    added the current port to the connection address box
+
+[33mcommit 628beac54795739a0fd1561d6e9a4e30eee9c785[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sat Jan 4 12:39:02 2020 +1100
+
+    switch from netty-all to individual netty libraries
+
+[33mcommit 7b52677cd4e168ac7c28e3fa6049c8b323b9596a[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sat Jan 4 11:10:47 2020 +1100
+
+    fix the maven install script
+
+[33mcommit b3baf0c468643bf8e2e25b46bbc9835d63ba644b[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sat Jan 4 09:13:28 2020 +1100
+
+    fix the download URLs (jpackage is now integrated into the EA JDK)
+
+[33mcommit e29dfb85e273ed6dad1c53911f9b54dbbdfedb83[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sat Jan 4 08:49:10 2020 +1100
+
+    set visible on connect
+
+[33mcommit 8f4d3f9d79e340dd06eb4b92218a41be0b3ce33d[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sat Jan 4 08:46:23 2020 +1100
+
+    jump up
+
+[33mcommit 0b9ca4c0683cdbba24425ec93f9b6054765dfb96[m
+Merge: 3e9f667 df773f8
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sat Jan 4 08:43:40 2020 +1100
+
+    Merge branch 'master' of https://github.com/jett59/werekitten
+
+[33mcommit 3e9f667bcafe74610da29cb8b754bfa9509b4835[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sat Jan 4 08:42:57 2020 +1100
+
+    fixed the kitten locations
+
+[33mcommit df773f8dae1ce017239950e44020d833fdea2f4c[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sat Jan 4 08:34:08 2020 +1100
+
+    fix get local ip function to break once it finds an IP address
+
+[33mcommit 912a2286c8a6d21d2d73b5bf61380a292168222d[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sat Jan 4 08:30:57 2020 +1100
+
+    fix get local ip function to exclude ip v6
+
+[33mcommit cb0db334d1a9ab1dd0cce5ee33eafb9b66519973[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sat Jan 4 08:16:54 2020 +1100
+
+    improve top bar
+
+[33mcommit d960ba6e168b33d6a0d68730be397239cd1d7ea6[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sat Jan 4 08:10:41 2020 +1100
+
+    fixed the level.wkl
+
+[33mcommit 6186776cdef6222d8544603e54b2e1bec1ec22cc[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Fri Jan 3 08:10:33 2020 +1100
+
+    fixed a bug with multiplayer
+
+[33mcommit 663ba3670fe3510992c8e649c8241bc7825204bc[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Fri Jan 3 07:59:03 2020 +1100
+
+    add network key release events
+
+[33mcommit decd3534605fd085bad2ec40f9961b5f88896d7d[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Fri Jan 3 07:54:13 2020 +1100
+
+    atempted to enable multiplayer!
+
+[33mcommit 997925bff8e9c4d9e49ced993d014232636fb370[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Fri Jan 3 07:28:35 2020 +1100
+
+    add network events
+
+[33mcommit 0c619fab7c226ca214731a6272ffeaf1a249bd14[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Fri Jan 3 07:17:03 2020 +1100
+
+    add player2 to ui and respond to network
+
+[33mcommit 9d2c24d7b7bc3536d52928bd4a36acbb047bf15d[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Fri Jan 3 07:09:47 2020 +1100
+
+    changed the project to use a kitten class instead of the ui having all of the player stuff
+
+[33mcommit 815cd64901ffe2635214a66492f48e03b10c2d6a[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Mon Dec 30 11:21:02 2019 +1100
+
+    add a client connection text box and button, and hook it up to the websocket client
+
+[33mcommit 1d30d28160070548806a2e32e4ceb0d1b37dd849[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Mon Dec 30 09:32:45 2019 +1100
+
+    add a white transparent bar to the top of WereKitten
+
+[33mcommit d45ba349f813bd15a342ec78b878d47af430eda6[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Mon Dec 30 09:25:01 2019 +1100
+
+    fixed all of the compile errors in the NettyClient
+
+[33mcommit ae3203fd784c2356a0f5860bb7c0324e14b1d377[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Mon Dec 30 09:20:25 2019 +1100
+
+    changed the WebSocketClientHandler to NettyClientHandler
+
+[33mcommit 38b7ac4172beea338cf5b06f031ad1f551069e13[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Mon Dec 30 09:07:47 2019 +1100
+
+    added the text in the nettyClient class
+
+[33mcommit 356cc131ebe5562eb4d5e5067bac71a21814deb8[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Mon Dec 30 08:57:50 2019 +1100
+
+    added the nettyServer classes
+
+[33mcommit 20150adc028062f5fdbb33e247b9105f519a5da7[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sun Dec 29 10:28:45 2019 +1100
+
+    added lan capabilities to werekittengit add .git add .!
+
+[33mcommit 427ee806d95164b939da4b02d0f9f44d1ab87025[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sat Dec 28 20:28:58 2019 +1100
+
+    added the classes for server connections
+
+[33mcommit 8d3bc0fe5bbb6c4b9b975f545cd59780477237b9[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sat Dec 28 14:17:33 2019 +1100
+
+    added netty to the pom
+
+[33mcommit 437c616191ab109a2528f8848e88726d9d1f639f[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sat Dec 28 12:49:12 2019 +1100
+
+    fixed a bug, the cat could not walk and jump at the same time
+
+[33mcommit 6313867d8cd276c0231e007ca2567d9784ad1a4f[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sat Dec 28 10:46:25 2019 +1100
+
+    added a system that stops the cat from moving and enters idle mode after the key is released
+
+[33mcommit 7bbc19e0e3480f7cfe9bd6b7947c756293cb20f0[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sat Dec 28 09:36:44 2019 +1100
+
+    added a keyboardListener that works!
+
+[33mcommit 359316cf8a0b5751df7aa4de69895a5f0ab0294f[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sat Dec 28 06:47:23 2019 +1100
+
+    added the new events stopMovingLeft and stopMovingRight
+
+[33mcommit 91b2d052625cc82abf916978fc41bc55d25bdf80[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Fri Dec 27 20:09:58 2019 +1100
+
+    refactor application core class into Start
+
+[33mcommit 597b5cf08e2284baea6eb29bf46f7f1f4d6935d0[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Fri Dec 27 19:57:11 2019 +1100
+
+    refactor application core class into GameUI
+
+[33mcommit cbf79d43ca57b06658680aeacda58a9f072c3b50[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Fri Dec 27 19:50:39 2019 +1100
+
+    added a method to the game loop that allows you to add events
+
+[33mcommit 5d2b262d2fe6e945c10692b6ba28d03b0b795c8f[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Fri Dec 27 17:14:57 2019 +1100
+
+    started refactoring the application class and preparing for the new features, added the game loop
+
+[33mcommit 575e1305175072fb9025beda01d6722f6454f53d[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Mon Dec 16 07:56:35 2019 +1100
+
+    fixed level.wkl to scale the images properly instead of throwing exceptions
+
+[33mcommit a9868cea03d400700ce9099ebe73ba0be47fe93b[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Mon Dec 16 07:39:06 2019 +1100
+
+    allowed scaling to background objects of the type image
+
+[33mcommit c55085e88800fb01b4913e2d32bc07fa89af2b94[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sun Dec 15 21:24:18 2019 +1100
+
+    added mockito to the tests and configured the animation compiler and background object builder to be instance instead of static
+
+[33mcommit d46d4366f2036caf002693d1fb32bdf920938f4b[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sun Dec 15 14:18:15 2019 +1100
+
+    added mockito
+
+[33mcommit 23863e6f1bd74f1e33ccddfe6ae722c8109c5f64[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Dec 15 12:58:05 2019 +1000
+
+    ignore text files
+
+[33mcommit 01cf43c74522e3d9726effbf5556df7f4bc4ccf4[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Dec 15 12:10:04 2019 +1000
+
+    finalise tests for BackgroundObjectBuilder shapes
+
+[33mcommit cd167d1dd26485ef030a20908f8e518e35d8e08f[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Dec 15 11:28:40 2019 +1000
+
+    started adding tests to BackgroundObjectBuilder
+
+[33mcommit 103f53705aefb78f683907e47dc1d2ac6ad8ebd4[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sun Dec 15 12:28:05 2019 +1100
+
+    moved some of the functions related to images from the animationcompiler to the imagehelper class
+
+[33mcommit 1f364680f0bcad61ccf06cb51b35cc7702fec66c[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sun Dec 15 10:47:24 2019 +1100
+
+    added exceptions to the animation resizing if you don't specify the parameters correctly
+
+[33mcommit 309e7d6abba5757971114ee5d2cc55b556ef853c[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Wed Dec 11 20:42:37 2019 +1000
+
+    add support for scaling a background animation. make some improvements to the level design
+
+[33mcommit bf7749398a44db40ac16f6a3169a1f54c366b7da[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Dec 8 19:34:58 2019 +1000
+
+    fix the case of the Idle animation on the new tests - this was causing the test to fail on Linux (CircleCI).
+
+[33mcommit d22a3811e39854fc0bc6426c2b7c4e12514e2c8b[m
+Merge: 28fbdd4 ad9d3e6
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Dec 8 19:32:44 2019 +1000
+
+    Merge remote-tracking branch 'origin/master'
+
+[33mcommit 28fbdd4f7a0f9a7ffea275e7a48424061e2cbd00[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Dec 8 19:32:29 2019 +1000
+
+    log when the resource stream returned is null
+
+[33mcommit ad9d3e66a5fb16641b0be61a791cd682e11de3e1[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Dec 8 19:28:50 2019 +1000
+
+    more logging
+
+[33mcommit 4c3fdacdc13f10b306109d3708709ebb342cf9af[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Dec 8 19:02:20 2019 +1000
+
+    fix test on animation compiler which was missing the last parameter 'height'
+
+[33mcommit fbffad600422762d90513cc1a58128854d99e31c[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sun Dec 8 19:34:40 2019 +1100
+
+    have some issues with the unit tests because the animation compiler now supports width and height scaling
+
+[33mcommit 14fa5fa56f1df580f1e42e8f1a700619a6fa6d4c[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sun Dec 8 08:30:16 2019 +1100
+
+    added a resize to height function to the animation compiler
+
+[33mcommit 623a1f1938667b90cc58f117b254f2df6eda4789[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Tue Dec 3 07:55:58 2019 +1100
+
+    fixed the animations on the background and actually added the changes
+
+[33mcommit 17d8dc44d06fa5f9cf28105d50992eeeee6fd2bd[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Mon Dec 2 20:54:21 2019 +1100
+
+    cleaned up the animation compiler
+
+[33mcommit 962a4118a89ec9fbaf1eed8745b4c9d9eed82b27[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Mon Dec 2 19:39:52 2019 +1100
+
+    enabled more control features to the animation compiler using the imageProcess interface, added the animation config
+
+[33mcommit 049bd8fa50432e770b1344a53dd01c30f6bd62cb[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Dec 1 21:20:17 2019 +1100
+
+    first attempt at collision detection - still need to work out the polygon detection properly
+
+[33mcommit 4872975f99d97cd562e8ce88d40dd191229244ba[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sun Dec 1 19:44:30 2019 +1100
+
+    added the basics of animations on the background and put a cat on the background for a test
+
+[33mcommit aaae486a1bb42c5dd8c1cdf822496d81f341c269[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Dec 1 11:06:58 2019 +1100
+
+    add image to polygon
+
+[33mcommit ccfb079eecde8a063c7434aebd1b98b1ecff81f7[m[33m ([m[1;33mtag: v0.0.4[m[33m)[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Mon Nov 25 20:27:51 2019 +1100
+
+    release v0.0.4
+
+[33mcommit 2c2e70407aa798c221cf3372c3895a08cbf0da00[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Mon Nov 25 20:26:22 2019 +1100
+
+    add support for shapes and use this to add sky and ground to level layers
+
+[33mcommit 19cc7f92c125ad8641f5133a2b653822ebf75f16[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Mon Nov 25 18:10:55 2019 +1100
+
+    add the ability to have layers in the background
+
+[33mcommit 7f6cc60d0dba393e7d0b27a2239241919160608e[m[33m ([m[1;33mtag: v0.0.3[m[33m)[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Tue Nov 19 07:52:30 2019 +1100
+
+    release v0.0.3
+
+[33mcommit ffcb1e0c1d539a8f573554a3f9475592e428c8dd[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Tue Nov 19 07:45:44 2019 +1100
+
+    separate download from unzip
+
+[33mcommit 819fe2ca67baf902b70fdd730ee520cc49c4d38e[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Tue Nov 19 07:32:37 2019 +1100
+
+    release v0.0.3
+
+[33mcommit 3939c602743346b5ea340a8eedbc23b1a476ae7b[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Tue Nov 19 07:29:01 2019 +1100
+
+    release v0.0.3
+
+[33mcommit 592e3e75a8163ce145607b27bd46edf2d7a3c97a[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Tue Nov 19 07:26:51 2019 +1100
+
+    updates to windows build process
+
+[33mcommit 7f7a3f68b371b89dbefb70e95ed3f173f6b95b28[m[33m ([m[1;33mtag: v0.0.2[m[33m)[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Nov 17 21:11:24 2019 +1100
+
+    release v0.0.2
+
+[33mcommit 07f6057d31bd4a328750dffebf152d53cba082e1[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Nov 17 21:09:03 2019 +1100
+
+    update to use java modules
+
+[33mcommit 6600be38714a4ecf5e9240a441b55b78366d52d2[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Nov 17 08:31:23 2019 +1100
+
+    tidy up and add validation to the animation classes
+
+[33mcommit 23c115cc555b3bd6d05775a574c57d9bca838d2a[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sat Nov 16 17:54:53 2019 +1100
+
+    remove old Start class
+
+[33mcommit 21e79dd0d6ff1706bf4d12ee83f2e6f20b0605dc[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sat Nov 16 17:41:17 2019 +1100
+
+    add level reader
+
+[33mcommit 9eca0e36087c456fc7f610da6b3f6b54d279131b[m
+Merge: c173272 2c4cb0d
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sat Nov 16 17:38:16 2019 +1100
+
+    Merge branch 'master' of https://github.com/jett59/werekitten
+
+[33mcommit c173272a84292063da16af52d3a33a11cf0f1410[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Wed Nov 13 19:40:27 2019 +1100
+
+    changed the template
+
+[33mcommit 2c4cb0d1c5aceca423817f5410f557fb7ac66301[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Mon Nov 11 18:37:57 2019 +1100
+
+    release v0.0.2
+
+[33mcommit 0eebd56ff5d0b742c5dc18fd55d0b3d5cc5fe729[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Mon Nov 11 18:30:36 2019 +1100
+
+    slow down the shrew
+
+[33mcommit 5aa7c36822f5d71d99c21b2c6989f16e744659f2[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Mon Nov 11 18:23:22 2019 +1100
+
+    make the slide movement smoother by doing it in an animation timer
+
+[33mcommit f370d23f6f2ed02ea244351b25276f76dc76cf5b[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Mon Nov 11 18:15:24 2019 +1100
+
+    set the cat back to normal size
+
+[33mcommit e52151df00da1325b6cc639439d41e55f0f0df0a[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Mon Nov 11 18:14:00 2019 +1100
+
+    add shaded shrew and switch to using him
+
+[33mcommit d98934c9611b9653fbab99a17cd30efc96e6176d[m
+Merge: 850f44f f1c3395
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Mon Nov 11 16:38:40 2019 +1100
+
+    Merge remote-tracking branch 'origin/master'
+
+[33mcommit 850f44f724c992bce760aa43ad9fc3466adc6a4c[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Mon Nov 11 16:37:40 2019 +1100
+
+    fix slidebackground
+
+[33mcommit f1c3395e0dba5c1a7716c6b2683cf5e117f77cc1[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Mon Nov 11 07:29:30 2019 +1100
+
+    release v0.0.3
+
+[33mcommit 45fbabdf2f672b2b1aa375e2ace2d9bfe4800827[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Mon Nov 11 07:21:37 2019 +1100
+
+    release v0.0.7
+
+[33mcommit 4b565f8416fd1cff59a18d73dd39176a50a5df41[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Mon Nov 11 07:18:05 2019 +1100
+
+    release v0.0.5
+
+[33mcommit 95c652098ef029b2b731a3e88c1800fcef69cdf9[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Mon Nov 11 07:17:01 2019 +1100
+
+    made the cat bigger
+
+[33mcommit 093fecab1589248979bfa8eaff9cd0407faad4b9[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Mon Nov 11 07:14:29 2019 +1100
+
+    release v0.0.4
+
+[33mcommit fa8add7fe139ff941a47410c1a698fbb306a81f2[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Nov 10 22:46:34 2019 +1100
+
+    small thing
+
+[33mcommit d54746b8d7364174de41ceb016210034a759582a[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Nov 10 22:39:58 2019 +1100
+
+    update release
+
+[33mcommit 9e7f7ddcf1dd541d94d123579869e40636082d67[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Nov 10 22:39:12 2019 +1100
+
+    release v0.0.6
+
+[33mcommit 85c97dca95a89b980db05cbb0d5aab5667ecc35a[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Nov 10 22:34:45 2019 +1100
+
+    simplify the release process - all you have to do is tag the last commit
+
+[33mcommit fcc1be4aaf6ee2e170a9c2478d88eb7cdddd0096[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Nov 10 22:24:38 2019 +1100
+
+    release v0.0.4
+
+[33mcommit 7fa187af10abde2e96b791786bc74c5822d76541[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Nov 10 22:23:49 2019 +1100
+
+    fix the branch filter - finally got it from this post:
+    https://discuss.circleci.com/t/workflow-job-with-tag-filter-being-run-for-every-commit/20762/3
+
+[33mcommit d47524a6a4fff68d171c3b760ec903e846ace210[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Nov 10 22:05:34 2019 +1100
+
+    cleanup
+
+[33mcommit f0fa1e5b7cac84210a608e5db779774e785733d5[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Nov 10 21:55:55 2019 +1100
+
+    release v0.0.3
+
+[33mcommit 140ef0db3affbae437548a1427633a29bd6a3051[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Nov 10 21:55:50 2019 +1100
+
+    fix the release upload
+
+[33mcommit d4b5b955fd0f0c0fc6623274cf4a25b0339470b1[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Nov 10 21:39:14 2019 +1100
+
+    release v0.0.2
+
+[33mcommit 0b1885c40d807a4e8d681960b942eac8a1a8cba5[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Nov 10 21:38:57 2019 +1100
+
+    save the tag in the build and then use it later
+
+[33mcommit 735630e1e908ebc4d0fdd0ad53463021427d27fc[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Nov 10 21:29:21 2019 +1100
+
+    release v0.0.2
+
+[33mcommit 3c6982a83d1607965336e69ab5206a7e1e6df06d[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Nov 10 21:29:02 2019 +1100
+
+    try something else
+
+[33mcommit f7a5a0d1d559e369e904125fd07a19fd09f68112[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Nov 10 21:15:18 2019 +1100
+
+    release v0.0.2
+
+[33mcommit e479850f5dba737cd21e3ee09c2dec6303617f14[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Nov 10 21:15:09 2019 +1100
+
+    update cleanup script
+
+[33mcommit 1cd18ac675071096b3fe936cbf0aa1b46a3b4c21[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Nov 10 21:14:22 2019 +1100
+
+    try v2 config
+
+[33mcommit 18b602be74e5499055170ca8203354f873783d0b[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Nov 10 21:05:40 2019 +1100
+
+    release v0.0.2
+
+[33mcommit 708941557c76beb4abdfe8dd0a68fea60b076fe6[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Nov 10 21:02:17 2019 +1100
+
+    release v0.0.2
+
+[33mcommit bc4d30e2682dfd1fbfdc87d562c41942ea14be60[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Nov 10 21:02:06 2019 +1100
+
+    clean up tags
+
+[33mcommit 01065b8efdaabe6c1cac98c2c73fd46d91e2c552[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Nov 10 20:56:25 2019 +1100
+
+    release v0.0.2
+
+[33mcommit 178367b87224f06fc23d34b35abe67e2bf67dd39[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Nov 10 20:53:49 2019 +1100
+
+    release v0.0.2
+
+[33mcommit 05a019aa55d450b033a795595be3491fcb205daa[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Nov 10 20:52:59 2019 +1100
+
+    release v0.0.2
+
+[33mcommit 6b377b3117b956802bd64a32dee17decaa612251[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Nov 10 20:52:52 2019 +1100
+
+    update the release script to only push the tag you are working on
+
+[33mcommit bd13a8c876ea4a9921c47f3c423a6adfdddeb5d7[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Nov 10 20:48:28 2019 +1100
+
+    release v0.0.2
+
+[33mcommit df0cbc4c0b1d86a7cea6378ca9c6bfd0fb4edd8a[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Nov 10 20:48:22 2019 +1100
+
+    update the ghr release documentation
+
+[33mcommit dc36fb3d52c49c0a572dea5427f65a3d621f5392[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Nov 10 20:35:36 2019 +1100
+
+    release v0.0.13
+
+[33mcommit fcd7aee14a4d0c1f3ec71b91ff72402e65ebff5f[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Nov 10 20:35:31 2019 +1100
+
+    add idea for getting CIRCLE_TAG broken in 2.0
+
+[33mcommit 7ff3a1a10eda7dcb399956b7305266b81d888f6e[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Nov 10 20:31:43 2019 +1100
+
+    release v0.0.12
+
+[33mcommit fdc3d52d2967a95f2d81583c52ddfd16eb8065f7[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Nov 10 20:30:27 2019 +1100
+
+    release v0.0.11
+
+[33mcommit 6d1cec49fcb57fb1fc9c97da6a02299a0832feaa[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Nov 10 20:26:39 2019 +1100
+
+    release v0.0.9
+
+[33mcommit bef9f2fb1cf05e6d6f7ced7a28253fa32742cb46[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Nov 10 20:18:59 2019 +1100
+
+    release v0.0.8
+
+[33mcommit 669b78e61fade283ee84386490a6774980972627[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Nov 10 19:44:14 2019 +1100
+
+    release v0.0.7
+
+[33mcommit bf7bbe22a647c7419906526ef145d0056571585a[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Nov 10 19:43:59 2019 +1100
+
+    release v0.0.
+
+[33mcommit 129569b815e1855f5c160868100d26fea59fda17[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Nov 10 19:40:37 2019 +1100
+
+    attempt to get tricky release filter syntax right
+
+[33mcommit 03dce04917839ce561b883d178bc19b4580e9f7d[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Nov 10 19:29:22 2019 +1100
+
+    version v0.0.5
+
+[33mcommit d3b0d43025e77d6ce68c3417da44bff63921d926[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Nov 10 19:26:32 2019 +1100
+
+    update for build workflow syntax such that the build job always runs, but the release jobs only run on tagged commits:
+    https://circleci.com/docs/2.0/workflows/#executing-workflows-for-a-git-tag
+
+[33mcommit 15942152c13508eac00167a9978ac5eddc3aec37[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Nov 10 19:20:08 2019 +1100
+
+    update for build workflow syntax such that the build job always runs, but the release jobs only run on tagged commits
+
+[33mcommit e652fdb7d940ffaa9b9dd22ff5f62f1460b28022[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Nov 10 19:02:15 2019 +1100
+
+    release v0.0.3
+
+[33mcommit f08620bc1512ff9f451838b127eaf5c296650524[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Nov 10 18:53:56 2019 +1100
+
+    work on tagged builds - try the ignore branches syntax
+
+[33mcommit 67159798de4d6d1d9332e5b1fbad368b07fcb24c[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Nov 10 18:36:39 2019 +1100
+
+    work on tagged builds
+
+[33mcommit 3b758d1c35e4917fe44a3180fb077ebb92d235a5[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sun Nov 10 18:24:15 2019 +1100
+
+    fixed the unit test
+
+[33mcommit 67cf6d1ad0fa74402554036c90db741dba50709d[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Nov 10 13:39:18 2019 +1100
+
+    fix shrew size and names of characters (refactor fail)
+
+[33mcommit 753870eb19734017c52bde6e3b3768581131db43[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Nov 10 13:35:33 2019 +1100
+
+    fix backslash issue
+
+[33mcommit 1b932cd58b9c5c8228f628d1139a26153870d703[m
+Merge: 8a6fffc 1e9b684
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Nov 10 13:32:46 2019 +1100
+
+    Merge remote-tracking branch 'origin/jett-branch'
+    
+    # Conflicts:
+    #       src/main/java/com/mycodefu/application/Application.java
+
+[33mcommit 1e9b684e243b2c12953e5c1999633166d1a3981e[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sun Nov 10 13:28:39 2019 +1100
+
+    half way to background slide
+
+[33mcommit 8a6fffc0606ec2043a6176f465ff6636f97583b6[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Nov 10 13:18:41 2019 +1100
+
+    refactor and add a test for the animation compiler
+
+[33mcommit 0870ac1b5643a0c88dc86e8199e944b0d18fa9cd[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Nov 10 12:50:12 2019 +1100
+
+    refactor and add a test for the animation compiler
+
+[33mcommit 75ffebbcb3c6cdb03311c9875d50e438806589e7[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sat Nov 9 21:51:43 2019 +1100
+
+    re-enable the windows build this time with NuGet installed wix
+
+[33mcommit aebab012c88bd709a9d86043794963fde773c24d[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sat Nov 9 21:12:55 2019 +1100
+
+    test the windows install of wix using nuget, and update the shrew gimp file
+
+[33mcommit 374e3d26cbdfa4f7a8396fb65018697cadfeb692[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sat Nov 9 12:50:16 2019 +1100
+
+    Update download_jdk_win64.sh
+
+[33mcommit 7a48139008f4022a321eab40614e31b166b2dbad[m
+Merge: 1a8d7fc c43822d
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sat Nov 9 12:23:47 2019 +1100
+
+    Merge pull request #2 from luketn/master
+    
+    add mac build
+
+[33mcommit c43822d1b8fe8e8a0792f58a0579b05d77bedd1a[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sat Nov 9 12:18:39 2019 +1100
+
+    try to force java and maven home properties
+
+[33mcommit a86c01b94c3dcc6c277e3e5ce7ef1447c3a7f88e[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sat Nov 9 12:14:52 2019 +1100
+
+    try to force java and maven home properties
+
+[33mcommit d3c4c94abb289aa725ef28d668a8f0db89cbc570[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sat Nov 9 12:05:30 2019 +1100
+
+    fix maven paths
+
+[33mcommit c0f7c7e1e6db94424a980b676eacdbb904998762[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sat Nov 9 11:55:49 2019 +1100
+
+    switch from brew to wget install of maven
+
+[33mcommit 2b7eb2412f5fe5665119d9ac711d4c4a016cd3ac[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sat Nov 9 11:34:08 2019 +1100
+
+    remove the release
+
+[33mcommit a8ab1a3707dd29fbf10f3de10af55954fa63a563[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sat Nov 9 11:29:07 2019 +1100
+
+    update pom with encoding and build version
+
+[33mcommit 9c6148a9f3b5154ffe4dd229579904382312430e[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sat Nov 9 11:15:34 2019 +1100
+
+    add windows back
+
+[33mcommit 537f1e1f62823b603ceac773783e567430f5cd41[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sat Nov 9 11:09:47 2019 +1100
+
+    add a version info statement
+
+[33mcommit 45f5718d39a61370e9ac2a8c27612cf2c07c83d4[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sat Nov 9 11:03:20 2019 +1100
+
+    fix the corretto http path
+
+[33mcommit 97b877826d74955d4fd8ababd5c99275256883de[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sat Nov 9 10:57:30 2019 +1100
+
+    update to install corretto from the TAR
+
+[33mcommit 242e156fd90b47f9056865e16d05932d79a97177[m
+Merge: b17621b 1a8d7fc
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sat Nov 9 10:34:29 2019 +1100
+
+    Merge remote-tracking branch 'upstream/master'
+    
+    # Conflicts:
+    #       .circleci/config.yml
+
+[33mcommit 1a8d7fccf0b683a05da82c88e3a36720162e2cd7[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sat Nov 9 09:58:01 2019 +1100
+
+    quote the java home directory (may have spaces)
+
+[33mcommit 62ba0a96716bd334dd2d8fd0b81ca28198e2166c[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sat Nov 9 00:24:46 2019 +1100
+
+    allow update
+
+[33mcommit 4a441af5f22970cce230bc969b29db76fdd254cd[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sat Nov 9 00:21:23 2019 +1100
+
+    install maven and java
+
+[33mcommit 2617dab79cbd020bf7011cfa52f8da5c47be9dce[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sat Nov 9 00:13:50 2019 +1100
+
+    update mac download version
+
+[33mcommit eb912cfb48eba64f40eb656185a87b04c0222a6f[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sat Nov 9 00:11:18 2019 +1100
+
+    try just mac
+
+[33mcommit 79743f9738997bcbb07af1b437d693432ddf65b9[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sat Nov 9 00:08:05 2019 +1100
+
+    try just mac
+
+[33mcommit 6a2ad78926078cb765ce9bc9066c606a59834b16[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sat Nov 9 00:06:40 2019 +1100
+
+    try just mac
+
+[33mcommit 75522bc895150316f927d50c8ae6be9d4c66077b[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Fri Nov 8 23:50:10 2019 +1100
+
+    add mac install
+
+[33mcommit b17621bf52dfc7bdfa75b54c8906fce34b8bc576[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Fri Nov 8 23:48:07 2019 +1100
+
+    Update config.yml
+
+[33mcommit ef2ca6451ae98547fe7e2fc7f12b1ee719532034[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Fri Nov 8 23:45:38 2019 +1100
+
+    add mac install
+
+[33mcommit 839a9087b9f185d99fb20f3907def7887f6a9f62[m[33m ([m[1;33mtag: 0.01[m[33m)[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Tue Nov 5 07:39:22 2019 +1100
+
+    update mac installer + fix case bug
+
+[33mcommit fd17702cf8d56ac11569fb8e672576fd1def5892[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Mon Nov 4 22:36:19 2019 +1100
+
+    update mac installer
+
+[33mcommit 376048737859e483bb5ca5c14a239d5247e1a7ad[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Mon Nov 4 22:35:45 2019 +1100
+
+    add shrew
+
+[33mcommit a3c9dcdea6910253172445fd93ebce63ee7a5d2f[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Mon Nov 4 19:21:14 2019 +1100
+
+    clean up animation compiler
+
+[33mcommit aa4be33bb58c71ca814950a3ffb1841064a9e279[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Mon Nov 4 17:53:33 2019 +1100
+
+    clean up animation compiler
+
+[33mcommit 6c4f854b256cbbf70208413a688f0f6282ed7a28[m
+Merge: 46ee6e5 f8ee162
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Mon Nov 4 17:25:47 2019 +1100
+
+    Merge branch 'master' of https://github.com/jett59/werekitten
+
+[33mcommit 46ee6e5869fd6a9fc2c1c5e8ad35b6b548850874[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Mon Nov 4 17:06:40 2019 +1100
+
+    added object loading features
+
+[33mcommit f8ee162b075068ae6c491ddb7519f67f93e72789[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Mon Nov 4 17:06:40 2019 +1100
+
+    added object loading features
+
+[33mcommit 43dc0f5dff464115607b0721fc3613f949e1d370[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Nov 3 21:17:33 2019 +1100
+
+    Update package_win64.sh
+
+[33mcommit bc4ecf4a1c2b57eb62cb3d67d4a48724e83b7de9[m
+Merge: 40c364b 67d710d
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Nov 3 16:50:28 2019 +1100
+
+    Merge pull request #1 from luketn/master
+    
+    fix circleci build
+
+[33mcommit 67d710dcecfc56f37d9abe7a5cde09eaebb5359e[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Nov 3 16:43:38 2019 +1100
+
+    Update config.yml
+
+[33mcommit 6e405e884fd1e2ee6ee1eb439b7e4c6d1e682571[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Nov 3 15:51:13 2019 +1100
+
+    Update config.yml
+
+[33mcommit e1e8382677c5c33ff75b2fdfa5a2b3ab0b63ab42[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Nov 3 15:42:20 2019 +1100
+
+    Update config.yml
+
+[33mcommit b2422ac0ca7c617a7238701446603127bc4bfb42[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Nov 3 15:02:29 2019 +1100
+
+    Update config.yml
+
+[33mcommit 40c364b6819d1ee7363e453ac23f8319e6f6eb84[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Nov 3 14:17:48 2019 +1100
+
+    store the msi
+
+[33mcommit c1279a2cc35dc3fa5bb2c05015757f9021511484[m
+Author: Jett59 <jett.thompson.59@gmail.com>
+Date:   Sat Nov 2 14:05:49 2019 +1100
+
+    Update .gitignore
+
+[33mcommit 571090a46860b4dd45423db305973ab1d2d8972f[m
+Author: Jett59 <jett.thompson.59@gmail.com>
+Date:   Sat Nov 2 14:02:51 2019 +1100
+
+    Switch to GNU 3 license
+
+[33mcommit 7fa986029de815d21f5add7c167907cbbddb21da[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sat Nov 2 12:46:03 2019 +1100
+
+    install specific maven version so the path stays the same
+
+[33mcommit b8ea737a23c6a2c5c3ef98eed7d549501c6ba3df[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sat Nov 2 12:39:58 2019 +1100
+
+    try aliasing mvn to the full installed path with a function - dodgy hack but let's see
+
+[33mcommit a366a7b67c31f40d9501ea1650669d3624fdc850[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sat Nov 2 12:24:23 2019 +1100
+
+    add more verbose shell scripts with errors stopping execution
+
+[33mcommit 7f1e72ad67611bf92dd72b87743eb43d296d3746[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sat Nov 2 12:19:58 2019 +1100
+
+    update the download location for jpackage
+
+[33mcommit bf22765a3275cc5e16e25a02db99ed34561b250d[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sat Nov 2 12:13:38 2019 +1100
+
+    separate the chocolate from the download
+
+[33mcommit 909c3639fe308992d07addcbbfa38d4dd9636f2f[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sat Nov 2 12:11:18 2019 +1100
+
+    add wget to the chocolatey install list
+
+[33mcommit b36d6be1a202196a3714b66a054cd37b9b4475ca[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sat Nov 2 12:09:28 2019 +1100
+
+    work on download and cache of jdk
+
+[33mcommit ac701ab066f9053a7bb66ec0ef702ee70922620b[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sat Nov 2 12:02:24 2019 +1100
+
+    separate the steps for installing and building
+
+[33mcommit 011ceca7833f261f600b43dcd21f83713347e178[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sat Nov 2 11:45:39 2019 +1100
+
+    install maven and java with chocolatey
+
+[33mcommit c3814932ab1eb21d334aec8765862dc810f56878[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sat Nov 2 11:41:34 2019 +1100
+
+    switch the build to running the package
+
+[33mcommit 52e8df5d6291bcbfdb2056fc9ea961dcf1660ec8[m
+Author: Jett59 <jett.thompson.59@gmail.com>
+Date:   Sat Nov 2 11:20:15 2019 +1100
+
+    Create config.yml
+
+[33mcommit 36e1dda49e45c9477dd86b22b48181b03e0c1362[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Mon Oct 28 08:24:22 2019 +1100
+
+    rename package to package_osx
+
+[33mcommit 20a244db6ec14963a7ae2501159d4f4df2c62f13[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Mon Oct 28 08:23:42 2019 +1100
+
+    scale the cat to 0.5 size. add jump
+
+[33mcommit 8d74d08cc87e68d4d65156f4202a25799e53e63f[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Mon Oct 28 08:21:42 2019 +1100
+
+    add windows build
+
+[33mcommit 9edddc846f523e6fa188c3c278731c881cfe85f8[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Oct 27 19:14:30 2019 +1100
+
+    add a mac script to build an installer
+    https://openjdk.java.net/jeps/343
+    https://github.com/mirkosertic/FXDesktopSearch
+    https://medium.com/@adam_carroll/java-packager-with-jdk11-31b3d620f4a8
+
+[33mcommit 2e1da4ff479442e100e42d12f0cad6653d2d69fa[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Oct 27 15:54:43 2019 +1100
+
+    add left and right walking
+
+[33mcommit f425ec8601c107306338237c1c6fc27d28955abf[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Oct 27 15:26:00 2019 +1100
+
+    add key handling to go from idle to walking states
+
+[33mcommit 0f57a308a1d729a5fedf1997c4fe13b69e30f7c8[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Oct 27 14:06:44 2019 +1100
+
+    add animation classes
+
+[33mcommit b4e105095f53c01823e4ddb8a5b30849f80efda1[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Sun Oct 27 11:48:46 2019 +1100
+
+    add javafx
+
+[33mcommit 133ec945011667e06f9de82b54ee5095da53ccec[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sun Oct 27 11:29:55 2019 +1100
+
+    configured
+
+[33mcommit 9d27ad8bef81cbb2e1fc13254a5ddad063318d85[m
+Merge: b716831 5bd2994
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sun Oct 27 11:04:51 2019 +1100
+
+    t push
+    git status
+    git commit
+    git commit -m "added some features"
+    git push
+    Merge branch 'master' of https://github.com/jett59/werekitten
+
+[33mcommit b716831f8fae71dd082d0ed2cf1d819f2b484065[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Sun Oct 27 11:02:10 2019 +1100
+
+    made a window for the game
+
+[33mcommit 5bd2994a3caf23300dd3ee91c07aec31b626a34b[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Fri Oct 25 17:49:41 2019 +1100
+
+    set the java language version
+
+[33mcommit e8184d1692cd4da55c681ea8f9817d3e9f3111ed[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Fri Oct 25 16:18:28 2019 +1100
+
+    made music play on repeat using the musicplayer class
+
+[33mcommit c94c721397c0c2824711426d6cff0f491ca5acbe[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Tue Oct 22 07:42:25 2019 +1100
+
+    add background art
+
+[33mcommit 3ddb491474a39555d3a6ac99a5698856a27f6657[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Tue Oct 22 07:03:35 2019 +1100
+
+    moved round packages and added new package sound
+
+[33mcommit 9af6bd0452d74fe6a2b54f918c4e011ff8c07470[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Tue Oct 22 06:52:59 2019 +1100
+
+    filed the resources
+
+[33mcommit 6316a17fa1b159d868a49288c7180433a09e1f84[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Mon Oct 21 18:14:57 2019 +1100
+
+    remove intellij files
+
+[33mcommit a2c7bb70b399818bc01d1d959e0a824a824d9b5e[m
+Author: Luke Thompson <endeavour9@gmail.com>
+Date:   Mon Oct 21 18:12:02 2019 +1100
+
+    add art resources
+
+[33mcommit e82a9cac31c48451ca5793753c5f30b00aac4370[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Mon Oct 21 17:35:56 2019 +1100
+
+    forgot to add the new files
+
+[33mcommit d12e1f7807a7b51beca88ec4f88570c63c6f9cab[m
+Author: Jett Thompson <jett.thompson.59@gmail.com>
+Date:   Mon Oct 21 17:26:58 2019 +1100
+
+    added a start class
+
+[33mcommit 437867fb133998a5c6f8be17bd87721e47eff517[m
+Author: Jett59 <jett.thompson.59@gmail.com>
+Date:   Mon Oct 21 16:52:24 2019 +1100
+
+    Initial commit
