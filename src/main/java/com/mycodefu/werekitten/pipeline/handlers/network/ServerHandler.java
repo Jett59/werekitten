@@ -5,42 +5,37 @@ import com.mycodefu.werekitten.event.Event;
 import com.mycodefu.werekitten.event.GameEventType;
 import com.mycodefu.werekitten.event.NetworkEventType;
 import com.mycodefu.werekitten.event.PlayerEventType;
-import com.mycodefu.werekitten.netty.server.NettyServer;
-import com.mycodefu.werekitten.netty.server.NettyServerHandler;
+import com.mycodefu.werekitten.netty.client.NettyClient;
+import com.mycodefu.werekitten.netty.client.NettyClientHandler.SocketCallback;
 import com.mycodefu.werekitten.network.NetworkUtils;
 import com.mycodefu.werekitten.network.message.MessageBuilder;
 import com.mycodefu.werekitten.network.message.MessageType;
+import com.mycodefu.werekitten.network.message.ServerMessage;
+import com.mycodefu.werekitten.network.message.ServerMessage.IntroductionType;
 import com.mycodefu.werekitten.pipeline.PipelineContext;
 import com.mycodefu.werekitten.pipeline.PipelineEvent;
 import com.mycodefu.werekitten.pipeline.events.chat.ChatMessageSendEvent;
 import com.mycodefu.werekitten.pipeline.events.game.QuitGameEvent;
+import com.mycodefu.werekitten.pipeline.events.game.StartGameEvent;
 import com.mycodefu.werekitten.pipeline.events.network.NetworkEvent;
 import com.mycodefu.werekitten.pipeline.events.player.PlayerEvent;
-import com.mycodefu.werekitten.pipeline.events.ui.NetworkConnectionEstablishedEvent;
 import com.mycodefu.werekitten.pipeline.events.ui.NetworkServerListeningEvent;
 import com.mycodefu.werekitten.pipeline.handlers.PipelineHandler;
 import com.mycodefu.werekitten.player.NetworkPlayerHelper;
 import com.mycodefu.werekitten.preferences.Preferences;
 
 import io.netty.buffer.ByteBuf;
-import io.netty.channel.ChannelId;
 import io.netty.util.CharsetUtil;
 
-import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.CopyOnWriteArrayList;
-
-import static com.mycodefu.werekitten.pipeline.events.ui.NetworkConnectionEstablishedEvent.ConnectionType.client;
 
 public class ServerHandler implements PipelineHandler {
     private final NetworkPlayerHelper networkPlayerHelper;
-    private NettyServer server;
-    private List<ChannelId> channelIds;
-
+    private NettyClient server;
+    
     public ServerHandler() {
         this.networkPlayerHelper = new NetworkPlayerHelper();
-        this.channelIds = new CopyOnWriteArrayList<>();
+        new CopyOnWriteArrayList<>();
     }
 
     @Override
@@ -51,39 +46,44 @@ public class ServerHandler implements PipelineHandler {
                 case start: {
                 	String portPreference = context.getPreferences().get(Preferences.LISTENING_PORT_PREFERENCE);
                 	int port = portPreference == null || portPreference == "" ? context.getListeningPort() : Integer.parseInt(portPreference);
-                    server = new NettyServer(port, new NettyServerHandler.ServerConnectionCallback() {
-                        ConcurrentMap<ChannelId, NetworkPlayerHelper.NetworkPlayerMessageSender> senders = new ConcurrentHashMap<>();
-
-                        @Override
-                        public void serverConnectionOpened(ChannelId id, String remoteAddress) {
-                            channelIds.add(id);
-                            senders.put(id, (playerMessage) -> server.sendMessage(id, playerMessage));
-                            context.postEvent(new NetworkConnectionEstablishedEvent(client, remoteAddress));
-                        }
-
-                        @Override
-                        public void serverConnectionMessage(ChannelId id, String sourceIpAddress, ByteBuf message) {
-                        	if(message.getByte(0) == MessageType.ping.getCode()) {
-                        		server.sendMessage(id, MessageBuilder.createNewMessageBuffer(MessageType.pong, 0).getBuffer());
-                        	}else {
-                            networkPlayerHelper.applyNetworkMessageToPlayer(message, id.asLongText(), context, senders.get(id), true);
-                        	}
-                        }
-
-                        @Override
-                        public void serverConnectionClosed(ChannelId id) {
-                            networkPlayerHelper.destroyNetworkPlayer(id.asLongText(), context);
-                        }
-                    });
-                    server.listen();
-                    context.getPreferences().put(Preferences.LISTENING_PORT_PREFERENCE, Integer.toString(server.getPort()));
+                    server = new NettyClient("ws://werekitten.mycodefu.com:51273", (SocketCallback) new SocketCallback() {
+                    	
+						@Override
+						public void clientMessageReceived(String id, ByteBuf content) {
+							// TODO Auto-generated method stub
+							if(content.getByte(0) == MessageType.ping.getCode()) {
+					    				server.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.ping, 0).getBuffer());
+					    	}
+					        networkPlayerHelper.applyNetworkMessageToPlayer(content, id, context,
+					                message -> server.sendMessage(message), false);
+						}
+						
+						@Override
+						public void clientError(String id, Throwable e) {
+							// TODO Auto-generated method stub
+							e.printStackTrace();
+						}
+						
+						@Override
+						public void clientDisconnected(String id) {
+							// TODO Auto-generated method stub
+							networkPlayerHelper.destroyNetworkPlayer(id, context);
+					        context.postEvent(new StartGameEvent());
+						}
+						
+						@Override
+						public void clientConnected(String id, String remoteAddress) {
+							server.sendMessage(ServerMessage.introductionMessage(port, IntroductionType.HOST));
+						}
+					});
+                    server.connect();
                     String internetIpAddress = NetworkUtils.getInternetIpAddress();
-                    String wsAddress = String.format("ws://%s:%d", internetIpAddress, server.getPort());
+                    String wsAddress = String.format("ws://%s:%d", internetIpAddress, port);
                     context.postEvent(new NetworkServerListeningEvent(wsAddress));
                     break;
                 }
                 case stop: {
-                    server.close();
+                    server.disconnect();
                     break;
                 }
                 default:
@@ -93,9 +93,7 @@ public class ServerHandler implements PipelineHandler {
         	if(server != null) {
         		String message = ((ChatMessageSendEvent)event).message;
         		MessageBuilder messageBuilder = MessageBuilder.createNewMessageBuffer(MessageType.chat, message.length()+1).putByte((byte)message.length()).putBytes(message.getBytes(CharsetUtil.UTF_8));
-        		for (ChannelId id : channelIds) {
-        			server.sendMessage(id, messageBuilder.getBuffer());
-        		}
+        			server.sendMessage(messageBuilder.getBuffer());
         	}
         } else if (event instanceof PlayerEvent) {
             PlayerEvent playerEvent = (PlayerEvent) event;
@@ -105,39 +103,29 @@ public class ServerHandler implements PipelineHandler {
                 double scaledBackX = context.level().get().getPixelScaleHelper().scaleXBack(x);
                 switch (playerEvent.getPlayerEvent()) {
                     case moveLeft:
-                        for (ChannelId id : channelIds) {
-                            server.sendMessage(id, MessageBuilder.createNewMessageBuffer(MessageType.moveLeft, 2).addDoubleAsShort(scaledBackX).getBuffer());
-                        }
+                            server.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.moveLeft, 2).addDoubleAsShort(scaledBackX).getBuffer());
                         break;
                     case moveRight:
-                        for (ChannelId id : channelIds) {
-                            server.sendMessage(id, MessageBuilder.createNewMessageBuffer(MessageType.moveRight, 2).addDoubleAsShort(scaledBackX).getBuffer());
-                        }
+                            server.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.moveRight, 2).addDoubleAsShort(scaledBackX).getBuffer());
                         break;
                     case stopMovingLeft:
-                        for (ChannelId id : channelIds) {
-                            server.sendMessage(id, MessageBuilder.createNewMessageBuffer(MessageType.idleLeft, 2).addDoubleAsShort(scaledBackX).getBuffer());
-                        }
+                            server.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.idleLeft, 2).addDoubleAsShort(scaledBackX).getBuffer());
                         break;
                     case stopMovingRight:
-                        for (ChannelId id : channelIds) {
-                            server.sendMessage(id, MessageBuilder.createNewMessageBuffer(MessageType.idleRight, 2).addDoubleAsShort(scaledBackX).getBuffer());
-                        }
+                            server.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.idleRight, 2).addDoubleAsShort(scaledBackX).getBuffer());
                         break;
                     case jump:
-                        for (ChannelId id : channelIds) {
-                            server.sendMessage(id, MessageBuilder.createNewMessageBuffer(MessageType.jump, 2).addDoubleAsShort(scaledBackX).getBuffer());
-                        }
+                            server.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.jump, 2).addDoubleAsShort(scaledBackX).getBuffer());
                         break;
                 }
             }
         }else if(event instanceof QuitGameEvent) {
         	if(server != null) {
-        		server.close();
+        		server.disconnect();
         	}
         }
-    }
-
+        }
+    
     @Override
     public Event[] getEventInterest() {
         return Event.combineEvents(PlayerEventType.values(), new Event[] {
