@@ -7,7 +7,6 @@ import com.mycodefu.werekitten.event.NetworkEventType;
 import com.mycodefu.werekitten.event.PlayerEventType;
 import com.mycodefu.werekitten.netty.client.NettyClient;
 import com.mycodefu.werekitten.netty.client.NettyClientHandler.SocketCallback;
-import com.mycodefu.werekitten.network.NetworkUtils;
 import com.mycodefu.werekitten.network.message.MessageBuilder;
 import com.mycodefu.werekitten.network.message.MessageType;
 import com.mycodefu.werekitten.network.message.ServerMessage;
@@ -77,9 +76,8 @@ public class ServerHandler implements PipelineHandler {
 						}
 					});
                     server.connect();
-                    String internetIpAddress = NetworkUtils.getInternetIpAddress();
-                    String wsAddress = String.format("ws://%s:%d", internetIpAddress, port);
-                    context.postEvent(new NetworkServerListeningEvent(wsAddress));
+                    String address = Integer.toString(port);
+                    context.postEvent(new NetworkServerListeningEvent(address));
                     break;
                 }
                 case stop: {

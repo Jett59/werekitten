@@ -26,7 +26,7 @@ import static com.mycodefu.werekitten.preferences.Preferences.loadPreferences;
 import static com.mycodefu.werekitten.preferences.Preferences.savePreferences;
 
 public class Start extends Application implements PipelineContext {
-    public static boolean DEBUG_PIPELINE_EVENTS = true;
+    public static boolean DEBUG_PIPELINE_EVENTS = false;
     private static int listeningPort = 0;
 
     private final Map<String, Pipeline> pipelines;
