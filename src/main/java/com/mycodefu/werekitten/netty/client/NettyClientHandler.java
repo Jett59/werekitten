@@ -69,7 +69,9 @@ public class NettyClientHandler extends SimpleChannelInboundHandler<Object> {
 
         WebSocketFrame frame = (WebSocketFrame) msg;
         if (frame instanceof BinaryWebSocketFrame) {
+        	System.out.println("handling message in callback");
             callback.clientMessageReceived(id, frame.content());
+            System.out.println("handled message sent from "+id);
         } else if (frame instanceof PongWebSocketFrame) {
             System.out.println("WebSocket Client received pong");
         } else if (frame instanceof CloseWebSocketFrame) {

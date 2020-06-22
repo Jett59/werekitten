@@ -52,10 +52,10 @@ public class ServerHandler implements PipelineHandler {
 						public void clientMessageReceived(String id, ByteBuf content) {
 							// TODO Auto-generated method stub
 							if(content.getByte(0) == MessageType.ping.getCode()) {
-					    				server.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.ping, 0).getBuffer());
+					    				server.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.pong, 0).getBuffer());
 					    	}
 					        networkPlayerHelper.applyNetworkMessageToPlayer(content, id, context,
-					                message -> server.sendMessage(message), false);
+					                message -> server.sendMessage(message), true);
 						}
 						
 						@Override

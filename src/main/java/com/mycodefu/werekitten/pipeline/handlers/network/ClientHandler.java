@@ -5,6 +5,8 @@ import com.mycodefu.werekitten.netty.client.NettyClient;
 import com.mycodefu.werekitten.netty.client.NettyClientHandler;
 import com.mycodefu.werekitten.network.message.MessageBuilder;
 import com.mycodefu.werekitten.network.message.MessageType;
+import com.mycodefu.werekitten.network.message.ServerMessage;
+import com.mycodefu.werekitten.network.message.ServerMessage.IntroductionType;
 import com.mycodefu.werekitten.pipeline.PipelineContext;
 import com.mycodefu.werekitten.pipeline.PipelineEvent;
 import com.mycodefu.werekitten.pipeline.events.chat.ChatMessageSendEvent;
@@ -44,7 +46,7 @@ public class ClientHandler implements PipelineHandler, NettyClientHandler.Socket
                 case connect: {
                     serverAddress = ((NetworkConnectClientEvent) event).getServerAddress();
 
-                    nettyClient = new NettyClient(serverAddress, this);
+                    nettyClient = new NettyClient("ws://werekitten.mycodefu.com:51273", this);
                     nettyClient.connect();
                     context.postEvent(new BuildLevelEvent(false));
                     context.postEvent(new NetworkConnectionEstablishedEvent(ConnectionType.server, serverAddress));
@@ -119,6 +121,7 @@ public class ClientHandler implements PipelineHandler, NettyClientHandler.Socket
     
     @Override
     public void clientConnected(String id, String remoteAddress) {
+    	nettyClient.sendMessage(ServerMessage.introductionMessage(Integer.parseInt(serverAddress), IntroductionType.JOIN));
         context.getPreferences().put(Preferences.CLIENT_CONNECT_IP_PREFERENCE, serverAddress);
         nettyClient.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.ping, 0).getBuffer());
         start = System.nanoTime();
