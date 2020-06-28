@@ -9,6 +9,7 @@ import com.mycodefu.werekitten.pipeline.PipelineEvent;
 import com.mycodefu.werekitten.pipeline.config.PipelineConfig;
 import com.mycodefu.werekitten.pipeline.config.PipelineConfiguration;
 import com.mycodefu.werekitten.pipeline.events.game.StartGameEvent;
+import com.mycodefu.werekitten.pipeline.events.time.FrameRateEvent;
 import com.mycodefu.werekitten.pipeline.handlers.PipelineHandler;
 import com.mycodefu.werekitten.player.Player;
 import javafx.application.Application;
@@ -26,7 +27,7 @@ import static com.mycodefu.werekitten.preferences.Preferences.loadPreferences;
 import static com.mycodefu.werekitten.preferences.Preferences.savePreferences;
 
 public class Start extends Application implements PipelineContext {
-    public static boolean DEBUG_PIPELINE_EVENTS = false;
+    public static boolean DEBUG_PIPELINE_EVENTS = true;
     private static int listeningPort = 0;
 
     private final Map<String, Pipeline> pipelines;
@@ -110,7 +111,7 @@ public class Start extends Application implements PipelineContext {
         if (pipeline == null) {
             System.out.println("pipeline == null. event cannot be posted\n" + event.toString());
         } else {
-            if (DEBUG_PIPELINE_EVENTS) {
+            if (DEBUG_PIPELINE_EVENTS && !(event instanceof FrameRateEvent)) {
                 StackTraceElement calledBy = new Exception().getStackTrace()[1];
                 System.out.println(String.format("%s (%s): Event posted: %s (%s), class: %s, \n%s\npostedBy: %s, method %s, line number: %s, module: %s", Instant.now().toString(), Thread.currentThread().getName(), event.getEvent(), event.getPipelineName(), event.getClass().getSimpleName(), event.toString(), calledBy.getClassName(), calledBy.getMethodName(), Integer.toString(calledBy.getLineNumber()), calledBy.getModuleName()));
             }

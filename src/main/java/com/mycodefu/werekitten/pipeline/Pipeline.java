@@ -69,7 +69,7 @@ public class Pipeline {
 
             PipelineHandler[] handlers = this.eventHandlers.get(event.getEvent());
             
-            if (Start.DEBUG_PIPELINE_EVENTS) {
+            if (Start.DEBUG_PIPELINE_EVENTS && !(event instanceof FrameRateEvent)) {
             	if(handlers != null) {
                 System.out.printf("rendering event %s in the handlers %s\n", event.getEvent().getName(), Arrays.stream(handlers).map(pipeline->pipeline.getClass().getSimpleName()).collect(Collectors.toList()).toString());
             	}else {
