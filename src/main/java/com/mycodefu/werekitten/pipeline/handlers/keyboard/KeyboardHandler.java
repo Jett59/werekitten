@@ -48,6 +48,7 @@ public class KeyboardHandler implements PipelineHandler {
                                         keysDown.add(KeyCode.C);
                                         context.postEvent(new CKeyPressedEvent());
                                     }
+                                    break;
                                 }
                                 case D: {
                                     if (!keysDown.contains(KeyCode.D)){
