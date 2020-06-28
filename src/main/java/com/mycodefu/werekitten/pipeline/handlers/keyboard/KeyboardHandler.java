@@ -43,6 +43,12 @@ public class KeyboardHandler implements PipelineHandler {
                                     }
                                     break;
                                 }
+                                case C: {
+                                    if (!keysDown.contains(KeyCode.C)){
+                                        keysDown.add(KeyCode.C);
+                                        context.postEvent(new CKeyPressedEvent());
+                                    }
+                                }
                                 case D: {
                                     if (!keysDown.contains(KeyCode.D)){
                                         keysDown.add(KeyCode.D);
@@ -75,6 +81,11 @@ public class KeyboardHandler implements PipelineHandler {
                                     case A: {
                                         context.postEvent(new AKeyReleasedEvent());
                                         keysDown.remove(KeyCode.A);
+                                        break;
+                                    }
+                                    case C: {
+                                        context.postEvent(new CKeyReleasedEvent());
+                                        keysDown.remove(KeyCode.C);
                                         break;
                                     }
                                     case D: {
