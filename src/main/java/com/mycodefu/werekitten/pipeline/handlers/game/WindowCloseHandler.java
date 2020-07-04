@@ -7,6 +7,7 @@ import com.mycodefu.werekitten.pipeline.PipelineEvent;
 import com.mycodefu.werekitten.pipeline.events.game.GameEvent;
 import com.mycodefu.werekitten.pipeline.events.game.QuitGameEvent;
 import com.mycodefu.werekitten.pipeline.handlers.PipelineHandler;
+import javafx.application.Platform;
 
 public class WindowCloseHandler implements PipelineHandler {
 
@@ -18,7 +19,9 @@ public class WindowCloseHandler implements PipelineHandler {
                 case start: {
                     context.getStage().setOnCloseRequest(e -> {
                         context.postEvent(new QuitGameEvent());
+                        e.consume();
                     });
+                    Platform.setImplicitExit(false);
                     break;
                 }
                 case quit: {
