@@ -15,11 +15,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
-import javafx.scene.text.TextBoundsType;
 import javafx.util.Duration;
 
 import java.util.concurrent.atomic.AtomicInteger;
@@ -56,30 +54,33 @@ public class StartPageUI {
         singleplayer.setOnAction(actionEvent -> {
             context.postEvent(new BuildLevelEvent(false));
         });
-        Button hostServer = new Button("Host LAN Server");
-        hostServer.setStyle(buttonStyle);
-        hostServer.setFont(buttonFont);
-        hostServer.setPrefWidth(width);
-        hostServer.setOnAction(e -> {
+        Button host = new Button("Host");
+        host.setStyle(buttonStyle);
+        host.setFont(buttonFont);
+        host.setPrefWidth(width/2-5);
+        host.setOnAction(e -> {
             context.postEvent(new BuildLevelEvent(true));
         });
-        Button joinServer = new Button("Join LAN Server");
-        joinServer.setFont(buttonFont);
+        Button join = new Button("Join");
+        join.setFont(buttonFont);
 
-        joinServer.setStyle(buttonStyle);
+        join.setStyle(buttonStyle);
 
-        joinServer.setPrefWidth(width);
+        join.setPrefWidth(width/2-5);
 
         final FlowPane imagePane = new FlowPane(catAnimation.getImageView());
         imagePane.setPrefWidth(230);
 
 
-        joinServer.setOnAction(e -> {
+        join.setOnAction(e -> {
             Node serverNode = getJoinServerScreenNode(context, welcome, imagePane);
             Scene connectScene = new Scene(new Group(serverNode));
             connectScene.setFill(new Color(0.05, 0.2, 0.95, 0.25));
             context.getStage().setScene(connectScene);
         });
+        
+        HBox hostAndJoin = new HBox(10, host, join);
+        
         Button settings = new Button("Settings");
         settings.setFont(buttonFont);
         settings.setStyle(buttonStyle);
@@ -97,8 +98,6 @@ public class StartPageUI {
         quit.setPrefWidth(width / 2d - 5d);
         quit.setOnAction(e -> context.postEvent(new QuitGameEvent()));
 
-        HBox settingsAndQuit = new HBox(10, settings, quit);
-
         Button levelDesigner = new Button("Level Designer");
         levelDesigner.setStyle(buttonStyle);
         levelDesigner.setFont(buttonFont);
@@ -106,11 +105,11 @@ public class StartPageUI {
         levelDesigner.setOnAction(e -> context.postEvent(new LevelDesignerEvent()));
 
         BorderPane bottomBorder = new BorderPane();
-        bottomBorder.setLeft(levelDesigner);
-        bottomBorder.setRight(settingsAndQuit);
+        bottomBorder.setLeft(settings);
+        bottomBorder.setRight(quit);
 
 
-        VBox buttons = new VBox(10, singleplayer, hostServer, joinServer);
+        VBox buttons = new VBox(10, singleplayer, levelDesigner, hostAndJoin);
         buttons.setPadding(new Insets(50, 0, 0, 0));
 
 
