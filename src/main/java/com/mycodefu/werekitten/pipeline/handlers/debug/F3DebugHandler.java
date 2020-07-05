@@ -12,7 +12,6 @@ import com.mycodefu.werekitten.event.TimeEventType;
 import com.mycodefu.werekitten.event.UiEventType;
 import com.mycodefu.werekitten.pipeline.PipelineContext;
 import com.mycodefu.werekitten.pipeline.PipelineEvent;
-import com.mycodefu.werekitten.pipeline.events.keyboard.F3PressedEvent;
 import com.mycodefu.werekitten.pipeline.events.keyboard.F3ReleasedEvent;
 import com.mycodefu.werekitten.pipeline.events.player.PlayerEvent;
 import com.mycodefu.werekitten.pipeline.events.time.FrameRateEvent;

@@ -20,9 +20,6 @@ import java.time.Instant;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicReference;
-import java.util.prefs.BackingStoreException;
-import java.util.prefs.Preferences;
-
 import static com.mycodefu.werekitten.preferences.Preferences.loadPreferences;
 import static com.mycodefu.werekitten.preferences.Preferences.savePreferences;
 

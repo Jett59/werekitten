@@ -21,7 +21,6 @@ import static com.mycodefu.werekitten.animation.MovementAnimation.MovementDirect
 
 public class Player {
     private final String id;
-    private final double speed;
     private  Map<AnimationType, Animation> nameToAnimation = new ConcurrentHashMap<>();
     private List<Animation> animations = new ArrayList<>();
     private Group animationGroup;
@@ -35,7 +34,6 @@ public class Player {
 
     Player(String id, Animation idleRight, Animation idleLeft, Animation walkRight, Animation walkLeft, double jumpAmount, AnimationType initialAnimation, double initialXPosition, double speed) {
         this.id = id;
-        this.speed = speed;
         animations.addAll(List.of(idleRight, idleLeft, walkRight, walkLeft));
 
         nameToAnimation.put(AnimationType.idleRight, idleRight);

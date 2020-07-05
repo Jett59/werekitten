@@ -6,13 +6,8 @@ import com.mycodefu.werekitten.pipeline.PipelineContext;
 import com.mycodefu.werekitten.pipeline.PipelineEvent;
 import com.mycodefu.werekitten.pipeline.events.player.*;
 import com.mycodefu.werekitten.pipeline.handlers.PipelineHandler;
-import com.mycodefu.werekitten.sound.MusicPlayer;
-
-import javax.sound.sampled.Clip;
 
 public class PlayerMotionHandler implements PipelineHandler {
-    private final Clip ouch = MusicPlayer.getClipFromResource("/characters/cat/sounds/ouch.wav");
-
     @Override
     public Event[] getEventInterest() {
         return Event.combineEvents(PlayerEventType.values());

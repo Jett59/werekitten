@@ -15,16 +15,12 @@ import io.netty.buffer.ByteBuf;
 import io.netty.util.CharsetUtil;
 import javafx.util.Duration;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
 public class NetworkPlayerHelper {
     public interface NetworkPlayerMessageSender {
         void sendMessage(ByteBuf message);
     }
 
-    private Map<String, NetworkPlayerMessageSender> playerMessageSenders = new ConcurrentHashMap<>();
-    public void createNetworkPlayer(String playerId, PipelineContext context, NetworkPlayerMessageSender playerMessageSender, double initialXPosition) {
+    public void createNetworkPlayer(String playerId, PipelineContext context, double initialXPosition) {
         double height = context.level().get().getPlayerElement().getSize().getHeight();
 
         double catJumpAmount = context.level().get().getPixelScaleHelper().scaleY(GameUI.CAT_JUMP_AMOUNT);
@@ -33,16 +29,12 @@ public class NetworkPlayerHelper {
         context.getPlayerMap().put(playerId, networkPlayer);
         context.postEvent(new PlayerCreatedEvent(networkPlayer));
         context.postEvent(new NetworkConnectedEvent());
-
-        playerMessageSenders.put(playerId, playerMessageSender);
     }
 
     public void destroyNetworkPlayer(String playerId, PipelineContext context) {
         Player player = context.getPlayerMap().get(playerId);
         context.postEvent(new PlayerDestroyedEvent(player));
         context.postEvent(new NetworkDisconnectedEvent());
-
-        playerMessageSenders.remove(playerId);
     }
 
     public void applyNetworkMessageToPlayer(ByteBuf content, String playerId, PipelineContext context, NetworkPlayerMessageSender playerMessageSender, boolean shouldSendInit) {
@@ -60,7 +52,7 @@ public class NetworkPlayerHelper {
                     playerMessageSender.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.init, 2).addDoubleAsShort(x).getBuffer());
                 }
                 double initialXPosition = context.level().get().getPixelScaleHelper().scaleX(((double) content.readShort()) / 10);
-                createNetworkPlayer(playerId, context, playerMessageSender, initialXPosition);
+                createNetworkPlayer(playerId, context, initialXPosition);
                 break;
             }
             case moveLeft: {

@@ -7,7 +7,6 @@ import com.mycodefu.werekitten.pipeline.events.time.FrameRateEvent;
 import com.mycodefu.werekitten.pipeline.events.time.TickEvent;
 import com.mycodefu.werekitten.pipeline.handlers.PipelineHandler;
 
-import java.time.Instant;
 import java.util.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.stream.Collectors;
@@ -16,7 +15,6 @@ public class Pipeline {
     private final Queue<PipelineEvent> eventQueue;
     private final Map<Event, PipelineHandler[]> eventHandlers;
     private final PipelineHandler[] handlers;
-    private final int eventsToRunPerFrame;
     private String name;
     private final PipelineContext context;
     private long eventsInSecond = 0;
@@ -50,7 +48,6 @@ public class Pipeline {
         if (eventsToRunPerFrame < 1 || eventsToRunPerFrame > 10) {
             throw new IllegalArgumentException("eventsToRunPerFrame must be between 1 and 10.");
         }
-        this.eventsToRunPerFrame = eventsToRunPerFrame;
         this.eventQueue = new ConcurrentLinkedQueue<>();
     }
 

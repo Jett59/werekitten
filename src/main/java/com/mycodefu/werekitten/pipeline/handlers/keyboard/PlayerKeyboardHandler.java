@@ -12,7 +12,6 @@ import com.mycodefu.werekitten.pipeline.events.player.PlayerEvent;
 import com.mycodefu.werekitten.pipeline.events.player.StopMovingLeftEvent;
 import com.mycodefu.werekitten.pipeline.events.player.StopMovingRightEvent;
 import com.mycodefu.werekitten.pipeline.handlers.PipelineHandler;
-import com.mycodefu.werekitten.player.Kitten;
 
 public class PlayerKeyboardHandler implements PipelineHandler {
 

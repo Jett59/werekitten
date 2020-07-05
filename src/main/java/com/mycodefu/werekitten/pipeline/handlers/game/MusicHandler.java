@@ -15,14 +15,18 @@ public class MusicHandler implements PipelineHandler {
         if (event instanceof GameEvent) {
             GameEvent gameEvent = (GameEvent)event;
             switch (gameEvent.getGameEvent()) {
-                case start: //for when the level is closed
+                case start: {
+                	MusicPlayer.stop();
+                	break;
+                }
 				case quit: {
-                    MusicPlayer.stopPlayingLevel();
+                    MusicPlayer.stop();
+                    MusicPlayer.shutdown();
                     break;
                 }
 
                 case levelLoaded: {
-                    MusicPlayer.playLevel();
+                    MusicPlayer.play();
                     break;
                 }
 			default:
