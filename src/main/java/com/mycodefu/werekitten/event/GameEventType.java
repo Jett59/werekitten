@@ -4,7 +4,7 @@ public enum GameEventType implements Event {
     start,
     buildLevel,
     levelLoaded,
-    quit;
+    quit, levelDesigner;
 
     @Override
     public String getName() {
