@@ -6,6 +6,7 @@
       "handlers": [
         "com.mycodefu.werekitten.pipeline.handlers.game.StartPageHandler",
         "com.mycodefu.werekitten.pipeline.handlers.game.LevelBuildHandler",
+        "com.mycodefu.werekitten.pipeline.handlers.level.LevelDesignerHandler",
         "com.mycodefu.werekitten.pipeline.handlers.game.UICreationHandler",
         "com.mycodefu.werekitten.pipeline.handlers.game.MusicHandler",
         "com.mycodefu.werekitten.pipeline.handlers.keyboard.KeyboardHandler",
