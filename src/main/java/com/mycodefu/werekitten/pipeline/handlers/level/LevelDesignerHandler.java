@@ -23,7 +23,7 @@ public class LevelDesignerHandler implements PipelineHandler{
 			LevelDesignerUI ui = new LevelDesignerUI();
 			context.getStage().hide();
 			context.getStage().setScene(ui.getScene());
-			context.getStage().setWidth(LevelDesignerUI.LEVEL_WIDTH);
+			context.getStage().setWidth(LevelDesignerUI.LEVEL_WIDTH+250);
 			context.getStage().setHeight(LevelDesignerUI.LEVEL_HEIGHT);
 			context.getStage().show();
 		}
