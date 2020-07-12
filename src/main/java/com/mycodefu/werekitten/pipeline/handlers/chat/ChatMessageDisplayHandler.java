@@ -66,7 +66,10 @@ public class ChatMessageDisplayHandler implements PipelineHandler {
 
             send.setOnAction(e -> {
                 context.postEvent(new ChatMessageSendEvent(textField.getText()));
+                textField.setText("");
+                textField.requestFocus();
             });
+
         } else if (event instanceof ChatMessageRecievedEvent) {
             ChatMessageRecievedEvent chatEvent = (ChatMessageRecievedEvent) event;
             displayArea.setText(chatEvent.message + "\n" + displayArea.getText());
