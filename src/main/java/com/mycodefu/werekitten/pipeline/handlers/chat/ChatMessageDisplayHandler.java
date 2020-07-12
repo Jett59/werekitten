@@ -65,14 +65,17 @@ public class ChatMessageDisplayHandler implements PipelineHandler {
 			});
 
             send.setOnAction(e -> {
-                context.postEvent(new ChatMessageSendEvent(textField.getText()));
+                String message = textField.getText();
+                context.postEvent(new ChatMessageSendEvent(message));
+                displayArea.setText(String.format("Sent: %s\n%s", message, displayArea.getText()));
+
                 textField.setText("");
                 textField.requestFocus();
             });
 
         } else if (event instanceof ChatMessageRecievedEvent) {
             ChatMessageRecievedEvent chatEvent = (ChatMessageRecievedEvent) event;
-            displayArea.setText(chatEvent.message + "\n" + displayArea.getText());
+            displayArea.setText("Received: " + chatEvent.message + "\n" + displayArea.getText());
         } else if (event instanceof CKeyPressedEvent) {
             System.out.println("group.isVisible: " + group.isVisible());
             group.setVisible(!group.isVisible());
