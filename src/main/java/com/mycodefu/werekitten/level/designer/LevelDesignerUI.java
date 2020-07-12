@@ -20,7 +20,7 @@ public Scene getScene() {
 	Group combined = new Group(level.getLayerGroups().stream()
 	.map(LayerGroup::getGroup)
 	.collect(Collectors.toList()));
-	combined.setOnDragDetected(new DragHandler());
+	combined.setOnDragDetected(DragHandler.detectedHandler);
 	return new Scene(combined);
 }
 }
