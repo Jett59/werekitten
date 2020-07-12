@@ -42,6 +42,7 @@ public class SoundEffectHandler  implements PipelineHandler {
                 }
 
                 ClipData clipData = soundEffects.get(soundEffect);
+                clipData.getClip().setFramePosition(0);
                 clipData.getClip().start();
 
             } catch (Exception e) {
