@@ -1,7 +1,5 @@
 package com.mycodefu.werekitten.pipeline.handlers.chat;
 
-import java.awt.Toolkit;
-
 import com.mycodefu.werekitten.event.ChatEventType;
 import com.mycodefu.werekitten.event.Event;
 import com.mycodefu.werekitten.event.KeyboardEventType;
@@ -13,61 +11,70 @@ import com.mycodefu.werekitten.pipeline.events.chat.ChatMessageSendEvent;
 import com.mycodefu.werekitten.pipeline.events.keyboard.CKeyPressedEvent;
 import com.mycodefu.werekitten.pipeline.events.ui.UiCreatedEvent;
 import com.mycodefu.werekitten.pipeline.handlers.PipelineHandler;
-
 import javafx.scene.AccessibleRole;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 
-public class ChatMessageDisplayHandler implements PipelineHandler{
-	private TextArea displayArea;
-	private HBox chatSendInterface;
-	private TextField textField;
-	private Button send;
-	private Group group;
-	
-public ChatMessageDisplayHandler() {
-		this.displayArea = new TextArea();
-	displayArea.setEditable(false);
-	this.textField = new TextField();
-	textField.setAccessibleRole(AccessibleRole.TEXT_AREA);
-	this.send = new Button("send");
-	this.chatSendInterface = new HBox(20, textField, send);
-	group  = new Group(displayArea, chatSendInterface);
-}
+import java.awt.*;
 
-	@Override
-	public Event[] getEventInterest() {
-		return new Event[] {
-				ChatEventType.send,
-				ChatEventType.recieved,
-				UiEventType.UiCreated,
-				KeyboardEventType.cPressed
-		};
-	}
+public class ChatMessageDisplayHandler implements PipelineHandler {
+    private TextArea displayArea;
+    private HBox chatSendInterface;
+    private TextField textField;
+    private Button send;
+    private Group group;
 
-	@Override
-	public void handleEvent(PipelineContext context, PipelineEvent event) {
-		if(event instanceof UiCreatedEvent) {
-			chatSendInterface.setTranslateX(Toolkit.getDefaultToolkit().getScreenSize().width-400);
-			chatSendInterface.setTranslateY(50);
-			textField.setPrefColumnCount(20);
-			displayArea.setTranslateX(0);
-			displayArea.setTranslateY(Toolkit.getDefaultToolkit().getScreenSize().height-200);
-			((UiCreatedEvent)event).getUI().addNode(group);
-			send.setOnAction(e->{
-				context.postEvent(new ChatMessageSendEvent(textField.getText()));
+    public ChatMessageDisplayHandler() {
+        this.displayArea = new TextArea();
+        displayArea.setEditable(false);
+        this.textField = new TextField();
+        textField.setAccessibleRole(AccessibleRole.TEXT_AREA);
+        this.send = new Button("send");
+        this.chatSendInterface = new HBox(20, textField, send);
+        group = new Group(displayArea, chatSendInterface);
+    }
+
+    @Override
+    public Event[] getEventInterest() {
+        return new Event[]{
+                ChatEventType.send,
+                ChatEventType.recieved,
+                UiEventType.UiCreated,
+                KeyboardEventType.cPressed
+        };
+    }
+
+    @Override
+    public void handleEvent(PipelineContext context, PipelineEvent event) {
+        if (event instanceof UiCreatedEvent) {
+            chatSendInterface.setTranslateX(Toolkit.getDefaultToolkit().getScreenSize().width - 400);
+            chatSendInterface.setTranslateY(50);
+            textField.setPrefColumnCount(20);
+            displayArea.setTranslateX(0);
+            displayArea.setTranslateY(Toolkit.getDefaultToolkit().getScreenSize().height - 200);
+            ((UiCreatedEvent) event).getUI().addNode(group);
+
+            textField.setOnKeyPressed(keyEvent -> {
+            	if (keyEvent.getCode()== KeyCode.ENTER){
+            	    send.fire();
+                }
 			});
-		}else if(event instanceof ChatMessageRecievedEvent) {
-			ChatMessageRecievedEvent chatEvent = (ChatMessageRecievedEvent)event;
-			displayArea.setText(chatEvent.message+"\n"+displayArea.getText());
-		}else if(event instanceof CKeyPressedEvent) {
-			System.out.println("group.isVisible: "+group.isVisible());
-			group.setVisible(!group.isVisible());
-			System.out.println("group.isVisible: "+group.isVisible());
-		}
-	}
+
+            send.setOnAction(e -> {
+                context.postEvent(new ChatMessageSendEvent(textField.getText()));
+            });
+        } else if (event instanceof ChatMessageRecievedEvent) {
+            ChatMessageRecievedEvent chatEvent = (ChatMessageRecievedEvent) event;
+            displayArea.setText(chatEvent.message + "\n" + displayArea.getText());
+        } else if (event instanceof CKeyPressedEvent) {
+            System.out.println("group.isVisible: " + group.isVisible());
+            group.setVisible(!group.isVisible());
+            System.out.println("group.isVisible: " + group.isVisible());
+        }
+    }
 
 }
