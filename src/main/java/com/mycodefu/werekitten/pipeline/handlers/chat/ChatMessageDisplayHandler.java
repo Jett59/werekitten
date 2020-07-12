@@ -9,6 +9,8 @@ import com.mycodefu.werekitten.pipeline.PipelineEvent;
 import com.mycodefu.werekitten.pipeline.events.chat.ChatMessageRecievedEvent;
 import com.mycodefu.werekitten.pipeline.events.chat.ChatMessageSendEvent;
 import com.mycodefu.werekitten.pipeline.events.keyboard.CKeyPressedEvent;
+import com.mycodefu.werekitten.pipeline.events.soundeffects.PlaySoundEffectEvent;
+import com.mycodefu.werekitten.pipeline.events.soundeffects.SoundEffects;
 import com.mycodefu.werekitten.pipeline.events.ui.UiCreatedEvent;
 import com.mycodefu.werekitten.pipeline.handlers.PipelineHandler;
 import javafx.scene.AccessibleRole;
@@ -76,6 +78,9 @@ public class ChatMessageDisplayHandler implements PipelineHandler {
         } else if (event instanceof ChatMessageRecievedEvent) {
             ChatMessageRecievedEvent chatEvent = (ChatMessageRecievedEvent) event;
             displayArea.setText("Received: " + chatEvent.message + "\n" + displayArea.getText());
+
+            context.postEvent(new PlaySoundEffectEvent(SoundEffects.bell));
+
         } else if (event instanceof CKeyPressedEvent) {
             System.out.println("group.isVisible: " + group.isVisible());
             group.setVisible(!group.isVisible());

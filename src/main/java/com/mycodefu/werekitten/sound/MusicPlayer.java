@@ -1,6 +1,8 @@
 package com.mycodefu.werekitten.sound;
 
-import javax.sound.sampled.*;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import java.io.BufferedInputStream;
 import java.io.InputStream;
 
@@ -8,7 +10,7 @@ public class MusicPlayer {
     private static ClipData levelTheme = gameThemeInit("Level_Theme");
 
     public static void play() {
-    	System.out.println("playing");
+        System.out.println("playing");
         levelTheme.clip.loop(Clip.LOOP_CONTINUOUSLY);
     }
 
@@ -17,10 +19,10 @@ public class MusicPlayer {
     }
 
     public static void shutdown() {
-    	System.out.println("closing level!");
-    	levelTheme.close();
+        System.out.println("closing level!");
+        levelTheme.close();
     }
-    
+
     private static ClipData gameThemeInit(String themeName) {
         String resourcePath = "/music/" + themeName + ".wav";
         return getClipFromResource(resourcePath);
@@ -39,29 +41,33 @@ public class MusicPlayer {
             return null;
         }
     }
-    
+
     public static class ClipData {
-    	private Clip clip;
-    	private InputStream in;
-    	private BufferedInputStream bufIn;
-    	private AudioInputStream audIn;
-    
-    private ClipData(Clip clip, InputStream in, BufferedInputStream bufIn, AudioInputStream audIn) {
-    	this.audIn = audIn;
-    	this.bufIn = bufIn;
-    	this.clip = clip;
-    	this.in = in;
-    }
-    
-    private void close() {
-    	try {
-			in.close();
-    	bufIn.close();
-    	audIn.close();
-    	clip.close();
-    	} catch (Exception e) {
-			e.printStackTrace();
-		}
-    }
+        private Clip clip;
+        private InputStream in;
+        private BufferedInputStream bufIn;
+        private AudioInputStream audIn;
+
+        private ClipData(Clip clip, InputStream in, BufferedInputStream bufIn, AudioInputStream audIn) {
+            this.audIn = audIn;
+            this.bufIn = bufIn;
+            this.clip = clip;
+            this.in = in;
+        }
+
+        public void close() {
+            try {
+                in.close();
+                bufIn.close();
+                audIn.close();
+                clip.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        public Clip getClip() {
+            return clip;
+        }
     }
 }
