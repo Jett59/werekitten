@@ -8,25 +8,25 @@ import com.mycodefu.werekitten.pipeline.PipelineEvent;
 import com.mycodefu.werekitten.pipeline.events.game.LevelDesignerEvent;
 import com.mycodefu.werekitten.pipeline.handlers.PipelineHandler;
 
-public class LevelDesignerHandler implements PipelineHandler{
+public class LevelDesignerHandler implements PipelineHandler {
 
-	@Override
-	public Event[] getEventInterest() {
-		return new Event[] {
-				GameEventType.levelDesigner
-		};
-	}
+    @Override
+    public Event[] getEventInterest() {
+        return new Event[]{
+                GameEventType.levelDesigner
+        };
+    }
 
-	@Override
-	public void handleEvent(PipelineContext context, PipelineEvent event) {
-		if(event instanceof LevelDesignerEvent) {
-			LevelDesignerUI ui = new LevelDesignerUI();
-			context.getStage().hide();
-			context.getStage().setScene(ui.getScene());
-			context.getStage().setWidth(LevelDesignerUI.LEVEL_WIDTH+250);
-			context.getStage().setHeight(LevelDesignerUI.LEVEL_HEIGHT);
-			context.getStage().show();
-		}
-	}
+    @Override
+    public void handleEvent(PipelineContext context, PipelineEvent event) {
+        if (event instanceof LevelDesignerEvent) {
+            LevelDesignerUI ui = new LevelDesignerUI();
+            context.getStage().hide();
+            context.getStage().setScene(ui.getScene());
+            context.getStage().setWidth(LevelDesignerUI.LEVEL_WIDTH + LevelDesignerUI.TOOL_WIDTH);
+            context.getStage().setHeight(LevelDesignerUI.LEVEL_HEIGHT);
+            context.getStage().show();
+        }
+    }
 
 }
