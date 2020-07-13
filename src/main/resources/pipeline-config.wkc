@@ -19,8 +19,8 @@
         "com.mycodefu.werekitten.pipeline.handlers.Ui.PlayerAdditionHandler",
         "com.mycodefu.werekitten.pipeline.handlers.Ui.UiNetworkEventHandler",
         "com.mycodefu.werekitten.pipeline.handlers.debug.F3DebugHandler",
-        "com.mycodefu.werekitten.pipeline.handlers.game.WindowCloseHandler",
-        "com.mycodefu.werekitten.pipeline.handlers.soundeffects.SoundEffectHandler"
+        "com.mycodefu.werekitten.pipeline.handlers.soundeffects.SoundEffectHandler",
+        "com.mycodefu.werekitten.pipeline.handlers.game.WindowCloseHandler"
       ]
     }
   ]
