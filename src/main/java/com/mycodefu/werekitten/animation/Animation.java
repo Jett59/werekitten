@@ -1,6 +1,7 @@
 package com.mycodefu.werekitten.animation;
 
 import com.mycodefu.werekitten.backgroundObjects.BackgroundAnimationObject;
+import com.mycodefu.werekitten.level.data.Element;
 
 import javafx.animation.Interpolator;
 import javafx.animation.Transition;
@@ -80,7 +81,7 @@ public class Animation extends Transition {
         return cellPolygons.get(cellIndex);
     }
 
-    public BackgroundAnimationObject asBackgroundObject(String name) {
-    	return new BackgroundAnimationObject(this, name);
+    public BackgroundAnimationObject asBackgroundObject(String name, Element element) {
+    	return new BackgroundAnimationObject(this, name, element);
     }
 }

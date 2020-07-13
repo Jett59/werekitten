@@ -1,16 +1,20 @@
 package com.mycodefu.werekitten.backgroundObjects;
 
 import com.mycodefu.werekitten.animation.Animation;
+import com.mycodefu.werekitten.level.data.Element;
+
 import javafx.scene.Node;
 import javafx.scene.shape.Shape;
 
 public class BackgroundAnimationObject implements NodeObject {
     private Animation animation;
     private String name;
-
-    public BackgroundAnimationObject(Animation animation, String name) {
+private Element element;
+    
+    public BackgroundAnimationObject(Animation animation, String name, Element element) {
         this.animation = animation;
         this.name = name;
+        this.element = element;
     }
 
     @Override
@@ -30,5 +34,10 @@ public class BackgroundAnimationObject implements NodeObject {
 
 	public Animation getAnimation() {
 		return animation;
+	}
+
+	@Override
+	public Element getDataElement() {
+		return element;
 	}
 }

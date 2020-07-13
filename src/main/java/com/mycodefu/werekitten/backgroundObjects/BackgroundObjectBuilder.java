@@ -67,7 +67,7 @@ public BackgroundObjectBuilder(AnimationCompiler animationCompiler) {
                 animat.getImageView().setX(element.getLocation().getX());
                 animat.getImageView().setY(element.getLocation().getY());
 
-                BackgroundAnimationObject animatedBackgroundObject = animat.asBackgroundObject(element.getName());
+                BackgroundAnimationObject animatedBackgroundObject = animat.asBackgroundObject(element.getName(), element);
 
 
                 animatedBackgroundObject.getAnimation().setCycleCount(INDEFINITE);
@@ -96,7 +96,7 @@ public BackgroundObjectBuilder(AnimationCompiler animationCompiler) {
 
                 Polygon polygon = getPolygon(bufferedImage, 32);
 
-                BackgroundImageObject backgroundImageObject = new BackgroundImageObject(fxImage, element.getName(), polygon);
+                BackgroundImageObject backgroundImageObject = new BackgroundImageObject(fxImage, element.getName(), polygon, element);
                 backgroundImageObject.getImageView().setX(element.getLocation().getX());
                 backgroundImageObject.getImageView().setY(element.getLocation().getY());
                 result = backgroundImageObject;
@@ -128,6 +128,11 @@ public BackgroundObjectBuilder(AnimationCompiler animationCompiler) {
                     public Shape getShape() {
                         return rectangle;
                     }
+
+					@Override
+					public Element getDataElement() {
+						return element;
+					}
                 };
             	break;
             }
@@ -173,7 +178,7 @@ public BackgroundObjectBuilder(AnimationCompiler animationCompiler) {
         } else {
             rectangle.setStroke(Color.BLACK);
         }
-        BackgroundShapeObject result = new BackgroundShapeObject(element.getName(), rectangle);
+        BackgroundShapeObject result = new BackgroundShapeObject(element.getName(), rectangle, element);
         return result;
     }
 
