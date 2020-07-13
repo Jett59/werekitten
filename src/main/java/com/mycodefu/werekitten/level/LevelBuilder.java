@@ -20,9 +20,7 @@ public class LevelBuilder {
         this.backgroundObjectBuilder = backgroundObjectBuilder;
     }
 
-    public GameLevel buildLevel(String LevelPath, int screenWidth, int screenHeight) {
-        Level level = LevelReader.read(LevelPath);
-
+    public GameLevel buildLevel(Level level, int screenWidth, int screenHeight) {
         Size levelSize = level.getSize();
 
         PixelScaleHelper pixelScaleHelper = new PixelScaleHelper(levelSize.getWidth(), levelSize.getHeight(), screenWidth, screenHeight);
@@ -59,5 +57,10 @@ public class LevelBuilder {
                 .collect(Collectors.toList());
 
         return new GameLevel(level, nodeMap, layerGroups, pixelScaleHelper);
+    }
+    
+    public GameLevel buildLevel(String levelPath, int screenWidth, int screenHeight) {
+    	Level level = LevelReader.read(levelPath);
+    	return buildLevel(level, screenWidth, screenHeight);
     }
 }

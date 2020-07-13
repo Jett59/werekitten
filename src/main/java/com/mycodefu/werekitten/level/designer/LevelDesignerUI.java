@@ -4,7 +4,6 @@ import com.mycodefu.werekitten.animation.AnimationCompiler;
 import com.mycodefu.werekitten.backgroundObjects.BackgroundObjectBuilder;
 import com.mycodefu.werekitten.level.GameLevel;
 import com.mycodefu.werekitten.level.LevelBuilder;
-import com.mycodefu.werekitten.level.data.Element;
 import com.mycodefu.werekitten.slide.LayerGroup;
 import javafx.scene.Group;
 import javafx.scene.Scene;
