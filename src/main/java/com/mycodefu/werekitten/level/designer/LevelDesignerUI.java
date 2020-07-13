@@ -2,6 +2,7 @@ package com.mycodefu.werekitten.level.designer;
 
 import com.mycodefu.werekitten.animation.AnimationCompiler;
 import com.mycodefu.werekitten.backgroundObjects.BackgroundObjectBuilder;
+import com.mycodefu.werekitten.backgroundObjects.NodeObject;
 import com.mycodefu.werekitten.level.GameLevel;
 import com.mycodefu.werekitten.level.LevelBuilder;
 import com.mycodefu.werekitten.level.data.Element;
@@ -23,21 +24,27 @@ public class LevelDesignerUI {
     public static int LEVEL_HEIGHT = 768;
     private GameLevel level;
 
+    private NodeObject selectedNode;
+    private Label details;
+
     public Scene getScene() {
         Group levelGroup = buildLevelGroup();
         Group toolGroup = buildToolGroup();
         Group root = new Group(levelGroup, toolGroup);
         createHandlers(toolGroup, levelGroup);
         Scene scene = new Scene(root);
+
         return scene;
     }
 
     private Group buildToolGroup() {
-        Label details = new Label("Details");
+        details = new Label("Details");
         BorderPane border = new BorderPane();
         border.setLayoutX(LEVEL_WIDTH);
         border.setPrefWidth(TOOL_WIDTH);
         border.setBackground(new Background(new BackgroundFill(Color.CYAN, null, null)));
+
+
 
         border.setTop(details);
         return new Group(border);
@@ -52,8 +59,10 @@ public class LevelDesignerUI {
     
     public void createHandlers(Group toolGroup, Group levelGroup) {
     	levelGroup.setOnMouseClicked(e->{
-    		Element target = level.getNodeMap().get((Node)e.getTarget());
-    		System.out.println(target.getName());
+    		selectedNode = level.getNodeMap().get(e.getTarget());
+            String detailsHeading = String.format("Selected: %s", selectedNode.getDataElement().getName());
+            details.setText(detailsHeading);
+    		System.out.println(detailsHeading);
     	});
     }
 }

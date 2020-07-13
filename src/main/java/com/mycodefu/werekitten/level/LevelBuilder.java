@@ -38,7 +38,7 @@ public class LevelBuilder {
         levelSize.setWidth(screenWidth);
         levelSize.setHeight(screenHeight);
 
-        Map<Node, Element> nodeMap = new HashMap<>();
+        Map<Node, NodeObject> nodeMap = new HashMap<>();
 
         List<LayerGroup> layerGroups = level.getLayers().stream()
                 .map(layer -> {
@@ -47,7 +47,7 @@ public class LevelBuilder {
                             .collect(Collectors.toList());
 
                     for (NodeObject element : elements) {
-                        nodeMap.put(element.getNode(), element.getDataElement());
+                        nodeMap.put(element.getNode(), element);
                     }
 
                     Group group = new Group(elements.stream().map(NodeObject::getNode).collect(Collectors.toList()));
