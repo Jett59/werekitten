@@ -51,11 +51,7 @@ public class LevelDesignerUI {
     
     public void createHandlers(Group toolGroup, Group levelGroup) {
     	levelGroup.setOnMouseClicked(e->{
-            for (LayerGroup layerGroup : level.getLayerGroups()) {
-                for (Element element : layerGroup.getElements()) {
 
-                }
-            }
     		System.out.println(e.getTarget().toString());
     	});
     }
