@@ -2,18 +2,26 @@ package com.mycodefu.werekitten.level;
 
 import com.mycodefu.werekitten.level.data.*;
 import com.mycodefu.werekitten.slide.LayerGroup;
+import javafx.scene.Node;
 
 import java.util.List;
+import java.util.Map;
 
 public class GameLevel {
     private Level levelData;
+    private Map<Node, Element> nodeMap;
     private List<LayerGroup> layerGroups;
     private PixelScaleHelper pixelScaleHelper;
 
-    public GameLevel(Level levelData, List<LayerGroup> layerGroups, PixelScaleHelper pixelScaleHelper) {
+    public GameLevel(Level levelData, Map<Node, Element> nodeMap, List<LayerGroup> layerGroups, PixelScaleHelper pixelScaleHelper) {
         this.levelData = levelData;
+        this.nodeMap = nodeMap;
         this.layerGroups = layerGroups;
         this.pixelScaleHelper = pixelScaleHelper;
+    }
+
+    public Map<Node, Element> getNodeMap() {
+        return nodeMap;
     }
 
     public Level getLevelData() {

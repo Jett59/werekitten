@@ -4,6 +4,7 @@ import com.mycodefu.werekitten.animation.AnimationCompiler;
 import com.mycodefu.werekitten.backgroundObjects.BackgroundObjectBuilder;
 import com.mycodefu.werekitten.level.GameLevel;
 import com.mycodefu.werekitten.level.LevelBuilder;
+import com.mycodefu.werekitten.level.data.Element;
 import com.mycodefu.werekitten.slide.LayerGroup;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -19,6 +20,7 @@ public class LevelDesignerUI {
     public static int LEVEL_WIDTH = 1024;
     public static int TOOL_WIDTH = 250;
     public static int LEVEL_HEIGHT = 768;
+    private GameLevel level;
 
     public Scene getScene() {
         Group levelGroup = buildLevelGroup();
@@ -41,7 +43,7 @@ public class LevelDesignerUI {
     }
 
     private Group buildLevelGroup() {
-        GameLevel level = new LevelBuilder(new BackgroundObjectBuilder(new AnimationCompiler())).buildLevel("/level.wkl", LEVEL_WIDTH, LEVEL_HEIGHT);
+        level = new LevelBuilder(new BackgroundObjectBuilder(new AnimationCompiler())).buildLevel("/level.wkl", LEVEL_WIDTH, LEVEL_HEIGHT);
         return new Group(level.getLayerGroups().stream()
                 .map(LayerGroup::getGroup)
                 .collect(Collectors.toList()));
@@ -49,6 +51,11 @@ public class LevelDesignerUI {
     
     public void createHandlers(Group toolGroup, Group levelGroup) {
     	levelGroup.setOnMouseClicked(e->{
+            for (LayerGroup layerGroup : level.getLayerGroups()) {
+                for (Element element : layerGroup.getElements()) {
+
+                }
+            }
     		System.out.println(e.getTarget().toString());
     	});
     }

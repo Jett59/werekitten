@@ -5,9 +5,12 @@ import com.mycodefu.werekitten.backgroundObjects.NodeObject;
 import com.mycodefu.werekitten.level.data.*;
 import com.mycodefu.werekitten.slide.LayerGroup;
 import javafx.scene.Group;
+import javafx.scene.Node;
 
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class LevelBuilder {
@@ -18,12 +21,12 @@ public class LevelBuilder {
     }
 
     public GameLevel buildLevel(String LevelPath, int screenWidth, int screenHeight) {
-        Level defaultLevel = LevelReader.read(LevelPath);
+        Level level = LevelReader.read(LevelPath);
 
-        Size levelSize = defaultLevel.getSize();
+        Size levelSize = level.getSize();
 
         PixelScaleHelper pixelScaleHelper = new PixelScaleHelper(levelSize.getWidth(), levelSize.getHeight(), screenWidth, screenHeight);
-        for (Layer layer : defaultLevel.getLayers()) {
+        for (Layer layer : level.getLayers()) {
             for (Element element : layer.getElements()) {
                 Size size = element.getSize();
                 size.setWidth(pixelScaleHelper.scaleX(size.getWidth()));
@@ -37,9 +40,17 @@ public class LevelBuilder {
         levelSize.setWidth(screenWidth);
         levelSize.setHeight(screenHeight);
 
-        List<LayerGroup> layerGroups = defaultLevel.getLayers().stream()
+        Map<Node, Element> nodeMap = new HashMap<>();
+
+        List<LayerGroup> layerGroups = level.getLayers().stream()
                 .map(layer -> {
-                    List<NodeObject> elements = layer.getElements().stream().map(backgroundObjectBuilder::build).collect(Collectors.toList());
+                    List<NodeObject> elements = layer.getElements().stream()
+                            .map(backgroundObjectBuilder::build)
+                            .collect(Collectors.toList());
+
+                    for (NodeObject element : elements) {
+                        nodeMap.put(element.getNode(), element.getDataElement());
+                    }
 
                     Group group = new Group(elements.stream().map(NodeObject::getNode).collect(Collectors.toList()));
                     return new LayerGroup(layer.getName(), layer.getType(), group, layer.getElements(), layer.getScrollSpeed(), layer.getDepth());
@@ -47,6 +58,6 @@ public class LevelBuilder {
                 .sorted(Comparator.comparingInt(LayerGroup::getDepth))
                 .collect(Collectors.toList());
 
-        return new GameLevel(defaultLevel, layerGroups, pixelScaleHelper);
+        return new GameLevel(level, nodeMap, layerGroups, pixelScaleHelper);
     }
 }
