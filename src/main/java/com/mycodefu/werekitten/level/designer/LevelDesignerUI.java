@@ -24,6 +24,7 @@ public class LevelDesignerUI {
         Group levelGroup = buildLevelGroup();
         Group toolGroup = buildToolGroup();
         Group root = new Group(levelGroup, toolGroup);
+        createHandlers(toolGroup, levelGroup);
         Scene scene = new Scene(root);
         return scene;
     }
@@ -44,5 +45,11 @@ public class LevelDesignerUI {
         return new Group(level.getLayerGroups().stream()
                 .map(LayerGroup::getGroup)
                 .collect(Collectors.toList()));
+    }
+    
+    public void createHandlers(Group toolGroup, Group levelGroup) {
+    	levelGroup.setOnMouseClicked(e->{
+    		System.out.println(e.getTarget().toString());
+    	});
     }
 }
