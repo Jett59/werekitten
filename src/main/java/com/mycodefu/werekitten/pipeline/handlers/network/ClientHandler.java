@@ -70,17 +70,17 @@ public class ClientHandler implements PipelineHandler, NettyClientHandler.Socket
                 default:
                     break;
             }
-        }else if(event instanceof ChatMessageSendEvent) {
-        	if(nettyClient != null) {
-        		ChatMessageSendEvent sendEvent = (ChatMessageSendEvent)event;
-        		if(sendEvent.message.length() < Byte.MAX_VALUE) {
-        		nettyClient.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.chat, sendEvent.message.length()+1).putByte((byte)sendEvent.message.length()).putBytes(sendEvent.message.getBytes(CharsetUtil.UTF_8)).getBuffer());
-        		context.postEvent(new ChatMessageSentEvent());
-        		System.out.println("posted sent event");
-        		}else {
-        			throw new IllegalArgumentException(String.format("message %s is larger than the size limit of %s", sendEvent.message, Byte.MAX_VALUE));
-        		}
-        	}
+        } else if (event instanceof ChatMessageSendEvent) {
+            if (nettyClient != null) {
+                ChatMessageSendEvent sendEvent = (ChatMessageSendEvent) event;
+                if (sendEvent.message.length() < Byte.MAX_VALUE) {
+                    nettyClient.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.chat, sendEvent.message.length() + 1).putByte((byte) sendEvent.message.length()).putBytes(sendEvent.message.getBytes(CharsetUtil.UTF_8)).getBuffer());
+                    context.postEvent(new ChatMessageSentEvent());
+                    System.out.println("posted sent event");
+                } else {
+                    throw new IllegalArgumentException(String.format("message %s is larger than the size limit of %s", sendEvent.message, Byte.MAX_VALUE));
+                }
+            }
         } else if (event instanceof PlayerEvent) {
             PlayerEvent playerEvent = (PlayerEvent) event;
             if (nettyClient != null && playerEvent.getPlayerId().equalsIgnoreCase("local")) {
@@ -118,10 +118,10 @@ public class ClientHandler implements PipelineHandler, NettyClientHandler.Socket
     long start = 0;
     long finished = 0;
     long time = 0;
-    
+
     @Override
     public void clientConnected(String id, String remoteAddress) {
-    	nettyClient.sendMessage(ServerMessage.introductionMessage(Integer.parseInt(serverAddress), IntroductionType.JOIN));
+        nettyClient.sendMessage(ServerMessage.introductionMessage(Integer.parseInt(serverAddress), IntroductionType.JOIN));
         context.getPreferences().put(Preferences.CLIENT_CONNECT_IP_PREFERENCE, serverAddress);
         nettyClient.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.ping, 0).getBuffer());
         start = System.nanoTime();
@@ -129,21 +129,21 @@ public class ClientHandler implements PipelineHandler, NettyClientHandler.Socket
 
     @Override
     public void clientMessageReceived(String id, ByteBuf content) {
-    	if(content.getByte(0) == MessageType.pong.getCode()) {
-    		finished = System.nanoTime();
-    		pongs++;
-    		time+= finished-start;
-    		if(pongs < 10) {
-    			nettyClient.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.ping, 0).getBuffer());
-    			start = System.nanoTime();
-    		}else {
-    			time/=pongs;
-    			time/=1000000;
-    			time/=2;
-    			System.out.println("average latency: "+time/2);
-    			nettyClient.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.pang, 8).putLong(time).getBuffer());
-    			}
-    	}
+        if (content.getByte(0) == MessageType.pong.getCode()) {
+            finished = System.nanoTime();
+            pongs++;
+            time += finished - start;
+            if (pongs < 10) {
+                nettyClient.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.ping, 0).getBuffer());
+                start = System.nanoTime();
+            } else {
+                time /= pongs;
+                time /= 1000000;
+                time /= 2;
+                System.out.println("average latency: " + time);
+                nettyClient.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.pang, 8).putLong(time).getBuffer());
+            }
+        }
         networkPlayerHelper.applyNetworkMessageToPlayer(content, id, context,
                 message -> nettyClient.sendMessage(message), false);
     }
@@ -156,7 +156,7 @@ public class ClientHandler implements PipelineHandler, NettyClientHandler.Socket
     @Override
     public Event[] getEventInterest() {
         return Event.combineEvents(PlayerEventType.values(),
-        		ChatEventType.send,
+                ChatEventType.send,
                 UiCreated,
                 NetworkEventType.connect);
     }
