@@ -9,6 +9,7 @@ public class Element {
     private Color fillColor;
     private Color strokeColor;
     private double strokeWidth;
+    private String path;
 
     public Element() {
 
@@ -77,4 +78,12 @@ public class Element {
 	public void setAnimationConfig(AnimationConfig animationConfig) {
 		this.animationConfig = animationConfig;
 	}
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
 }

@@ -78,7 +78,7 @@ public BackgroundObjectBuilder(AnimationCompiler animationCompiler) {
             }
 
             case Image: {
-                BufferedImage bufferedImage = ImageHelper.readBufferedImage(toResourceDir(element.getName()));
+                BufferedImage bufferedImage = ImageHelper.readBufferedImage(toResourceDir(element.getPath()));
                 if(element.getSize() != null) {
                 if(element.getSize().getHeight() > 0 && element.getSize().getWidth() > 0) {
                 	throw new IllegalArgumentException("the size parameter on element "+element.getName()+" cannot have both width and height specified at one time");

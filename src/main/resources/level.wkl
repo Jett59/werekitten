@@ -1,151 +1,155 @@
 {
-"type": "level",
-"version": "0.1.5",
-"name": "default level",
-"size": {
-"width": 1024,
-"height": 768
-},
-"layers": [
-{
-"name": "sky",
-"depth": -3,
-"elements": [
-{
-"type": "Rectangle",
-"name": "sky",
-"size": {
-"width": 1024,
-"height": 344
-},
-"location": {
-"x": 0,
-"y": 0
-},
-"fillColor": {
-"red": 0.0125,
-"green": 0.025,
-"blue": 0.25,
-"opacity": 1
-}
-}
-]
-},
-{
-"name": "back hill",
-"depth": -2,
-"elements": [
-{
-"type": "Rectangle",
-"name": "back hill",
-"size": {
-"width": 1024,
-"height": 162
-},
-"location": {
-"x": 0,
-"y": 344
-},
-"fillColor": {
-"red": 0.025,
-"green": 0.2,
-"blue": 0.0125,
-"opacity": 1
-}
-},
-{
-"type": "Image",
-"name": "Stone",
-"size": {
-"width": 10
-},
-"location": {
-"x": 500,
-"y": 350
-}
-},
-{
-"type": "Image",
-"name": "Tree_2",
-"size": {
-"height": 100
-},
-"location": {
-"x": 900,
-"y": 244
-}
-}
-]
-},
-{
-"name": "front hill",
-"depth": -1,
-"elements": [
-{
-"type": "Rectangle",
-"name": "front hill",
-"size": {
-"width": 1024,
-"height": 518
-},
-"location": {
-"x": 0,
-"y": 506
-},
-"fillColor": {
-"red": 0.05,
-"green": 0.4,
-"blue": 0.025,
-"opacity": 1
-}
-},
-{
-"type": "Image",
-"name": "Stone",
-"size": {
-"width": 100
-},
-"location": {
-"x": 924,
-"y": 500
-}
-}
-]
-},
-{
-"name": "player layer",
-"type": "Player",
-"depth": 0,
-"elements": [
-{
-"type": "Player",
-"name": "Werekitten",
-"size": {
-"height": 100
-},
-"location": {
-"x": 512,
-"y": 512
-}
-}
-]
-},
-{
-"name": "foreground",
-"depth": 1,
-"elements": [
-{
-"type": "Image",
-"name": "Tree_2",
-"size": {
-"height": 1000
-},
-"location": {
-"x": 0,
-"y": -325
-}
-}
-]
-}
-]
+  "type": "level",
+  "version": "0.1.5",
+  "name": "default level",
+  "size": {
+    "width": 1024,
+    "height": 768
+  },
+  "layers": [
+    {
+      "name": "sky",
+      "depth": -3,
+      "elements": [
+        {
+          "type": "Rectangle",
+          "name": "sky",
+          "size": {
+            "width": 1024,
+            "height": 344
+          },
+          "location": {
+            "x": 0,
+            "y": 0
+          },
+          "fillColor": {
+            "red": 0.0125,
+            "green": 0.025,
+            "blue": 0.25,
+            "opacity": 1
+          }
+        }
+      ]
+    },
+    {
+      "name": "back hill",
+      "depth": -2,
+      "elements": [
+        {
+          "type": "Rectangle",
+          "name": "back hill",
+          "size": {
+            "width": 1024,
+            "height": 162
+          },
+          "location": {
+            "x": 0,
+            "y": 344
+          },
+          "fillColor": {
+            "red": 0.025,
+            "green": 0.2,
+            "blue": 0.0125,
+            "opacity": 1
+          }
+        },
+        {
+          "type": "Image",
+          "name": "Little Stone",
+          "path": "Stone",
+          "size": {
+            "width": 10
+          },
+          "location": {
+            "x": 500,
+            "y": 350
+          }
+        },
+        {
+          "type": "Image",
+          "name": "Little Tree",
+          "path": "Tree_2",
+          "size": {
+            "height": 100
+          },
+          "location": {
+            "x": 900,
+            "y": 244
+          }
+        }
+      ]
+    },
+    {
+      "name": "front hill",
+      "depth": -1,
+      "elements": [
+        {
+          "type": "Rectangle",
+          "name": "front hill",
+          "size": {
+            "width": 1024,
+            "height": 518
+          },
+          "location": {
+            "x": 0,
+            "y": 506
+          },
+          "fillColor": {
+            "red": 0.05,
+            "green": 0.4,
+            "blue": 0.025,
+            "opacity": 1
+          }
+        },
+        {
+          "type": "Image",
+          "name": "Big Stone",
+          "path": "Stone",
+          "size": {
+            "width": 100
+          },
+          "location": {
+            "x": 924,
+            "y": 500
+          }
+        }
+      ]
+    },
+    {
+      "name": "player layer",
+      "type": "Player",
+      "depth": 0,
+      "elements": [
+        {
+          "type": "Player",
+          "name": "Werekitten",
+          "size": {
+            "height": 100
+          },
+          "location": {
+            "x": 512,
+            "y": 512
+          }
+        }
+      ]
+    },
+    {
+      "name": "foreground",
+      "depth": 1,
+      "elements": [
+        {
+          "type": "Image",
+          "name": "Big Tree",
+          "path": "Tree_2",
+          "size": {
+            "height": 1000
+          },
+          "location": {
+            "x": 0,
+            "y": -325
+          }
+        }
+      ]
+    }
+  ]
 }
