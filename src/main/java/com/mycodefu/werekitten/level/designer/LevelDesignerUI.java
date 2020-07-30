@@ -72,7 +72,7 @@ apply.setOnAction(e->{
     public void createHandlers(Group toolGroup, Group levelGroup) {
     	levelGroup.setOnMouseClicked(e->{
     		selectedNode = level.getNodeMap().get(e.getTarget());
-            String detailsHeading = String.format("Selected: %s", selectedNode.getDataElement().getName());
+            String detailsHeading = String.format("Selected: %s\nx %.1f\ny %.1f\nwidth %.1f\nheight %.1f\n", selectedNode.getDataElement().getName(), selectedNode.getDataElement().getLocation().getX(), selectedNode.getDataElement().getLocation().getY(), selectedNode.getDataElement().getSize().getWidth(), selectedNode.getDataElement().getSize().getHeight());
             details.setText(detailsHeading);
     		System.out.println(detailsHeading);
     	});
