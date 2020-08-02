@@ -34,8 +34,8 @@ public class LevelDesignerUI {
     private TextField yBox;
     private TextField widthBox;
     private TextField heightBox;
-private Button apply;
-    
+    private Button apply;
+
     public Scene getScene() {
         levelGroup = buildLevelGroup();
         toolGroup = buildToolGroup();
@@ -55,19 +55,19 @@ private Button apply;
         BorderPane border = new BorderPane();
         border.setLayoutX(LEVEL_WIDTH);
         border.setPrefWidth(TOOL_WIDTH);
-        border.setPrefHeight(LEVEL_HEIGHT-100);
+        border.setPrefHeight(LEVEL_HEIGHT - 100);
         border.setBackground(new Background(new BackgroundFill(Color.CYAN, null, null)));
 
-apply = new Button("apply");
-apply.setOnAction(e->{
-	levelGroup.getChildren().clear();
-	GameLevel newLevel = new LevelBuilder(new BackgroundObjectBuilder(new AnimationCompiler())).buildLevel(level.getLevelData(), LEVEL_WIDTH, LEVEL_HEIGHT);
-	level = newLevel;
-	levelGroup.getChildren().addAll(newLevel.getLayerGroups().stream()
-			.map(LayerGroup::getGroup)
-			.collect(Collectors.toList()));
-});
-VBox detailsHeadingAndSettings = new VBox(10, details, new Text("X"), xBox, new Text("Y"), yBox, new Text("Width"), widthBox, new Text("Height"), heightBox);
+        apply = new Button("apply");
+        apply.setOnAction(e -> {
+            levelGroup.getChildren().clear();
+            GameLevel newLevel = new LevelBuilder(new BackgroundObjectBuilder(new AnimationCompiler())).buildLevel(level.getLevelData(), LEVEL_WIDTH, LEVEL_HEIGHT);
+            level = newLevel;
+            levelGroup.getChildren().addAll(newLevel.getLayerGroups().stream()
+                    .map(LayerGroup::getGroup)
+                    .collect(Collectors.toList()));
+        });
+        VBox detailsHeadingAndSettings = new VBox(10, details, new Text("X"), xBox, new Text("Y"), yBox, new Text("Width"), widthBox, new Text("Height"), heightBox);
         border.setTop(detailsHeadingAndSettings);
         border.setBottom(apply);
         return new Group(border);
@@ -79,14 +79,21 @@ VBox detailsHeadingAndSettings = new VBox(10, details, new Text("X"), xBox, new 
                 .map(LayerGroup::getGroup)
                 .collect(Collectors.toList()));
     }
-    
+
     public void createHandlers(Group toolGroup, Group levelGroup) {
-    	levelGroup.setOnMouseClicked(e->{
-    		selectedNode = level.getNodeMap().get(e.getTarget());
-            String detailsHeading = "selected: "+selectedNode.getName();
-            
+        levelGroup.setOnMouseClicked(e -> {
+            selectedNode = level.getNodeMap().get(e.getTarget());
+            String detailsHeading = "selected: " + selectedNode.getName();
+
             details.setText(detailsHeading);
-    		System.out.println(detailsHeading);
-    	});
+
+            this.xBox.setText(Double.toString(selectedNode.getNode().getTranslateX()));
+            this.yBox.setText(Double.toString(selectedNode.getNode().getTranslateY()));
+
+            this.widthBox.setText(Double.toString(selectedNode.getNode().getBoundsInLocal().getWidth()));
+            this.heightBox.setText(Double.toString(selectedNode.getNode().getBoundsInLocal().getHeight()));
+
+            System.out.println(detailsHeading);
+        });
     }
 }
