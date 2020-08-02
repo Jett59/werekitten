@@ -10,10 +10,13 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 
 import java.util.stream.Collectors;
 
@@ -27,6 +30,10 @@ public class LevelDesignerUI {
 
     private NodeObject selectedNode;
     private Label details;
+    private TextField xBox;
+    private TextField yBox;
+    private TextField widthBox;
+    private TextField heightBox;
 private Button apply;
     
     public Scene getScene() {
@@ -41,6 +48,10 @@ private Button apply;
 
     private Group buildToolGroup() {
         details = new Label("Details");
+        xBox = new TextField();
+        yBox = new TextField();
+        widthBox = new TextField();
+        heightBox = new TextField();
         BorderPane border = new BorderPane();
         border.setLayoutX(LEVEL_WIDTH);
         border.setPrefWidth(TOOL_WIDTH);
@@ -56,8 +67,8 @@ apply.setOnAction(e->{
 			.map(LayerGroup::getGroup)
 			.collect(Collectors.toList()));
 });
-
-        border.setTop(details);
+VBox detailsHeadingAndSettings = new VBox(10, details, new Text("X"), xBox, new Text("Y"), yBox, new Text("Width"), widthBox, new Text("Height"), heightBox);
+        border.setTop(detailsHeadingAndSettings);
         border.setBottom(apply);
         return new Group(border);
     }
@@ -72,7 +83,8 @@ apply.setOnAction(e->{
     public void createHandlers(Group toolGroup, Group levelGroup) {
     	levelGroup.setOnMouseClicked(e->{
     		selectedNode = level.getNodeMap().get(e.getTarget());
-            String detailsHeading = String.format("Selected: %s\nx %.1f\ny %.1f\nwidth %.1f\nheight %.1f\n", selectedNode.getDataElement().getName(), selectedNode.getDataElement().getLocation().getX(), selectedNode.getDataElement().getLocation().getY(), selectedNode.getDataElement().getSize().getWidth(), selectedNode.getDataElement().getSize().getHeight());
+            String detailsHeading = "selected: "+selectedNode.getName();
+            
             details.setText(detailsHeading);
     		System.out.println(detailsHeading);
     	});
