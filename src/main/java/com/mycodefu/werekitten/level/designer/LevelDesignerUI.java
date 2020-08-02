@@ -5,6 +5,7 @@ import com.mycodefu.werekitten.backgroundObjects.BackgroundObjectBuilder;
 import com.mycodefu.werekitten.backgroundObjects.NodeObject;
 import com.mycodefu.werekitten.level.GameLevel;
 import com.mycodefu.werekitten.level.LevelBuilder;
+import com.mycodefu.werekitten.level.data.Element;
 import com.mycodefu.werekitten.slide.LayerGroup;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -60,6 +61,12 @@ public class LevelDesignerUI {
 
         apply = new Button("apply");
         apply.setOnAction(e -> {
+            Element dataElement = selectedNode.getDataElement();
+            dataElement.getLocation().setX(Double.parseDouble(this.xBox.getText()));
+            dataElement.getLocation().setY(Double.parseDouble(this.yBox.getText()));
+            dataElement.getSize().setWidth(Double.parseDouble(this.widthBox.getText()));
+            dataElement.getSize().setHeight(Double.parseDouble(this.heightBox.getText()));
+
             levelGroup.getChildren().clear();
             GameLevel newLevel = new LevelBuilder(new BackgroundObjectBuilder(new AnimationCompiler())).buildLevel(level.getLevelData(), LEVEL_WIDTH, LEVEL_HEIGHT);
             level = newLevel;
