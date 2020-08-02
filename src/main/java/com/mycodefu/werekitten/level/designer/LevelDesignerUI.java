@@ -87,11 +87,11 @@ public class LevelDesignerUI {
 
             details.setText(detailsHeading);
 
-            this.xBox.setText(Double.toString(selectedNode.getNode().getTranslateX()));
-            this.yBox.setText(Double.toString(selectedNode.getNode().getTranslateY()));
-
-            this.widthBox.setText(Double.toString(selectedNode.getNode().getBoundsInLocal().getWidth()));
-            this.heightBox.setText(Double.toString(selectedNode.getNode().getBoundsInLocal().getHeight()));
+            this.xBox.setText(Double.toString(selectedNode.getDataElement().getLocation().getX()));
+this.yBox.setText(Double.toString(selectedNode.getDataElement().getLocation().getY()));
+            
+            this.widthBox.setText(Double.toString(selectedNode.getDataElement().getSize().getWidth()));
+            this.heightBox.setText(Double.toString(selectedNode.getDataElement().getSize().getHeight()));
 
             System.out.println(detailsHeading);
         });

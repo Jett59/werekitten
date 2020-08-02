@@ -112,8 +112,8 @@ public BackgroundObjectBuilder(AnimationCompiler animationCompiler) {
             	Animation playerIdle = animationCompiler.compileAnimation("Cat", "walk", 10, Duration.seconds(1), false, element.getSize().getHeight(), "height");
             	var nodeObject = playerIdle.asBackgroundObject("player", element);
             			playerIdle.play();
-            			nodeObject.getNode().setTranslateX(element.getLocation().getX());
-            			nodeObject.getNode().setTranslateY(element.getLocation().getY());
+            			nodeObject.getNode().setLayoutX(element.getLocation().getX());
+            			nodeObject.getNode().setLayoutY(element.getLocation().getY());
 result = nodeObject;
             	break;
             }
