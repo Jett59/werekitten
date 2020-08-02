@@ -109,31 +109,12 @@ public BackgroundObjectBuilder(AnimationCompiler animationCompiler) {
             }
             
             case Player: {
-            	//empty node
-                final Group group = new Group();
-                final Rectangle rectangle = new Rectangle(element.getSize().getWidth(), element.getSize().getHeight());
-            	result = new NodeObject() {
-
-					@Override
-					public String getName() {
-						return element.getName();
-					}
-
-					@Override
-					public Node getNode() {
-                        return group;
-					}
-
-                    @Override
-                    public Shape getShape() {
-                        return rectangle;
-                    }
-
-					@Override
-					public Element getDataElement() {
-						return element;
-					}
-                };
+            	Animation playerIdle = animationCompiler.compileAnimation("Cat", "walk", 10, Duration.seconds(1), false, element.getSize().getHeight(), "height");
+            	var nodeObject = playerIdle.asBackgroundObject("player", element);
+            			playerIdle.play();
+            			nodeObject.getNode().setTranslateX(element.getLocation().getX());
+            			nodeObject.getNode().setTranslateY(element.getLocation().getY());
+result = nodeObject;
             	break;
             }
 
