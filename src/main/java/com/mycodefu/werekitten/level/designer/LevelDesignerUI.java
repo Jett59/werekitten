@@ -3,8 +3,10 @@ package com.mycodefu.werekitten.level.designer;
 import com.mycodefu.werekitten.animation.AnimationCompiler;
 import com.mycodefu.werekitten.backgroundObjects.BackgroundObjectBuilder;
 import com.mycodefu.werekitten.backgroundObjects.NodeObject;
+import com.mycodefu.werekitten.files.LocalFileStorage;
 import com.mycodefu.werekitten.level.GameLevel;
 import com.mycodefu.werekitten.level.LevelBuilder;
+import com.mycodefu.werekitten.level.LevelSerializer;
 import com.mycodefu.werekitten.level.data.Element;
 import com.mycodefu.werekitten.slide.LayerGroup;
 import javafx.scene.Group;
@@ -15,6 +17,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -36,7 +39,8 @@ public class LevelDesignerUI {
     private TextField widthBox;
     private TextField heightBox;
     private Button apply;
-
+private Button save;
+    
     public Scene getScene() {
         levelGroup = buildLevelGroup();
         toolGroup = buildToolGroup();
@@ -74,9 +78,18 @@ public class LevelDesignerUI {
                     .map(LayerGroup::getGroup)
                     .collect(Collectors.toList()));
         });
+        save = new Button("save");
+        save.setOnAction(e->{
+        	try {
+        	LocalFileStorage.writeLevelFile(level.getLevelData().getName(), LevelSerializer.serialize(level.getLevelData()));
+        	}catch(Exception e) {
+        		e.printStackTrace();
+        	}
+        });
         VBox detailsHeadingAndSettings = new VBox(10, details, new Text("X"), xBox, new Text("Y"), yBox, new Text("Width"), widthBox, new Text("Height"), heightBox);
+        HBox applyAndSave = new HBox(50, apply, save);
         border.setTop(detailsHeadingAndSettings);
-        border.setBottom(apply);
+        border.setBottom(applyAndSave);
         return new Group(border);
     }
 
