@@ -81,6 +81,7 @@ private Button save;
         save = new Button("save");
         save.setOnAction(e->{
         	try {
+        		System.out.println("saving level file");
         	LocalFileStorage.writeLevelFile(level.getLevelData().getName(), LevelSerializer.serialize(level.getLevelData()));
         	}catch(Exception exception) {
                 exception.printStackTrace();
