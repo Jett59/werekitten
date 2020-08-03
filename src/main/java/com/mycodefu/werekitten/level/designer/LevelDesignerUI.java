@@ -82,8 +82,8 @@ private Button save;
         save.setOnAction(e->{
         	try {
         	LocalFileStorage.writeLevelFile(level.getLevelData().getName(), LevelSerializer.serialize(level.getLevelData()));
-        	}catch(Exception e) {
-        		e.printStackTrace();
+        	}catch(Exception exception) {
+                exception.printStackTrace();
         	}
         });
         VBox detailsHeadingAndSettings = new VBox(10, details, new Text("X"), xBox, new Text("Y"), yBox, new Text("Width"), widthBox, new Text("Height"), heightBox);
