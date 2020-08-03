@@ -7,10 +7,15 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class LocalFileStorage {
-    private static final String USER_HOME = System.getProperty("user.home");
-    private static final Path WEREKITTEN_HOME = Paths.get(USER_HOME, "WereKitten");
-    private static final Path WEREKITTEN_HOME_LEVELS = WEREKITTEN_HOME.resolve("Levels");
-    private static final String LEVEL_EXTENSION = ".wkl";
+    public static final String USER_HOME = System.getProperty("user.home");
+    public static final Path WEREKITTEN_HOME = Paths.get(USER_HOME, "WereKitten");
+    public static final Path WEREKITTEN_HOME_LEVELS = WEREKITTEN_HOME.resolve("Levels");
+    public static final String LEVEL_EXTENSION = ".wkl";
+
+    public static boolean levelFileExists(String levelName){
+        Path path = getLevelFilePath(levelName);
+        return Files.exists(path);
+    }
 
     public static void writeLevelFile(String levelName, String data) throws IOException {
         Path path = getLevelFilePath(levelName);
