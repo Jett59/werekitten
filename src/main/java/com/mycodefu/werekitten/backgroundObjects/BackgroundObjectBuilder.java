@@ -109,7 +109,8 @@ public BackgroundObjectBuilder(AnimationCompiler animationCompiler) {
             }
             
             case Player: {
-            	Animation playerIdle = animationCompiler.compileAnimation("Cat", "walk", 10, Duration.seconds(1), false, element.getSize().getHeight(), "height");
+            	Animation playerIdle = animationCompiler.compileAnimation("cat", "Idle", 10, Duration.seconds(1), false, element.getSize().getHeight(), "height");
+                playerIdle.setCycleCount(INDEFINITE);
             	var nodeObject = playerIdle.asBackgroundObject("player", element);
             			playerIdle.play();
             			nodeObject.getNode().setLayoutX(element.getLocation().getX());
