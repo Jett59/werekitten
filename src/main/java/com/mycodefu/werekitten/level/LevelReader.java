@@ -8,13 +8,14 @@ import com.mycodefu.werekitten.files.LocalFileStorage;
 import com.mycodefu.werekitten.level.data.Level;
 
 public class LevelReader {
+	public static String defaultLevelName = "default level";
 	private static ObjectMapper mapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
 	public static Level read(String path) {
 		try {
 			Level level;
-			if (LocalFileStorage.levelFileExists("default level")) {
-				level = mapper.readValue(LocalFileStorage.readLevelFile("default level"), Level.class);
+			if (LocalFileStorage.levelFileExists(defaultLevelName)) {
+				level = mapper.readValue(LocalFileStorage.readLevelFile(defaultLevelName), Level.class);
 			} else {
 				level = mapper.readValue(LevelReader.class.getResourceAsStream(path), Level.class);
 			}
