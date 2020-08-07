@@ -7,13 +7,10 @@ import com.mycodefu.werekitten.image.ImageHelper;
 import com.mycodefu.werekitten.level.data.Element;
 import javafx.animation.Interpolator;
 import javafx.embed.swing.SwingFXUtils;
-import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
 import javafx.util.Duration;
 
 import java.awt.image.BufferedImage;

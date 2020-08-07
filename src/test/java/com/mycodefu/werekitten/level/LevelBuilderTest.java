@@ -10,7 +10,7 @@ class LevelBuilderTest {
     @Test
     void buildLevel() {
         LevelBuilder levelBuilder = new LevelBuilder(new BackgroundObjectBuilder(new AnimationCompiler()));
-        GameLevel gameLevel = levelBuilder.buildLevel("/level.wkl", 1024, 768);
+        GameLevel gameLevel = levelBuilder.buildLevel("/level.wkl", 1024, 768, LevelReader.defaultLevelName);
         assertNotNull(gameLevel);
     }
 }

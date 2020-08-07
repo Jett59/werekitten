@@ -6,12 +6,14 @@ import com.mycodefu.werekitten.event.Event;
 import com.mycodefu.werekitten.event.GameEventType;
 import com.mycodefu.werekitten.level.GameLevel;
 import com.mycodefu.werekitten.level.LevelBuilder;
+import com.mycodefu.werekitten.level.LevelReader;
 import com.mycodefu.werekitten.pipeline.PipelineContext;
 import com.mycodefu.werekitten.pipeline.PipelineEvent;
 import com.mycodefu.werekitten.pipeline.events.game.BuildLevelEvent;
 import com.mycodefu.werekitten.pipeline.events.game.GameEvent;
 import com.mycodefu.werekitten.pipeline.events.game.LevelLoadedEvent;
 import com.mycodefu.werekitten.pipeline.handlers.PipelineHandler;
+import com.mycodefu.werekitten.preferences.Preferences;
 
 import java.awt.*;
 
@@ -26,7 +28,7 @@ public class LevelBuildHandler implements PipelineHandler {
                     var screen = Toolkit.getDefaultToolkit().getScreenSize();
                     BackgroundObjectBuilder backgroundObjectBuilder = new BackgroundObjectBuilder(new AnimationCompiler());
                     LevelBuilder levelBuilder = new LevelBuilder(backgroundObjectBuilder);
-                    GameLevel level = levelBuilder.buildLevel("/level.wkl", screen.width, screen.height);
+                    GameLevel level = levelBuilder.buildLevel("/level.wkl", screen.width, screen.height, context.getPreferences().get(Preferences.DEFAULT_LEVEL_PREFERENCE) == null? LevelReader.defaultLevelName : context.getPreferences().get(Preferences.DEFAULT_LEVEL_PREFERENCE));
                     context.getStage().hide();
 
                     context.level().set(level);

@@ -10,6 +10,7 @@ public class Preferences {
 
     public static final String CLIENT_CONNECT_IP_PREFERENCE = "CLIENT_CONNECT_IP";
     public static final String LISTENING_PORT_PREFERENCE = "LISTENING_PORT";
+    public static final String DEFAULT_LEVEL_PREFERENCE = "DEFAULT_LEVEL";
 
     public static Map<String,String> loadPreferences() {
         Map<String,String> preferences = new ConcurrentHashMap<>();

@@ -59,7 +59,8 @@ public class LevelBuilder {
         return new GameLevel(level, nodeMap, layerGroups, pixelScaleHelper);
     }
     
-    public GameLevel buildLevel(String levelPath, int screenWidth, int screenHeight) {
+    public GameLevel buildLevel(String levelPath, int screenWidth, int screenHeight, String defaultLevelName) {
+    	LevelReader.defaultLevelName = defaultLevelName;
     	Level level = LevelReader.read(levelPath);
     	return buildLevel(level, screenWidth, screenHeight);
     }

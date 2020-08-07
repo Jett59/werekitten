@@ -41,8 +41,8 @@ public class LevelDesignerUI {
     private Button apply;
 private Button save;
     
-    public Scene getScene() {
-        levelGroup = buildLevelGroup();
+    public Scene getScene(String defaultLevelName) {
+        levelGroup = buildLevelGroup(defaultLevelName);
         toolGroup = buildToolGroup();
         Group root = new Group(levelGroup, toolGroup);
         createHandlers(toolGroup, levelGroup);
@@ -94,8 +94,8 @@ private Button save;
         return new Group(border);
     }
 
-    private Group buildLevelGroup() {
-        level = new LevelBuilder(new BackgroundObjectBuilder(new AnimationCompiler())).buildLevel("/level.wkl", LEVEL_WIDTH, LEVEL_HEIGHT);
+    private Group buildLevelGroup(String defaultLevelName) {
+        level = new LevelBuilder(new BackgroundObjectBuilder(new AnimationCompiler())).buildLevel("/level.wkl", LEVEL_WIDTH, LEVEL_HEIGHT, defaultLevelName);
         return new Group(level.getLayerGroups().stream()
                 .map(LayerGroup::getGroup)
                 .collect(Collectors.toList()));
