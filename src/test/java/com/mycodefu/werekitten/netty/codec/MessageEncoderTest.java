@@ -8,6 +8,7 @@ import java.nio.charset.StandardCharsets;
 import org.junit.jupiter.api.Test;
 
 import com.mycodefu.werekitten.network.message.ChatMessage;
+import com.mycodefu.werekitten.network.message.Message;
 import com.mycodefu.werekitten.network.message.MessageType;
 
 import io.netty.buffer.ByteBuf;
@@ -62,5 +63,14 @@ void encode_chatMessage_massiveSize() throws Exception{
 	MessageEncoder encoder = new MessageEncoder();
 	ByteBuf buf = PooledByteBufAllocator.DEFAULT.buffer();
 	assertThrows(IllegalArgumentException.class, ()->encoder.encode(null, message, buf));
+}
+@Test
+void encode_standardMessage() throws Exception {
+	Message message = new Message(MessageType.init, System.currentTimeMillis());
+	MessageEncoder encoder = new MessageEncoder();
+	ByteBuf buf = PooledByteBufAllocator.DEFAULT.buffer();
+	encoder.encode(null, message, buf);
+	assertEquals(message.type.getCode(), buf.readByte());
+	assertEquals(message.timeStamp, buf.readLong());
 }
 }
