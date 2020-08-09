@@ -18,10 +18,12 @@ import static org.junit.jupiter.api.Assertions.*;
 class NettyServerTest {
     //TODO: Change to using WebSocketServerProtocolHandler instead of manual upgrade in NettyServerHandler
     //ref: https://netty.io/4.0/api/io/netty/handler/codec/http/websocketx/WebSocketServerProtocolHandler.html
-    //TODO: Implement a MessageDecoder which extends ByteToMessageDecoder / MessageToMessageDecoder
+    //TODO: Implement a MessageDecoder which extends MessageToMessageDecoder
+    //ref: https://netty.io/4.0/api/io/netty/handler/codec/MessageToMessageDecoder.html
     //ref: https://github.com/blynkkk/blynk-server/blob/25aee285f4a7845f7128b6989314d05f2b08ad80/server/core/src/main/java/cc/blynk/server/core/protocol/handlers/decoders/MessageDecoder.java
     //TODO: Implement a MessageEncoder which extends MessageToByteEncoder<PlayerMessage>
-    //ref: https://github.com/blynkkk/blynk-server/blob/25aee285f4a7845f7128b6989314d05f2b08ad80/server/core/src/main/java/cc/blynk/server/core/protocol/handlers/encoders/MessageEncoder.java
+    //ref: https://netty.io/4.0/api/io/netty/handler/codec/MessageToByteEncoder.html
+    //e.g.: https://github.com/blynkkk/blynk-server/blob/25aee285f4a7845f7128b6989314d05f2b08ad80/server/core/src/main/java/cc/blynk/server/core/protocol/handlers/encoders/MessageEncoder.java
 
     @Test
     void initHandshakeTest() throws InterruptedException {
