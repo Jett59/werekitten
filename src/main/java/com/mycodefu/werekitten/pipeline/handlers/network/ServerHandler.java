@@ -34,7 +34,6 @@ public class ServerHandler implements PipelineHandler {
     
     public ServerHandler() {
         this.networkPlayerHelper = new NetworkPlayerHelper();
-        new CopyOnWriteArrayList<>();
     }
 
     @Override
