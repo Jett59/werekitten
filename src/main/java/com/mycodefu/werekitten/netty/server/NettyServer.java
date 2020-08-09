@@ -1,7 +1,9 @@
 package com.mycodefu.werekitten.netty.server;
 
+import com.mycodefu.werekitten.netty.codec.MessageDecoder;
+import com.mycodefu.werekitten.netty.codec.MessageEncoder;
+import com.mycodefu.werekitten.network.message.Message;
 import io.netty.bootstrap.ServerBootstrap;
-import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelId;
 import io.netty.channel.ChannelInitializer;
@@ -14,8 +16,6 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.address.DynamicAddressConnectHandler;
 import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpServerCodec;
-import io.netty.handler.codec.http.websocketx.BinaryWebSocketFrame;
-import io.netty.handler.codec.http.websocketx.WebSocketFrame;
 import io.netty.handler.codec.http.websocketx.extensions.compression.WebSocketServerCompressionHandler;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
@@ -50,6 +50,9 @@ public class NettyServer {
                         pipeline.addLast(new HttpServerCodec());
                         pipeline.addLast(new HttpObjectAggregator(65536));
                         pipeline.addLast(new WebSocketServerCompressionHandler());
+                        pipeline.addLast(new NettyWebsocketUpgradeHandler());
+                        pipeline.addLast(new MessageEncoder());
+                        pipeline.addLast(new MessageDecoder());
                         pipeline.addLast(new NettyServerHandler(callback));
                     }
                 });
@@ -86,11 +89,10 @@ public class NettyServer {
         }
     }
 
-    public void sendMessage(ChannelId id, ByteBuf message) {
+    public void sendMessage(ChannelId id, Message message) {
         Channel channel = allChannels.find(id);
         if (channel != null) {
-            WebSocketFrame frame = new BinaryWebSocketFrame(message);
-            channel.writeAndFlush(frame);
+            channel.writeAndFlush(message);
         }
     }
     

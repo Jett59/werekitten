@@ -79,7 +79,10 @@ public class NettyClient {
     public boolean sendMessage(ByteBuf message) {
         if (connected) {
             WebSocketFrame frame = new BinaryWebSocketFrame(message);
-            channel.writeAndFlush(frame);
+            System.out.println("Writing message...");
+            channel.writeAndFlush(frame).addListener(future -> {
+                System.out.println("Successfully wrote message from client.");
+            });
             return true;
         } else {
             return false;
@@ -102,7 +105,28 @@ public class NettyClient {
                         new NettyClientHandler(
                                 WebSocketClientHandshakerFactory.newHandshaker(
                                         uri, WebSocketVersion.V13, null, true, new DefaultHttpHeaders()),
-                                this.callback
+                                new NettyClientHandler.SocketCallback() {
+                                    @Override
+                                    public void clientDisconnected(String id) {
+                                        callback.clientDisconnected(id);
+                                    }
+
+                                    @Override
+                                    public void clientConnected(String id, String remoteAddress) {
+                                        connected = true;
+                                        callback.clientConnected(id, remoteAddress);
+                                    }
+
+                                    @Override
+                                    public void clientMessageReceived(String id, ByteBuf buffer) {
+                                        callback.clientMessageReceived(id, buffer);
+                                    }
+
+                                    @Override
+                                    public void clientError(String id, Throwable e) {
+                                        callback.clientError(id, e);
+                                    }
+                                }
                         );
                 id = handler.getId();
 
@@ -126,8 +150,6 @@ public class NettyClient {
 
                 channel = b.connect(host, port).sync().channel();
                 handler.handshakeFuture().sync();
-
-                connected = true;
 
             } catch (Exception e) {
                 this.callback.clientError(id, e);

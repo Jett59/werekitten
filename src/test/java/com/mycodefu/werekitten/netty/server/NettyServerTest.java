@@ -2,6 +2,8 @@ package com.mycodefu.werekitten.netty.server;
 
 import com.mycodefu.werekitten.netty.client.NettyClient;
 import com.mycodefu.werekitten.netty.client.NettyClientHandler;
+import com.mycodefu.werekitten.network.message.ChatMessage;
+import com.mycodefu.werekitten.network.message.Message;
 import com.mycodefu.werekitten.network.message.MessageType;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
@@ -9,6 +11,7 @@ import io.netty.channel.ChannelId;
 import org.junit.jupiter.api.Test;
 
 import java.nio.charset.StandardCharsets;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
 import static com.mycodefu.werekitten.network.message.MessageBuilder.MESSAGE_TYPE_SIZE;
@@ -28,7 +31,7 @@ class NettyServerTest {
 
     @Test
     void initHandshakeTest() throws InterruptedException {
-        Object lock = new Object();
+        AtomicBoolean finished = new AtomicBoolean();
 
         AtomicReference<String> serverMessage = new AtomicReference<>();
         AtomicReference<String> clientMessage = new AtomicReference<>();
@@ -41,11 +44,10 @@ class NettyServerTest {
             }
 
             @Override
-            public void serverConnectionMessage(ChannelId id, String sourceIpAddress, ByteBuf byteBuf) {
-                String message = byteBuf.toString(StandardCharsets.UTF_8);
-                System.out.printf("Received message %s\n", message);
-                serverMessage.set(message);
-                nettyServerGetter.get().sendMessage(id, createMessageByteBuf("Initialized!"));
+            public void serverConnectionMessage(ChannelId id, String sourceIpAddress, Message message) {
+                System.out.printf("Received message %s\n", message.toString());
+                serverMessage.set(message.toString());
+                nettyServerGetter.get().sendMessage(id, createMessage("Initialized!"));
             }
 
             @Override
@@ -61,16 +63,14 @@ class NettyServerTest {
             @Override
             public void clientDisconnected(String id) {
                 System.out.println("Client disconnected.");
-                synchronized (lock) {
-                    lock.notify();
-                }
+                finished.set(true);
             }
 
             @Override
             public void clientConnected(String id, String remoteAddress) {
                 System.out.println("Client connected");
-                ByteBuf buffer = createMessageByteBuf("Initializing...");
-                nettyClientGetter.get().sendMessage(buffer);
+                ByteBuf message = createMessageByteBuf("Initializing...");
+                nettyClientGetter.get().sendMessage(message);
             }
 
             @Override
@@ -88,18 +88,25 @@ class NettyServerTest {
             }
         };
 
-        NettyClient nettyClient = new NettyClient(String.format("ws://localhost:%d", nettyServer.getPort()), socketCallback);
+        NettyClient nettyClient = new NettyClient(String.format("ws://127.0.0.1:%d", nettyServer.getPort()), socketCallback);
         nettyClientGetter.set(nettyClient);
 
         nettyClient.connect();
 
-        synchronized (lock) {
-            lock.wait(10000);
-            System.out.flush();
+        int wait300Seconds = 30;
+        while (wait300Seconds > 0 && !finished.get()) {
+            Thread.sleep(300);
+            wait300Seconds--;
         }
+        System.out.flush();
 
-        assertEquals("\u0007\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u000FInitializing...", serverMessage.get());
+        assertEquals("ChatMessage{text='Initializing...', type=chat, timeStamp=0}", serverMessage.get());
         assertEquals("\u0007\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\fInitialized!", clientMessage.get());
+    }
+
+    private Message createMessage(String message) {
+        ChatMessage chatMessage = new ChatMessage(0, message);
+        return chatMessage;
     }
 
     private ByteBuf createMessageByteBuf(String message) {

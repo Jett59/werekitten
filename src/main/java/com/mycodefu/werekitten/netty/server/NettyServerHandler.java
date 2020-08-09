@@ -1,5 +1,6 @@
 package com.mycodefu.werekitten.netty.server;
 
+import com.mycodefu.werekitten.network.message.Message;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelHandlerContext;
@@ -12,7 +13,7 @@ import io.netty.handler.codec.http.websocketx.WebSocketServerHandshakerFactory;
 
 import static io.netty.handler.codec.http.HttpHeaderNames.HOST;
 
-public class NettyServerHandler extends SimpleChannelInboundHandler<Object> {
+public class NettyServerHandler extends SimpleChannelInboundHandler<Message> {
     private final ServerConnectionCallback callback;
 
 	public NettyServerHandler(ServerConnectionCallback callback) {
@@ -27,42 +28,16 @@ public class NettyServerHandler extends SimpleChannelInboundHandler<Object> {
     }
 
     @Override
-	protected void channelRead0(ChannelHandlerContext ctx, Object msg) throws Exception {
-		if (msg instanceof FullHttpRequest) {
-            handleHttpRequest(ctx, (FullHttpRequest) msg);
-        } else if (msg instanceof WebSocketFrame) {
-            handleWebSocketRequest(ctx, (WebSocketFrame) msg);
-        }
+	protected void channelRead0(ChannelHandlerContext ctx, Message msg) throws Exception {
+        String ip = ctx.channel().remoteAddress().toString();
+        ChannelId id = ctx.channel().id();
+        callback.serverConnectionMessage(id, ip, (Message)msg);
 	}
 
 	public interface ServerConnectionCallback {
         void serverConnectionOpened(ChannelId id, String remoteAddress);
-        void serverConnectionMessage(ChannelId id, String sourceIpAddress, ByteBuf byteBuf);
+        void serverConnectionMessage(ChannelId id, String sourceIpAddress, Message message);
         void serverConnectionClosed(ChannelId id);
-    }
-
-	private void handleWebSocketRequest(ChannelHandlerContext channelHandlerContext, WebSocketFrame msg) {
-        String ip = channelHandlerContext.channel().remoteAddress().toString();
-        callback.serverConnectionMessage(channelHandlerContext.channel().id(), ip, msg.content());
-    }
-
-    private void handleHttpRequest(ChannelHandlerContext channelHandlerContext, FullHttpRequest msg) {
-        String ip = channelHandlerContext.channel().remoteAddress().toString();
-
-        System.out.println("Received HTTP Request from " + ip);
-
-        WebSocketServerHandshakerFactory wsFactory = new WebSocketServerHandshakerFactory(getWebSocketLocation(msg), null, true);
-        WebSocketServerHandshaker handshaker = wsFactory.newHandshaker(msg);
-        if (handshaker == null) {
-            WebSocketServerHandshakerFactory.sendUnsupportedVersionResponse(channelHandlerContext.channel());
-        } else {
-            ChannelFuture channelFuture = handshaker.handshake(channelHandlerContext.channel(), msg);
-            if (channelFuture.isSuccess()) {
-                System.out.println(channelHandlerContext.channel() + " Connected");
-
-                callback.serverConnectionOpened(channelHandlerContext.channel().id(), channelHandlerContext.channel().remoteAddress().toString());
-            }
-        }
     }
     
     private String getWebSocketLocation(FullHttpRequest req) {
