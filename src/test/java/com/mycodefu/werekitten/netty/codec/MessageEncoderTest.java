@@ -1,6 +1,7 @@
 package com.mycodefu.werekitten.netty.codec;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.nio.charset.StandardCharsets;
 
@@ -40,5 +41,12 @@ void encode_chatMessage_127CharTextSize() throws Exception{
 	buf.readBytes(bytes);
 	String decodedString = new String(bytes, StandardCharsets.UTF_8);
 	assertEquals(message.text, decodedString);
+}
+@Test
+void encode_chatMessage_massiveSize() throws Exception{
+	ChatMessage message = new ChatMessage(System.currentTimeMillis(), "r".repeat(128));
+	MessageEncoder encoder = new MessageEncoder();
+	ByteBuf buf = PooledByteBufAllocator.DEFAULT.buffer();
+	assertThrows(IllegalArgumentException.class, ()->encoder.encode(null, message, buf));
 }
 }
