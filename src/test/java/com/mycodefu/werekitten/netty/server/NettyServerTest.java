@@ -2,20 +2,21 @@ package com.mycodefu.werekitten.netty.server;
 
 import com.mycodefu.werekitten.netty.client.NettyClient;
 import com.mycodefu.werekitten.netty.client.NettyClientHandler;
-import com.mycodefu.werekitten.network.message.MessageBuilder;
 import com.mycodefu.werekitten.network.message.MessageType;
 import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
-import io.netty.buffer.UnpooledDirectByteBuf;
+import io.netty.buffer.ByteBufAllocator;
 import io.netty.channel.ChannelId;
 import org.junit.jupiter.api.Test;
 
-import java.util.concurrent.CompletableFuture;
+import java.nio.charset.StandardCharsets;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static com.mycodefu.werekitten.network.message.MessageBuilder.MESSAGE_TYPE_SIZE;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class NettyServerTest {
+    private static final ByteBufAllocator allocator = ByteBufAllocator.DEFAULT;
+
     //TODO: Change to using WebSocketServerProtocolHandler instead of manual upgrade in NettyServerHandler
     //ref: https://netty.io/4.0/api/io/netty/handler/codec/http/websocketx/WebSocketServerProtocolHandler.html
     //TODO: Implement a MessageDecoder which extends MessageToMessageDecoder
@@ -27,52 +28,63 @@ class NettyServerTest {
 
     @Test
     void initHandshakeTest() throws InterruptedException {
-        CompletableFuture<ChannelId> connectionReceived = new CompletableFuture<>();
-        CompletableFuture<ByteBuf> connectionReceivedMessage = new CompletableFuture<>();
-        CompletableFuture<ChannelId> connectionClosed = new CompletableFuture<>();
+        Object lock = new Object();
+
+        AtomicReference<String> serverMessage = new AtomicReference<>();
+        AtomicReference<String> clientMessage = new AtomicReference<>();
+
+        AtomicReference<NettyServer> nettyServerGetter = new AtomicReference<>();
         NettyServer nettyServer = new NettyServer(0, new NettyServerHandler.ServerConnectionCallback() {
             @Override
             public void serverConnectionOpened(ChannelId id, String remoteAddress) {
                 System.out.println("Server received connection");
-                connectionReceived.complete(id);
             }
 
             @Override
             public void serverConnectionMessage(ChannelId id, String sourceIpAddress, ByteBuf byteBuf) {
-                connectionReceivedMessage.complete(byteBuf);
+                String message = byteBuf.toString(StandardCharsets.UTF_8);
+                System.out.printf("Received message %s\n", message);
+                serverMessage.set(message);
+                nettyServerGetter.get().sendMessage(id, createMessageByteBuf("Initialized!"));
             }
 
             @Override
             public void serverConnectionClosed(ChannelId id) {
-                connectionClosed.complete(id);
+                System.out.println("Server connection closed.");
             }
         });
+        nettyServerGetter.set(nettyServer);
         nettyServer.listen();
-
-        CompletableFuture<ByteBuf> clientMessageReceived = new CompletableFuture<>();
 
         AtomicReference<NettyClient> nettyClientGetter = new AtomicReference<>();
         NettyClientHandler.SocketCallback socketCallback = new NettyClientHandler.SocketCallback() {
             @Override
             public void clientDisconnected(String id) {
-
+                System.out.println("Client disconnected.");
+                synchronized (lock) {
+                    lock.notify();
+                }
             }
 
             @Override
             public void clientConnected(String id, String remoteAddress) {
                 System.out.println("Client connected");
-                ByteBuf initMessage = MessageBuilder.createNewMessageBuffer(MessageType.init, 0).getBuffer();
-                nettyClientGetter.get().sendMessage(initMessage);
+                ByteBuf buffer = createMessageByteBuf("Initializing...");
+                nettyClientGetter.get().sendMessage(buffer);
             }
 
             @Override
             public void clientMessageReceived(String id, ByteBuf buffer) {
-                clientMessageReceived.complete(buffer);
+                String message = buffer.toString(StandardCharsets.UTF_8);
+                clientMessage.set(message);
+                System.out.printf("Client received message: %s\n", message);
+                nettyClientGetter.get().disconnect();
             }
 
             @Override
             public void clientError(String id, Throwable e) {
-
+                System.out.println("Error in client:");
+                e.printStackTrace();
             }
         };
 
@@ -80,9 +92,24 @@ class NettyServerTest {
         nettyClientGetter.set(nettyClient);
 
         nettyClient.connect();
-//        connectionReceived.wait(1000);
 
+        synchronized (lock) {
+            lock.wait(10000);
+            System.out.flush();
+        }
 
+        assertEquals("\u0007\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u000FInitializing...", serverMessage.get());
+        assertEquals("\u0007\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\fInitialized!", clientMessage.get());
+    }
 
+    private ByteBuf createMessageByteBuf(String message) {
+        byte[] bytes = message.getBytes(StandardCharsets.UTF_8);
+        int size = MESSAGE_TYPE_SIZE + Long.BYTES + 1 + bytes.length;
+        ByteBuf buffer = allocator.buffer(size, size);
+        buffer.writeByte(MessageType.chat.getCode());
+        buffer.writeLong(0);
+        buffer.writeByte(bytes.length);
+        buffer.writeBytes(bytes);
+        return buffer;
     }
 }
