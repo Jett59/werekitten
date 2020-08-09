@@ -1,5 +1,7 @@
 package com.mycodefu.werekitten.netty.client;
 
+import com.mycodefu.werekitten.netty.codec.MessageEncoder;
+import com.mycodefu.werekitten.network.message.Message;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
@@ -76,13 +78,21 @@ public class NettyClient {
         }
     }
 
+    public boolean sendMessage(Message message) {
+        if (connected) {
+            System.out.println("Writing message...");
+            channel.writeAndFlush(message);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public boolean sendMessage(ByteBuf message) {
         if (connected) {
             WebSocketFrame frame = new BinaryWebSocketFrame(message);
             System.out.println("Writing message...");
-            channel.writeAndFlush(frame).addListener(future -> {
-                System.out.println("Successfully wrote message from client.");
-            });
+            channel.writeAndFlush(frame);
             return true;
         } else {
             return false;
@@ -141,6 +151,7 @@ public class NettyClient {
                                     p.addLast(sslCtx.newHandler(ch.alloc(), host, port));
                                 }
                                 p.addLast(
+                                        new MessageEncoder(),
                                         new HttpClientCodec(),
                                         new HttpObjectAggregator(8192),
                                         WebSocketClientCompressionHandler.INSTANCE,

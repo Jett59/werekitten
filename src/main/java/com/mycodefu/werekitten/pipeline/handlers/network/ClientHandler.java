@@ -3,6 +3,7 @@ package com.mycodefu.werekitten.pipeline.handlers.network;
 import com.mycodefu.werekitten.event.*;
 import com.mycodefu.werekitten.netty.client.NettyClient;
 import com.mycodefu.werekitten.netty.client.NettyClientHandler;
+import com.mycodefu.werekitten.network.message.ChatMessage;
 import com.mycodefu.werekitten.network.message.MessageBuilder;
 import com.mycodefu.werekitten.network.message.MessageType;
 import com.mycodefu.werekitten.network.message.ServerMessage;
@@ -73,13 +74,9 @@ public class ClientHandler implements PipelineHandler, NettyClientHandler.Socket
         } else if (event instanceof ChatMessageSendEvent) {
             if (nettyClient != null) {
                 ChatMessageSendEvent sendEvent = (ChatMessageSendEvent) event;
-                if (sendEvent.message.length() < Byte.MAX_VALUE) {
-                    nettyClient.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.chat, sendEvent.message.length() + 1).putByte((byte) sendEvent.message.length()).putBytes(sendEvent.message.getBytes(CharsetUtil.UTF_8)).getBuffer());
-                    context.postEvent(new ChatMessageSentEvent());
-                    System.out.println("posted sent event");
-                } else {
-                    throw new IllegalArgumentException(String.format("message %s is larger than the size limit of %s", sendEvent.message, Byte.MAX_VALUE));
-                }
+                nettyClient.sendMessage(new ChatMessage(System.currentTimeMillis(), sendEvent.message));
+                context.postEvent(new ChatMessageSentEvent());
+                System.out.println("posted sent event");
             }
         } else if (event instanceof PlayerEvent) {
             PlayerEvent playerEvent = (PlayerEvent) event;
