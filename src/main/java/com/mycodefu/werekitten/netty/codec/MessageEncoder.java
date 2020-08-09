@@ -20,7 +20,7 @@ public class MessageEncoder extends MessageToByteEncoder<Message> {
 			ChatMessage chatMessage = (ChatMessage)msg;
 			byte[] bytes = chatMessage.text.getBytes(StandardCharsets.UTF_8);
 			if(bytes.length > Byte.MAX_VALUE) {
-				throw new IllegalArgumentException(String.format("chat message length may not be more than %d bytes", bytes.length));
+				throw new IllegalArgumentException(String.format("chat message length may not be more than %d bytes", Byte.MAX_VALUE));
 			}
 			out.writeByte(bytes.length);
 			out.writeBytes(bytes);
