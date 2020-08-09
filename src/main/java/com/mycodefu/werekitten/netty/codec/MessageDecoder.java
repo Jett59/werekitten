@@ -2,6 +2,8 @@ package com.mycodefu.werekitten.netty.codec;
 
 import java.util.List;
 
+import com.mycodefu.werekitten.network.message.ChatMessage;
+import com.mycodefu.werekitten.network.message.Message;
 import com.mycodefu.werekitten.network.message.MessageType;
 
 import io.netty.buffer.ByteBuf;
@@ -25,5 +27,4 @@ public class MessageDecoder extends ByteToMessageDecoder{
 			out.add(new Message(type, timeStamp));
 		}
 	}
-
 }
