@@ -48,7 +48,7 @@ public class NetworkPlayerHelper {
             case init: {
                 if (shouldSendInit) {
                     Player local = context.getPlayerMap().get("local");
-                    double x = context.level().get().getPixelScaleHelper().scaleXBack(local.getGroup().getLayoutX());
+                    double x = context.level().get().getPixelScaleHelper().scaleXBack(local.getGroup().getTranslateX());
                     playerMessageSender.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.init, 2).addDoubleAsShort(x).getBuffer());
                 }
                 double initialXPosition = context.level().get().getPixelScaleHelper().scaleX(((double) content.readShort()) / 10);
