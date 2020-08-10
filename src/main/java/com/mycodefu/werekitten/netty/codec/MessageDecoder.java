@@ -5,10 +5,10 @@ import java.util.List;
 import com.mycodefu.werekitten.network.message.ChatMessage;
 import com.mycodefu.werekitten.network.message.Message;
 import com.mycodefu.werekitten.network.message.MessageType;
+import com.mycodefu.werekitten.network.message.XSyncMessage;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.handler.codec.ByteToMessageDecoder;
 import io.netty.handler.codec.MessageToMessageDecoder;
 import io.netty.handler.codec.http.websocketx.BinaryWebSocketFrame;
 import io.netty.util.CharsetUtil;
@@ -20,14 +20,26 @@ public class MessageDecoder extends MessageToMessageDecoder<BinaryWebSocketFrame
 		ByteBuf in = msg.content();
 		MessageType type = MessageType.forCode(in.readByte());
 		long timeStamp = in.readLong();
-		if(type.equals(MessageType.chat)) {
+		switch (type) {
+		case chat: {
 			byte stringLength = in.readByte();
 			byte[] bytes = new byte[stringLength];
 			in.readBytes(bytes);
 			String text = new String(bytes, CharsetUtil.UTF_8);
 			out.add(new ChatMessage(timeStamp, text));
-		}else {
+			break;
+		}
+		case idleLeft:
+		case idleRight:
+		case init:
+		case jump:
+		case moveLeft:
+		case moveRight: {
+			out.add(new XSyncMessage(type, timeStamp, ((double)in.readShort())/10));
+			break;
+		}
+		default:
 			out.add(new Message(type, timeStamp));
 		}
 	}
-}
+	}
