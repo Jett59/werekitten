@@ -56,10 +56,8 @@ public class ClientHandler implements PipelineHandler, SocketCallback {
             switch ((UiEventType) event.getEvent()) {
                 case UiCreated: {
                     if (nettyClient != null) {
-                        MessageBuilder messageBuilder = MessageBuilder.createNewMessageBuffer(MessageType.init, 2)
-                                .addDoubleAsShort(context.level().get().getPixelScaleHelper()
-                                        .scaleXBack(context.level().get().getPlayerElement().getLocation().getX()));
-                        nettyClient.sendMessage(messageBuilder.getBuffer());
+                        double x = context.level().get().getPixelScaleHelper().scaleXBack(context.level().get().getPlayerElement().getLocation().getX());
+                        nettyClient.sendMessage(new XSyncMessage(MessageType.init, x));
                     }
                     break;
                 }
@@ -81,19 +79,19 @@ public class ClientHandler implements PipelineHandler, SocketCallback {
                 double scaledBackX = context.level().get().getPixelScaleHelper().scaleXBack(x);
                 switch (playerEvent.getPlayerEvent()) {
                     case moveLeft:
-                        nettyClient.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.moveLeft, 2).addDoubleAsShort(scaledBackX).getBuffer());
+                        nettyClient.sendMessage(new XSyncMessage(MessageType.moveLeft, scaledBackX));
                         break;
                     case moveRight:
-                        nettyClient.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.moveRight, 2).addDoubleAsShort(scaledBackX).getBuffer());
+                        nettyClient.sendMessage(new XSyncMessage(MessageType.moveRight, scaledBackX));
                         break;
                     case stopMovingLeft:
-                        nettyClient.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.idleLeft, 2).addDoubleAsShort(scaledBackX).getBuffer());
+                        nettyClient.sendMessage(new XSyncMessage(MessageType.idleLeft, scaledBackX));
                         break;
                     case stopMovingRight:
-                        nettyClient.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.idleRight, 2).addDoubleAsShort(scaledBackX).getBuffer());
+                        nettyClient.sendMessage(new XSyncMessage(MessageType.idleRight, scaledBackX));
                         break;
                     case jump:
-                        nettyClient.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.jump, 2).addDoubleAsShort(scaledBackX).getBuffer());
+                        nettyClient.sendMessage(new XSyncMessage(MessageType.jump, scaledBackX));
                         break;
                 }
             }
@@ -115,7 +113,7 @@ public class ClientHandler implements PipelineHandler, SocketCallback {
     public void clientConnected(String id, String remoteAddress) {
         nettyClient.sendMessage(ServerMessage.introductionMessage(Integer.parseInt(serverAddress), IntroductionType.JOIN));
         context.getPreferences().put(Preferences.CLIENT_CONNECT_IP_PREFERENCE, serverAddress);
-        nettyClient.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.ping, 0).getBuffer());
+        nettyClient.sendMessage(new Message(MessageType.ping));
         start = System.nanoTime();
     }
 
@@ -133,7 +131,7 @@ public class ClientHandler implements PipelineHandler, SocketCallback {
                 time /= 1000000;
                 time /= 2;
                 System.out.println("average latency: " + time);
-                nettyClient.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.pang, 8).putLong(time).getBuffer());
+                nettyClient.sendMessage(new PangMessage(time));
             }
         }
         networkPlayerHelper.applyNetworkMessageToPlayer(message, id, context,

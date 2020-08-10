@@ -16,7 +16,7 @@ import javafx.util.Duration;
 
 public class NetworkPlayerHelper {
     public interface NetworkPlayerMessageSender {
-        void sendMessage(ByteBuf message);
+        void sendMessage(Message message);
     }
 
     public void createNetworkPlayer(String playerId, PipelineContext context, double initialXPosition) {
@@ -47,7 +47,7 @@ public class NetworkPlayerHelper {
                 if (shouldSendInit) {
                     Player local = context.getPlayerMap().get("local");
                     double x = context.level().get().getPixelScaleHelper().scaleXBack(local.getGroup().getTranslateX());
-                    playerMessageSender.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.init, 2).addDoubleAsShort(x).getBuffer());
+                    playerMessageSender.sendMessage(new XSyncMessage(MessageType.init, x));
                 }
                 XSyncMessage xSyncMessage = (XSyncMessage) message;
                 double initialXPosition = context.level().get().getPixelScaleHelper().scaleX(xSyncMessage.xSync);
