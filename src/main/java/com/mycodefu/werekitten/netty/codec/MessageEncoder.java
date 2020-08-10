@@ -6,6 +6,7 @@ import java.util.List;
 import com.mycodefu.werekitten.network.message.ChatMessage;
 import com.mycodefu.werekitten.network.message.Message;
 import com.mycodefu.werekitten.network.message.MessageType;
+import com.mycodefu.werekitten.network.message.PangMessage;
 import com.mycodefu.werekitten.network.message.XSyncMessage;
 
 import io.netty.buffer.ByteBuf;
@@ -29,6 +30,9 @@ public class MessageEncoder extends MessageToMessageEncoder<Message> {
 			}
 			message.writeByte(bytes.length);
 			message.writeBytes(bytes);
+		}else if(msg.type.equals(MessageType.pang)) {
+			PangMessage pangMessage = (PangMessage)msg;
+			message.writeLong(pangMessage.latency);
 		}else if(msg instanceof XSyncMessage) {
 			XSyncMessage xSyncMessage = (XSyncMessage)msg;
 			message.writeShort((short)(xSyncMessage.xSync*10));

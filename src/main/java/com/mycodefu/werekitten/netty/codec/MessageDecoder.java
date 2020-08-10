@@ -5,6 +5,7 @@ import java.util.List;
 import com.mycodefu.werekitten.network.message.ChatMessage;
 import com.mycodefu.werekitten.network.message.Message;
 import com.mycodefu.werekitten.network.message.MessageType;
+import com.mycodefu.werekitten.network.message.PangMessage;
 import com.mycodefu.werekitten.network.message.XSyncMessage;
 
 import io.netty.buffer.ByteBuf;
@@ -27,6 +28,10 @@ public class MessageDecoder extends MessageToMessageDecoder<BinaryWebSocketFrame
 			in.readBytes(bytes);
 			String text = new String(bytes, CharsetUtil.UTF_8);
 			out.add(new ChatMessage(timeStamp, text));
+			break;
+		}
+		case pang: {
+			out.add(new PangMessage(timeStamp, in.readLong()));
 			break;
 		}
 		case idleLeft:
