@@ -7,7 +7,11 @@ public class ChatMessage extends Message {
         super(MessageType.chat, timeStamp);
         this.text = text;
     }
-
+public ChatMessage(String text) {
+	super(MessageType.chat);
+	this.text = text;
+}
+    
     @Override
     public String toString() {
         return "ChatMessage{" +
