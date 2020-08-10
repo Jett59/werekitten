@@ -1,7 +1,7 @@
 package com.mycodefu.werekitten.netty.server;
 
 import com.mycodefu.werekitten.netty.client.NettyClient;
-import com.mycodefu.werekitten.netty.client.NettyClientHandler;
+import com.mycodefu.werekitten.netty.client.SocketCallback;
 import com.mycodefu.werekitten.network.message.ChatMessage;
 import com.mycodefu.werekitten.network.message.Message;
 import com.mycodefu.werekitten.network.message.MessageType;
@@ -59,7 +59,7 @@ class NettyServerTest {
         nettyServer.listen();
 
         AtomicReference<NettyClient> nettyClientGetter = new AtomicReference<>();
-        NettyClientHandler.SocketCallback socketCallback = new NettyClientHandler.SocketCallback() {
+        SocketCallback socketCallback = new SocketCallback() {
             @Override
             public void clientDisconnected(String id) {
                 System.out.println("Client disconnected.");
@@ -74,9 +74,8 @@ class NettyServerTest {
             }
 
             @Override
-            public void clientMessageReceived(String id, ByteBuf buffer) {
-                String message = buffer.toString(StandardCharsets.UTF_8);
-                clientMessage.set(message);
+            public void clientMessageReceived(String id, Message message) {
+                clientMessage.set(message.toString());
                 System.out.printf("Client received message: %s\n", message);
                 nettyClientGetter.get().disconnect();
             }
@@ -101,7 +100,7 @@ class NettyServerTest {
         System.out.flush();
 
         assertEquals("ChatMessage{text='Initializing...', type=chat, timeStamp=0}", serverMessage.get());
-        assertEquals("\u0007\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\fInitialized!", clientMessage.get());
+        assertEquals("ChatMessage{text='Initialized!', type=chat, timeStamp=0}", clientMessage.get());
     }
 
     private Message createMessage(String message) {

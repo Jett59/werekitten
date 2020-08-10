@@ -4,6 +4,9 @@ public class Message {
     public MessageType type;
     public long timeStamp;
 
+    public Message(MessageType type) {
+        this(type, System.currentTimeMillis());
+    }
     public Message(MessageType type, long timeStamp) {
         this.timeStamp = timeStamp;
         this.type = type;

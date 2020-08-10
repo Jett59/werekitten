@@ -1,5 +1,6 @@
 package com.mycodefu.werekitten.netty.client;
 
+import com.mycodefu.werekitten.netty.codec.MessageDecoder;
 import com.mycodefu.werekitten.netty.codec.MessageEncoder;
 import com.mycodefu.werekitten.network.message.Message;
 import io.netty.bootstrap.Bootstrap;
@@ -13,10 +14,7 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.http.DefaultHttpHeaders;
 import io.netty.handler.codec.http.HttpClientCodec;
 import io.netty.handler.codec.http.HttpObjectAggregator;
-import io.netty.handler.codec.http.websocketx.BinaryWebSocketFrame;
-import io.netty.handler.codec.http.websocketx.WebSocketClientHandshakerFactory;
-import io.netty.handler.codec.http.websocketx.WebSocketFrame;
-import io.netty.handler.codec.http.websocketx.WebSocketVersion;
+import io.netty.handler.codec.http.websocketx.*;
 import io.netty.handler.codec.http.websocketx.extensions.compression.WebSocketClientCompressionHandler;
 import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.SslContextBuilder;
@@ -24,14 +22,15 @@ import io.netty.handler.ssl.util.InsecureTrustManagerFactory;
 
 import javax.net.ssl.SSLException;
 import java.net.URI;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class NettyClient {
-	final URI uri;
+    final URI uri;
     final String host;
     final int port;
     final boolean ssl;
     final SslContext sslCtx;
-    final NettyClientHandler.SocketCallback callback;
+    final SocketCallback callback;
     private Channel channel;
     private NioEventLoopGroup group;
     private boolean connected;
@@ -39,7 +38,7 @@ public class NettyClient {
     /**
      * @param url e.g. ws://127.0.0.1:8080/websocket
      */
-    public NettyClient(String url, NettyClientHandler.SocketCallback callback) {
+    public NettyClient(String url, SocketCallback callback) {
         this.callback = callback;
         try {
             this.uri = new URI(url);
@@ -109,61 +108,62 @@ public class NettyClient {
     public void connect() {
         if (!connected) {
             this.group = new NioEventLoopGroup();
-            String id = "";
+            AtomicReference<String> idRef = new AtomicReference<>("not_connected");
             try {
-                final NettyClientHandler handler =
-                        new NettyClientHandler(
-                                WebSocketClientHandshakerFactory.newHandshaker(
-                                        uri, WebSocketVersion.V13, null, true, new DefaultHttpHeaders()),
-                                new NettyClientHandler.SocketCallback() {
-                                    @Override
-                                    public void clientDisconnected(String id) {
-                                        callback.clientDisconnected(id);
-                                    }
+                SocketCallback callback = new SocketCallback() {
+                    @Override
+                    public void clientDisconnected(String id) {
+                        NettyClient.this.callback.clientDisconnected(id);
+                    }
 
-                                    @Override
-                                    public void clientConnected(String id, String remoteAddress) {
-                                        connected = true;
-                                        callback.clientConnected(id, remoteAddress);
-                                    }
+                    @Override
+                    public void clientConnected(String id, String remoteAddress) {
+                        connected = true;
+                        idRef.set(id);
+                        NettyClient.this.callback.clientConnected(id, remoteAddress);
+                    }
 
-                                    @Override
-                                    public void clientMessageReceived(String id, ByteBuf buffer) {
-                                        callback.clientMessageReceived(id, buffer);
-                                    }
+                    @Override
+                    public void clientMessageReceived(String id, Message buffer) {
+                        NettyClient.this.callback.clientMessageReceived(id, buffer);
+                    }
 
-                                    @Override
-                                    public void clientError(String id, Throwable e) {
-                                        callback.clientError(id, e);
-                                    }
-                                }
-                        );
-                id = handler.getId();
+                    @Override
+                    public void clientError(String id, Throwable e) {
+                        NettyClient.this.callback.clientError(id, e);
+                    }
+                };
 
+                WebSocketClientHandshaker handshaker = WebSocketClientHandshakerFactory.newHandshaker(uri, WebSocketVersion.V13, null, true, new DefaultHttpHeaders());
+                final NettyClientWebSocketUpgradeHandler websocketUpgradeHandler = new NettyClientWebSocketUpgradeHandler(
+                        handshaker,
+                        callback
+                );
                 Bootstrap b = new Bootstrap();
                 b.group(group)
                         .channel(NioSocketChannel.class)
                         .handler(new ChannelInitializer<SocketChannel>() {
                             @Override
                             protected void initChannel(SocketChannel ch) {
-                                ChannelPipeline p = ch.pipeline();
+                                ChannelPipeline pipeline = ch.pipeline();
                                 if (sslCtx != null) {
-                                    p.addLast(sslCtx.newHandler(ch.alloc(), host, port));
+                                    pipeline.addLast(sslCtx.newHandler(ch.alloc(), host, port));
                                 }
-                                p.addLast(
-                                        new MessageEncoder(),
-                                        new HttpClientCodec(),
-                                        new HttpObjectAggregator(8192),
-                                        WebSocketClientCompressionHandler.INSTANCE,
-                                        handler);
+                                pipeline.addLast(new HttpClientCodec());
+                                pipeline.addLast(new HttpObjectAggregator(8192));
+                                pipeline.addLast(WebSocketClientCompressionHandler.INSTANCE);
+                                pipeline.addLast(websocketUpgradeHandler);
+                                pipeline.addLast(new MessageEncoder());
+                                pipeline.addLast(new MessageDecoder());
+                                pipeline.addLast(new NettyClientMessageHandler(callback));
                             }
                         });
 
                 channel = b.connect(host, port).sync().channel();
-                handler.handshakeFuture().sync();
+                websocketUpgradeHandler.handshakeFuture().sync();
 
             } catch (Exception e) {
-                this.callback.clientError(id, e);
+                this.callback.clientError(idRef.get(), e);
                 throw new RuntimeException("Failed to connect", e);
             }
         }

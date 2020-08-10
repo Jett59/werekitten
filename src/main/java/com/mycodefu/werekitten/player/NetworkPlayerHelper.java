@@ -1,8 +1,7 @@
 package com.mycodefu.werekitten.player;
 
 import com.mycodefu.werekitten.Start;
-import com.mycodefu.werekitten.network.message.MessageBuilder;
-import com.mycodefu.werekitten.network.message.MessageType;
+import com.mycodefu.werekitten.network.message.*;
 import com.mycodefu.werekitten.pipeline.PipelineContext;
 import com.mycodefu.werekitten.pipeline.events.chat.ChatMessageRecievedEvent;
 import com.mycodefu.werekitten.pipeline.events.player.*;
@@ -37,10 +36,9 @@ public class NetworkPlayerHelper {
         context.postEvent(new NetworkDisconnectedEvent());
     }
 
-    public void applyNetworkMessageToPlayer(ByteBuf content, String playerId, PipelineContext context, NetworkPlayerMessageSender playerMessageSender, boolean shouldSendInit) {
-        MessageType messageType = MessageType.forCode(content.readByte());
-        long timeSent = content.readLong();
-        long latency = System.currentTimeMillis() - timeSent;
+    public void applyNetworkMessageToPlayer(Message message, String playerId, PipelineContext context, NetworkPlayerMessageSender playerMessageSender, boolean shouldSendInit) {
+        MessageType messageType = message.type;
+        long latency = System.currentTimeMillis() - message.timeStamp;
         if (Start.DEBUG_PIPELINE_EVENTS){
             System.out.printf("Latency: %d\n", latency);
         }
@@ -51,30 +49,35 @@ public class NetworkPlayerHelper {
                     double x = context.level().get().getPixelScaleHelper().scaleXBack(local.getGroup().getTranslateX());
                     playerMessageSender.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.init, 2).addDoubleAsShort(x).getBuffer());
                 }
-                double initialXPosition = context.level().get().getPixelScaleHelper().scaleX(((double) content.readShort()) / 10);
+                XSyncMessage xSyncMessage = (XSyncMessage) message;
+                double initialXPosition = context.level().get().getPixelScaleHelper().scaleX(xSyncMessage.xSync);
                 createNetworkPlayer(playerId, context, initialXPosition);
                 break;
             }
             case moveLeft: {
-                double x = ((double) content.readShort()) / 10d;
+                XSyncMessage xSyncMessage = (XSyncMessage) message;
+                double x = xSyncMessage.xSync;
                 double xScaled = context.level().get().getPixelScaleHelper().scaleX(x);
                 context.postEvent(new MoveLeftEvent(playerId, xScaled));
                 break;
             }
             case moveRight: {
-                double x = ((double) content.readShort()) / 10d;
+                XSyncMessage xSyncMessage = (XSyncMessage) message;
+                double x = xSyncMessage.xSync;
                 double xScaled = context.level().get().getPixelScaleHelper().scaleX(x);
                 context.postEvent(new MoveRightEvent(playerId, xScaled));
                 break;
             }
             case idleLeft: {
-                double x = ((double) content.readShort()) / 10d;
+                XSyncMessage xSyncMessage = (XSyncMessage) message;
+                double x = xSyncMessage.xSync;
                 double xScaled = context.level().get().getPixelScaleHelper().scaleX(x);
                 context.postEvent(new StopMovingLeftEvent(playerId, xScaled));
                 break;
             }
             case idleRight: {
-                double x = ((double) content.readShort()) / 10d;
+                XSyncMessage xSyncMessage = (XSyncMessage) message;
+                double x = xSyncMessage.xSync;
                 double xScaled = context.level().get().getPixelScaleHelper().scaleX(x);
                 context.postEvent(new StopMovingRightEvent(playerId, xScaled));
                 break;
@@ -84,9 +87,7 @@ public class NetworkPlayerHelper {
                 break;
             }
             case chat: {
-            	byte[] bytes = new byte[content.readByte()];
-            	content.readBytes(bytes);
-            	String chatMessage = new String(bytes, CharsetUtil.UTF_8);
+            	String chatMessage = ((ChatMessage) message).text;
             	context.postEvent(new ChatMessageRecievedEvent(chatMessage));
             }
 		default:

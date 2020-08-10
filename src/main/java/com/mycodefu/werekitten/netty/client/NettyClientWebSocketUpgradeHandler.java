@@ -3,21 +3,18 @@ package com.mycodefu.werekitten.netty.client;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.*;
 import io.netty.handler.codec.http.FullHttpResponse;
-import io.netty.handler.codec.http.websocketx.*;
+import io.netty.handler.codec.http.websocketx.WebSocketClientHandshaker;
+import io.netty.handler.codec.http.websocketx.WebSocketHandshakeException;
 import io.netty.util.CharsetUtil;
 
-import java.util.UUID;
-
-public class NettyClientHandler extends SimpleChannelInboundHandler<Object> {
+public class NettyClientWebSocketUpgradeHandler extends SimpleChannelInboundHandler<FullHttpResponse> {
 	private final WebSocketClientHandshaker handshaker;
-    private final String id;
-    private SocketCallback callback;
+    private final SocketCallback callback;
     private ChannelPromise handshakeFuture;
 
-    public NettyClientHandler(WebSocketClientHandshaker handshaker, SocketCallback callback) {
+    public NettyClientWebSocketUpgradeHandler(WebSocketClientHandshaker handshaker, SocketCallback callback) {
         this.handshaker = handshaker;
         this.callback = callback;
-        this.id = UUID.randomUUID().toString();
     }
 
     public ChannelFuture handshakeFuture() {
@@ -36,15 +33,16 @@ public class NettyClientHandler extends SimpleChannelInboundHandler<Object> {
 
     @Override
     public void channelInactive(ChannelHandlerContext ctx) {
-        callback.clientDisconnected(id);
+        callback.clientDisconnected(ctx.channel().id().asShortText());
     }
 
     @Override
-    public void channelRead0(ChannelHandlerContext ctx, Object msg) {
+    public void channelRead0(ChannelHandlerContext ctx, FullHttpResponse msg) {
         Channel ch = ctx.channel();
+        String id = ctx.channel().id().asShortText();
         if (!handshaker.isHandshakeComplete()) {
             try {
-                handshaker.finishHandshake(ch, (FullHttpResponse) msg);
+                handshaker.finishHandshake(ch, msg);
                 System.out.println("WebSocket Client connected!");
                 handshakeFuture.setSuccess();
                 callback.clientConnected(id, ctx.channel().remoteAddress().toString());
@@ -55,29 +53,13 @@ public class NettyClientHandler extends SimpleChannelInboundHandler<Object> {
                 callback.clientError(id, e);
             }
             return;
-        }
-
-        if (msg instanceof FullHttpResponse) {
-            FullHttpResponse response = (FullHttpResponse) msg;
-            ByteBuf content = response.content();
+        } else {
+            ByteBuf content = msg.content();
             IllegalStateException illegalStateException = new IllegalStateException(
-                    "Unexpected FullHttpResponse (getStatus=" + response.status() +
+                    "Unexpected FullHttpResponse (getStatus=" + msg.status() +
                             ", content=" + content.toString(CharsetUtil.UTF_8) + ')');
             callback.clientError(id, illegalStateException);
             throw illegalStateException;
-        }
-
-        WebSocketFrame frame = (WebSocketFrame) msg;
-        if (frame instanceof BinaryWebSocketFrame) {
-        	System.out.println("handling message in callback");
-            callback.clientMessageReceived(id, frame.content());
-            System.out.println("handled message sent from "+id);
-        } else if (frame instanceof PongWebSocketFrame) {
-            System.out.println("WebSocket Client received pong");
-        } else if (frame instanceof CloseWebSocketFrame) {
-            System.out.println("WebSocket Client received closing");
-            ch.close();
-            callback.clientDisconnected(id);
         }
     }
 
@@ -88,17 +70,7 @@ public class NettyClientHandler extends SimpleChannelInboundHandler<Object> {
             handshakeFuture.setFailure(cause);
         }
         ctx.close();
-        callback.clientError(id, cause);
+        callback.clientError(ctx.channel().id().asShortText(), cause);
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public interface SocketCallback {
-        void clientDisconnected(String id);
-        void clientConnected(String id, String remoteAddress);
-        void clientMessageReceived(String id, ByteBuf buffer);
-        void clientError(String id, Throwable e);
-    }
 }

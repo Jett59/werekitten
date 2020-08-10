@@ -6,7 +6,8 @@ import com.mycodefu.werekitten.event.GameEventType;
 import com.mycodefu.werekitten.event.NetworkEventType;
 import com.mycodefu.werekitten.event.PlayerEventType;
 import com.mycodefu.werekitten.netty.client.NettyClient;
-import com.mycodefu.werekitten.netty.client.NettyClientHandler.SocketCallback;
+import com.mycodefu.werekitten.netty.client.SocketCallback;
+import com.mycodefu.werekitten.network.message.Message;
 import com.mycodefu.werekitten.network.message.MessageBuilder;
 import com.mycodefu.werekitten.network.message.MessageType;
 import com.mycodefu.werekitten.network.message.ServerMessage;
@@ -23,10 +24,7 @@ import com.mycodefu.werekitten.pipeline.handlers.PipelineHandler;
 import com.mycodefu.werekitten.player.NetworkPlayerHelper;
 import com.mycodefu.werekitten.preferences.Preferences;
 
-import io.netty.buffer.ByteBuf;
 import io.netty.util.CharsetUtil;
-
-import java.util.concurrent.CopyOnWriteArrayList;
 
 public class ServerHandler implements PipelineHandler {
     private final NetworkPlayerHelper networkPlayerHelper;
@@ -47,10 +45,10 @@ public class ServerHandler implements PipelineHandler {
                     server = new NettyClient("ws://werekitten.mycodefu.com:51273", (SocketCallback) new SocketCallback() {
                     	
 						@Override
-						public void clientMessageReceived(String id, ByteBuf content) {
+						public void clientMessageReceived(String id, Message content) {
 							// TODO Auto-generated method stub
-							if(content.getByte(0) == MessageType.ping.getCode()) {
-					    				server.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.pong, 0).getBuffer());
+							if(content.type == MessageType.ping) {
+					    				server.sendMessage(new Message(MessageType.pong));
 					    	}
 					        networkPlayerHelper.applyNetworkMessageToPlayer(content, id, context,
 					                message -> server.sendMessage(message), true);

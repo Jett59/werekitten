@@ -2,11 +2,8 @@ package com.mycodefu.werekitten.pipeline.handlers.network;
 
 import com.mycodefu.werekitten.event.*;
 import com.mycodefu.werekitten.netty.client.NettyClient;
-import com.mycodefu.werekitten.netty.client.NettyClientHandler;
-import com.mycodefu.werekitten.network.message.ChatMessage;
-import com.mycodefu.werekitten.network.message.MessageBuilder;
-import com.mycodefu.werekitten.network.message.MessageType;
-import com.mycodefu.werekitten.network.message.ServerMessage;
+import com.mycodefu.werekitten.netty.client.SocketCallback;
+import com.mycodefu.werekitten.network.message.*;
 import com.mycodefu.werekitten.network.message.ServerMessage.IntroductionType;
 import com.mycodefu.werekitten.pipeline.PipelineContext;
 import com.mycodefu.werekitten.pipeline.PipelineEvent;
@@ -23,12 +20,10 @@ import com.mycodefu.werekitten.pipeline.events.ui.UiEvent;
 import com.mycodefu.werekitten.pipeline.handlers.PipelineHandler;
 import com.mycodefu.werekitten.player.NetworkPlayerHelper;
 import com.mycodefu.werekitten.preferences.Preferences;
-import io.netty.buffer.ByteBuf;
-import io.netty.util.CharsetUtil;
 
 import static com.mycodefu.werekitten.event.UiEventType.UiCreated;
 
-public class ClientHandler implements PipelineHandler, NettyClientHandler.SocketCallback {
+public class ClientHandler implements PipelineHandler, SocketCallback {
     private final NetworkPlayerHelper networkPlayerHelper;
     private NettyClient nettyClient;
     private PipelineContext context;
@@ -125,13 +120,13 @@ public class ClientHandler implements PipelineHandler, NettyClientHandler.Socket
     }
 
     @Override
-    public void clientMessageReceived(String id, ByteBuf content) {
-        if (content.getByte(0) == MessageType.pong.getCode()) {
+    public void clientMessageReceived(String id, Message message) {
+        if (message.type == MessageType.pong) {
             finished = System.nanoTime();
             pongs++;
             time += finished - start;
             if (pongs < 10) {
-                nettyClient.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.ping, 0).getBuffer());
+                nettyClient.sendMessage(new Message(MessageType.ping));
                 start = System.nanoTime();
             } else {
                 time /= pongs;
@@ -141,8 +136,8 @@ public class ClientHandler implements PipelineHandler, NettyClientHandler.Socket
                 nettyClient.sendMessage(MessageBuilder.createNewMessageBuffer(MessageType.pang, 8).putLong(time).getBuffer());
             }
         }
-        networkPlayerHelper.applyNetworkMessageToPlayer(content, id, context,
-                message -> nettyClient.sendMessage(message), false);
+        networkPlayerHelper.applyNetworkMessageToPlayer(message, id, context,
+                msg -> nettyClient.sendMessage(msg), false);
     }
 
     @Override
