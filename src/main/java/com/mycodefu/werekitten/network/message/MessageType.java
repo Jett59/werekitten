@@ -12,6 +12,7 @@ public enum MessageType {
 	moveLeft((byte) 5),
 	moveRight((byte) 6),
 	chat((byte)7),
+    join((byte)65),
 	ping((byte)100),
 	pong((byte)101),
 	pang((byte)102);

@@ -1,4 +1,4 @@
-package com.mycodefu.werekitten.pipeline.handlers.network;
+package com.mycodefu.werekitten.pipeline.handlers.network.lan;
 
 import com.mycodefu.werekitten.event.*;
 import com.mycodefu.werekitten.netty.client.NettyClient;
@@ -146,9 +146,9 @@ public class ClientHandler implements PipelineHandler, SocketCallback {
     @Override
     public Event[] getEventInterest() {
         return Event.combineEvents(PlayerEventType.values(),
-                ChatEventType.send,
-                UiCreated,
-                NetworkEventType.connect);
+            ChatEventType.send,
+            UiCreated
+        ); //TODO: Create a new variation of NetworkEventType.connect for LAN clients
     }
 
 }

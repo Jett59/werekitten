@@ -1,4 +1,4 @@
-package com.mycodefu.werekitten.pipeline.handlers.network;
+package com.mycodefu.werekitten.pipeline.handlers.network.lan;
 
 import com.mycodefu.werekitten.event.*;
 import com.mycodefu.werekitten.netty.client.NettyClient;

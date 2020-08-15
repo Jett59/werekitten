@@ -35,7 +35,6 @@ public class StartPageUI {
         double width = 250d;
 
         Text welcome = new Text("WELCOME TO WEREKITTEN");
-
         welcome.setFocusTraversable(true);
         welcome.setFont(new Font("Arial", 42));
         welcome.setTextAlignment(TextAlignment.CENTER);
@@ -44,6 +43,8 @@ public class StartPageUI {
         Animation catAnimation = animationCompiler.compileAnimation("cat", "Idle", 10, Duration.seconds(1), false, 0.5);
         catAnimation.setCycleCount(javafx.animation.Animation.INDEFINITE);
         catAnimation.play();
+        final FlowPane imagePane = new FlowPane(catAnimation.getImageView());
+        imagePane.setPrefWidth(230);
 
         Font buttonFont = new Font("Arial", 24);
 
@@ -54,33 +55,44 @@ public class StartPageUI {
         singleplayer.setOnAction(actionEvent -> {
             context.postEvent(new BuildLevelEvent(false));
         });
+
         Button host = new Button("Host");
         host.setStyle(buttonStyle);
         host.setFont(buttonFont);
         host.setPrefWidth(width/2-5);
         host.setOnAction(e -> {
-            context.postEvent(new BuildLevelEvent(true));
+            //context.postEvent(new BuildLevelEvent(true));
+            //TODO: change to start a Netty server
         });
+        host.setDisable(true);
+
         Button join = new Button("Join");
         join.setFont(buttonFont);
-
         join.setStyle(buttonStyle);
-
         join.setPrefWidth(width/2-5);
-
-        final FlowPane imagePane = new FlowPane(catAnimation.getImageView());
-        imagePane.setPrefWidth(230);
-
-
         join.setOnAction(e -> {
+            //TODO: change to show settings to connect to a netty server on the lan
+        });
+        join.setDisable(true);
+        
+        HBox hostAndJoin = new HBox(10, host, join);
+
+        Text lanLabel = new Text("LAN");
+        VBox lanPane = new VBox(10, lanLabel, hostAndJoin);
+
+        Text serverLabel = new Text("Server");
+        Button joinServer = new Button("Join Server");
+        joinServer.setStyle(buttonStyle);
+        joinServer.setFont(buttonFont);
+        joinServer.setPrefWidth(width);
+        joinServer.setOnAction(e -> {
             Node serverNode = getJoinServerScreenNode(context, welcome, imagePane);
             Scene connectScene = new Scene(new Group(serverNode));
             connectScene.setFill(new Color(0.05, 0.2, 0.95, 0.25));
             context.getStage().setScene(connectScene);
         });
-        
-        HBox hostAndJoin = new HBox(10, host, join);
-        
+        VBox serverPane = new VBox(10, serverLabel, joinServer);
+
         Button settings = new Button("Settings");
         settings.setFont(buttonFont);
         settings.setStyle(buttonStyle);
@@ -109,9 +121,8 @@ public class StartPageUI {
         bottomBorder.setRight(quit);
 
 
-        VBox buttons = new VBox(10, singleplayer, levelDesigner, hostAndJoin);
+        VBox buttons = new VBox(10, singleplayer, levelDesigner, lanPane, serverPane);
         buttons.setPadding(new Insets(50, 0, 0, 0));
-
 
         BorderPane border = new BorderPane();
         border.setPadding(new Insets(25, 25, 25, 25));
