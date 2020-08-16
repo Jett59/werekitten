@@ -4,7 +4,6 @@ import com.mycodefu.werekitten.event.*;
 import com.mycodefu.werekitten.netty.client.NettyClient;
 import com.mycodefu.werekitten.netty.client.SocketCallback;
 import com.mycodefu.werekitten.network.message.*;
-import com.mycodefu.werekitten.network.message.ServerMessage.IntroductionType;
 import com.mycodefu.werekitten.pipeline.PipelineContext;
 import com.mycodefu.werekitten.pipeline.PipelineEvent;
 import com.mycodefu.werekitten.pipeline.events.chat.ChatMessageSendEvent;
@@ -111,7 +110,7 @@ public class JoinServerHandler implements PipelineHandler, SocketCallback {
 
     @Override
     public void clientConnected(String id, String remoteAddress) {
-        nettyClient.sendMessage(ServerMessage.introductionMessage(Integer.parseInt(serverAddress), IntroductionType.JOIN));
+        nettyClient.sendMessage(new JoinMessage(serverAddress));
         context.getPreferences().put(Preferences.CLIENT_CONNECT_IP_PREFERENCE, serverAddress);
         nettyClient.sendMessage(new Message(MessageType.ping));
         start = System.nanoTime();
