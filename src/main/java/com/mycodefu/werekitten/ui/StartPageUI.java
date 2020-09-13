@@ -7,13 +7,17 @@ import com.mycodefu.werekitten.pipeline.events.game.BuildLevelEvent;
 import com.mycodefu.werekitten.pipeline.events.game.LevelDesignerEvent;
 import com.mycodefu.werekitten.pipeline.events.game.QuitGameEvent;
 import com.mycodefu.werekitten.pipeline.events.network.NetworkConnectClientEvent;
+import com.mycodefu.werekitten.ui.settings.SettingsView;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.*;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -179,42 +183,55 @@ public class StartPageUI {
         return border;
     }
 
+    private static boolean use_afterburner = false;
     private BorderPane getSettingsScreenNode(PipelineContext context, Text welcome, FlowPane imagePane) {
-        BorderPane result = new BorderPane();
-        result.setTop(welcome);
-        result.setLeft(imagePane);
+        if (use_afterburner) {
+            SettingsView settingsView = new SettingsView(s -> {
+                switch(s){
+                    case "welcome": return welcome;
+                    case "imagePane": return imagePane;
+                }
+                return null;
+            });
+            return (BorderPane) settingsView.getView();
 
-        HBox[] preferences = new HBox[context.getPreferences().keySet().size()];
-        AtomicInteger index = new AtomicInteger();
-        context.getPreferences().forEach((key, value) -> {
-            Text text = new Text(key);
-            text.setFocusTraversable(true);
-            preferences[index.get()] = new HBox(text, new TextField(value));
-            index.addAndGet(1);
-        });
+        } else {
+            BorderPane result = new BorderPane();
+            result.setTop(welcome);
+            result.setLeft(imagePane);
 
-        Button cancel = new Button("cancel");
-        cancel.setStyle(buttonStyle);
+            HBox[] preferences = new HBox[context.getPreferences().keySet().size()];
+            AtomicInteger index = new AtomicInteger();
+            context.getPreferences().forEach((key, value) -> {
+                Text text = new Text(key);
+                text.setFocusTraversable(true);
+                preferences[index.get()] = new HBox(text, new TextField(value));
+                index.addAndGet(1);
+            });
 
-        cancel.setOnAction(e -> {
-            context.getStage().setScene(getScene(context));
-        });
-        Button apply = new Button("apply");
-        apply.setStyle(buttonStyle);
+            Button cancel = new Button("cancel");
+            cancel.setStyle(buttonStyle);
 
-        apply.setOnAction(e -> {
-            applyPreferences(context, preferences);
-        });
-        Button applyAndClose = new Button("apply and close");
-        applyAndClose.setStyle(buttonStyle);
+            cancel.setOnAction(e -> {
+                context.getStage().setScene(getScene(context));
+            });
+            Button apply = new Button("apply");
+            apply.setStyle(buttonStyle);
 
-        applyAndClose.setOnAction(e -> {
-            applyPreferences(context, preferences);
-            context.getStage().setScene(getScene(context));
-        });
+            apply.setOnAction(e -> {
+                applyPreferences(context, preferences);
+            });
+            Button applyAndClose = new Button("apply and close");
+            applyAndClose.setStyle(buttonStyle);
 
-        result.setRight(new VBox(new VBox(preferences), new HBox(cancel, apply, applyAndClose)));
-        return result;
+            applyAndClose.setOnAction(e -> {
+                applyPreferences(context, preferences);
+                context.getStage().setScene(getScene(context));
+            });
+
+            result.setRight(new VBox(new VBox(preferences), new HBox(cancel, apply, applyAndClose)));
+            return result;
+        }
     }
 
     private void applyPreferences(PipelineContext context, HBox[] preferences) {
