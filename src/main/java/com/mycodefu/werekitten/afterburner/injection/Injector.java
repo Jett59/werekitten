@@ -52,7 +52,7 @@ public class Injector {
 
     public static <T> T instantiatePresenter(Class<T> clazz, Function<String, Object> injectionContext) {
         @SuppressWarnings("unchecked")
-        T presenter = registerExistingAndInject((T) instanceSupplier.apply(clazz));
+        T presenter = (T) instanceSupplier.apply(clazz);
         //after the regular, conventional initialization and injection, perform postinjection
         Field[] fields = clazz.getDeclaredFields();
         for (final Field field : fields) {
@@ -64,6 +64,7 @@ public class Injector {
                 }
             }
         }
+        registerExistingAndInject(presenter);
         return presenter;
     }
 
@@ -100,9 +101,9 @@ public class Injector {
      * @return presenter with injected fields
      */
     public static <T> T registerExistingAndInject(T instance) {
-        T product = injectAndInitialize(instance);
-        presenters.add(product);
-        return product;
+        injectAndInitialize(instance);
+        presenters.add(instance);
+        return instance;
     }
 
     @SuppressWarnings("unchecked")
@@ -140,9 +141,13 @@ public class Injector {
                 String key = field.getName();
                 Object value = configurator.getProperty(clazz, key);
                 LOG.accept("Value returned by configurator is: " + value);
-                if (value == null && isNotPrimitiveOrString(type)) {
+                if (value == null && isNotPrimitiveOrString(type) && fieldIsNull(field, instance) ) {
                     LOG.accept("Field is not a JDK class");
-                    value = instantiateModelOrService(type);
+                    try {
+                        value = instantiateModelOrService(type);
+                    } catch (Exception e) {
+                        value = null;
+                    }
                 }
                 if (value != null) {
                     LOG.accept("Value is a primitive, injecting...");
@@ -154,6 +159,14 @@ public class Injector {
         if (superclass != null) {
             LOG.accept("Injecting members of: " + superclass);
             injectMembers(superclass, instance);
+        }
+    }
+
+    private static boolean fieldIsNull(Field field, Object instance) {
+        try {
+            return field.get(instance) == null;
+        } catch (IllegalAccessException e) {
+            return true;
         }
     }
 
