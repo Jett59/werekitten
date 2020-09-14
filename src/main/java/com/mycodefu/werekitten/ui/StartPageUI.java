@@ -11,6 +11,7 @@ import com.mycodefu.werekitten.ui.settings.SettingsView;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -22,6 +23,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.util.concurrent.atomic.AtomicInteger;
@@ -78,7 +81,7 @@ public class StartPageUI {
             //TODO: change to show settings to connect to a netty server on the lan
         });
         join.setDisable(true);
-        
+
         HBox hostAndJoin = new HBox(10, host, join);
 
         Text lanLabel = new Text("LAN");
@@ -103,7 +106,7 @@ public class StartPageUI {
         settings.setPrefWidth(width / 2d - 5d);
 
         settings.setOnAction(e -> {
-            Node settingsNode = getSettingsScreenNode(context, welcome, imagePane);
+            Node settingsNode = showSettings(context, welcome, imagePane);
             Scene settingsScene = new Scene(new Group(settingsNode));
             settingsScene.setFill(new Color(0.05, 0.2, 0.95, 0.25));
             context.getStage().setScene(settingsScene);
@@ -184,17 +187,22 @@ public class StartPageUI {
     }
 
     private static boolean use_afterburner = false;
-    private BorderPane getSettingsScreenNode(PipelineContext context, Text welcome, FlowPane imagePane) {
+    private BorderPane showSettings(PipelineContext context, Text welcome, FlowPane imagePane) {
         if (use_afterburner) {
             SettingsView settingsView = new SettingsView(s -> {
                 switch(s){
+                    case "context": return context;
                     case "welcome": return welcome;
                     case "imagePane": return imagePane;
                 }
                 return null;
             });
-            return (BorderPane) settingsView.getView();
-
+            Stage stage = new Stage();
+            Parent parent = settingsView.getView();
+            stage.setScene(new Scene(parent));
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.show();
+            return null;
         } else {
             BorderPane result = new BorderPane();
             result.setTop(welcome);

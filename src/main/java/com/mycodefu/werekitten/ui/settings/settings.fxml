@@ -1,9 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<BorderPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"  fx:controller="com.mycodefu.werekitten.ui.settings.SettingsPresenter">
+<BorderPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycodefu.werekitten.ui.settings.SettingsPresenter">
+   <left>
+
+   </left>
+   <top>
+
+   </top>
    <right>
-      <VBox prefHeight="400.0" prefWidth="219.0" BorderPane.alignment="CENTER" />
+      <VBox fx:id="settings" prefHeight="400.0" prefWidth="219.0" BorderPane.alignment="CENTER" />
    </right>
+   <bottom>
+      <HBox BorderPane.alignment="CENTER_RIGHT">
+         <Button fx:id="cancel" onAction="#cancel" text="Cancel" />
+         <Button mnemonicParsing="false" onAction="#save" prefHeight="27.0" prefWidth="66.0" text="Save">
+            <HBox.margin>
+               <Insets />
+            </HBox.margin>
+         </Button>
+      </HBox>
+   </bottom>
 </BorderPane>
