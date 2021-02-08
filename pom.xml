@@ -12,7 +12,7 @@
         <junit-platform.version>5.3.1</junit-platform.version>
         <jackson.version>2.10.1</jackson.version>
         <javafx.version>11.0.1</javafx.version>
-        <netty.version>4.1.44.Final</netty.version>
+        <netty.version>4.1.59.Final</netty.version>
     </properties>
 
 
