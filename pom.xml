@@ -10,7 +10,7 @@
         <maven.compiler.source>11</maven.compiler.source>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <junit-platform.version>5.3.1</junit-platform.version>
-        <jackson.version>2.10.1</jackson.version>
+        <jackson.version>2.10.5.1</jackson.version>
         <javafx.version>11.0.1</javafx.version>
         <netty.version>4.1.44.Final</netty.version>
     </properties>
